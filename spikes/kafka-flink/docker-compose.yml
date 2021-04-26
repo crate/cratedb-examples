@@ -1,0 +1,141 @@
+version: "3"
+
+networks:
+  scada-demo:
+    name: scada-demo
+    driver: bridge
+
+services:
+
+  # ---------------
+  # Confluent Kafka
+  # ---------------
+  # https://docs.confluent.io/platform/current/installation/docker/config-reference.html
+  # https://gist.github.com/everpeace/7a317860cab6c7fb39d5b0c13ec2543e
+  # https://github.com/framiere/a-kafka-story/blob/master/step14/docker-compose.yml
+  kafka-zookeeper:
+    image: confluentinc/cp-zookeeper:6.1.1
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      KAFKA_OPTS: -Dzookeeper.4lw.commands.whitelist=ruok
+    networks:
+      - scada-demo
+
+    # Define health check for Zookeeper.
+    healthcheck:
+      # https://github.com/confluentinc/cp-docker-images/issues/827
+      test: ["CMD", "bash", "-c", "echo ruok | nc localhost 2181 | grep imok"]
+      start_period: 3s
+      interval: 2s
+      timeout: 30s
+      retries: 60
+
+  kafka-broker:
+    image: confluentinc/cp-kafka:6.1.1
+    ports:
+      - "9092:9092"
+      - "9094:9094"
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: kafka-zookeeper:2181
+      KAFKA_LISTENERS: INTERNAL://0.0.0.0:9092,EXTERNAL://0.0.0.0:9094
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-broker:9092,EXTERNAL://localhost:9094
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    depends_on:
+      - kafka-zookeeper
+    networks:
+      - scada-demo
+
+    # Define health check for Kafka broker.
+    healthcheck:
+      #test: ps augwwx | egrep "kafka.Kafka"
+      test: ["CMD", "nc", "-vz", "localhost", "9092"]
+      start_period: 3s
+      interval: 0.5s
+      timeout: 30s
+      retries: 60
+
+  # The Kafka schema registry as well as ksqlDB is not needed for this setup.
+  #kafka-schema-registry:
+  #  image: confluentinc/cp-schema-registry:6.1.1
+  #kafka-ksqldb:
+  #  image: confluentinc/cp-ksqldb-server:6.1.1
+
+
+  # ------------
+  # Apache Flink
+  # ------------
+  # https://ci.apache.org/projects/flink/flink-docs-master/docs/deployment/resource-providers/standalone/docker/#flink-with-docker-compose
+  flink-jobmanager:
+    image: flink:1.12
+    ports:
+      - "8081:8081"
+    command: jobmanager
+    environment:
+      - |
+        FLINK_PROPERTIES=
+        jobmanager.rpc.address: flink-jobmanager
+    networks:
+      - scada-demo
+
+    # Define health check for Apache Flink jobmanager.
+    healthcheck:
+      test: [ "CMD", "curl", "--fail", "http://localhost:8081/overview" ]
+      start_period: 3s
+      interval: 0.5s
+      timeout: 30s
+      retries: 60
+
+  flink-taskmanager:
+    image: flink:1.12
+    depends_on:
+      - flink-jobmanager
+    command: taskmanager
+    scale: 1
+    environment:
+      - |
+        FLINK_PROPERTIES=
+        jobmanager.rpc.address: flink-jobmanager
+        taskmanager.numberOfTaskSlots: 2
+    networks:
+      - scada-demo
+
+
+  # -------
+  # CrateDB
+  # -------
+  cratedb:
+    image: crate:4.5.0
+    ports:
+      - "4200:4200"
+      - "5432:5432"
+    environment:
+      CRATE_HEAP_SIZE: 1g
+    networks:
+      - scada-demo
+
+    # Define health check for CrateDB.
+    healthcheck:
+      test: [ "CMD", "curl", "--fail", "http://localhost:4200" ]
+      start_period: 3s
+      interval: 0.5s
+      timeout: 30s
+      retries: 60
+
+
+  # -------
+  # Bundler
+  # -------
+  # Wait for all defined services to be fully available by probing their health
+  # status, even when using `docker-compose up --detach`.
+  # https://marcopeg.com/2019/docker-compose-healthcheck/
+  start-dependencies:
+    image: dadarek/wait-for-dependencies
+    depends_on:
+      kafka-broker:
+        condition: service_healthy
+      flink-jobmanager:
+        condition: service_healthy
+      cratedb:
+        condition: service_healthy
