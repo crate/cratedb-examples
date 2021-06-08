@@ -22,11 +22,11 @@ To invoke a CrateDB instance for evaluation purposes, run::
 For building and running the demonstration program and connect to
 ``localhost:5432``, invoke::
 
-    sh$ dotnet run
+    sh$ dotnet run --framework=net5.0
 
 To connect to CrateDB Cloud, use a command like::
 
-    sh$ dotnet run -- \
+    sh$ dotnet run --framework=net5.0 -- \
         --host=clustername.aks1.westeurope.azure.cratedb.net --ssl-mode=Require \
         --username=foobar --password='X8F%Shn)TESTvF5ac7%eW4NM'
 
@@ -40,12 +40,12 @@ Tests
 
 For running the test scenarios wrapped into a xUnit test suite, invoke::
 
-    sh$ dotnet test
+    sh$ dotnet test --framework=net5.0
 
 For running the tests against a remote database, use, for example::
 
     sh$ export CRATEDB_DSN='Host=clustername.aks1.westeurope.azure.cratedb.net;Port=5432;SSL Mode=Require;Username=foobar;Password=X8F%Shn)TESTvF5ac7%eW4NM;Database=testdrive'
-    sh$ dotnet test
+    sh$ dotnet test --framework=net5.0
 
 
 .. _crate-npgsql: https://github.com/crate/crate-npgsql

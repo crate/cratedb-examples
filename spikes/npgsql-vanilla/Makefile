@@ -1,3 +1,5 @@
+DOTNET_FRAMEWORK=net5.0
+
 help:
 	@echo "Please choose one of the following targets: start-cratedb, build, run"
 	@exit 2
@@ -9,8 +11,11 @@ build:
 	dotnet build
 
 run:
-	dotnet run
+	dotnet run --framework=${DOTNET_FRAMEWORK}
 
 test:
-	dotnet test --verbosity=minimal
+	dotnet test --framework=${DOTNET_FRAMEWORK} --verbosity=minimal
 	@#dotnet test --verbosity=normal
+
+coverage:
+	dotnet test --framework=${DOTNET_FRAMEWORK} --verbosity=minimal --collect:"XPlat Code Coverage"
