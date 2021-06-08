@@ -23,9 +23,18 @@ In order to invoke a CrateDB instance for evaluation purposes, run::
 
     docker run -it --rm --publish=4200:4200 --publish=5432:5432 crate:4.5.1
 
-For building and running the demonstration program, invoke:: 
+For building and running the demonstration program and connect to
+``localhost:5432``, invoke::
 
-    dotnet run localhost 5432
+    dotnet run 
+
+In order to connect to CrateDB Cloud, use::
+
+    dotnet run -- --host=clustername.aks1.westeurope.azure.cratedb.net --ssl-mode=Require --username=foobar --password='X8F%Shn)TESTvF5ac7%eW4NM'
+
+For exploring all available options, run:: 
+
+    dotnet run -- --help
 
 
 .. _crate-npgsql: https://github.com/crate/crate-npgsql

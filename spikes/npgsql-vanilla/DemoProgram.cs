@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CommandLine;
 using Npgsql;
 using NpgsqlTypes;
 
@@ -129,21 +130,47 @@ namespace demo
             Console.WriteLine();
         }
 
+        public class Options
+        {
+            [Option('h', "host", Required = false, HelpText = "Host name to connect to", Default = "localhost")]
+            public string Host { get; set; }
+
+            [Option('p', "port", Required = false, HelpText = "Port number to connect to", Default = 5432)]
+            public int Port { get; set; }
+
+            // Controls whether SSL is used, depending on server support. Can be Require, Disable, or Prefer.
+            // https://www.npgsql.org/doc/connection-string-parameters.html#security-and-encryption
+            [Option('s', "ssl-mode", Required = false, HelpText = "Which SSL mode to use", Default = "Disable")]
+            public string SslMode { get; set; }
+
+            [Option('u', "username", Required = false, HelpText = "Username to authenticate with", Default = "crate")]
+            public string Username { get; set; }
+            [Option('w', "password", Required = false, HelpText = "Password to authenticate with", Default = "")]
+            public string Password { get; set; }
+            [Option('d', "database", Required = false, HelpText = "Database to use", Default = "testdrive")]
+            public string Database { get; set; }
+        }
+
         public static async Task Main(string[] args)
         {
-            var host = args[0];
-            var port = args[1];
+            await Parser.Default.ParseArguments<Options>(args)
+                .WithParsedAsync<Options>(async options =>
+                {
+                    Console.WriteLine($"port: {options.Port}");
+                    var connString = $"Host={options.Host};Port={options.Port};SSL Mode={options.SslMode};" +
+                                     $"Username={options.Username};Password={options.Password};Database={options.Database}";
+                    Console.WriteLine($"Connecting to {connString}\n");
+                    await using (var conn = new NpgsqlConnection(connString))
+                    {
+                        conn.Open();
+                        await SystemQueryExample(conn);
+                        await BasicConversationExample(conn);
+                        await AsyncUnnestExample(conn);
+                        conn.Close();
+                    }
+                    
+                });
 
-            var connString = $"Host={host};Port={port};Username=crate;Password=;Database=testdrive";
-            Console.WriteLine($"Connecting to {connString}\n");
-            await using (var conn = new NpgsqlConnection(connString))
-            {
-                conn.Open();
-                await SystemQueryExample(conn);
-                await BasicConversationExample(conn);
-                await AsyncUnnestExample(conn);
-                conn.Close();
-            }
         }
     }
 }

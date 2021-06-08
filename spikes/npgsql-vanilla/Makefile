@@ -9,4 +9,4 @@ build:
 	dotnet build
 
 run:
-	dotnet run localhost 5432
+	dotnet run
