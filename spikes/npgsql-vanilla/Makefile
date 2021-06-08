@@ -10,3 +10,7 @@ build:
 
 run:
 	dotnet run
+
+test:
+	dotnet test --verbosity=minimal
+	@#dotnet test --verbosity=normal

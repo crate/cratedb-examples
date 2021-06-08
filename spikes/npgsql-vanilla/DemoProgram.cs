@@ -15,16 +15,16 @@ namespace demo
             await Parser.Default.ParseArguments<Options>(args)
                 .WithParsedAsync<Options>(async options =>
                 {
-                    Console.WriteLine($"port: {options.Port}");
                     var connString = $"Host={options.Host};Port={options.Port};SSL Mode={options.SslMode};" +
                                      $"Username={options.Username};Password={options.Password};Database={options.Database}";
                     Console.WriteLine($"Connecting to {connString}\n");
                     await using (var conn = new NpgsqlConnection(connString))
                     {
                         conn.Open();
-                        await SystemQueryExample(conn);
-                        await BasicConversationExample(conn);
-                        await AsyncUnnestExample(conn);
+                        var program = new DatabaseWorkloads();
+                        await program.SystemQueryExample(conn);
+                        await program.BasicConversationExample(conn);
+                        await program.AsyncUnnestExample(conn);
                         conn.Close();
                     }
 
@@ -32,13 +32,38 @@ namespace demo
 
         }
 
-        private static async Task SystemQueryExample(NpgsqlConnection conn)
+        public class Options
+        {
+            [Option('h', "host", Required = false, HelpText = "Host name to connect to", Default = "localhost")]
+            public string Host { get; set; }
+
+            [Option('p', "port", Required = false, HelpText = "Port number to connect to", Default = 5432)]
+            public int Port { get; set; }
+
+            // Controls whether SSL is used, depending on server support. Can be Require, Disable, or Prefer.
+            // https://www.npgsql.org/doc/connection-string-parameters.html#security-and-encryption
+            [Option('s', "ssl-mode", Required = false, HelpText = "Which SSL mode to use", Default = "Disable")]
+            public string SslMode { get; set; }
+
+            [Option('u', "username", Required = false, HelpText = "Username to authenticate with", Default = "crate")]
+            public string Username { get; set; }
+            [Option('w', "password", Required = false, HelpText = "Password to authenticate with", Default = "")]
+            public string Password { get; set; }
+            [Option('d', "database", Required = false, HelpText = "Database to use", Default = "testdrive")]
+            public string Database { get; set; }
+        }
+        
+    }
+
+    public class DatabaseWorkloads
+    {
+        public async Task<List<string>> SystemQueryExample(NpgsqlConnection conn)
         {
             Console.WriteLine("Running SystemQueryExample");
+            var mountains = new List<string>();
             await using (var cmd = new NpgsqlCommand("SELECT mountain FROM sys.summits ORDER BY 1 LIMIT 25", conn))
             await using (var reader = cmd.ExecuteReader())
             {
-                var mountains = new List<string>();
                 while (reader.Read())
                 {
                     mountains.Add(reader.GetString(0));
@@ -48,9 +73,10 @@ namespace demo
             }
 
             Console.WriteLine();
+            return mountains;
         }
 
-        private static async Task BasicConversationExample(NpgsqlConnection conn)
+        public async Task<List<int>> BasicConversationExample(NpgsqlConnection conn)
         {
             Console.WriteLine("Running BasicConversationExample");
             
@@ -96,17 +122,24 @@ namespace demo
             }
 
             // Query back data.
+            var data = new List<int>();
             await using (var cmd = new NpgsqlCommand("SELECT x FROM testdrive.basic ORDER BY 1 ASC LIMIT 10", conn))
             await using (var reader = cmd.ExecuteReader())
             {
                 while (await reader.ReadAsync())
-                    Console.WriteLine(reader.GetInt32(0));
+                {
+                    var value = reader.GetInt32(0);
+                    data.Add(value);
+                    Console.WriteLine(value);
+                }
+
             }
 
             Console.WriteLine();
+            return data;
         }
 
-        private static async Task AsyncUnnestExample(NpgsqlConnection conn)
+        public async Task<int> AsyncUnnestExample(NpgsqlConnection conn)
         {
             Console.WriteLine("Running AsyncUnnestExample");
 
@@ -140,37 +173,19 @@ namespace demo
             }
 
             // Query back data.
+            var resultCount = -1;
             await using (var cmd = new NpgsqlCommand("SELECT COUNT(*) FROM testdrive.unnest", conn))
             {
                 await using (var reader = cmd.ExecuteReader())
                 {
                     await reader.ReadAsync();
-                    Console.WriteLine($"Wrote {reader.GetInt32(0)} records");
+                    resultCount = reader.GetInt32(0);
+                    Console.WriteLine($"Wrote {resultCount} records");
                 }
             }
 
             Console.WriteLine();
-        }
-
-        public class Options
-        {
-            [Option('h', "host", Required = false, HelpText = "Host name to connect to", Default = "localhost")]
-            public string Host { get; set; }
-
-            [Option('p', "port", Required = false, HelpText = "Port number to connect to", Default = 5432)]
-            public int Port { get; set; }
-
-            // Controls whether SSL is used, depending on server support. Can be Require, Disable, or Prefer.
-            // https://www.npgsql.org/doc/connection-string-parameters.html#security-and-encryption
-            [Option('s', "ssl-mode", Required = false, HelpText = "Which SSL mode to use", Default = "Disable")]
-            public string SslMode { get; set; }
-
-            [Option('u', "username", Required = false, HelpText = "Username to authenticate with", Default = "crate")]
-            public string Username { get; set; }
-            [Option('w', "password", Required = false, HelpText = "Password to authenticate with", Default = "")]
-            public string Password { get; set; }
-            [Option('d', "database", Required = false, HelpText = "Database to use", Default = "testdrive")]
-            public string Database { get; set; }
+            return resultCount;
         }
 
     }
