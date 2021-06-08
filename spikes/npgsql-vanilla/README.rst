@@ -35,4 +35,17 @@ Explore all available options::
     sh$ dotnet run -- --help
 
 
+Tests
+=====
+
+For running the test scenarios wrapped into a xUnit test suite, invoke::
+
+    sh$ dotnet test
+
+For running the tests against a remote database, use, for example::
+
+    sh$ export CRATEDB_DSN='Host=clustername.aks1.westeurope.azure.cratedb.net;Port=5432;SSL Mode=Require;Username=foobar;Password=X8F%Shn)TESTvF5ac7%eW4NM;Database=testdrive'
+    sh$ dotnet test
+
+
 .. _crate-npgsql: https://github.com/crate/crate-npgsql
