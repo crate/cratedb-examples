@@ -18,7 +18,7 @@ namespace demo
                     var connString = $"Host={options.Host};Port={options.Port};SSL Mode={options.SslMode};" +
                                      $"Username={options.Username};Password={options.Password};Database={options.Database}";
                     Console.WriteLine($"Connecting to {connString}\n");
-                    await using (var conn = new NpgsqlConnection(connString))
+                    using (var conn = new NpgsqlConnection(connString))
                     {
                         conn.Open();
                         var program = new DatabaseWorkloads();
@@ -61,8 +61,8 @@ namespace demo
         {
             Console.WriteLine("Running SystemQueryExample");
             var mountains = new List<string>();
-            await using (var cmd = new NpgsqlCommand("SELECT mountain FROM sys.summits ORDER BY 1 LIMIT 25", conn))
-            await using (var reader = cmd.ExecuteReader())
+            using (var cmd = new NpgsqlCommand("SELECT mountain FROM sys.summits ORDER BY 1 LIMIT 25", conn))
+            using (var reader = cmd.ExecuteReader())
             {
                 while (reader.Read())
                 {
@@ -81,11 +81,11 @@ namespace demo
             Console.WriteLine("Running BasicConversationExample");
             
             // Submit DDL, create database schema.
-            await using (var cmd = new NpgsqlCommand("DROP TABLE IF EXISTS testdrive.basic", conn))
+            using (var cmd = new NpgsqlCommand("DROP TABLE IF EXISTS testdrive.basic", conn))
             {
                 cmd.ExecuteNonQuery();
             }
-            await using (var cmd = new NpgsqlCommand("CREATE TABLE testdrive.basic (x int)", conn))
+            using (var cmd = new NpgsqlCommand("CREATE TABLE testdrive.basic (x int)", conn))
             {
                 cmd.ExecuteNonQuery();
             }
@@ -98,9 +98,9 @@ namespace demo
             }
 
             // Insert multiple data points.
-            await using (var cmd = new NpgsqlCommand("INSERT INTO testdrive.basic (x) VALUES (@x)", conn))
+            using (var cmd = new NpgsqlCommand("INSERT INTO testdrive.basic (x) VALUES (@x)", conn))
             {
-                await using (var transaction = conn.BeginTransaction())
+                using (var transaction = conn.BeginTransaction())
                 {
                     cmd.Transaction = transaction;
                     cmd.Parameters.Add("@x", NpgsqlDbType.Integer);
@@ -116,15 +116,15 @@ namespace demo
             }
 
             // Flush data.
-            await using (var cmd = new NpgsqlCommand("REFRESH TABLE testdrive.basic", conn))
+            using (var cmd = new NpgsqlCommand("REFRESH TABLE testdrive.basic", conn))
             {
                 cmd.ExecuteNonQuery();
             }
 
             // Query back data.
             var data = new List<int>();
-            await using (var cmd = new NpgsqlCommand("SELECT x FROM testdrive.basic ORDER BY 1 ASC LIMIT 10", conn))
-            await using (var reader = cmd.ExecuteReader())
+            using (var cmd = new NpgsqlCommand("SELECT x FROM testdrive.basic ORDER BY 1 ASC LIMIT 10", conn))
+            using (var reader = cmd.ExecuteReader())
             {
                 while (await reader.ReadAsync())
                 {
@@ -144,15 +144,18 @@ namespace demo
             Console.WriteLine("Running AsyncUnnestExample");
 
             // Submit DDL, create database schema.
-            await using (var cmd = new NpgsqlCommand("DROP TABLE IF EXISTS testdrive.unnest", conn))
+            using (var cmd = new NpgsqlCommand("DROP TABLE IF EXISTS testdrive.unnest", conn))
             {
                 await cmd.ExecuteNonQueryAsync();
             }
-            await using var cmd2 = new NpgsqlCommand(
+
+            using (var cmd2 = new NpgsqlCommand(
                 connection: conn,
                 cmdText: "CREATE TABLE IF NOT EXISTS testdrive.unnest (id int, name text)"
-            );
-            await cmd2.ExecuteNonQueryAsync();
+            ))
+            {
+                await cmd2.ExecuteNonQueryAsync();
+            }
 
             // Insert multiple data points.
             var records = Enumerable
@@ -167,16 +170,16 @@ namespace demo
             await cmd3.ExecuteNonQueryAsync();
 
             // Flush data.
-            await using (var cmd = new NpgsqlCommand("REFRESH TABLE testdrive.unnest", conn))
+            using (var cmd = new NpgsqlCommand("REFRESH TABLE testdrive.unnest", conn))
             {
                 cmd.ExecuteNonQuery();
             }
 
             // Query back data.
             var resultCount = -1;
-            await using (var cmd = new NpgsqlCommand("SELECT COUNT(*) FROM testdrive.unnest", conn))
+            using (var cmd = new NpgsqlCommand("SELECT COUNT(*) FROM testdrive.unnest", conn))
             {
-                await using (var reader = cmd.ExecuteReader())
+                using (var reader = cmd.ExecuteReader())
                 {
                     await reader.ReadAsync();
                     resultCount = reader.GetInt32(0);
