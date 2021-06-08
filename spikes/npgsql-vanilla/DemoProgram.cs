@@ -10,6 +10,28 @@ namespace demo
 {
     public static class DemoProgram
     {
+        public static async Task Main(string[] args)
+        {
+            await Parser.Default.ParseArguments<Options>(args)
+                .WithParsedAsync<Options>(async options =>
+                {
+                    Console.WriteLine($"port: {options.Port}");
+                    var connString = $"Host={options.Host};Port={options.Port};SSL Mode={options.SslMode};" +
+                                     $"Username={options.Username};Password={options.Password};Database={options.Database}";
+                    Console.WriteLine($"Connecting to {connString}\n");
+                    await using (var conn = new NpgsqlConnection(connString))
+                    {
+                        conn.Open();
+                        await SystemQueryExample(conn);
+                        await BasicConversationExample(conn);
+                        await AsyncUnnestExample(conn);
+                        conn.Close();
+                    }
+
+                });
+
+        }
+
         private static async Task SystemQueryExample(NpgsqlConnection conn)
         {
             Console.WriteLine("Running SystemQueryExample");
@@ -151,26 +173,5 @@ namespace demo
             public string Database { get; set; }
         }
 
-        public static async Task Main(string[] args)
-        {
-            await Parser.Default.ParseArguments<Options>(args)
-                .WithParsedAsync<Options>(async options =>
-                {
-                    Console.WriteLine($"port: {options.Port}");
-                    var connString = $"Host={options.Host};Port={options.Port};SSL Mode={options.SslMode};" +
-                                     $"Username={options.Username};Password={options.Password};Database={options.Database}";
-                    Console.WriteLine($"Connecting to {connString}\n");
-                    await using (var conn = new NpgsqlConnection(connString))
-                    {
-                        conn.Open();
-                        await SystemQueryExample(conn);
-                        await BasicConversationExample(conn);
-                        await AsyncUnnestExample(conn);
-                        conn.Close();
-                    }
-                    
-                });
-
-        }
     }
 }
