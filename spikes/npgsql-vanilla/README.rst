@@ -32,7 +32,7 @@ To connect to CrateDB Cloud, use a command like::
 
 Explore all available options::
 
-    sh$ dotnet run -- --help
+    sh$ dotnet run --framework=net5.0 -- --help
 
 
 Tests
@@ -41,6 +41,10 @@ Tests
 For running the test scenarios wrapped into a xUnit test suite, invoke::
 
     sh$ dotnet test --framework=net5.0
+
+To generate a Cobertura code coverage report, run::
+
+    sh$ dotnet test --framework=net5.0 --collect:"XPlat Code Coverage"
 
 For running the tests against a remote database, use, for example::
 

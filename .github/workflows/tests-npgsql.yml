@@ -26,11 +26,6 @@ jobs:
         dotnet-version: ['3.1.x', '5.0.x']  # 6.0.0-preview.4
         cratedb-version: ['4.3.2', '4.4.3', '4.5.1', 'nightly']
         npgsql-version: ['5.0.5', '6.0.0-preview4']
-        #include:
-        #- dotnet-version: 3.1.x
-        #  dotnet-framework: netcoreapp3.1
-        #- dotnet-version: 5.0.x
-        #  dotnet-framework: net5.0
       fail-fast: true
 
     # https://docs.github.com/en/free-pro-team@latest/actions/guides/about-service-containers
