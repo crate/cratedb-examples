@@ -64,7 +64,7 @@ namespace demo
             using (var cmd = new NpgsqlCommand("SELECT mountain FROM sys.summits ORDER BY 1 LIMIT 25", conn))
             using (var reader = cmd.ExecuteReader())
             {
-                while (reader.Read())
+                while (await reader.ReadAsync())
                 {
                     mountains.Add(reader.GetString(0));
                 }
