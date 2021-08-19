@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>crate.io</groupId>
+    <artifactId>cratedb-jdbc-example</artifactId>
+    <version>0.1.0</version>
+
+    <name>Basic example for connecting to CrateDB using JDBC</name>
+    <url>https://github.com/crate/cratedb-examples</url>
+
+    <properties>
+        <pgjdbc.version>42.2.23</pgjdbc.version>
+        <crate-jdbc.version>2.6.0</crate-jdbc.version>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>maven-central</id>
+            <name>Maven Central</name>
+            <layout>default</layout>
+            <url>https://repo1.maven.org/maven2</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${pgjdbc.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.crate</groupId>
+            <artifactId>crate-jdbc</artifactId>
+            <version>${crate-jdbc.version}</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+
+        <sourceDirectory>.</sourceDirectory>
+
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                    <executions>
+                        <execution>
+                            <phase>test-compile</phase>
+                            <goals>
+                                <goal>java</goal>
+                            </goals>
+                            <configuration>
+                                <mainClass>BasicPostgresCrateDB</mainClass>
+                                <arguments>
+                                </arguments>
+                            </configuration>
+                        </execution>
+                    </executions>
+            </plugin>
+
+
+        </plugins>
+    </build>
+
+</project>
