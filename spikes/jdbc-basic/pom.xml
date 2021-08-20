@@ -64,19 +64,16 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.0.0</version>
-                    <executions>
-                        <execution>
-                            <phase>test-compile</phase>
-                            <goals>
-                                <goal>java</goal>
-                            </goals>
-                            <configuration>
-                                <mainClass>BasicPostgresCrateDB</mainClass>
-                                <arguments>
-                                </arguments>
-                            </configuration>
-                        </execution>
-                    </executions>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>BasicPostgresCrateDB</mainClass>
+                </configuration>
             </plugin>
 
 
