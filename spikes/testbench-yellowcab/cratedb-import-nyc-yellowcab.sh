@@ -1,5 +1,9 @@
+#!/bin/bash
+#
 # Run SQL payload on CrateDB, all with Docker.
 # Here: Import a subset of the NYC Yellowcab data set from a gzipped CSV file on AWS S3.
+#
+# Requirements: Bash, Docker
 #
 # Synopsis:
 #
@@ -15,7 +19,7 @@ psql="docker run --rm --network=host --volume=${PWD}/${SQLFILE}:/${SQLFILE} post
 cratedb_start="docker run --detach --rm --publish=4200:4200 --publish=5432:5432 --health-cmd=\"curl http://localhost:4200\" --health-interval=1s --health-start-period=5s --name=${CONTAINER} crate/crate:nightly -Cdiscovery.type=single-node"
 cratedb_stop="docker stop ${CONTAINER}"
 cratedb_status="docker inspect -f {{.State.Health.Status}} ${CONTAINER}"
-
+echo=$(which echo)
 
 # 1. Start CrateDB and wait for availability.
 $cratedb_status > /dev/null 2>&1
@@ -27,7 +31,7 @@ else
 fi
 echo "Waiting for availability of CrateDB."
 until [[ $($cratedb_status) = "healthy" ]]; do
-  /bin/echo -n .
+  $echo -n .
   sleep 0.1
 done;
 echo
@@ -41,6 +45,8 @@ CREATE TABLE IF NOT EXISTS "nyc_taxi"
 COPY "nyc_taxi"
   FROM 'https://s3.amazonaws.com/crate.sampledata/nyc.yellowcab/yc.2019.07.gz'
   WITH (compression = 'gzip');
+
+REFRESH TABLE "nyc_taxi";
 EOF
 
 # 3. Run SQL file.
