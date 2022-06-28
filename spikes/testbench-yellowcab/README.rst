@@ -34,4 +34,6 @@ The SQL statements used::
       FROM 'https://s3.amazonaws.com/crate.sampledata/nyc.yellowcab/yc.2019.07.gz'
       WITH (compression = 'gzip');
 
+    REFRESH TABLE "nyc_taxi";
+
     SELECT COUNT(*) FROM nyc_taxi;
