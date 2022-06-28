@@ -11,11 +11,10 @@
 #
 
 # 0. Define variables.
-SQLFILE=cratedb-import-nyc-yellowcab.sql
 CONTAINER=cratedb
 
 # 0. Define incantations.
-psql="docker run --rm --network=host --volume=${PWD}/${SQLFILE}:/${SQLFILE} postgres:14.3 psql"
+crash="docker run --interactive --rm --network=host crate/crate:nightly crash"
 cratedb_start="docker run --detach --rm --publish=4200:4200 --publish=5432:5432 --health-cmd=\"curl http://localhost:4200\" --health-interval=1s --health-start-period=5s --name=${CONTAINER} crate/crate:nightly -Cdiscovery.type=single-node"
 cratedb_stop="docker stop ${CONTAINER}"
 cratedb_status="docker inspect -f {{.State.Health.Status}} ${CONTAINER}"
@@ -36,8 +35,8 @@ until [[ $($cratedb_status) = "healthy" ]]; do
 done;
 echo
 
-# 2. Prepare SQL file.
-cat <<EOF > ${SQLFILE}
+# 2. Insert NYC Yellowcab data.
+time $crash <<EOF
 CREATE TABLE IF NOT EXISTS "nyc_taxi"
   ("congestion_surcharge" REAL, "dolocationid" INTEGER, "extra" REAL, "fare_amount" REAL, "improvement_surcharge" REAL, "mta_tax" REAL, "passenger_count" INTEGER, "payment_type" INTEGER, "pickup_datetime" TIMESTAMP WITH TIME ZONE, "pulocationid" INTEGER, "ratecodeid" INTEGER, "store_and_fwd_flag" TEXT, "tip_amount" REAL, "tolls_amount" REAL, "total_amount" REAL, "trip_distance" REAL, "vendorid" INTEGER)
   WITH ("column_policy" = 'dynamic', "number_of_replicas" = '0', "refresh_interval" = 10000);
@@ -48,15 +47,14 @@ COPY "nyc_taxi"
 
 REFRESH TABLE "nyc_taxi";
 EOF
-
-# 3. Run SQL file.
-time $psql postgres://crate@localhost --file="/${SQLFILE}"
 echo
 
-# 4. Inspect database.
+# 3. Inspect database.
 echo "Total number of records in database:"
-$psql postgres://crate@localhost --command="SELECT COUNT(*) FROM nyc_taxi;"
+$crash <<EOF
+SELECT COUNT(*) FROM nyc_taxi;
+EOF
 echo
 
-# 5. Shut down database again.
+# 4. Shut down database again.
 $cratedb_stop
