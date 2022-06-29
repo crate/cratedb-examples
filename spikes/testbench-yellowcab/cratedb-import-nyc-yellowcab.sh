@@ -16,7 +16,7 @@ CRATEDB_IMAGE=crate/crate:nightly
 
 # 0. Define incantations.
 crash="docker run --interactive --rm --network=host ${CRATEDB_IMAGE} crash"
-cratedb_start="docker run --detach --rm --publish=4200:4200 --publish=5432:5432 --health-cmd=\"curl http://localhost:4200\" --health-interval=1s --health-start-period=5s --name=${CONTAINER_NAME} ${CRATEDB_IMAGE} -Cdiscovery.type=single-node"
+cratedb_start="docker run --detach --rm --publish=4200:4200 --publish=5432:5432 --health-cmd=\"curl http://localhost:4200\" --health-interval=1s --health-start-period=5s --health-retries=15 --name=${CONTAINER_NAME} ${CRATEDB_IMAGE} -Cdiscovery.type=single-node"
 cratedb_stop="docker stop ${CONTAINER_NAME}"
 cratedb_status="docker inspect -f {{.State.Health.Status}} ${CONTAINER_NAME}"
 echo=$(which echo)
