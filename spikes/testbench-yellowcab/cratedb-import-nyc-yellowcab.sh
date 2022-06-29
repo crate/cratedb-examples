@@ -11,8 +11,8 @@
 #
 
 # 0. Define variables.
-CONTAINER_NAME=cratedb
-CRATEDB_IMAGE=crate/crate:nightly
+CONTAINER_NAME=${CONTAINER_NAME:-cratedb}
+CRATEDB_IMAGE=${CRATEDB_IMAGE:-crate:4.8.1}
 
 # 0. Define incantations.
 crash="docker run --interactive --rm --network=host ${CRATEDB_IMAGE} crash"
