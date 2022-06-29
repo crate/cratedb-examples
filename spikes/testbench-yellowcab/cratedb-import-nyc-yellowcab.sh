@@ -27,7 +27,7 @@ if [ $? -ne 0 ]; then
   echo "Starting CrateDB."
   sh -c "$cratedb_start"
 else
-  echo "CrateDB already running."
+  echo "CrateDB already started."
 fi
 echo "Waiting for availability of CrateDB."
 until [[ $($cratedb_status) = "healthy" ]]; do
@@ -37,6 +37,7 @@ done;
 echo
 
 # 2. Insert NYC Yellowcab data.
+echo "Importing NYC Yellowcab data. This will take a few seconds/minutes."
 time $crash <<EOF
 CREATE TABLE IF NOT EXISTS "nyc_taxi"
   ("congestion_surcharge" REAL, "dolocationid" INTEGER, "extra" REAL, "fare_amount" REAL, "improvement_surcharge" REAL, "mta_tax" REAL, "passenger_count" INTEGER, "payment_type" INTEGER, "pickup_datetime" TIMESTAMP WITH TIME ZONE, "pulocationid" INTEGER, "ratecodeid" INTEGER, "store_and_fwd_flag" TEXT, "tip_amount" REAL, "tolls_amount" REAL, "total_amount" REAL, "trip_distance" REAL, "vendorid" INTEGER)
@@ -57,5 +58,11 @@ SELECT COUNT(*) FROM nyc_taxi;
 EOF
 echo
 
-# 4. Shut down database again.
-$cratedb_stop
+# 4. User notes
+echo
+echo "The CrateDB database service has been started and populated with a subset of the NYC Yellowcab data into the table 'doc.nyc_taxi'."
+echo "The administration interface is available at http://localhost:4200."
+echo
+echo "If you are finished, you may want to shut down the database service using '${cratedb_stop}'."
+echo "Enjoy conducting your experiments."
+echo
