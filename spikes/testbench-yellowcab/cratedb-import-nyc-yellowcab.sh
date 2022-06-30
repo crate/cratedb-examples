@@ -14,6 +14,14 @@
 CONTAINER_NAME=${CONTAINER_NAME:-cratedb}
 CRATEDB_IMAGE=${CRATEDB_IMAGE:-crate:4.8.1}
 
+# 0. Sanity checks
+if [ ! $(command -v docker) ]; then
+  echo
+  echo "ERROR: The 'docker' command was not found. Do you have a working Docker installation?"
+  echo
+  exit 1
+fi
+
 # 0. Define incantations.
 crash="docker run --interactive --rm --network=host ${CRATEDB_IMAGE} crash"
 cratedb_start="docker run --detach --rm --publish=4200:4200 --publish=5432:5432 --health-cmd=\"curl http://localhost:4200\" --health-interval=1s --health-start-period=5s --health-retries=15 --name=${CONTAINER_NAME} ${CRATEDB_IMAGE} -Cdiscovery.type=single-node"
