@@ -38,7 +38,7 @@ Create schema and insert data::
 Invoke example program::
 
     git clone https://github.com/crate/cratedb-examples
-    cd cratedb-examples/spikes/jdbc-basic
+    cd cratedb-examples/by-language/java-jdbc
 
     # Use vanilla PgJDBC driver
     mvn install exec:java -Dexec.args="'jdbc:postgresql://localhost:5432/'"
