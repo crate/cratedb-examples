@@ -1,3 +1,5 @@
+.. highlight: console
+
 ##################################################
 Basic example for connecting to CrateDB using JDBC
 ##################################################
@@ -20,20 +22,18 @@ it makes sense to also have a look at the `PostgreSQL documentation about schema
 Usage
 *****
 
-Run CrateDB::
+To invoke a CrateDB instance for evaluation purposes, run::
 
-    docker run -it --rm --publish=4200:4200 --publish=5432:5432 crate/crate:4.6.1
+    docker run -it --rm --publish=4200:4200 --publish=5432:5432 crate:5.1.1
 
 Create schema and insert data::
 
     psql postgres://crate@localhost:5432/doc
 
-::
+.. code-block:: sql
 
-    crate=> CREATE TABLE testdrive (id INT PRIMARY KEY, data TEXT);
-    CREATE 1
-    crate=> INSERT INTO testdrive VALUES (0, 'zero'), (1, 'one'), (2, 'two');
-    INSERT 0 3
+    CREATE TABLE testdrive (id INT PRIMARY KEY, data TEXT);
+    INSERT INTO testdrive VALUES (0, 'zero'), (1, 'one'), (2, 'two');
 
 Invoke example program::
 
