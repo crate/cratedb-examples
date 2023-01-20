@@ -1,0 +1,89 @@
+/**
+ * About
+ * =====
+ *
+ * Configure `gradle-jooq-plugin`, a Gradle plugin that integrates the jOOQ
+ * code generation tool. This layout manages the jOOQ configuration within
+ * a separate script file.
+ *
+ * Synopsis
+ * ========
+ *
+ *     ./gradlew generateJooq
+ *
+ * Resources
+ * =========
+ *
+ * - https://github.com/etiennestuder/gradle-jooq-plugin#gradle-groovy-dsl-4
+ * - https://github.com/etiennestuder/gradle-jooq-plugin/tree/main/example/extract_script_file
+ * - https://github.com/etiennestuder/gradle-jooq-plugin#examples
+ */
+
+buildscript {
+    repositories {
+        gradlePluginPortal()
+    }
+    dependencies {
+        classpath 'nu.studer:gradle-jooq-plugin:8.1'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+apply plugin: nu.studer.gradle.jooq.JooqPlugin
+
+dependencies {
+    jooqGenerator 'org.postgresql:postgresql:42.5.1'
+}
+
+jooq {
+
+    // Defaults (can be omitted).
+    // version = '3.17.6'
+    // edition = nu.studer.gradle.jooq.JooqEdition.OSS
+
+    configurations {
+        // Name of the jOOQ configuration.
+        main {
+
+            // Do not *automatically* generate code.
+            generateSchemaSourceOnCompilation = false
+
+            generationTool {
+                logging = org.jooq.meta.jaxb.Logging.WARN
+                jdbc {
+                    driver = 'org.postgresql.Driver'
+                    url = 'jdbc:postgresql://localhost:5432/testdrive'
+                    user = 'crate'
+                    password = ''
+                    properties {
+                        property {
+                            key = 'PAGE_SIZE'
+                            value = 2048
+                        }
+                    }
+                }
+                generator {
+                    name = 'org.jooq.codegen.DefaultGenerator'
+                    database {
+                        name = 'org.jooq.meta.postgres.PostgresDatabase'
+                        inputSchema = 'testdrive'
+                    }
+                    generate {
+                        deprecated = false
+                        records = false
+                        immutablePojos = false
+                        fluentSetters = false
+                    }
+                    target {
+                        packageName = 'io.crate.demo.jooq.model'
+                        directory = 'src/generated/java'
+                    }
+                    strategy.name = "org.jooq.codegen.DefaultGeneratorStrategy"
+                }
+            }
+        }
+    }
+}
