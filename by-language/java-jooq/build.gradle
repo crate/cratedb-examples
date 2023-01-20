@@ -1,0 +1,61 @@
+/**
+ * A demo application using CrateDB with jOOQ and the PostgreSQL JDBC driver.
+ */
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
+plugins {
+    id 'application'
+    id 'com.adarshr.test-logger' version '3.2.0'
+    id 'idea'
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    implementation 'org.jooq:jooq:3.17.7'
+    implementation 'org.postgresql:postgresql:42.5.1'
+    implementation 'org.slf4j:slf4j-api:2.0.6'
+    implementation 'org.slf4j:slf4j-simple:2.0.6'
+    testImplementation 'junit:junit:4.13.2'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+jar {
+    archiveBaseName = 'cratedb-demo-java-jooq'
+    archiveVersion = '0.0.1-SNAPSHOT'
+}
+
+application {
+    mainClass = 'io.crate.demo.jooq.Application'
+}
+
+sourceSets {
+    main {
+        java.srcDirs += [
+            "src/generated/java",
+            "src/main/java",
+        ]
+    }
+}
+
+test {
+    dependsOn 'cleanTest'
+}
+
+idea.module.inheritOutputDirs = true
+processResources.destinationDir = compileJava.destinationDir
+compileJava.dependsOn processResources
