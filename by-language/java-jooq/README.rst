@@ -46,11 +46,6 @@ builder without code generation`_.
 Caveats
 =======
 
-- `jOOQ's code generator`_ takes your database schema and reverse-engineers it
-  into a set of Java classes. This feature currently does not work with CrateDB
-  yet. The code provided within the ``src/generated`` directory has not been
-  derived by reflecting the database schema from CrateDB.
-
 - Most of the jOOQ examples use uppercase letters for the database, table, and
   field names. CrateDB currently only handles lowercase letters.
 
@@ -72,6 +67,10 @@ Usage
 3. Invoke software tests::
 
     ./gradlew test
+
+4. Generate the jOOQ sources from the main jOOQ configuration, see ``jooq.gradle``::
+
+    ./gradlew generateJooq
 
 
 .. _CrateDB: https://github.com/crate/crate

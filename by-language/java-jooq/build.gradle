@@ -56,6 +56,9 @@ test {
     dependsOn 'cleanTest'
 }
 
+// Activate jOOQ code generation add-on.
+apply from: 'jooq.gradle'
+
 idea.module.inheritOutputDirs = true
 processResources.destinationDir = compileJava.destinationDir
 compileJava.dependsOn processResources
