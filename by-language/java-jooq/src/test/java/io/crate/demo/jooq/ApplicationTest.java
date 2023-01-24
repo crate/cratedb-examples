@@ -40,7 +40,7 @@ public class ApplicationTest {
 
         // Check number of records.
         DSLContext db = app.getDSLContext();
-        int count = db.fetchCount(DSL.selectFrom("testdrive.book"));
+        int count = db.fetchCount(DSL.selectFrom("book"));
         Assert.assertEquals(count, 2);
     }
 

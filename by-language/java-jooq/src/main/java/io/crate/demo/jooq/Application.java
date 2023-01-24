@@ -1,7 +1,7 @@
 package io.crate.demo.jooq;
 
-import org.jooq.*;
 import org.jooq.Record;
+import org.jooq.*;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
 
@@ -12,8 +12,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 import io.crate.demo.jooq.model.tables.records.AuthorRecord;
-
-import static io.crate.demo.jooq.model.Tables.*;
+import static io.crate.demo.jooq.model.Tables.AUTHOR;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.table;
 
@@ -148,7 +147,7 @@ public class Application {
 
         DSLContext db = getDSLContext();
 
-        Table<Record> BOOK = table("\"testdrive\".\"book\"");
+        Table<Record> BOOK = table("book");
         Field<Object> BOOK_ID = field("id");
         Field<Object> BOOK_TITLE = field("title");
 
