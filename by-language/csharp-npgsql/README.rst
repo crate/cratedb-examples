@@ -16,7 +16,10 @@ CrateDB versions prior to 4.2 needed a custom fork of the official Npgsql .NET
 data provider for PostgreSQL, `crate-npgsql`_. CrateDB versions 4.2 and later
 work with the vanilla `Npgsql - .NET Access to PostgreSQL`_ driver without the
 need for a plugin.
- 
+
+Please note that Npgsql 5 is not supported starting with CrateDB 4.8.4, you
+will need Npgsql 6 or newer.
+
 
 *****
 Usage
@@ -60,4 +63,4 @@ For running the tests against a remote database, use, for example::
 
 .. _C#: https://en.wikipedia.org/wiki/C_Sharp_(programming_language)
 .. _crate-npgsql: https://github.com/crate/crate-npgsql
-.. _Npgsql - .NET Access to PostgreSQL: https://www.npgsql.org/
+.. _Npgsql - .NET Access to PostgreSQL: https://github.com/npgsql/npgsql
