@@ -38,7 +38,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]  # , macos-latest
-        dotnet-version: ['3.1.x', '5.0.x']  # 6.0.0-preview.4
+        dotnet-version: ['5.0.x', '6.0.x', '7.0.x']
         cratedb-version: ['5.2.0', 'nightly']
         npgsql-version: ['6.0.8']
       fail-fast: false
@@ -59,23 +59,23 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
 
-      - name: Invoke tests on netcoreapp3.1
-        if: matrix.dotnet-version == '3.1.x'
-        run: |
-          cd by-language/csharp-npgsql
-          dotnet test --framework=netcoreapp3.1
-
-      - name: Invoke tests on net5.0
-        if: matrix.dotnet-version == '5.0.x'
-        run: |
-          cd by-language/csharp-npgsql
-          dotnet test --framework=net5.0
-
-      - name: Run tests with coverage
+      - name: Invoke tests on .NET 5
         if: matrix.dotnet-version == '5.0.x'
         run: |
           cd by-language/csharp-npgsql
           dotnet test --framework=net5.0 --collect:"XPlat Code Coverage"
+
+      - name: Invoke tests on .NET 6
+        if: matrix.dotnet-version == '6.0.x'
+        run: |
+          cd by-language/csharp-npgsql
+          dotnet test --framework=net6.0 --collect:"XPlat Code Coverage"
+
+      - name: Invoke tests on .NET 7
+        if: matrix.dotnet-version == '7.0.x'
+        run: |
+          cd by-language/csharp-npgsql
+          dotnet test --framework=net7.0 --collect:"XPlat Code Coverage"
 
       # https://github.com/codecov/codecov-action
       - name: Upload coverage results to Codecov
