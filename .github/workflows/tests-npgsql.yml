@@ -39,7 +39,7 @@ jobs:
       matrix:
         os: [ubuntu-latest]  # , macos-latest
         dotnet-version: ['3.1.x', '5.0.x']  # 6.0.0-preview.4
-        cratedb-version: ['4.8.3', '4.8.4', 'nightly']
+        cratedb-version: ['5.2.0', 'nightly']
         npgsql-version: ['6.0.8']
       fail-fast: false
 
