@@ -42,7 +42,7 @@ jobs:
         os: [ubuntu-latest]  # , macos-latest
         dotnet-version: ['5.0.x', '6.0.x', '7.0.x']
         cratedb-version: ['5.2.0', 'nightly']
-        # npgsql-version: ['6.0.8']
+        npgsql-version: ['6.0.8', '7.0.1']
       fail-fast: false
 
     # https://docs.github.com/en/free-pro-team@latest/actions/guides/about-service-containers
@@ -56,10 +56,24 @@ jobs:
     steps:
       - name: Acquire sources
         uses: actions/checkout@v3
+
       - name: Set up .NET ${{ matrix.dotnet-version }}
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
+
+      - name: Use Npgsql version ${{ matrix.npgsql-version }}
+        run: |
+          sed -E 's!<PackageReference Include="Npgsql" Version=".+?" />!<PackageReference Include="Npgsql" Version="${{ matrix.npgsql-version }}" />!' \
+            -i by-language/csharp-npgsql/demo.csproj
+
+      - name: Display .NET information
+        run: dotnet --info
+
+      - name: Display package dependencies
+        run: |
+          cd by-language/csharp-npgsql
+          dotnet list . package
 
       - name: Invoke tests on .NET 5
         if: matrix.dotnet-version == '5.0.x'

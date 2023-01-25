@@ -12,6 +12,10 @@ About
 The file ``DemoProgram.cs`` is a demonstration program written in `C#`_ which
 outlines typical, very basic usage scenarios with CrateDB.
 
+
+Compatibility notes
+===================
+
 CrateDB versions prior to 4.2 needed a custom fork of the official Npgsql .NET
 data provider for PostgreSQL, `crate-npgsql`_. CrateDB versions 4.2 and later
 work with the vanilla `Npgsql - .NET Access to PostgreSQL`_ driver without the
@@ -19,6 +23,8 @@ need for a plugin.
 
 Please note that Npgsql 5 is not supported starting with CrateDB 4.8.4, you
 will need Npgsql 6 or newer.
+
+.NET 5, 6, and 7 are supported, .NET 3.1 and 4.6 may still work.
 
 
 *****
