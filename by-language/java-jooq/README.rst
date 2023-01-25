@@ -9,9 +9,6 @@ Java jOOQ demo application with CrateDB using PostgreSQL JDBC
 About
 *****
 
-In a nutshell
-=============
-
 A demo application using `CrateDB`_ with `jOOQ`_ and the `PostgreSQL JDBC
 driver`_. It uses the `Gradle Build Tool`_ and the `Gradle plugin for jOOQ code
 generation`_.
@@ -20,10 +17,12 @@ It is intended as a basic example to demonstrate what currently works, and as a
 testing rig for eventually growing a full-fledged CrateDB extension.
 Contributions are welcome.
 
-Introduction
-============
 
-The idea of jOOQ is to generate typesafe code based on the SQL schema.
+********
+Synopsis
+********
+
+The idea of jOOQ is to generate typesafe code based on an SQL schema.
 Then, accessing a database table using the jOOQ DSL API looks like this:
 
 .. code-block:: java
@@ -85,15 +84,12 @@ Contributions to resolve any of those items will be welcome, see also
   DDL) is only supported for schema definitions which use field types
   compatible with standard PostgreSQL, and understood by jOOQ. jOOQ does not
   know anything about any other special data types supported by CrateDB, and
-  does not support it. When using special field types, like ``IP``, it will
-  trip the code generator.
+  does not support it. When using special field types, like ``OBJECT``,
+  ``ARRAY``, or ``IP``, it will trip the code generator.
 
 - Most of the jOOQ examples use uppercase letters for the database, table, and
   field names. Within this setup, we have only been able to make it work using
   lowercase letters.
-
-- We have not been able to make multiple SQL DDL statements work within a
-  single SQL bootstrap file at ``src/main/resources/bootstrap.sql``.
 
 
 *****
@@ -119,7 +115,7 @@ Usage
     ./gradlew generateJooq
 
 
-.. _backlog: backlog
+.. _backlog: backlog.rst
 .. _Bytebase: https://github.com/bytebase/bytebase
 .. _CrateDB: https://github.com/crate/crate
 .. _database schema migration: https://en.wikipedia.org/wiki/Schema_migration
