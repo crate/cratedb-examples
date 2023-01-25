@@ -27,7 +27,7 @@ Usage
 
 To invoke a CrateDB instance for evaluation purposes, run::
 
-    docker run -it --rm --publish=4200:4200 --publish=5432:5432 crate:4.7
+    docker run -it --rm --publish=4200:4200 --publish=5432:5432 crate:latest
 
 Invoke example program::
 
