@@ -29,6 +29,7 @@ concurrency:
 defaults:
   run:
     shell: bash
+    working-directory: by-language/csharp-npgsql
 
 jobs:
   test:
@@ -65,32 +66,28 @@ jobs:
       - name: Use Npgsql version ${{ matrix.npgsql-version }}
         run: |
           sed -E 's!<PackageReference Include="Npgsql" Version=".+?" />!<PackageReference Include="Npgsql" Version="${{ matrix.npgsql-version }}" />!' \
-            -i by-language/csharp-npgsql/demo.csproj
+            -i demo.csproj
 
       - name: Display .NET information
         run: dotnet --info
 
       - name: Display package dependencies
         run: |
-          cd by-language/csharp-npgsql
           dotnet list . package
 
       - name: Invoke tests on .NET 5
         if: matrix.dotnet-version == '5.0.x'
         run: |
-          cd by-language/csharp-npgsql
           dotnet test --framework=net5.0 --collect:"XPlat Code Coverage"
 
       - name: Invoke tests on .NET 6
         if: matrix.dotnet-version == '6.0.x'
         run: |
-          cd by-language/csharp-npgsql
           dotnet test --framework=net6.0 --collect:"XPlat Code Coverage"
 
       - name: Invoke tests on .NET 7
         if: matrix.dotnet-version == '7.0.x'
         run: |
-          cd by-language/csharp-npgsql
           dotnet test --framework=net7.0 --collect:"XPlat Code Coverage"
 
       # https://github.com/codecov/codecov-action
