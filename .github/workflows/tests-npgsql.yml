@@ -50,19 +50,19 @@ jobs:
       - name: Invoke tests on netcoreapp3.1
         if: matrix.dotnet-version == '3.1.x'
         run: |
-          cd spikes/npgsql-vanilla
+          cd by-language/csharp-npgsql
           dotnet test --framework=netcoreapp3.1
 
       - name: Invoke tests on net5.0
         if: matrix.dotnet-version == '5.0.x'
         run: |
-          cd spikes/npgsql-vanilla
+          cd by-language/csharp-npgsql
           dotnet test --framework=net5.0
 
       - name: Run tests with coverage
         if: matrix.dotnet-version == '5.0.x'
         run: |
-          cd spikes/npgsql-vanilla
+          cd by-language/csharp-npgsql
           dotnet test --framework=net5.0 --collect:"XPlat Code Coverage"
 
       # https://github.com/codecov/codecov-action
