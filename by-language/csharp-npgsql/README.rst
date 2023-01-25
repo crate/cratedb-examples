@@ -9,14 +9,14 @@ Basic example for connecting to CrateDB using .NET (C#)
 About
 *****
 
+The file ``DemoProgram.cs`` is a demonstration program written in `C#`_ which
+outlines typical, very basic usage scenarios with CrateDB.
+
 CrateDB versions prior to 4.2 needed a custom fork of the official Npgsql .NET
 data provider for PostgreSQL, `crate-npgsql`_. CrateDB versions 4.2 and later
-work with the vanilla Npgsql driver without the need for a plugin.
-
-The file ``DemoProgram.cs`` is a demonstration program written in C# which
-outlines typical, very basic usage scenarios with CrateDB.
+work with the vanilla `Npgsql - .NET Access to PostgreSQL`_ driver without the
+need for a plugin.
  
-
 
 *****
 Usage
@@ -24,7 +24,7 @@ Usage
 
 To invoke a CrateDB instance for evaluation purposes, run::
 
-    docker run -it --rm --publish=4200:4200 --publish=5432:5432 crate:4.5.1
+    docker run -it --rm --publish=4200:4200 --publish=5432:5432 crate:4.7
 
 Invoke example program::
 
@@ -36,7 +36,7 @@ To connect to CrateDB Cloud, use a command like::
         --host=clustername.aks1.westeurope.azure.cratedb.net --ssl-mode=Require \
         --username=foobar --password='X8F%Shn)TESTvF5ac7%eW4NM'
 
-Explore all available options::
+Explore all available connection options::
 
     dotnet run --framework=net5.0 -- --help
 
@@ -58,4 +58,6 @@ For running the tests against a remote database, use, for example::
     dotnet test --framework=net5.0
 
 
+.. _C#: https://en.wikipedia.org/wiki/C_Sharp_(programming_language)
 .. _crate-npgsql: https://github.com/crate/crate-npgsql
+.. _Npgsql - .NET Access to PostgreSQL: https://www.npgsql.org/
