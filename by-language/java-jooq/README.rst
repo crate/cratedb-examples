@@ -1,19 +1,23 @@
 .. highlight:: sh
 
-############################################################
-Java jOOQ demo application for CrateDB using PostgreSQL JDBC
-############################################################
+#############################################################
+Java jOOQ demo application with CrateDB using PostgreSQL JDBC
+#############################################################
 
 
 *****
 About
 *****
 
-A demo application using `CrateDB`_ with `jOOQ`_ and the `PostgreSQL
-JDBC driver`_.
+In a nutshell
+=============
+
+A demo application using `CrateDB`_ with `jOOQ`_ and the `PostgreSQL JDBC
+driver`_. It uses the `Gradle Build Tool`_ and the `Gradle plugin for jOOQ code
+generation`_.
 
 It is intended as a basic example to demonstrate what currently works, and as a
-testing rig for eventually growing a full-fledged CrateDB dialect.
+testing rig for eventually growing a full-fledged CrateDB extension.
 Contributions are welcome.
 
 Introduction
@@ -31,8 +35,12 @@ Then, accessing a database table using the jOOQ DSL API looks like this:
             .orderBy(AUTHOR.NAME)
             .fetch();
 
-In some kind, jOOQ is similar to `LINQ`_, `but better <Insight into Language
-Integrated Querying_>`_.
+    // Iterate and display records.
+    for (Record record : result) {
+        Integer id = record.getValue(AUTHOR.ID);
+        String name = record.getValue(AUTHOR.NAME);
+        System.out.println("id: " + id + ", name: " + name);
+    }
 
 
 *******
@@ -63,13 +71,22 @@ directory has been generated like this.
 Caveats
 =======
 
+Contributions to resolve any of those items will be welcome, see also
+`backlog`_.
+
 - `jOOQ's code generator`_ currently does not work with directly connecting to
   a real CrateDB database instance and reflecting the schema from there.
-  Because SQL DDL statements are usually maintained in form of multiple
-  incremental migration scripts anyway, this is considered to be not of a too
-  big concern, see above. With corresponding improvements to CrateDB, this
-  can be made work in the future, see `issue #10 - with reflection from the
-  database`_.
+  With corresponding improvements to CrateDB, this can be made work in the
+  future, see `issue #10 - with reflection from the database`_. Right now, this
+  example uses code generation based on SQL DDL files, which is also supported
+  by jOOQ.
+
+- Applying code generation based on the database schema (directly, or via SQL
+  DDL) is only supported for schema definitions which use field types
+  compatible with standard PostgreSQL, and understood by jOOQ. jOOQ does not
+  know anything about any other special data types supported by CrateDB, and
+  does not support it. When using special field types, like ``IP``, it will
+  trip the code generator.
 
 - Most of the jOOQ examples use uppercase letters for the database, table, and
   field names. Within this setup, we have only been able to make it work using
@@ -102,6 +119,7 @@ Usage
     ./gradlew generateJooq
 
 
+.. _backlog: backlog
 .. _Bytebase: https://github.com/bytebase/bytebase
 .. _CrateDB: https://github.com/crate/crate
 .. _database schema migration: https://en.wikipedia.org/wiki/Schema_migration
@@ -109,14 +127,13 @@ Usage
 .. _Different use cases for jOOQ: https://www.jooq.org/doc/latest/manual/getting-started/use-cases/
 .. _Dynamic SQL API: https://www.jooq.org/doc/latest/manual/sql-building/dynamic-sql/
 .. _Flyway: https://github.com/flyway/flyway
-.. _Gradle: https://gradle.org/
-.. _Insight into Language Integrated Querying: https://blog.jooq.org/jooq-tuesdays-ming-yee-iu-gives-insight-into-language-integrated-querying/
+.. _Gradle Build Tool: https://gradle.org/
+.. _Gradle plugin for jOOQ code generation: https://github.com/etiennestuder/gradle-jooq-plugin
 .. _issue #10 - with reflection from the database: https://github.com/crate/cratedb-examples/pull/10
 .. _Java 17: https://adoptium.net/temurin/releases/?version=17
 .. _jOOQ: https://github.com/jOOQ/jOOQ
 .. _jOOQ as a SQL builder without code generation: https://www.jooq.org/doc/latest/manual/getting-started/use-cases/jooq-as-a-sql-builder-without-codegeneration/
 .. _jOOQ's code generator: https://www.jooq.org/doc/latest/manual/code-generation/
 .. _jOOQ DSL API: https://www.jooq.org/doc/latest/manual/sql-building/dsl-api/
-.. _LINQ: https://en.wikipedia.org/wiki/Language_Integrated_Query
 .. _Liquibase: https://github.com/liquibase/liquibase
 .. _PostgreSQL JDBC Driver: https://github.com/pgjdbc/pgjdbc
