@@ -69,10 +69,13 @@ jobs:
             -i demo.csproj
 
       - name: Display .NET information
-        run: dotnet --info
-
-      - name: Display package dependencies
         run: |
+          dotnet --version
+          dotnet --info
+
+      - name: Display package information
+        run: |
+          dotnet restore
           dotnet list . package
 
       - name: Invoke tests on .NET 5
