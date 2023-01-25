@@ -30,9 +30,9 @@ defaults:
 
 jobs:
   test:
-    name: ".NET: ${{ matrix.dotnet-version }}
+    name: "CrateDB: ${{ matrix.cratedb-version }}
      Npgsql: ${{ matrix.npgsql-version }}
-     CrateDB: ${{ matrix.cratedb-version }}
+     .NET: ${{ matrix.dotnet-version }}
      on ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
     strategy:
