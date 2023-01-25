@@ -3,8 +3,12 @@ name: Npgsql Tests
 on:
   push:
     branches: [ main ]
+    paths:
+    - 'by-language/csharp-npgsql/**'
   pull_request:
     branches: [ main ]
+    paths:
+    - 'by-language/csharp-npgsql/**'
   workflow_dispatch:
   schedule:
     - cron: '0 2 * * *'
