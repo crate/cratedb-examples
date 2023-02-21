@@ -87,7 +87,7 @@ Obtain raw data::
 
 Subscribe to the topic to receive messages::
 
-    docker run -it --network=scada-demo edenhill/kafkacat:1.6.0 kafkacat -b kafka-broker -C -t rides -o end
+    docker run -it --network=scada-demo edenhill/kcat:1.7.1 kcat -b kafka-broker -C -t rides -o end
 
 Publish data to the Kafka topic::
 
