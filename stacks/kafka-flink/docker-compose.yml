@@ -144,3 +144,78 @@ services:
         condition: service_healthy
       cratedb:
         condition: service_healthy
+
+
+  # -----
+  # Tasks
+  # -----
+
+  # Create a Kafka topic for publishing messages.
+  create-table:
+    image: westonsteimel/httpie
+    networks: [scada-demo]
+    command: http "cratedb:4200/_sql?pretty" stmt='CREATE TABLE "taxi_rides" ("payload" OBJECT(DYNAMIC))'
+    deploy:
+      replicas: 0
+
+  # Create a CrateDB table to receive data.
+  create-topic:
+    image: confluentinc/cp-kafka:${CONFLUENT_VERSION}
+    networks: [scada-demo]
+    command: kafka-topics --bootstrap-server kafka-broker:9092 --create --replication-factor 1 --partitions 1 --topic rides
+    deploy:
+      replicas: 0
+
+  # Drop database table in CrateDB.
+  drop-table:
+    image: westonsteimel/httpie
+    networks: [scada-demo]
+    command: http "cratedb:4200/_sql?pretty" stmt='DROP TABLE "taxi_rides"'
+    deploy:
+      replicas: 0
+
+  # Invoke HTTPie via Docker.
+  httpie:
+    image: westonsteimel/httpie
+    networks: [scada-demo]
+    deploy:
+      replicas: 0
+
+  # List running Flink jobs.
+  list-jobs:
+    image: flink:${FLINK_VERSION}
+    networks: [scada-demo]
+    command: flink list --jobmanager=flink-jobmanager:${PORT_FLINK_JOBMANAGER}
+    deploy:
+      replicas: 0
+
+  # Publish data to Kafka topic.
+  publish-data:
+    image: confluentinc/cp-kafka:${CONFLUENT_VERSION}
+    networks: [scada-demo]
+    command: kafka-console-producer --bootstrap-server kafka-broker:9092 --topic rides
+    deploy:
+      replicas: 0
+
+  # Submit Flink job.
+  submit-job:
+    image: flink:${FLINK_VERSION}
+    networks: [scada-demo]
+    command: >
+      flink run
+        --jobmanager=flink-jobmanager:${PORT_FLINK_JOBMANAGER}
+        /${JARFILE}
+          --kafka.servers kafka-broker:${PORT_KAFKA_BROKER_INTERNAL}
+          --kafka.topic rides
+          --crate.hosts cratedb:${PORT_CRATEDB_POSTGRESQL}
+          --crate.table taxi_rides
+    deploy:
+      replicas: 0
+
+  # Subscribe to Kafka topic.
+  subscribe-topic:
+    image: edenhill/kcat:${KCAT_VERSION}
+    networks: [scada-demo]
+    command: kcat -b kafka-broker -C -t rides -o end
+    deploy:
+      replicas: 0
