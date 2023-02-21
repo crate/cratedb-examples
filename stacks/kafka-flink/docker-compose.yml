@@ -112,7 +112,7 @@ services:
       - "${PORT_CRATEDB_HTTP}:${PORT_CRATEDB_HTTP}"
       - "${PORT_CRATEDB_POSTGRESQL}:${PORT_CRATEDB_POSTGRESQL}"
     environment:
-      CRATE_HEAP_SIZE: 1g
+      CRATE_HEAP_SIZE: 4g
 
     command: ["crate",
               "-Cdiscovery.type=single-node",
