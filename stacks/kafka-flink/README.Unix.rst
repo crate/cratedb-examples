@@ -13,12 +13,6 @@ This document will outline how to run the tutorial on Linux, macOS and WSL2.
 Setup
 *****
 
-Prepare a sandbox directory::
-
-    mkdir -p sandbox/kafka-flink-cratedb
-    cd ./sandbox/kafka-flink-cratedb/
-
-
 Infrastructure
 ==============
 
@@ -38,7 +32,8 @@ Pre-flight checks
 -----------------
 
 In order to check if the Kafka subsystem works, have a look at the "Kafka"
-section within the ``notes.rst`` document.
+section within the ``notes.rst`` document. It is really worth the detour,
+because it will introduce you to excellent debug tooling for Kafka.
 
 
 Resources
@@ -77,19 +72,22 @@ Acquire and invoke the Flink job::
             --crate.hosts cratedb:5432 \
             --crate.table taxi_rides
 
+    # List running jobs
+    docker run --rm -it --network=scada-demo flink:1.12 \
+        flink list --jobmanager=flink-jobmanager:8081
 
 *****
 Usage
 *****
 
 This section outlines how to acquire the NYC Taxi 2017 dataset in JSON format
-and feed it to the Kafka topic ``rides``. After or while data is processed,
+and feed it to the Kafka topic ``rides``. After a while of data being processed,
 the number of records in the target database table will be inquired.
 
 Obtain raw data::
 
-    # Acquire NYC Taxi 2017 dataset in JSON format
-    wget https://gist.github.com/kovrus/328ba1b041dfbd89e55967291ba6e074/raw/7818724cb64a5d283db7f815737c9e198a22bee4/nyc-yellow-taxi-2017.tar.gz
+    # Acquire NYC Taxi 2017 dataset in JSON format (~90 MB)
+    wget https://gist.githubusercontent.com/kovrus/328ba1b041dfbd89e55967291ba6e074/raw/7818724cb64a5d283db7f815737c9e198a22bee4/nyc-yellow-taxi-2017.tar.gz
 
     # Extract archive
     tar -xvf nyc-yellow-taxi-2017.tar.gz
@@ -106,7 +104,10 @@ Publish data to the Kafka topic::
     cat nyc-yellow-taxi-2017-subset.json | docker run --rm -i --network=scada-demo confluentinc/cp-kafka:6.1.1 \
         kafka-console-producer --bootstrap-server kafka-broker:9092 --topic rides
 
-Check the number of records in database::
+Check the number of records in database, and display a few samples::
 
     docker run --rm -it --network=scada-demo westonsteimel/httpie \
         http "cratedb:4200/_sql?pretty" stmt='SELECT COUNT(*) FROM "taxi_rides";'
+
+    docker run --rm -it --network=scada-demo westonsteimel/httpie \
+        http "cratedb:4200/_sql?pretty" stmt='SELECT * FROM "taxi_rides" LIMIT 25;'
