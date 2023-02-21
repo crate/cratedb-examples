@@ -17,7 +17,7 @@ Usage
 
 ::
 
-    curl https://raw.githubusercontent.com/crate/cratedb-examples/main/spikes/testbench-yellowcab/cratedb-import-nyc-yellowcab.sh | bash
+    curl https://raw.githubusercontent.com/crate/cratedb-examples/main/stacks/testbench-yellowcab/cratedb-import-nyc-yellowcab.sh | bash
 
 
 ***

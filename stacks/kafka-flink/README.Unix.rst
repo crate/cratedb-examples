@@ -25,13 +25,13 @@ Infrastructure
 In order to start Kafka, Flink and CrateDB, invoke::
 
     git clone https://github.com/crate/cratedb-examples
-    cd cratedb-examples/spikes/kafka-flink
+    cd cratedb-examples/stacks/kafka-flink
     docker-compose up
 
 If you don't have Git installed on your machine, you can get hold of the
 ``docker-compose.yml`` file in any way you like. So, this will also work::
 
-    wget https://raw.githubusercontent.com/crate/cratedb-examples/0.1.0/spikes/kafka-flink/docker-compose.yml
+    wget https://raw.githubusercontent.com/crate/cratedb-examples/0.1.0/stacks/kafka-flink/docker-compose.yml
     docker-compose up
 
 Pre-flight checks
