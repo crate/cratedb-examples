@@ -21,7 +21,7 @@ Start CrateDB::
 
 Start Nginx::
 
-    wget https://raw.githubusercontent.com/crate/cratedb-examples/main/spikes/http-api-behind-nginx/nginx.conf
+    wget https://raw.githubusercontent.com/crate/cratedb-examples/main/stacks/http-api-behind-nginx/nginx.conf
     nginx -c $(pwd)/nginx.conf
 
 Then, navigate to http://localhost:7070/db/.

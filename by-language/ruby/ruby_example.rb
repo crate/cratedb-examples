@@ -1,7 +1,7 @@
 #
 # Basic examples for connecting to CrateDB with Ruby, using both HTTP and PostgreSQL protocols.
 #
-# https://github.com/crate/cratedb-examples/tree/main/spikes/ruby-basic
+# https://github.com/crate/cratedb-examples/tree/main/by-language/ruby
 #
 
 def demo_crate_ruby
