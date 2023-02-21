@@ -7,32 +7,32 @@ Notes for Apache Kafka, Apache Flink and CrateDB tutorial
 Kafka
 *****
 
-In order to check the Kafka subsystem, you can use the ``kafkacat`` program to
-submit and receive messages to/from the broker, like::
+In order to check the Kafka subsystem, you can use the excellent `kcat`_
+program to submit and receive messages to/from the broker, like::
 
     # Install program
-    brew install kafkacat
+    brew install kcat
 
     # Define a message
     export MESSAGE="The quick brown fox jumps over the lazy dog."
 
-    # Publish message to topic
-    echo $MESSAGE | kafkacat -b localhost:9094 -P -t testdrive
-
     # Consume messages from topic
-    kafkacat -b localhost:9094 -C -t testdrive -o end
+    kcat -b localhost:9094 -C -t testdrive -o end
+
+    # Publish message to topic
+    echo $MESSAGE | kcat -b localhost:9094 -P -t testdrive
 
     # Show topics
-    kafkacat -L -b localhost:9094
+    kcat -L -b localhost:9094
 
-If you can't install ``kafkacat`` on your machine, you can also use Docker to
+If you can't install ``kcat`` on your machine, you can also use Docker to
 invoke it::
 
-    # Publish message to topic
-    echo $MESSAGE | docker run -i --network=scada-demo edenhill/kafkacat:1.6.0 kafkacat -b kafka-broker -P -t testdrive
-
     # Consume messages from topic
-    docker run -it --network=scada-demo edenhill/kafkacat:1.6.0 kafkacat -b kafka-broker -C -t testdrive -o end
+    docker run -it --network=scada-demo edenhill/kcat:1.7.1 kcat -b kafka-broker -C -t testdrive -o end
+
+    # Publish message to topic
+    echo $MESSAGE | docker run -i --network=scada-demo edenhill/kcat:1.7.1 kcat -b kafka-broker -P -t testdrive
 
 
 *****
@@ -62,3 +62,6 @@ In order to make them writable again, invoke::
 
 
 [1] https://community.crate.io/t/node-in-read-only-mode-after-low-diskspace/166
+
+
+.. _kcat: https://github.com/edenhill/kcat
