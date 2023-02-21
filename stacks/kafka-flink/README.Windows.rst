@@ -27,7 +27,7 @@ In order to start Kafka, Flink and CrateDB, invoke::
 
     Set-Variable -Name DOCKER_COMPOSE_URL -value "https://raw.githubusercontent.com/crate/cratedb-examples/0.1.0/stacks/kafka-flink/docker-compose.yml"
     Invoke-WebRequest -Uri "${DOCKER_COMPOSE_URL}" -OutFile "docker-compose.yml"
-    docker-compose up
+    docker compose up
 
 Resources
 =========
