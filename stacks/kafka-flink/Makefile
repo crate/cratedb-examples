@@ -4,7 +4,7 @@
 
 # Start foundation infrastructure.
 start:
-	docker-compose up
+	docker compose up
 
 # Publish a message to the Kafka broker.
 test-publish:

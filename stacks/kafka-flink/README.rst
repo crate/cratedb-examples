@@ -109,11 +109,17 @@ system environment to fit the needs of the tutorial.
     needed.
 
     1. Install `Docker on Windows`_ and `enable WSL integration`_.
-    2. If your Docker Compose version (check with ``docker-compose --version``)
-       is <1.27.0, please upgrade it by invoking::
+    2. Docker Compose version 2 is recommended (``docker compose version``),
+       but version 1 should still work (``docker-compose --version``).
+       From the end of June 2023, Compose V1 won’t be supported anymore, and
+       will be removed from all Docker Desktop versions.
+    3. If you need to run Docker Compose version 1, you may consider updating to
+       the most recent and last available release 1.29.2. Please note that
+       Docker Compose <1.27.0 will not work at all.
+       ::
 
-           # Install Docker Compose 1.27.0
-           sudo curl -L "https://github.com/docker/compose/releases/download/1.27.0/docker-compose-$(uname -s)-$(uname -m)" \
+           # Install Docker Compose 1.29.2
+           sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" \
                -o /usr/local/bin/docker-compose
            sudo chmod +x /usr/local/bin/docker-compose
 
