@@ -16,7 +16,7 @@ services:
   kafka-zookeeper:
     image: confluentinc/cp-zookeeper:${CONFLUENT_VERSION}
     environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_CLIENT_PORT: ${PORT_KAFKA_ZOOKEEPER}
       KAFKA_OPTS: -Dzookeeper.4lw.commands.whitelist=ruok
     networks:
       - scada-demo
@@ -24,7 +24,7 @@ services:
     # Define health check for Zookeeper.
     healthcheck:
       # https://github.com/confluentinc/cp-docker-images/issues/827
-      test: ["CMD", "bash", "-c", "echo ruok | nc localhost 2181 | grep imok"]
+      test: ["CMD", "bash", "-c", "echo ruok | nc localhost ${PORT_KAFKA_ZOOKEEPER} | grep imok"]
       start_period: 3s
       interval: 2s
       timeout: 30s
@@ -33,12 +33,12 @@ services:
   kafka-broker:
     image: confluentinc/cp-kafka:${CONFLUENT_VERSION}
     ports:
-      - "9092:9092"
-      - "9094:9094"
+      - "${PORT_KAFKA_BROKER_INTERNAL}:${PORT_KAFKA_BROKER_INTERNAL}"
+      - "${PORT_KAFKA_BROKER_EXTERNAL}:${PORT_KAFKA_BROKER_EXTERNAL}"
     environment:
-      KAFKA_ZOOKEEPER_CONNECT: kafka-zookeeper:2181
-      KAFKA_LISTENERS: INTERNAL://0.0.0.0:9092,EXTERNAL://0.0.0.0:9094
-      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-broker:9092,EXTERNAL://localhost:9094
+      KAFKA_ZOOKEEPER_CONNECT: kafka-zookeeper:${PORT_KAFKA_ZOOKEEPER}
+      KAFKA_LISTENERS: INTERNAL://0.0.0.0:${PORT_KAFKA_BROKER_INTERNAL},EXTERNAL://0.0.0.0:${PORT_KAFKA_BROKER_EXTERNAL}
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-broker:${PORT_KAFKA_BROKER_INTERNAL},EXTERNAL://localhost:${PORT_KAFKA_BROKER_EXTERNAL}
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
@@ -50,7 +50,7 @@ services:
     # Define health check for Kafka broker.
     healthcheck:
       #test: ps augwwx | egrep "kafka.Kafka"
-      test: ["CMD", "nc", "-vz", "localhost", "9092"]
+      test: ["CMD", "nc", "-vz", "localhost", "${PORT_KAFKA_BROKER_INTERNAL}"]
       start_period: 3s
       interval: 0.5s
       timeout: 30s
@@ -70,7 +70,7 @@ services:
   flink-jobmanager:
     image: flink:${FLINK_VERSION}
     ports:
-      - "8081:8081"
+      - "${PORT_FLINK_JOBMANAGER}:${PORT_FLINK_JOBMANAGER}"
     command: jobmanager
     environment:
       - |
@@ -81,7 +81,7 @@ services:
 
     # Define health check for Apache Flink jobmanager.
     healthcheck:
-      test: [ "CMD", "curl", "--fail", "http://localhost:8081/overview" ]
+      test: [ "CMD", "curl", "--fail", "http://localhost:${PORT_FLINK_JOBMANAGER}/overview" ]
       start_period: 3s
       interval: 0.5s
       timeout: 30s
@@ -108,8 +108,8 @@ services:
   cratedb:
     image: crate:${CRATEDB_VERSION}
     ports:
-      - "4200:4200"
-      - "5432:5432"
+      - "${PORT_CRATEDB_HTTP}:${PORT_CRATEDB_HTTP}"
+      - "${PORT_CRATEDB_POSTGRESQL}:${PORT_CRATEDB_POSTGRESQL}"
     environment:
       CRATE_HEAP_SIZE: 1g
 
@@ -122,7 +122,7 @@ services:
 
     # Define health check for CrateDB.
     healthcheck:
-      test: [ "CMD", "curl", "--fail", "http://localhost:4200" ]
+      test: [ "CMD", "curl", "--fail", "http://localhost:${PORT_CRATEDB_HTTP}" ]
       start_period: 3s
       interval: 0.5s
       timeout: 30s
@@ -154,7 +154,7 @@ services:
   create-table:
     image: westonsteimel/httpie
     networks: [scada-demo]
-    command: http "cratedb:4200/_sql?pretty" stmt='CREATE TABLE "taxi_rides" ("payload" OBJECT(DYNAMIC))'
+    command: http "cratedb:${PORT_CRATEDB_HTTP}/_sql?pretty" stmt='CREATE TABLE "taxi_rides" ("payload" OBJECT(DYNAMIC))'
     deploy:
       replicas: 0
 
@@ -162,7 +162,7 @@ services:
   create-topic:
     image: confluentinc/cp-kafka:${CONFLUENT_VERSION}
     networks: [scada-demo]
-    command: kafka-topics --bootstrap-server kafka-broker:9092 --create --replication-factor 1 --partitions 1 --topic rides
+    command: kafka-topics --bootstrap-server kafka-broker:${PORT_KAFKA_BROKER_INTERNAL} --create --replication-factor 1 --partitions 1 --topic rides
     deploy:
       replicas: 0
 
@@ -170,7 +170,7 @@ services:
   drop-table:
     image: westonsteimel/httpie
     networks: [scada-demo]
-    command: http "cratedb:4200/_sql?pretty" stmt='DROP TABLE "taxi_rides"'
+    command: http "cratedb:${PORT_CRATEDB_HTTP}/_sql?pretty" stmt='DROP TABLE "taxi_rides"'
     deploy:
       replicas: 0
 
@@ -193,7 +193,7 @@ services:
   publish-data:
     image: confluentinc/cp-kafka:${CONFLUENT_VERSION}
     networks: [scada-demo]
-    command: kafka-console-producer --bootstrap-server kafka-broker:9092 --topic rides
+    command: kafka-console-producer --bootstrap-server kafka-broker:${PORT_KAFKA_BROKER_INTERNAL} --topic rides
     deploy:
       replicas: 0
 
