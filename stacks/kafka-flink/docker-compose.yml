@@ -112,6 +112,11 @@ services:
       - "5432:5432"
     environment:
       CRATE_HEAP_SIZE: 1g
+
+    command: ["crate",
+              "-Cdiscovery.type=single-node",
+              "-Ccluster.routing.allocation.disk.threshold_enabled=false",
+             ]
     networks:
       - scada-demo
 
