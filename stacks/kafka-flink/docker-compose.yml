@@ -92,7 +92,8 @@ services:
     depends_on:
       - flink-jobmanager
     command: taskmanager
-    scale: 1
+    deploy:
+      replicas: 1
     environment:
       - |
         FLINK_PROPERTIES=
