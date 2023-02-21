@@ -29,10 +29,10 @@ If you can't install ``kcat`` on your machine, you can also use Docker to
 invoke it::
 
     # Consume messages from topic
-    docker run -it --network=scada-demo edenhill/kcat:1.7.1 kcat -b kafka-broker -C -t testdrive -o end
+    docker run --rm -it --network=scada-demo edenhill/kcat:1.7.1 kcat -b kafka-broker -C -t testdrive -o end
 
     # Publish message to topic
-    echo $MESSAGE | docker run -i --network=scada-demo edenhill/kcat:1.7.1 kcat -b kafka-broker -P -t testdrive
+    echo $MESSAGE | docker run --rm -i --network=scada-demo edenhill/kcat:1.7.1 kcat -b kafka-broker -P -t testdrive
 
 
 *****
@@ -41,10 +41,12 @@ Flink
 
 Flink job administration::
 
-    docker run -it --network=scada-demo flink:1.12 \
+    # List running jobs
+    docker run --rm -it --network=scada-demo flink:1.12 \
         flink list --jobmanager=flink-jobmanager:8081
 
-    docker run -it --network=scada-demo flink:1.12 \
+    # Cancel specified job
+    docker run --rm -it --network=scada-demo flink:1.12 \
         flink cancel 873828a960f9ed8a4e71b7ec7e980b0d --jobmanager=flink-jobmanager:8081
 
 

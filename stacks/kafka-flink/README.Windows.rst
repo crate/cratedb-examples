@@ -36,11 +36,11 @@ Create a Kafka topic for publishing messages and a CrateDB table to receive
 data from the taxi rides data feed::
 
     # Create Kafka topic
-    docker run -it --network=scada-demo confluentinc/cp-kafka:6.1.1 `
+    docker run --rm -it --network=scada-demo confluentinc/cp-kafka:6.1.1 `
         kafka-topics --bootstrap-server kafka-broker:9092 --create --replication-factor 1 --partitions 1 --topic rides
 
     # Create CrateDB table
-    docker run -it --network=scada-demo westonsteimel/httpie `
+    docker run --rm -it --network=scada-demo westonsteimel/httpie `
         http "cratedb:4200/_sql?pretty" stmt='CREATE TABLE "taxi_rides" ("payload" OBJECT(DYNAMIC))'
 
 
@@ -58,7 +58,7 @@ Acquire and invoke the Flink job::
     Invoke-WebRequest -Uri "${JARURL}" -OutFile "${JARFILE}"
 
     # Invoke Flink job
-    docker run -it --network=scada-demo --volume=${HERE}/${JARFILE}:/${JARFILE} flink:1.12 `
+    docker run --rm -it --network=scada-demo --volume=${HERE}/${JARFILE}:/${JARFILE} flink:1.12 `
         flink run --jobmanager=flink-jobmanager:8081 /${JARFILE} `
             --kafka.servers kafka-broker:9092 `
             --kafka.topic rides `
@@ -87,17 +87,17 @@ Obtain raw data::
 
 Subscribe to the topic to receive messages::
 
-    docker run -it --network=scada-demo edenhill/kcat:1.7.1 kcat -b kafka-broker -C -t rides -o end
+    docker run --rm -it --network=scada-demo edenhill/kcat:1.7.1 kcat -b kafka-broker -C -t rides -o end
 
 Publish data to the Kafka topic::
 
-    gc nyc-yellow-taxi-2017-subset.json | docker run -i --network=scada-demo confluentinc/cp-kafka:6.1.1 `
+    gc nyc-yellow-taxi-2017-subset.json | docker run --rm -i --network=scada-demo confluentinc/cp-kafka:6.1.1 `
         kafka-console-producer --bootstrap-server kafka-broker:9092 --topic rides
 
 Check the number of records in database::
 
-    docker run -it --network=scada-demo westonsteimel/httpie `
-        http "cratedb:4200/_sql?pretty" stmt='SELECT COUNT(*) FROM "taxi_rides"'
+    docker run --rm -it --network=scada-demo westonsteimel/httpie `
+        http "cratedb:4200/_sql?pretty" stmt='SELECT COUNT(*) FROM "taxi_rides";'
 
 
 
