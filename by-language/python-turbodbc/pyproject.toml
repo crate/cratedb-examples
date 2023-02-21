@@ -1,0 +1,7 @@
+[tool.black]
+line-length = 120
+
+[tool.isort]
+profile = "black"
+skip_glob = "**/site-packages/**"
+skip_gitignore = false
