@@ -42,17 +42,12 @@ Resources
 Create a Kafka topic for publishing messages and a CrateDB table to receive
 data from the taxi rides data feed::
 
-    # Create Kafka topic
-    docker run --rm -it --network=scada-demo confluentinc/cp-kafka:6.1.1 \
-        kafka-topics --bootstrap-server kafka-broker:9092 --create --replication-factor 1 --partitions 1 --topic rides
-
-    # Create CrateDB table
-    docker run --rm -it --network=scada-demo westonsteimel/httpie \
-        http "cratedb:4200/_sql?pretty" stmt='CREATE TABLE "taxi_rides" ("payload" OBJECT(DYNAMIC))'
+    docker compose run --rm create-topic
+    docker compose run --rm create-table
 
 .. note::
 
-    In order to drop the database table, try ``http "localhost:4200/_sql?pretty" stmt='DROP TABLE "taxi_rides"'``.
+    In order to drop the database table, try ``docker compose run --rm drop-table``.
 
 Pipeline job
 ============
@@ -60,21 +55,16 @@ Pipeline job
 Acquire and invoke the Flink job::
 
     # Acquire Flink job
-    VERSION=0.2
-    JARFILE="cratedb-flink-jobs-${VERSION}.jar"
+    export VERSION=0.2
+    export JARFILE="cratedb-flink-jobs-${VERSION}.jar"
     wget https://github.com/crate/cratedb-flink-jobs/releases/download/${VERSION}/${JARFILE}
 
-    # Invoke Flink job
-    docker run --rm -it --network=scada-demo --volume=$(pwd)/${JARFILE}:/${JARFILE} flink:1.12 \
-        flink run --jobmanager=flink-jobmanager:8081 /${JARFILE} \
-            --kafka.servers kafka-broker:9092 \
-            --kafka.topic rides \
-            --crate.hosts cratedb:5432 \
-            --crate.table taxi_rides
+    # Submit and invoke Flink job
+    docker compose run --rm --volume=$(pwd)/${JARFILE}:/${JARFILE} submit-job
 
     # List running jobs
-    docker run --rm -it --network=scada-demo flink:1.12 \
-        flink list --jobmanager=flink-jobmanager:8081
+    docker compose run --rm list-jobs
+
 
 *****
 Usage
@@ -95,19 +85,18 @@ Obtain raw data::
     # Create a subset of the data (5000 records) for concluding the first steps
     cat nyc-yellow-taxi-2017.json | head -n 5000 > nyc-yellow-taxi-2017-subset.json
 
-Subscribe to the topic to receive messages::
+Subscribe to the Kafka topic to receive messages::
 
-    docker run --rm -it --network=scada-demo edenhill/kcat:1.7.1 kcat -b kafka-broker -C -t rides -o end
+    docker compose run --rm subscribe-topic
 
 Publish data to the Kafka topic::
 
-    cat nyc-yellow-taxi-2017-subset.json | docker run --rm -i --network=scada-demo confluentinc/cp-kafka:6.1.1 \
-        kafka-console-producer --bootstrap-server kafka-broker:9092 --topic rides
+    cat nyc-yellow-taxi-2017-subset.json | docker compose run --rm --no-TTY publish-data
 
 Check the number of records in database, and display a few samples::
 
-    docker run --rm -it --network=scada-demo westonsteimel/httpie \
+    docker compose run --rm httpie \
         http "cratedb:4200/_sql?pretty" stmt='SELECT COUNT(*) FROM "taxi_rides";'
 
-    docker run --rm -it --network=scada-demo westonsteimel/httpie \
+    docker compose run --rm httpie \
         http "cratedb:4200/_sql?pretty" stmt='SELECT * FROM "taxi_rides" LIMIT 25;'
