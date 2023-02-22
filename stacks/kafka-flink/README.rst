@@ -66,6 +66,32 @@ It uses those connectors and drivers to conclude its job:
 - `CrateDB JDBC driver`_
 
 
+Usage
+=====
+
+In order to run this recipe on your workstation, please follow the
+corresponding guidelines:
+
+- ``README.Unix.rst``
+- ``README.Windows.rst``
+
+There is also a test program ``test.sh`` which exercises those command
+walkthroughs as an end-to-end test. It can be invoked like::
+
+    bash test.sh
+
+Mostly, you want to keep the service containers running, in order to run the
+test progam repeatedly. Use the ``--keepalive`` option for that::
+
+    bash test.sh --keepalive
+
+In order to run specific subcommands/functions defined within the file, invoke,
+for example::
+
+    bash test.sh teardown
+    bash test.sh stop-services
+
+
 Details
 =======
 
@@ -158,16 +184,6 @@ The meanings of those fields are:
 :dropoff_location_id: Location (lat/lon) where the meter was disengaged
 :pickup_datetime: Date & time meter was engaged
 :dropoff_datetime: Date & time meter was disengaged
-
-
-Usage
-=====
-
-In order to run this recipe on your workstation, please follow the
-corresponding guides:
-
-- ``README.Unix.rst``
-- ``README.Windows.rst``
 
 
 ----
