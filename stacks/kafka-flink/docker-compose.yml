@@ -167,6 +167,16 @@ services:
     deploy:
       replicas: 0
 
+  # Acquire Flink job JAR file.
+  download-job:
+    image: apteno/alpine-jq
+    networks: [scada-demo]
+    command: >
+      wget https://github.com/crate/cratedb-flink-jobs/releases/download/${FLINK_JOB_JAR_VERSION}/${FLINK_JOB_JAR_FILE}
+        --output-document /src/${FLINK_JOB_JAR_FILE}
+    deploy:
+      replicas: 0
+
   # Drop database table in CrateDB.
   drop-table:
     image: westonsteimel/httpie
@@ -205,7 +215,7 @@ services:
     command: >
       flink run
         --jobmanager=flink-jobmanager:${PORT_FLINK_JOBMANAGER}
-        /${JARFILE}
+        /src/${FLINK_JOB_JAR_FILE}
           --kafka.servers kafka-broker:${PORT_KAFKA_BROKER_INTERNAL}
           --kafka.topic rides
           --crate.hosts cratedb:${PORT_CRATEDB_POSTGRESQL}
