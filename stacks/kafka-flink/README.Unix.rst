@@ -54,15 +54,13 @@ Pipeline job
 
 Acquire and invoke the Flink job::
 
-    # Acquire Flink job
-    export VERSION=0.2
-    export JARFILE="cratedb-flink-jobs-${VERSION}.jar"
-    wget https://github.com/crate/cratedb-flink-jobs/releases/download/${VERSION}/${JARFILE}
+    # Acquire Flink job JAR file.
+    docker compose run --rm --volume=$(pwd):/src download-job
 
-    # Submit and invoke Flink job
-    docker compose run --rm --volume=$(pwd)/${JARFILE}:/${JARFILE} submit-job
+    # Submit and invoke Flink job.
+    docker compose run --rm --volume=$(pwd):/src submit-job
 
-    # List running jobs
+    # List running jobs.
     docker compose run --rm list-jobs
 
 
