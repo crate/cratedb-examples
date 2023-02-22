@@ -212,9 +212,11 @@ services:
   submit-job:
     image: flink:${FLINK_VERSION}
     networks: [scada-demo]
+    # Note: Remove `--detach` option to interactively receive stacktrace.
     command: >
       flink run
         --jobmanager=flink-jobmanager:${PORT_FLINK_JOBMANAGER}
+        --detach
         /src/${FLINK_JOB_JAR_FILE}
           --kafka.servers kafka-broker:${PORT_KAFKA_BROKER_INTERNAL}
           --kafka.topic rides
