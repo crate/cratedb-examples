@@ -163,7 +163,15 @@ services:
   create-topic:
     image: confluentinc/cp-kafka:${CONFLUENT_VERSION}
     networks: [scada-demo]
-    command: kafka-topics --bootstrap-server kafka-broker:${PORT_KAFKA_BROKER_INTERNAL} --create --replication-factor 1 --partitions 1 --topic rides
+    command: kafka-topics --bootstrap-server kafka-broker:${PORT_KAFKA_BROKER_INTERNAL} --create --if-not-exists --replication-factor 1 --partitions 1 --topic rides
+    deploy:
+      replicas: 0
+
+  # Delete Kafka topic for publishing messages.
+  delete-topic:
+    image: confluentinc/cp-kafka:${CONFLUENT_VERSION}
+    networks: [scada-demo]
+    command: kafka-topics --bootstrap-server kafka-broker:${PORT_KAFKA_BROKER_INTERNAL} --delete --if-exists --topic rides
     deploy:
       replicas: 0
 
