@@ -18,6 +18,7 @@ Data type mapping
 
 Misc
 ====
+- [o] Evaluate performance options
 - [o] Support ``flink stop`` command. Currently, it errors out with
   ``Config key [state.savepoints.dir] is not set. Property [targetDirectory] must be provided.``
 - [o] No error message when data is **not** actually written to CrateDB?::
@@ -26,10 +27,14 @@ Misc
     flood stage disk watermark [95%] exceeded on [ZNRb6FDRRNmLlQChTb_zcA][Grand Mont][/data/data/nodes/0] free: 2.8gb[4%], all indices on this node will be marked read-only
 
 
-***********
-Maintenance
-***********
+**************
+Infrastructure
+**************
 
-- [o] Update all software components to their most recent versions
+- [x] Modernize environment setup
+- [/] Windows (PS): Use environment variables from python-dotenv formatted .env file
+  https://gist.github.com/grenzi/82e6cb8215cc47879fdf3a8a4768ec09
+- [/] Windows (PS): Verify if https://github.com/rajivharris/Set-PsEnv actually works
 - [o] Add CI configuration
+- [o] Update all software components to their most recent versions
 - [o] Add RTD configuration

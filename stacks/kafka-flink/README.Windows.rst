@@ -9,7 +9,7 @@ About
 
 This document will outline how to run the tutorial on Windows 10, using
 PowerShell. On Windows 10, please use those commands with PowerShell 3+
-(pwsh) and `Docker Desktop on Windows`_.
+(pwsh) and `Docker Desktop for Windows`_.
 
 
 *****
@@ -24,6 +24,10 @@ In order to start Kafka, Flink and CrateDB, invoke::
     Set-Variable -Name DOCKER_COMPOSE_URL -value "https://raw.githubusercontent.com/crate/cratedb-examples/0.1.0/stacks/kafka-flink/docker-compose.yml"
     Invoke-WebRequest -Uri "${DOCKER_COMPOSE_URL}" -OutFile "docker-compose.yml"
     docker compose up
+
+In order to shut down the services, and clear their state completely, use::
+
+    docker compose down --remove-orphans
 
 Pre-flight checks
 -----------------
@@ -99,4 +103,4 @@ Check the number of records in database, and display a few samples::
         http "cratedb:4200/_sql?pretty" stmt='SELECT * FROM "taxi_rides" LIMIT 25;'
 
 
-.. _Docker Desktop on Windows: https://docs.docker.com/desktop/install/windows-install/
+.. _Docker Desktop for Windows: https://docs.docker.com/desktop/install/windows-install/

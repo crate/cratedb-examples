@@ -28,6 +28,10 @@ If you don't have Git installed on your machine, you can get hold of the
     wget https://raw.githubusercontent.com/crate/cratedb-examples/0.1.0/stacks/kafka-flink/docker-compose.yml
     docker compose up
 
+In order to shut down the services, and clear their state completely, use::
+
+    docker compose down --remove-orphans
+
 Pre-flight checks
 -----------------
 
