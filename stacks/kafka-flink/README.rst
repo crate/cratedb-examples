@@ -108,7 +108,7 @@ system environment to fit the needs of the tutorial.
     When running this tutorial on Windows/WSL2, some upfront configuration is
     needed.
 
-    1. Install `Docker on Windows`_ and `enable WSL integration`_.
+    1. Install `Docker Desktop for Windows`_ and `enable WSL integration`_.
     2. Docker Compose version 2 is recommended (``docker compose version``),
        but version 1 should still work (``docker-compose --version``).
        From the end of June 2023, Compose V1 won’t be supported anymore, and
@@ -124,9 +124,6 @@ system environment to fit the needs of the tutorial.
            sudo chmod +x /usr/local/bin/docker-compose
 
            # Restart your terminal
-
-.. _Docker on Windows: https://desktop.docker.com/win/stable/amd64/Docker%20Desktop%20Installer.exe
-.. _enable WSL integration: https://docs.docker.com/docker-for-windows/wsl/
 
 
 The data
@@ -180,5 +177,7 @@ corresponding guides:
 
 .. _Apache Kafka Connector for Flink: https://ci.apache.org/projects/flink/flink-docs-stable/dev/connectors/kafka.html
 .. _CrateDB JDBC driver: https://github.com/crate/crate-jdbc
-.. _JDBC Connector for Flink: https://ci.apache.org/projects/flink/flink-docs-stable/dev/connectors/jdbc.html
+.. _Docker Desktop for Windows: https://docs.docker.com/desktop/install/windows-install/
+.. _enable WSL integration: https://docs.docker.com/desktop/windows/wsl/
+.. _JDBC Connector for Flink: https://nightlies.apache.org/flink/flink-docs-stable/docs/connectors/datastream/jdbc/
 .. _Kafka + Flink\: A Practical, How-To Guide: https://www.ververica.com/blog/kafka-flink-a-practical-how-to
