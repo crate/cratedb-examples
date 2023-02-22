@@ -155,7 +155,7 @@ services:
   create-table:
     image: westonsteimel/httpie
     networks: [scada-demo]
-    command: http "cratedb:${PORT_CRATEDB_HTTP}/_sql?pretty" stmt='CREATE TABLE "taxi_rides" ("payload" OBJECT(DYNAMIC))'
+    command: http "cratedb:${PORT_CRATEDB_HTTP}/_sql?pretty" stmt='CREATE TABLE "taxi_rides" ("payload" OBJECT(DYNAMIC))' --ignore-stdin
     deploy:
       replicas: 0
 
@@ -189,7 +189,7 @@ services:
   drop-table:
     image: westonsteimel/httpie
     networks: [scada-demo]
-    command: http "cratedb:${PORT_CRATEDB_HTTP}/_sql?pretty" stmt='DROP TABLE "taxi_rides"'
+    command: http "cratedb:${PORT_CRATEDB_HTTP}/_sql?pretty" stmt='DROP TABLE "taxi_rides"' --ignore-stdin
     deploy:
       replicas: 0
 

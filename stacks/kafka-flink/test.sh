@@ -111,10 +111,10 @@ function display-data() {
     http "cratedb:4200/_sql?pretty" stmt='REFRESH TABLE "taxi_rides";' --ignore-stdin > /dev/null
 
   docker compose run --rm httpie \
-    http "cratedb:4200/_sql?pretty" stmt='SELECT * FROM "taxi_rides" LIMIT 5;'
+    http "cratedb:4200/_sql?pretty" stmt='SELECT * FROM "taxi_rides" LIMIT 5;' --ignore-stdin
 
   docker compose run --rm httpie \
-    http "cratedb:4200/_sql?pretty" stmt='SELECT COUNT(*) FROM "taxi_rides";'
+    http "cratedb:4200/_sql?pretty" stmt='SELECT COUNT(*) FROM "taxi_rides";' --ignore-stdin
 
 }
 
