@@ -17,7 +17,7 @@ Outlook
 Data type mapping
 =================
 - [o] Currently, the DDL schema is ``CREATE TABLE "taxi_rides" ("payload" OBJECT(DYNAMIC))``.
-  Shell there be an advanced version, where data is stored into individual columns?
+  Shall there be an advanced version, where data is stored into individual columns?
 - [o] Currently, both ``pickup_datetime`` and ``dropoff_datetime`` are stored
   as ``TEXT`` within an ``OBJECT(DYNAMIC)``. Can this be improved?
 - [o] ``Unknown column type for column 1`` warnings::
