@@ -2,6 +2,7 @@
 Apache Kafka, Apache Flink and CrateDB on Unix
 ##############################################
 
+
 *****
 About
 *****
@@ -12,6 +13,22 @@ This document will outline how to run the tutorial on Linux, macOS and WSL2.
 *****
 Setup
 *****
+
+Prerequisites
+=============
+
+In order to exercise the command walkthrough successfully, please make sure
+those programs are installed/available on your machine / in your environment.
+
+- bash
+- cat
+- curl
+- docker
+- git
+- head
+- jq
+- tar
+- wget
 
 Infrastructure
 ==============
@@ -85,7 +102,7 @@ Obtain raw data::
     tar -xvf nyc-yellow-taxi-2017.tar.gz
 
     # Create a subset of the data (5000 records) for concluding the first steps
-    cat nyc-yellow-taxi-2017.json | head -n 5000 > nyc-yellow-taxi-2017-subset.json
+    cat nyc-yellow-taxi-2017.json | head -n 5000 > nyc-yellow-taxi-2017-subset.ndjson
 
 Subscribe to the Kafka topic to receive messages::
 
@@ -93,7 +110,7 @@ Subscribe to the Kafka topic to receive messages::
 
 Publish data to the Kafka topic::
 
-    cat nyc-yellow-taxi-2017-subset.json | docker compose run --rm --no-TTY publish-data
+    cat nyc-yellow-taxi-2017-subset.ndjson | docker compose run --rm --no-TTY publish-data
 
 Check the number of records in database, and display a few samples::
 
@@ -101,4 +118,4 @@ Check the number of records in database, and display a few samples::
         http "cratedb:4200/_sql?pretty" stmt='SELECT COUNT(*) FROM "taxi_rides";'
 
     docker compose run --rm httpie \
-        http "cratedb:4200/_sql?pretty" stmt='SELECT * FROM "taxi_rides" LIMIT 25;'
+        http "cratedb:4200/_sql?pretty" stmt='SELECT * FROM "taxi_rides" LIMIT 5;'

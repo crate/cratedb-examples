@@ -151,7 +151,7 @@ services:
   # Tasks
   # -----
 
-  # Create a Kafka topic for publishing messages.
+  # Create database table in CrateDB.
   create-table:
     image: westonsteimel/httpie
     networks: [scada-demo]
@@ -159,7 +159,7 @@ services:
     deploy:
       replicas: 0
 
-  # Create a CrateDB table to receive data.
+  # Create Kafka topic.
   create-topic:
     image: confluentinc/cp-kafka:${CONFLUENT_VERSION}
     networks: [scada-demo]
@@ -167,7 +167,7 @@ services:
     deploy:
       replicas: 0
 
-  # Delete Kafka topic for publishing messages.
+  # Delete Kafka topic.
   delete-topic:
     image: confluentinc/cp-kafka:${CONFLUENT_VERSION}
     networks: [scada-demo]
@@ -205,6 +205,15 @@ services:
     image: flink:${FLINK_VERSION}
     networks: [scada-demo]
     command: flink list --jobmanager=flink-jobmanager:${PORT_FLINK_JOBMANAGER}
+    deploy:
+      replicas: 0
+
+  # List job ids of running Flink jobs.
+  # TODO: Currently, this does not work, because `flink-jobmanager` fails to respond to our requests.
+  list-job-ids:
+    image: westonsteimel/httpie
+    networks: [scada-demo]
+    command: http http://flink-jobmanager:${PORT_FLINK_JOBMANAGER}/jobs/overview Host:localhost --ignore-stdin | jq -r .jobs[].jid
     deploy:
       replicas: 0
 

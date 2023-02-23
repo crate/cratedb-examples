@@ -3,9 +3,9 @@ Building IoT applications with open-source components
 #####################################################
 
 
-**********************************************
-Part 1: Apache Kafka, Apache Flink and CrateDB
-**********************************************
+***********************************************
+Part 1: Apache Kafka, Apache Flink, and CrateDB
+***********************************************
 
 
 Introduction
@@ -25,9 +25,9 @@ i.e. stateful computations over the data streams.
 Flink jobs consist of multiple components including source, sink, and the set
 of transformation operators that are applied to a data stream.
 
-CrateDB is a new kind of distributed SQL database built for IIoT applications.
-It will store and query data that has been processed and enriched by Apache
-Flink.
+CrateDB is a distributed SQL database built for IIoT applications. It will
+store data that has been processed and enriched by Apache Flink, and allow you
+to query it efficiently.
 
 
 About
@@ -36,17 +36,17 @@ About
 This tutorial shows how to build a simple data ingestion pipeline with open
 source software components.
 It will outline how to acquire and publish data to Kafka, process it using
-Flink and store the data stream into CrateDB.
+Flink, and store the data stream into CrateDB.
 It describes this system as a part of the CrateDB reference architecture and
 can be used as a blueprint for building own applications.
 
 The following versions of software components are used:
 
-- Confluent Kafka 6.1.1
 - Apache Flink 1.12
+- Apache Flink JDBC Connector 1.12.2
+- Apache Flink Kafka Connector 1.12.2
+- Confluent Kafka 6.1.1
 - CrateDB 4.5.0
-- Apache Kafka Connector for Flink 1.12.2
-- JDBC Connector for Flink 1.12.2
 - CrateDB JDBC driver 2.6.0
 
 
@@ -54,8 +54,7 @@ Overview
 ========
 
 The Flink pipeline job will subscribe to the Kafka topic ``rides`` in order to
-consume the data feed and store its records into the CrateDB table
-``taxi_rides``.
+consume the data feed and store its records into the CrateDB table ``taxi_rides``.
 
 Following the `Kafka + Flink: A Practical, How-To Guide`_, there is an example job
 for importing the NYC taxi dataset at https://github.com/crate/cratedb-flink-jobs.
