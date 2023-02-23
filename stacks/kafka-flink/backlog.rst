@@ -7,6 +7,13 @@ Backlog
 Functionality
 *************
 
+Outlook
+=======
+- [o] Currently, with the job(s) at https://github.com/crate/cratedb-flink-jobs,
+  we need Flink 1.13 max., higher versions are incompatible.
+- [o] Update to Flink 1.16. Newer releases of Flink need corresponding Catalog- and
+  Dialect-implementations for CrateDB. We are currently looking into this.
+
 Data type mapping
 =================
 - [o] Currently, the DDL schema is ``CREATE TABLE "taxi_rides" ("payload" OBJECT(DYNAMIC))``.
@@ -20,7 +27,8 @@ Data type mapping
 
 General
 =======
-- [o] Only *optionally* use ``flink run --detach`` option
+- [o] Only *optionally* use ``flink run --detach`` option: When using ``--detach``, there is no
+  output/feedback about any eventual failures happening when submitting the job.
 - [o] How to inquire job metrics?
 - [o] Evaluate performance options
 - [o] Support ``flink stop`` command. Currently, it errors out with
@@ -43,11 +51,6 @@ General
 
   - https://www.baeldung.com/kafka-flink-data-pipeline
   - https://github.com/eugenp/tutorials/tree/master/apache-kafka
-
-Outlook
-=======
-- [o] Newer releases of Flink need corresponding Catalog- and Dialect-implementations
-  for CrateDB. We are currently looking into this.
 
 
 **************

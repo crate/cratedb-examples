@@ -42,11 +42,11 @@ Flink
 Flink job administration::
 
     # List running jobs
-    docker run --rm -it --network=scada-demo flink:1.12 \
+    docker run --rm -it --network=scada-demo flink:1.13 \
         flink list --jobmanager=flink-jobmanager:8081
 
     # Cancel specified job
-    docker run --rm -it --network=scada-demo flink:1.12 \
+    docker run --rm -it --network=scada-demo flink:1.13 \
         flink cancel 873828a960f9ed8a4e71b7ec7e980b0d --jobmanager=flink-jobmanager:8081
 
 

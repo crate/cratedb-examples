@@ -42,11 +42,14 @@ can be used as a blueprint for building own applications.
 
 The following versions of software components are used:
 
-- Apache Flink 1.12
+- Apache Flink 1.13
+- Confluent Kafka 6.1.9
+- CrateDB 5.2.2
+
+Flink jobs have been tested using those software component versions:
+
 - Apache Flink JDBC Connector 1.12.2
 - Apache Flink Kafka Connector 1.12.2
-- Confluent Kafka 6.1.1
-- CrateDB 4.5.0
 - CrateDB JDBC driver 2.6.0
 
 
@@ -87,8 +90,12 @@ test progam repeatedly. Use the ``--keepalive`` option for that::
 In order to run specific subcommands/functions defined within the file, invoke,
 for example::
 
-    bash test.sh teardown
     bash test.sh stop-services
+
+If, by chance, the ``verify-data`` test step fails, resources are currently
+not cleaned up. In order to do that, run::
+
+    bash test.sh teardown
 
 
 Details
