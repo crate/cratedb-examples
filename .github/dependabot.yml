@@ -1,0 +1,27 @@
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+
+version: 2
+updates:
+
+  - directory: "/by-language/csharp-npgsql" # Location of package manifests
+    package-ecosystem: "nuget" # See documentation for possible values
+    schedule:
+      interval: "monthly"
+
+  - directory: "/by-language/java-jdbc"
+    package-ecosystem: "maven"
+    schedule:
+      interval: "monthly"
+
+  - directory: "/by-language/java-jooq"
+    package-ecosystem: "gradle"
+    schedule:
+      interval: "monthly"
+
+  - directory: "/by-language/ruby"
+    package-ecosystem: "bundler"
+    schedule:
+      interval: "monthly"
