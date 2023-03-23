@@ -6,15 +6,10 @@
 
     <groupId>crate.io</groupId>
     <artifactId>cratedb-jdbc-example</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
 
-    <name>Basic example for connecting to CrateDB using JDBC</name>
-    <url>https://github.com/crate/cratedb-examples</url>
-
-    <properties>
-        <pgjdbc.version>42.2.23</pgjdbc.version>
-        <crate-jdbc.version>2.6.0</crate-jdbc.version>
-    </properties>
+    <name>Basic example for connecting to CrateDB and CrateDB Cloud using JDBC</name>
+    <url>https://github.com/crate/cratedb-examples/tree/main/by-language/java-jdbc</url>
 
     <repositories>
         <repository>
@@ -33,13 +28,19 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>${pgjdbc.version}</version>
+            <version>42.6.0</version>
         </dependency>
 
         <dependency>
             <groupId>io.crate</groupId>
             <artifactId>crate-jdbc</artifactId>
-            <version>${crate-jdbc.version}</version>
+            <version>2.6.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.beust</groupId>
+            <artifactId>jcommander</artifactId>
+            <version>1.82</version>
         </dependency>
 
     </dependencies>
