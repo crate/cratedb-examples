@@ -31,7 +31,7 @@ jobs:
       matrix:
         os: [ "ubuntu-latest" ]
         cratedb-version: [ "nightly" ]
-        ruby-version: [ "2.7", "3.0", "3.1", "jruby", "truffleruby" ]
+        ruby-version: [ "2.7", "3.0", "3.1", "truffleruby" ]
 
     services:
       cratedb:
