@@ -53,12 +53,14 @@ function teardown() {
 
 function invoke-job() {
 
+  source .env
+
   # Delete downloaded JAR file upfront.
   # TODO: This is a little bit hard-coded. Improve!
   #rm cratedb-flink-jobs-*.jar || true
 
   # Acquire Flink job JAR file.
-  if ! test -f cratedb-flink-jobs-*.jar; then
+  if ! test -f "${FLINK_JOB_JAR_FILE}"; then
     title "Acquiring Flink job JAR file"
     docker compose run --rm --volume=$(pwd):/src download-job
   fi
