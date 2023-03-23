@@ -43,7 +43,7 @@ jobs:
         os: [ubuntu-latest]  # , macos-latest
         dotnet-version: ['5.0.x', '6.0.x', '7.0.x']
         cratedb-version: ['5.2.0', 'nightly']
-        npgsql-version: ['6.0.8', '7.0.1']
+        npgsql-version: ['6.0.9', '7.0.2']
       fail-fast: false
 
     # https://docs.github.com/en/free-pro-team@latest/actions/guides/about-service-containers
