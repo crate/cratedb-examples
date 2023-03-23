@@ -42,8 +42,8 @@ can be used as a blueprint for building own applications.
 
 The following versions of software components are used:
 
-- Apache Flink 1.13
-- Confluent Kafka 6.1.9
+- Apache Flink 1.16
+- Confluent Kafka 7.3
 - CrateDB 5.2.2
 
 Flink jobs have been tested using those software component versions:

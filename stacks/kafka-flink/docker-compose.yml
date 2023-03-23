@@ -180,8 +180,7 @@ services:
     image: apteno/alpine-jq
     networks: [scada-demo]
     command: >
-      wget https://github.com/crate/cratedb-flink-jobs/releases/download/${FLINK_JOB_JAR_VERSION}/${FLINK_JOB_JAR_FILE}
-        --output-document /src/${FLINK_JOB_JAR_FILE}
+      wget ${FLINK_JOB_JAR_URL} --output-document /src/${FLINK_JOB_JAR_FILE}
     deploy:
       replicas: 0
 
