@@ -1,0 +1,57 @@
+name: Java JDBC
+on:
+
+  pull_request:
+    branches: [ main ]
+    paths:
+    - '.github/workflows/test-java-jdbc.yml'
+    - 'by-language/java-jdbc/**'
+  push:
+    branches: [ main ]
+    paths:
+    - '.github/workflows/test-java-jdbc.yml'
+    - 'by-language/java-jdbc/**'
+
+  # Allow job to be triggered manually.
+  workflow_dispatch:
+
+# Cancel in-progress jobs when pushing to the same branch.
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  test:
+    name: "CrateDB: ${{ matrix.cratedb-version }}
+     on ${{ matrix.os }}"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ "ubuntu-latest" ]
+        cratedb-version: [ "nightly" ]
+
+    services:
+      cratedb:
+        image: crate/crate:nightly
+        ports:
+          - 4200:4200
+          - 5432:5432
+
+    steps:
+
+      - name: Acquire sources
+        uses: actions/checkout@v3
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "11"
+          cache: "maven"
+
+      - name: Run software tests
+        run: |
+          cd by-language/java-jdbc
+          mvn install
+          mvn exec:java -Dexec.args="--dburl 'jdbc:postgresql://localhost:5432/'"
+          mvn exec:java -Dexec.args="--dburl 'jdbc:crate://localhost:5432/'"
