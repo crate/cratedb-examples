@@ -23,8 +23,8 @@ systems for further processing.
 
 Apache Flink is a stream processing framework that executes data pipelines,
 i.e. stateful computations over data streams. Flink jobs consist of multiple
-components including source, sink, and the set of transformation/processing operators that
-are applied to a data stream.
+components including source, sink, and the set of transformation/processing
+operators that are applied to a data stream.
 
 CrateDB is a distributed SQL database focusing on industrial data acquisition
 applications. It will store data that has been processed and enriched by Apache
