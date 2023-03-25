@@ -109,8 +109,8 @@ services:
   cratedb:
     image: crate:${CRATEDB_VERSION}
     ports:
-      - "${PORT_CRATEDB_HTTP}:${PORT_CRATEDB_HTTP}"
-      - "${PORT_CRATEDB_POSTGRESQL}:${PORT_CRATEDB_POSTGRESQL}"
+      - "${CRATEDB_HTTP_PORT}:${CRATEDB_HTTP_PORT}"
+      - "${CRATEDB_POSTGRESQL_PORT}:${CRATEDB_POSTGRESQL_PORT}"
     environment:
       CRATE_HEAP_SIZE: 4g
 
@@ -123,7 +123,7 @@ services:
 
     # Define health check for CrateDB.
     healthcheck:
-      test: [ "CMD", "curl", "--fail", "http://localhost:${PORT_CRATEDB_HTTP}" ]
+      test: [ "CMD", "curl", "--fail", "http://localhost:${CRATEDB_HTTP_PORT}" ]
       start_period: 3s
       interval: 0.5s
       timeout: 30s
@@ -155,7 +155,7 @@ services:
   create-table:
     image: westonsteimel/httpie
     networks: [scada-demo]
-    command: http "cratedb:${PORT_CRATEDB_HTTP}/_sql?pretty" stmt='CREATE TABLE "taxi_rides" ("payload" OBJECT(DYNAMIC))' --ignore-stdin
+    command: http "${CRATEDB_HTTP_URL}/_sql?pretty" stmt='CREATE TABLE "taxi_rides" ("payload" OBJECT(DYNAMIC))' --ignore-stdin
     deploy:
       replicas: 0
 
@@ -188,7 +188,7 @@ services:
   drop-table:
     image: westonsteimel/httpie
     networks: [scada-demo]
-    command: http "cratedb:${PORT_CRATEDB_HTTP}/_sql?pretty" stmt='DROP TABLE "taxi_rides"' --ignore-stdin
+    command: http "${CRATEDB_HTTP_URL}/_sql?pretty" stmt='DROP TABLE "taxi_rides"' --ignore-stdin
     deploy:
       replicas: 0
 
@@ -236,8 +236,10 @@ services:
         /src/${FLINK_JOB_JAR_FILE}
           --kafka.servers kafka-broker:${PORT_KAFKA_BROKER_INTERNAL}
           --kafka.topic rides
-          --crate.hosts cratedb:${PORT_CRATEDB_POSTGRESQL}
+          --crate.hosts "${CRATEDB_HOST}:${CRATEDB_POSTGRESQL_PORT}"
           --crate.table taxi_rides
+          --crate.user '${CRATEDB_USERNAME}'
+          --crate.password '${CRATEDB_PASSWORD}'
     deploy:
       replicas: 0
 

@@ -38,7 +38,8 @@ source software components. It accompanies the article `Build a data ingestion
 pipeline using Kafka, Flink, and CrateDB`_.
 
 It will outline how to acquire and publish data to Kafka, process it using
-Flink, and store the data stream into CrateDB.
+Flink, and store the data stream into CrateDB, both using a `CrateDB`_ instance
+running on your machine, or using `CrateDB Cloud`_.
 
 The system is part of the CrateDB reference architecture and can be used as a
 blueprint for building own applications.
@@ -69,6 +70,9 @@ connectors and drivers to conclude its job:
 Usage
 *****
 
+Workstation
+===========
+
 In order to run this recipe on your workstation, please follow the
 corresponding guidelines:
 
@@ -95,6 +99,23 @@ If, by chance, the ``verify-data`` test step fails, resources are currently not
 cleaned up. In order to do that, run::
 
     bash test.sh teardown
+
+CrateDB Cloud
+=============
+
+1. In order to spin up a database cluster on `CrateDB Cloud`_, head over to the
+   `CrateDB Cloud Console`_.
+
+2. Edit the "Data sink configuration (CrateDB Cloud)" section within the ``.env``
+   configuration file, and activate the relevant settings. Alternatively, export
+   the corresponding environment variables within your terminal session::
+
+       export=CRATEDB_HTTP_SCHEME=https
+       export=CRATEDB_HOST=example.aks1.westeurope.azure.cratedb.net
+       export=CRATEDB_USERNAME='admin'
+       export=CRATEDB_PASSWORD='<PASSWORD>'
+
+3. Invoke ``test.sh`` as outlined in the previous documentation section.
 
 
 *******
@@ -202,6 +223,8 @@ The meanings of those fields are:
 .. _Apache Kafka: https://kafka.apache.org/
 .. _Build a data ingestion pipeline using Kafka, Flink, and CrateDB: https://dev.to/crate/build-a-data-ingestion-pipeline-using-kafka-flink-and-cratedb-1h5o
 .. _CrateDB: https://crate.io/products/cratedb
+.. _CrateDB Cloud: https://crate.io/products/cratedb-cloud
+.. _CrateDB Cloud Console: https://console.cratedb.cloud/
 .. _CrateDB JDBC driver: https://crate.io/docs/jdbc/
 .. _Docker Desktop for Windows: https://docs.docker.com/desktop/install/windows-install/
 .. _enable WSL integration: https://docs.docker.com/desktop/windows/wsl/

@@ -13,6 +13,7 @@
 # Main program
 # ============
 
+source .env
 set -e
 
 
@@ -52,8 +53,6 @@ function teardown() {
 # --------
 
 function invoke-job() {
-
-  source .env
 
   # Delete downloaded JAR file upfront.
   # TODO: This is a little bit hard-coded. Improve!
@@ -97,7 +96,7 @@ function feed-data() {
   echo
 
   # Wait a bit for the data to transfer and converge successfully.
-  sleep 1
+  sleep 3
 }
 
 
@@ -110,13 +109,13 @@ function display-data() {
   title "Displaying data in CrateDB"
 
   docker compose run --rm httpie \
-    http "cratedb:4200/_sql?pretty" stmt='REFRESH TABLE "taxi_rides";' --ignore-stdin > /dev/null
+    http "${CRATEDB_HTTP_URL}/_sql?pretty" stmt='REFRESH TABLE "taxi_rides";' --ignore-stdin > /dev/null
 
   docker compose run --rm httpie \
-    http "cratedb:4200/_sql?pretty" stmt='SELECT * FROM "taxi_rides" LIMIT 5;' --ignore-stdin
+    http "${CRATEDB_HTTP_URL}/_sql?pretty" stmt='SELECT * FROM "taxi_rides" LIMIT 5;' --ignore-stdin
 
   docker compose run --rm httpie \
-    http "cratedb:4200/_sql?pretty" stmt='SELECT COUNT(*) FROM "taxi_rides";' --ignore-stdin
+    http "${CRATEDB_HTTP_URL}/_sql?pretty" stmt='SELECT COUNT(*) FROM "taxi_rides";' --ignore-stdin
 
 }
 
@@ -125,7 +124,7 @@ function verify-data() {
   size_reference=5000
   size_actual=$(
     docker compose run --rm httpie \
-      http "cratedb:4200/_sql?pretty" stmt='SELECT COUNT(*) FROM "taxi_rides";' --ignore-stdin \
+      http "${CRATEDB_HTTP_URL}/_sql?pretty" stmt='SELECT COUNT(*) FROM "taxi_rides";' --ignore-stdin \
     | jq .rows[0][0]
   )
   if [[ ${size_actual} = ${size_reference} ]]; then
@@ -214,7 +213,6 @@ function read_options() {
 }
 
 function flink-get-job-ids() {
-  source .env
   jobids=$(
     curl --silent http://localhost:${PORT_FLINK_JOBMANAGER}/jobs/overview \
     | jq -r '.jobs[] | select(.state == "RUNNING").jid'
@@ -225,7 +223,6 @@ function flink-get-job-ids() {
 function flink-cancel-job() {
   jobid=$1
   echo "Cancelling job $jobid"
-  source .env
   docker run --rm --network=scada-demo flink:${FLINK_VERSION} \
     flink cancel ${jobid} --jobmanager=flink-jobmanager:${PORT_FLINK_JOBMANAGER}
 }
