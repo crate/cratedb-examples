@@ -2,3 +2,4 @@
 *.tar.gz
 *.jar
 .venv*
+__pycache__
