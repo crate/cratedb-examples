@@ -1,75 +1,73 @@
-#####################################################
-Building IoT applications with open-source components
-#####################################################
+#######################################
+Apache Kafka, Apache Flink, and CrateDB
+#######################################
+
+*Building industrial IoT applications with open-source components.*
 
 
-***********************************************
-Part 1: Apache Kafka, Apache Flink, and CrateDB
-***********************************************
-
+*****
+About
+*****
 
 Introduction
 ============
 
-Kafka, Flink, and CrateDB are all distributed systems that provide elastic
-scaling, fault tolerance, and high-throughput, low-latency performance via
-parallel processing. Particularly, the use of CrateDB makes the stack an
-extremely good fit for handling industrial time-series workloads.
+`Apache Kafka`_, `Apache Flink`_, and `CrateDB`_, are each distributed systems
+that provide elastic scaling, fault tolerance, and high-throughput, low-latency
+performance via parallel processing. Particularly, the use of CrateDB makes the
+stack an extremely good fit for handling industrial time-series workloads.
 
 The front line of the stack is Apache Kafka, used to queue messages received
-from the IoT sensors and devices, making that data highly available to systems
-that need it.
+from IoT sensors and devices, making that data highly available to other
+systems for further processing.
 
 Apache Flink is a stream processing framework that executes data pipelines,
-i.e. stateful computations over the data streams.
-Flink jobs consist of multiple components including source, sink, and the set
-of transformation operators that are applied to a data stream.
+i.e. stateful computations over data streams. Flink jobs consist of multiple
+components including source, sink, and the set of transformation/processing operators that
+are applied to a data stream.
 
-CrateDB is a distributed SQL database built for IIoT applications. It will
-store data that has been processed and enriched by Apache Flink, and allow you
-to query it efficiently.
+CrateDB is a distributed SQL database focusing on industrial data acquisition
+applications. It will store data that has been processed and enriched by Apache
+Flink, and will allow you to query it efficiently.
 
-
-About
-=====
+What's inside
+=============
 
 This tutorial shows how to build a simple data ingestion pipeline with open
-source software components.
+source software components. It accompanies the article `Build a data ingestion
+pipeline using Kafka, Flink, and CrateDB`_.
+
 It will outline how to acquire and publish data to Kafka, process it using
 Flink, and store the data stream into CrateDB.
-It describes this system as a part of the CrateDB reference architecture and
-can be used as a blueprint for building own applications.
+
+The system is part of the CrateDB reference architecture and can be used as a
+blueprint for building own applications.
 
 The following versions of software components are used:
 
 - Apache Flink 1.16
-- Confluent Kafka 7.3
-- CrateDB 5.2.2
-
-Flink jobs have been tested using those software component versions:
-
-- Apache Flink JDBC Connector 1.12.2
-- Apache Flink Kafka Connector 1.12.2
+- Apache Kafka 3.2 (Confluent 7.3)
+- CrateDB 5.2
 - CrateDB JDBC driver 2.6.0
 
-
-Overview
-========
+How it works
+============
 
 The Flink pipeline job will subscribe to the Kafka topic ``rides`` in order to
 consume the data feed and store its records into the CrateDB table ``taxi_rides``.
 
-Following the `Kafka + Flink: A Practical, How-To Guide`_, there is an example job
-for importing the NYC taxi dataset at https://github.com/crate/cratedb-flink-jobs.
-It uses those connectors and drivers to conclude its job:
+Following the `Kafka + Flink: A Practical, How-To Guide`_, there is an example
+job implementing this at `Apache Flink jobs for CrateDB`_. It uses those
+connectors and drivers to conclude its job:
 
-- `Apache Kafka Connector for Flink`_
-- `JDBC Connector for Flink`_
 - `CrateDB JDBC driver`_
+- `Flink Apache Kafka Connector`_
+- `Flink JDBC Connector`_
 
 
+*****
 Usage
-=====
+*****
 
 In order to run this recipe on your workstation, please follow the
 corresponding guidelines:
@@ -77,13 +75,14 @@ corresponding guidelines:
 - ``README.Unix.rst``
 - ``README.Windows.rst``
 
-There is also a test program ``test.sh`` which exercises those command
-walkthroughs as an end-to-end test. It can be invoked like::
+There is also a test program ``test.sh`` which exercises the commands as an
+end-to-end test. It can be invoked like::
 
     bash test.sh
 
-Mostly, you want to keep the service containers running, in order to run the
-test progam repeatedly. Use the ``--keepalive`` option for that::
+Mostly, you want to keep the service containers running, in order to invoke the
+test program repeatedly without incurring too much overhead. Use the
+``--keepalive`` option for that::
 
     bash test.sh --keepalive
 
@@ -92,22 +91,23 @@ for example::
 
     bash test.sh stop-services
 
-If, by chance, the ``verify-data`` test step fails, resources are currently
-not cleaned up. In order to do that, run::
+If, by chance, the ``verify-data`` test step fails, resources are currently not
+cleaned up. In order to do that, run::
 
     bash test.sh teardown
 
 
+*******
 Details
-=======
+*******
 
 Foundation infrastructure
--------------------------
+=========================
 
-The simplest possible way to setup and start all software components on a
+The simplest possible way to set up and start all software components on a
 developer workstation is to use Docker Compose and Docker. Thus, this tutorial
 does not address topics like high-availability, fault-tolerance, scalability
-and performance considerations.
+and other performance considerations.
 
 Both Apache Flink and CrateDB offer graphical user interfaces. You can navigate
 to them by using:
@@ -116,7 +116,7 @@ to them by using:
 :CrateDB Admin UI: http://localhost:4200/
 
 Notes
------
+=====
 
 Please read those admonitions carefully in order to optimally prepare your
 system environment to fit the needs of the tutorial.
@@ -197,9 +197,14 @@ The meanings of those fields are:
 -- Derived from: ``Building IoT applications with open-source tools.pdf``.
 
 
-.. _Apache Kafka Connector for Flink: https://ci.apache.org/projects/flink/flink-docs-stable/dev/connectors/kafka.html
-.. _CrateDB JDBC driver: https://github.com/crate/crate-jdbc
+.. _Apache Flink: https://flink.apache.org/
+.. _Apache Flink jobs for CrateDB: https://github.com/crate/cratedb-flink-jobs
+.. _Apache Kafka: https://kafka.apache.org/
+.. _Build a data ingestion pipeline using Kafka, Flink, and CrateDB: https://dev.to/crate/build-a-data-ingestion-pipeline-using-kafka-flink-and-cratedb-1h5o
+.. _CrateDB: https://crate.io/products/cratedb
+.. _CrateDB JDBC driver: https://crate.io/docs/jdbc/
 .. _Docker Desktop for Windows: https://docs.docker.com/desktop/install/windows-install/
 .. _enable WSL integration: https://docs.docker.com/desktop/windows/wsl/
-.. _JDBC Connector for Flink: https://nightlies.apache.org/flink/flink-docs-stable/docs/connectors/datastream/jdbc/
+.. _Flink Apache Kafka Connector: https://nightlies.apache.org/flink/flink-docs-stable/docs/connectors/datastream/kafka/
+.. _Flink JDBC Connector: https://nightlies.apache.org/flink/flink-docs-stable/docs/connectors/datastream/jdbc/
 .. _Kafka + Flink\: A Practical, How-To Guide: https://www.ververica.com/blog/kafka-flink-a-practical-how-to
