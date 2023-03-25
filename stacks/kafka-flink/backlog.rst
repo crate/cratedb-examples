@@ -9,10 +9,18 @@ Functionality
 
 Outlook
 =======
-- [o] Currently, with the job(s) at https://github.com/crate/cratedb-flink-jobs,
-  we need Flink 1.13 max., higher versions are incompatible.
-- [o] Update to Flink 1.16. Newer releases of Flink need corresponding Catalog- and
-  Dialect-implementations for CrateDB. We are currently looking into this.
+- [o] Is there an offering also running Apache Kafka and Apache Flink in the Cloud?
+
+  - Confluent Cloud
+
+    - https://docs.confluent.io/cloud/current/connectors/
+    - https://www.confluent.io/blog/cloud-kafka-meets-cloud-flink-with-confluent-and-immerok/
+
+  - Aiven for Apache Flink®
+    https://aiven.io/flink
+
+  - Amazon EMR
+    https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-flink.html
 
 Data type mapping
 =================
@@ -36,6 +44,7 @@ General
 - [o] No error message when data is **not** actually written to CrateDB?::
 
     flood stage disk watermark [95%] exceeded on [ZNRb6FDRRNmLlQChTb_zcA][Grand Mont][/data/data/nodes/0] free: 2.8gb[4%], all indices on this node will be marked read-only
+
 - [o] Use a solid fake data generator for producing/feeding data on the fly
   See https://github.com/aiven/python-fake-data-producer-for-apache-kafka
 
@@ -47,7 +56,7 @@ General
 
   - https://aiven.io/blog/preview-JSON-SQL-functions-apache-flink-1.15.0
   - https://aiven.io/flink
-- [o] Have look at other tutorials
+- [o] Have a look at other tutorials
 
   - https://www.baeldung.com/kafka-flink-data-pipeline
   - https://github.com/eugenp/tutorials/tree/master/apache-kafka
@@ -61,6 +70,6 @@ Infrastructure
 - [/] Windows (PS): Use environment variables from python-dotenv formatted .env file
   https://gist.github.com/grenzi/82e6cb8215cc47879fdf3a8a4768ec09
 - [/] Windows (PS): Verify if https://github.com/rajivharris/Set-PsEnv actually works
-- [o] Add CI configuration
-- [o] Update all software components to their most recent versions
+- [x] Add CI configuration
+- [x] Update all software components to their most recent versions
 - [o] Add RTD configuration
