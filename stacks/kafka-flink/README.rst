@@ -46,7 +46,7 @@ blueprint for building own applications.
 
 The following versions of software components are used:
 
-- Apache Flink 1.16
+- Apache Flink 1.17
 - Apache Kafka 3.2 (Confluent 7.3)
 - CrateDB 5.2
 - CrateDB JDBC driver 2.6.0
