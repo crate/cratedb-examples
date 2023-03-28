@@ -7,21 +7,6 @@ Backlog
 Functionality
 *************
 
-Outlook
-=======
-- [o] Is there an offering also running Apache Kafka and Apache Flink in the Cloud?
-
-  - Confluent Cloud
-
-    - https://docs.confluent.io/cloud/current/connectors/
-    - https://www.confluent.io/blog/cloud-kafka-meets-cloud-flink-with-confluent-and-immerok/
-
-  - Aiven for Apache Flink®
-    https://aiven.io/flink
-
-  - Amazon EMR
-    https://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-flink.html
-
 Data type mapping
 =================
 - [o] Currently, the DDL schema is ``CREATE TABLE "taxi_rides" ("payload" OBJECT(DYNAMIC))``.
