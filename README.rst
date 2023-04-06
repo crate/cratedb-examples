@@ -26,5 +26,8 @@ Layout
   CrateDB is part of a larger software stack. Those resources may also be used
   within "reference architecture" types of documentation.
 
+- The ``testing`` folder contains reference implementations about how to use
+  different kinds of test layers for testing your applications with CrateDB.
+
 
 .. _CrateDB: https://github.com/crate/crate

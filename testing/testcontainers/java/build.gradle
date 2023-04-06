@@ -1,0 +1,70 @@
+/**
+ * An example application for demonstrating "Testcontainers for Java" with CrateDB and the PostgreSQL JDBC driver.
+ */
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
+plugins {
+    id 'application'
+    id 'com.adarshr.test-logger' version '3.2.0'
+    id 'idea'
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    implementation 'org.postgresql:postgresql:42.6.0'
+    implementation 'io.crate:crate-jdbc:2.6.0'
+    implementation 'org.slf4j:slf4j-api:2.0.7'
+    implementation 'org.slf4j:slf4j-simple:2.0.7'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.testcontainers:testcontainers:1.18.0'
+    testImplementation 'org.testcontainers:cratedb:1.18.0'
+    testImplementation 'org.testcontainers:postgresql:1.18.0'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+jar {
+    archiveBaseName = 'cratedb-example-testcontainers-java'
+    archiveVersion = '0.0.1-SNAPSHOT'
+}
+
+sourceSets {
+    main {
+        java.srcDirs += [
+            "src/generated/java",
+            "src/main/java",
+        ]
+    }
+}
+
+test {
+    dependsOn 'cleanTest'
+}
+
+apply plugin: "java"
+apply plugin: "application"
+
+application {
+    mainClass = 'io.crate.example.testing.Application'
+}
+
+ext.javaMainClass = "io.crate.example.testing.Application"
+
+
+idea.module.inheritOutputDirs = true
+processResources.destinationDir = compileJava.destinationDir
+compileJava.dependsOn processResources

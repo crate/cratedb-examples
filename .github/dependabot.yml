@@ -35,3 +35,8 @@ updates:
     package-ecosystem: "bundler"
     schedule:
       interval: "monthly"
+
+  - directory: "/testing/testcontainers/java"
+    package-ecosystem: "gradle"
+    schedule:
+      interval: "monthly"
