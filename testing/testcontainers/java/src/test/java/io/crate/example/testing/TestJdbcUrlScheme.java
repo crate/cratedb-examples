@@ -12,7 +12,7 @@ import java.sql.SQLException;
  * - https://www.testcontainers.org/modules/databases/jdbc/#database-containers-launched-via-jdbc-url-scheme
  * - https://www.testcontainers.org/features/reuse/
  */
-public class TestJDBCURLScheme {
+public class TestJdbcUrlScheme {
 
     /**
      * Launch container with PostgreSQL 15.
