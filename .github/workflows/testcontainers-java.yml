@@ -1,0 +1,47 @@
+name: Testcontainers for Java
+on:
+
+  pull_request:
+    branches: [ main ]
+    paths:
+    - '.github/workflows/testcontainers-java.yml'
+    - 'testing/testcontainers/java/**'
+  push:
+    branches: [ main ]
+    paths:
+    - '.github/workflows/testcontainers-java.yml'
+    - 'testing/testcontainers/java/**'
+
+  # Allow job to be triggered manually.
+  workflow_dispatch:
+
+# Cancel in-progress jobs when pushing to the same branch.
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  test:
+    name: "CrateDB: ${{ matrix.cratedb-version }}
+     on ${{ matrix.os }}"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ "ubuntu-latest" ]
+
+    steps:
+
+      - name: Acquire sources
+        uses: actions/checkout@v3
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "17"
+          cache: "gradle"
+
+      - name: Run software tests
+        run: |
+          cd testing/testcontainers/java
+          ./gradlew check
