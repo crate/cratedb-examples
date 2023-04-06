@@ -10,6 +10,7 @@ import java.sql.SQLException;
 
 /**
  * Testcontainer instance shared across multiple test classes, implemented using the Singleton pattern.
+ * This test case uses the CrateDB nightly release.
  *
  * Sometimes it might be useful to define a container that is only started
  * once for several test classes. There is no special support for this use

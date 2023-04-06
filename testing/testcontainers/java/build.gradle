@@ -55,9 +55,6 @@ test {
     dependsOn 'cleanTest'
 }
 
-apply plugin: "java"
-apply plugin: "application"
-
 application {
     mainClass = 'io.crate.example.testing.Application'
 }

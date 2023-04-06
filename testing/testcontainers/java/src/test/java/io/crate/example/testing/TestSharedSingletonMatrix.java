@@ -14,7 +14,7 @@ import java.sql.SQLException;
  *
  * Possible values are:
  * - Version numbers: 5, 5.2, 5.2.3
- * - Nightly build: nightly
+ * - Nightly release: nightly
  */
 abstract class AbstractContainerMatrixBaseTest {
 
@@ -34,7 +34,7 @@ abstract class AbstractContainerMatrixBaseTest {
             }
         }
 
-        // Run CrateDB nightly.
+        // Run designated CrateDB version.
         DockerImageName image = DockerImageName.parse(fullImageName).asCompatibleSubstituteFor("crate");
         cratedb = new CrateDBContainer(image);
         cratedb.start();

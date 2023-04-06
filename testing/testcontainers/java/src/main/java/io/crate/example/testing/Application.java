@@ -31,7 +31,11 @@ public class Application {
 
     public static void main(String[] args) throws IOException, SQLException {
         if (args.length != 1) {
-            throw new IOException("ERROR: Need a single argument, the database connection URL. Example: jdbc:postgresql://localhost:5432/");
+            throw new IOException(
+                    "ERROR: Need a single argument, the database connection URL.\n\n" +
+                    "Examples:\n" +
+                    "./gradlew run --args=\"jdbc:crate://localhost:5432/\"\n" +
+                    "./gradlew run --args=\"jdbc:postgresql://localhost:5432/\"\n");
         }
         String connectionUrl = args[0];
         Application app = new Application(connectionUrl);
