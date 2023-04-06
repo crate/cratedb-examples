@@ -55,12 +55,12 @@ public class Application {
         Properties connectionProps = new Properties();
         connectionProps.put("user", user);
 
-        Connection sqlConnection = DriverManager.getConnection(dsn, connectionProps);
-        sqlConnection.setAutoCommit(true);
-        if (sqlConnection.isClosed()) {
-            throw new IOException("ERROR: Unable to open connection to database");
-        }
-        try (Statement stmt = sqlConnection.createStatement()) {
+        try (Connection sqlConnection = DriverManager.getConnection(dsn, connectionProps)) {
+            sqlConnection.setAutoCommit(true);
+            if (sqlConnection.isClosed()) {
+                throw new IOException("ERROR: Unable to open connection to database");
+            }
+            Statement stmt = sqlConnection.createStatement();
             boolean checkResults = stmt.execute(sql);
             if (checkResults) {
                 ResultSet rs = stmt.getResultSet();
@@ -81,7 +81,6 @@ public class Application {
                 throw new IOException("ERROR: Result is empty");
             }
         }
-        sqlConnection.close();
 
     }
 
