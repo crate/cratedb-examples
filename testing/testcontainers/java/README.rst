@@ -33,7 +33,7 @@ Currently, all test cases are based on JUnit 4.
 Usage
 *****
 
-1. Make sure Java 17 or later is installed.
+1. Make sure Java 17 is installed.
 2. Invoke software tests, using `Testcontainers for Java`_. It should work out
    of the box::
 
