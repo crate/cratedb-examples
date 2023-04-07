@@ -1,23 +1,28 @@
 /**
  * An example application for demonstrating "Testcontainers for Java" with CrateDB and the PostgreSQL JDBC driver.
- *
- * - https://github.com/crate/crate
- * - https://github.com/testcontainers/testcontainers-java
- * - https://www.testcontainers.org/modules/databases/cratedb/
- * - https://github.com/pgjdbc/pgjdbc
+ * <ul>
+ *  <li><a href="https://github.com/crate/crate"/></li>
+ *  <li><a href="https://github.com/testcontainers/testcontainers-java"/></li>
+ *  <li><a href="https://www.testcontainers.org/modules/databases/cratedb/"/></li>
+ *  <li><a href="https://github.com/pgjdbc/pgjdbc/"/></li>
+ * </ul>
  */
 
 package io.crate.example.testing;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 
 public class Application {
 
-    public String dsn;
-    public String user;
+    public record Results(ResultSetMetaData metaData, List<Object[]> rows) {}
+
+    private final String dsn;
+    private final String user;
 
     public Application(String connectionUrl) {
         dsn = connectionUrl;
@@ -31,27 +36,45 @@ public class Application {
 
     public static void main(String[] args) throws IOException, SQLException {
         if (args.length != 1) {
-            throw new IOException(
-                    "ERROR: Need a single argument, the database connection URL.\n\n" +
-                    "Examples:\n" +
-                    "./gradlew run --args=\"jdbc:crate://localhost:5432/\"\n" +
-                    "./gradlew run --args=\"jdbc:postgresql://localhost:5432/\"\n");
+            throw new IllegalArgumentException(
+                    """
+                    ERROR: Need a single argument, the database connection URL.
+                    
+                    Examples:
+                    ./gradlew run --args="jdbc:crate://localhost:5432/"
+                    ./gradlew run --args="jdbc:postgresql://localhost:5432/"
+                    """);
         }
         String connectionUrl = args[0];
         Application app = new Application(connectionUrl);
-        app.querySummitsTable();
-        System.out.println("Ready.");
+        printResults(app.querySummitsTable());
+        System.out.println("Done.");
+    }
+
+    public static void printResults(Results results) throws SQLException {
+        for (int i = 0; i < results.rows.size(); i++) {
+            Object[] row = results.rows.get(i);
+            System.out.printf(Locale.ENGLISH, "> row %d%n", i + 1);
+            for (int j = 1; j < results.metaData().getColumnCount(); j++) {
+                System.out.printf(
+                        Locale.ENGLISH,
+                        ">> col %d: %s: %s%n",
+                        j,
+                        results.metaData.getColumnName(j),
+                        row[j]);
+            }
+            System.out.println();
+        }
     }
 
     /**
      * Example database conversation: Query the built-in `sys.summits` table of CrateDB.
      */
-    public void querySummitsTable() throws IOException, SQLException {
-        this.query("SELECT * FROM sys.summits LIMIT 3;");
+    public Results querySummitsTable() throws IOException, SQLException {
+        return this.query("SELECT * FROM sys.summits ORDER BY height DESC LIMIT 3");
     }
 
-    public void query(String sql) throws IOException, SQLException {
-
+    public Results query(String sql) throws IOException, SQLException {
         Properties connectionProps = new Properties();
         connectionProps.put("user", user);
 
@@ -60,28 +83,25 @@ public class Application {
             if (sqlConnection.isClosed()) {
                 throw new IOException("ERROR: Unable to open connection to database");
             }
-            Statement stmt = sqlConnection.createStatement();
-            boolean checkResults = stmt.execute(sql);
-            if (checkResults) {
-                ResultSet rs = stmt.getResultSet();
-                while (rs.next()) {
-                    System.out.printf(Locale.ENGLISH, "> row %d\n", rs.getRow());
-                    ResultSetMetaData metaData = rs.getMetaData();
-                    int columnCount = metaData.getColumnCount();
-                    for (int i = 1; i <= columnCount; i++) {
-                        System.out.printf(
-                                Locale.ENGLISH,
-                                ">> col %d: %s: %s\n",
-                                i,
-                                metaData.getColumnName(i),
-                                rs.getObject(i));
+            try (Statement stmt = sqlConnection.createStatement()) {
+                boolean checkResults = stmt.execute(sql);
+                if (checkResults) {
+                    List<Object[]> rows = new ArrayList<>();
+                    ResultSet rs = stmt.getResultSet();
+                    while (rs.next()) {
+                        ResultSetMetaData metaData = rs.getMetaData();
+                        int columnCount = metaData.getColumnCount();
+                        Object[] row = new Object[columnCount];
+                        for (int i = 1; i < columnCount; i++) {
+                            row[i] = rs.getObject(i);
+                        }
+                        rows.add(row);
                     }
+                    return new Results(rs.getMetaData(), rows);
+                } else {
+                    throw new IOException("ERROR: Result is empty");
                 }
-            } else {
-                throw new IOException("ERROR: Result is empty");
             }
         }
-
     }
-
 }

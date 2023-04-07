@@ -8,16 +8,20 @@ import org.testcontainers.utility.DockerImageName;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import static io.crate.example.testing.utils.TestingHelpers.assertResults;
+
 
 /**
  * Function-scoped testcontainer instance with JUnit 4 @Rule/@ClassRule integration.
- *
+ * <p>
  * In case you can't use the URL support, or need to fine-tune the container, you can instantiate it yourself.
  * Note that if you use @Rule, you will be given an isolated container for each test method.
  * If you use @ClassRule, you will get on isolated container for all the methods in the test class.
- *
- * - https://www.testcontainers.org/modules/databases/jdbc/#database-container-objects
- * - https://www.testcontainers.org/test_framework_integration/junit_4/#ruleclassrule-integration
+ * </p>
+ * <p>
+ *   <a href="https://www.testcontainers.org/modules/databases/jdbc/#database-container-objects"/>
+ *   <a href="https://www.testcontainers.org/test_framework_integration/junit_4/#ruleclassrule-integration" />
+ * </p>
  */
 public class TestFunctionScope {
 
@@ -29,12 +33,11 @@ public class TestFunctionScope {
 
         // Get JDBC URL to CrateDB instance.
         String connectionUrl = cratedb.getJdbcUrl();
-        System.out.println(String.format("Connecting to %s", connectionUrl));
+        System.out.printf("Connecting to %s%n", connectionUrl);
 
         // Invoke example test.
         Application app = new Application(connectionUrl);
-        app.querySummitsTable();
-
+        var results = app.querySummitsTable();
+        assertResults(results);
     }
-
 }

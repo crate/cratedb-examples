@@ -7,14 +7,20 @@ import org.testcontainers.utility.DockerImageName;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import static io.crate.example.testing.utils.TestingHelpers.assertResults;
+
 
 /**
  * Testcontainer instance honoring the `CRATEDB_VERSION` environment variable,
  * suitable for running a test matrix on different versions of CrateDB.
- *
+ * <p>
  * Possible values are:
- * - Version numbers: 5, 5.2, 5.2.3
- * - Nightly release: nightly
+ * <ul>
+ *     <li>Version numbers: 5, 5.2, 5.2.3, etc.</li>
+ *     <li>Latest release: latest</li>
+ *     <li>Nightly release: nightly</li>
+ * </ul>
+ * </p>
  */
 abstract class AbstractContainerMatrixBaseTest {
 
@@ -49,12 +55,11 @@ public class TestSharedSingletonMatrix extends AbstractContainerMatrixBaseTest {
 
         // Get JDBC URL to CrateDB instance.
         String connectionUrl = cratedb.getJdbcUrl();
-        System.out.println(String.format("Connecting to %s", connectionUrl));
+        System.out.printf("Connecting to %s%n", connectionUrl);
 
         // Invoke example test.
         Application app = new Application(connectionUrl);
-        app.querySummitsTable();
-
+        var results = app.querySummitsTable();
+        assertResults(results);
     }
-
 }
