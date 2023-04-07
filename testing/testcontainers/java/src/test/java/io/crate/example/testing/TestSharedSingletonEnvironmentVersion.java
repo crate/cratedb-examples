@@ -22,7 +22,7 @@ import static io.crate.example.testing.utils.TestingHelpers.assertResults;
  * </ul>
  * </p>
  */
-abstract class AbstractContainerMatrixBaseTest {
+abstract class AbstractContainerSingletonEnvironmentVersion {
 
     static final CrateDBContainer cratedb;
 
@@ -48,7 +48,7 @@ abstract class AbstractContainerMatrixBaseTest {
 }
 
 
-public class TestSharedSingletonMatrix extends AbstractContainerMatrixBaseTest {
+public class TestSharedSingletonEnvironmentVersion extends AbstractContainerSingletonEnvironmentVersion {
 
     @Test
     public void testReadSummits() throws SQLException, IOException {
