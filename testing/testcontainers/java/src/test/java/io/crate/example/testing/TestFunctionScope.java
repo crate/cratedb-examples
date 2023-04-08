@@ -1,9 +1,9 @@
 package io.crate.example.testing;
 
+import io.crate.example.testing.utils.TestingHelpers;
 import org.junit.Rule;
 import org.junit.Test;
 import org.testcontainers.cratedb.CrateDBContainer;
-import org.testcontainers.utility.DockerImageName;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -26,7 +26,7 @@ import static io.crate.example.testing.utils.TestingHelpers.assertResults;
 public class TestFunctionScope {
 
     @Rule
-    public CrateDBContainer cratedb = new CrateDBContainer(DockerImageName.parse("crate:5.2"));
+    public CrateDBContainer cratedb = new CrateDBContainer(TestingHelpers.nameFromLabel("5.2"));
 
     @Test
     public void testReadSummits() throws SQLException, IOException {

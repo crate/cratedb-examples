@@ -1,5 +1,7 @@
 package io.crate.example.testing;
 
+import io.crate.example.testing.utils.TestingHelpers;
+import org.junit.Before;
 import org.junit.Test;
 import org.testcontainers.cratedb.CrateDBContainer;
 import org.testcontainers.utility.DockerImageName;
@@ -21,20 +23,17 @@ import static io.crate.example.testing.utils.TestingHelpers.assertResults;
  * </p>
  * <a href="https://www.testcontainers.org/test_framework_integration/manual_lifecycle_control/#singleton-containers"/>
  */
-abstract class AbstractContainerBaseTest {
+public class TestSharedSingleton {
 
-    static final CrateDBContainer cratedb;
+    private CrateDBContainer cratedb;
 
-    static {
-        // Run CrateDB nightly.
-        DockerImageName image = DockerImageName.parse("crate/crate:nightly").asCompatibleSubstituteFor("crate");
+    @Before
+    public void startContainer() {
+        // Run CrateDB latest.
+        DockerImageName image = TestingHelpers.nameFromLabel("latest");
         cratedb = new CrateDBContainer(image);
         cratedb.start();
     }
-}
-
-
-public class TestSharedSingleton extends AbstractContainerBaseTest {
 
     @Test
     public void testReadSummits() throws SQLException, IOException {

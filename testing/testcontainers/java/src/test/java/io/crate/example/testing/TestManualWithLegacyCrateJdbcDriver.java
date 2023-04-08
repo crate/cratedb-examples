@@ -1,5 +1,6 @@
 package io.crate.example.testing;
 
+import io.crate.example.testing.utils.TestingHelpers;
 import org.junit.Test;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
@@ -21,7 +22,7 @@ public class TestManualWithLegacyCrateJdbcDriver {
     @Test
     public void testReadSummits() throws SQLException, IOException {
         // Run CrateDB nightly.
-        DockerImageName image = DockerImageName.parse("crate/crate:nightly").asCompatibleSubstituteFor("crate");
+        DockerImageName image = TestingHelpers.nameFromLabel("nightly");
         try (CrateDBContainerLegacyJdbcDriver cratedb = new CrateDBContainerLegacyJdbcDriver(image)) {
             cratedb.start();
 
