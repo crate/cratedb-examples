@@ -1,5 +1,6 @@
 package io.crate.example.testing;
 
+import io.crate.example.testing.utils.TestingHelpers;
 import org.junit.Test;
 import org.testcontainers.cratedb.CrateDBContainer;
 import org.testcontainers.utility.DockerImageName;
@@ -19,7 +20,7 @@ public class TestManual {
     @Test
     public void testReadSummits() throws SQLException, IOException {
         // Run CrateDB nightly.
-        DockerImageName image = DockerImageName.parse("crate/crate:nightly").asCompatibleSubstituteFor("crate");
+        DockerImageName image = TestingHelpers.nameFromLabel("nightly");
         try (CrateDBContainer cratedb = new CrateDBContainer(image)) {
             cratedb.start();
 

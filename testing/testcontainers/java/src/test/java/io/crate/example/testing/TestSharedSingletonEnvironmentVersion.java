@@ -1,5 +1,7 @@
 package io.crate.example.testing;
 
+import io.crate.example.testing.utils.TestingHelpers;
+import org.junit.Before;
 import org.junit.Test;
 import org.testcontainers.cratedb.CrateDBContainer;
 import org.testcontainers.utility.DockerImageName;
@@ -22,37 +24,20 @@ import static io.crate.example.testing.utils.TestingHelpers.assertResults;
  * </ul>
  * </p>
  */
-abstract class AbstractContainerSingletonEnvironmentVersion {
+public class TestSharedSingletonEnvironmentVersion {
 
-    static final CrateDBContainer cratedb;
+    private CrateDBContainer cratedb;
 
-    static {
-
-        String cratedb_version = System.getenv("CRATEDB_VERSION");
-        String fullImageName;
-        if (cratedb_version == null) {
-            fullImageName = "crate:latest";
-        } else {
-            if (cratedb_version.equals("nightly")) {
-                fullImageName = "crate/crate:nightly";
-            } else {
-                fullImageName = String.format("crate:%s", cratedb_version);
-            }
-        }
-
+    @Before
+    public void startContainer() {
         // Run designated CrateDB version.
-        DockerImageName image = DockerImageName.parse(fullImageName).asCompatibleSubstituteFor("crate");
+        DockerImageName image = TestingHelpers.nameFromEnvironment();
         cratedb = new CrateDBContainer(image);
         cratedb.start();
     }
-}
-
-
-public class TestSharedSingletonEnvironmentVersion extends AbstractContainerSingletonEnvironmentVersion {
 
     @Test
     public void testReadSummits() throws SQLException, IOException {
-
         // Get JDBC URL to CrateDB instance.
         String connectionUrl = cratedb.getJdbcUrl();
         System.out.printf("Connecting to %s%n", connectionUrl);
