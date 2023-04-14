@@ -26,7 +26,28 @@ What's inside
 
 This directory includes different canonical examples how to use those
 components within test harnesses of custom applications using `CrateDB`_.
-Currently, all test cases are based on JUnit 4.
+Currently, all test cases are based on JUnit 4. This is an enumeration
+of examples you can explore here:
+
+- ``TestClassScope``: Class-scoped testcontainer instance with JUnit 4 @Rule/@ClassRule integration.
+- ``TestFunctionScope``: Function-scoped testcontainer instance with JUnit 4 @Rule/@ClassRule integration.
+- ``TestJdbcUrlScheme``: Database containers launched via Testcontainers "TC" JDBC URL scheme.
+- ``TestManual``: Function-scoped testcontainer instance with manual setup/teardown.
+- ``TestManualWithLegacyCrateJdbcDriver``:
+  Function-scoped testcontainer instance with manual setup/teardown, using a custom
+  ``CrateDBContainer``, which uses the `legacy CrateDB JDBC driver`_.
+- ``TestSharedSingleton`` [1]:
+  Testcontainer instance shared across multiple test classes, implemented using the Singleton pattern.
+- ``TestSharedSingletonEnvironmentVersion``:
+  Testcontainer instance honoring the ``CRATEDB_VERSION`` environment variable, suitable
+  for running a test matrix on different versions of CrateDB, shared across multiple test
+  classes.
+
+[1]: Sometimes, it might be useful to define a container that is only started once for
+several test classes. There is no special support for this use case provided by
+the Testcontainers extension. Instead, this can be implemented using the Singleton
+pattern. See also `Testcontainers » Manual container lifecycle control » Singleton
+containers`_.
 
 
 *****
@@ -62,5 +83,7 @@ Usage
 
 .. _CrateDB: https://github.com/crate/crate
 .. _CrateDB OCI image: https://hub.docker.com/_/crate
+.. _legacy CrateDB JDBC driver: https://crate.io/docs/jdbc/
 .. _Testcontainers for Java: https://github.com/testcontainers/testcontainers-java
 .. _Testcontainers CrateDB Module: https://www.testcontainers.org/modules/databases/cratedb/
+.. _Testcontainers » Manual container lifecycle control » Singleton containers: https://www.testcontainers.org/test_framework_integration/manual_lifecycle_control/#singleton-containers
