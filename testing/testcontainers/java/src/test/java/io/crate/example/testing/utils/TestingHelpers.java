@@ -3,7 +3,10 @@ package io.crate.example.testing.utils;
 import io.crate.example.testing.Application;
 import org.testcontainers.utility.DockerImageName;
 
+import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -36,4 +39,21 @@ public final class TestingHelpers {
                 "Monte Rosa",
                 "Dom");
     }
+
+    /**
+     * Support function for initializing CrateDB with SQL using an init function.
+     * You can run a simple schema setup or Flyway/liquibase DB migrations here, at your disposal.
+     * <a href="https://www.testcontainers.org/modules/databases/jdbc/#using-an-init-function"/>
+     */
+    public static void sqlInitFunction(Connection connection) throws SQLException, IOException, InterruptedException {
+        try (Statement stmt = connection.createStatement()) {
+            boolean checkResults = stmt.execute("CREATE TABLE IF NOT EXISTS foobar_init (id INTEGER)");
+            if (checkResults) {
+                System.out.println("Success.");
+            } else {
+                throw new SQLException("ERROR: SQL initialization failed");
+            }
+        }
+    }
+
 }
