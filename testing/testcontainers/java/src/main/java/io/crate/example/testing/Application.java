@@ -74,6 +74,10 @@ public class Application {
         return this.query("SELECT * FROM sys.summits ORDER BY height DESC LIMIT 3");
     }
 
+    public Results showCreateTable(String tablename) throws IOException, SQLException {
+        return this.query("SHOW CREATE TABLE " + tablename);
+    }
+
     public Results query(String sql) throws IOException, SQLException {
         Properties connectionProps = new Properties();
         connectionProps.put("user", user);
