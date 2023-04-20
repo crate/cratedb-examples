@@ -43,7 +43,7 @@ of examples you can explore here:
   for running a test matrix on different versions of CrateDB, shared across multiple test
   classes.
 - ``TestSqlInitialization``: Demonstrate different ways how Testcontainers can run an init script after
-  the database container is started, but before your code is given a connection to it.
+  the database container is started, but before your code initiates a connection to it.
 
 [1]: Sometimes, it might be useful to define a container that is only started once for
 several test classes. There is no special support for this use case provided by
