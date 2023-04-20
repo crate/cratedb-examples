@@ -39,7 +39,7 @@ public class TestSqlInitialization {
      */
     @Test
     public void testTcInitArbitraryFile() throws SQLException, IOException {
-        String connectionUrl = "jdbc:tc:cratedb:5.2://localhost/doc?user=crate&TC_REUSABLE=true&TC_INITSCRIPT=file:src/main/resources/init.sql";
+        String connectionUrl = "jdbc:tc:cratedb:5.2://localhost/doc?user=crate&TC_REUSABLE=true&TC_INITSCRIPT=file:src/test/resources/init.sql";
         System.out.printf("Connecting to %s%n", connectionUrl);
 
         // Invoke `SHOW CREATE TABLE ...` query.
@@ -64,5 +64,4 @@ public class TestSqlInitialization {
         assertThat(results.metaData().getColumnCount()).isEqualTo(1);
         assertThat(results.rows()).hasSize(1);
     }
-
 }
