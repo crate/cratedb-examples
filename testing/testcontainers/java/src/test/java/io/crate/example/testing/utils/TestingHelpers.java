@@ -47,13 +47,7 @@ public final class TestingHelpers {
      */
     public static void sqlInitFunction(Connection connection) throws SQLException, IOException, InterruptedException {
         try (Statement stmt = connection.createStatement()) {
-            boolean checkResults = stmt.execute("CREATE TABLE IF NOT EXISTS foobar_init (id INTEGER)");
-            if (checkResults) {
-                System.out.println("Success.");
-            } else {
-                throw new SQLException("ERROR: SQL initialization failed");
-            }
+            stmt.execute("CREATE TABLE IF NOT EXISTS foobar_init (id INTEGER)");
         }
     }
-
 }
