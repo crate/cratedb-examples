@@ -31,6 +31,11 @@ updates:
     schedule:
       interval: "monthly"
 
+  - directory: "/by-language/php-pdo"
+    package-ecosystem: "composer"
+    schedule:
+      interval: "monthly"
+
   - directory: "/by-language/ruby"
     package-ecosystem: "bundler"
     schedule:
