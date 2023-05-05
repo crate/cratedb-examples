@@ -1,0 +1,19 @@
+{
+    "name": "crate/amphp-example",
+    "description": "AMPHP example for CrateDB",
+    "authors": [
+        {
+            "name": "Crate.io",
+            "email": "office@crate.io",
+            "homepage": "https://crate.io",
+            "role": "maintainer"
+        }
+    ],
+    "license": "Apache-2.0",
+    "homepage": "https://github.com/crate/cratedb-examples/tree/main/by-language/php-amphp",
+    "keywords": ["database", "cratedb", "sql"],
+    "require": {
+        "php":     "^7.1|^8.0|^8.1|^8.2",
+        "amphp/postgres": "^1.4"
+    }
+}

@@ -1,0 +1,59 @@
+name: PHP AMPHP
+on:
+
+  pull_request:
+    branches: [ main ]
+    paths:
+    - '.github/workflows/test-php-amphp.yml'
+    - 'by-language/php-amphp/**'
+  push:
+    branches: [ main ]
+    paths:
+    - '.github/workflows/test-php-amphp.yml'
+    - 'by-language/php-amphp/**'
+
+  # Allow job to be triggered manually.
+  workflow_dispatch:
+
+# Cancel in-progress jobs when pushing to the same branch.
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  test:
+    name: "CrateDB: ${{ matrix.cratedb-version }}
+     PHP: ${{ matrix.php-version }}
+     on ${{ matrix.os }}"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ "ubuntu-latest" ]
+        cratedb-version: [ "nightly" ]
+        php-version: [ "7.4", "8.2" ]
+
+    services:
+      cratedb:
+        image: crate/crate:nightly
+        ports:
+          - 4200:4200
+          - 5432:5432
+
+    steps:
+
+      - name: Acquire sources
+        uses: actions/checkout@v3
+
+      # https://github.com/marketplace/actions/setup-php-action
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          tools: composer
+
+      - name: Run software tests
+        run: |
+          cd by-language/php-amphp
+          composer install
+          php basic.php 'host=localhost port=5432 user=crate'
