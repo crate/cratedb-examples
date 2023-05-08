@@ -19,8 +19,10 @@ page. Because CrateDB only supports (implicitly created) `table schemas`_
 instead of databases, please also read `PostgreSQL documentation about
 schemas`_ carefully.
 
-Also, please note that support for this driver is experimental. The `CrateDB
-PDO driver`_ is the official CrateDB PHP client supported by Crate.io.
+.. note::
+
+    The support for this driver is experimental. The `CrateDB PDO driver`_ 
+    is the official CrateDB PHP client supported by Crate.io.
 
 
 *****
