@@ -14,7 +14,7 @@ Setup
 =====
 ::
 
-    pip install --upgrade click colorlog crate pandas sqlalchemy
+    pip install --upgrade click colorlog 'crate[sqlalchemy]' pandas sqlalchemy
 
 
 Synopsis
@@ -52,6 +52,8 @@ import pkg_resources
 import sqlalchemy as sa
 from colorlog.escape_codes import escape_codes
 from pandas._testing import makeTimeDataFrame
+
+from crate.client.sqlalchemy.support import insert_bulk
 
 logger = logging.getLogger(__name__)
 
@@ -103,40 +105,10 @@ class DatabaseWorkload:
         # CrateDB bulk transfer mode. 65K records/s
         # https://crate.io/docs/crate/reference/en/latest/interfaces/http.html#bulk-operations
         elif mode == "bulk":
-            df.to_sql(name=self.table_name, con=engine, if_exists="append", index=False, chunksize=bulk_size, method=self.insert_bulk)
+            df.to_sql(name=self.table_name, con=engine, if_exists="append", index=False, chunksize=bulk_size, method=insert_bulk)
 
         else:
             raise ValueError(f"Unknown mode: {mode}")
-
-    @staticmethod
-    def insert_bulk(pd_table, conn, keys, data_iter):
-        """
-        A fast insert method for pandas and Dask, using CrateDB's "bulk operations" endpoint.
-
-        The idea is to break out of SQLAlchemy, compile the insert statement, and use the raw
-        DBAPI connection client, in order to invoke a request using `bulk_parameters`::
-
-            cursor.execute(sql=sql, bulk_parameters=data)
-
-        - https://crate.io/docs/crate/reference/en/latest/interfaces/http.html#bulk-operations
-
-        The vanilla implementation, used by SQLAlchemy, is::
-
-            data = [dict(zip(keys, row)) for row in data_iter]
-            conn.execute(pd_table.table.insert(), data)
-
-        """
-
-        # Bulk
-        sql = str(pd_table.table.insert().compile(bind=conn))
-        data = list(data_iter)
-
-        logger.info(f"Bulk SQL:     {sql}")
-        logger.info(f"Bulk records: {len(data)}")
-
-        cursor = conn._dbapi_connection.cursor()
-        cursor.execute(sql=sql, bulk_parameters=data)
-        cursor.close()
 
     def show_table_stats(self):
         """

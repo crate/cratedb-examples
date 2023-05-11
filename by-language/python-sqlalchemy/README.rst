@@ -27,7 +27,7 @@ Navigate to example program directory, and install prerequisites::
     cd cratedb-examples/by-language/python-sqlalchemy
     python3 -m venv .venv
     source .venv/bin/activate
-    pip install --upgrade click colorlog crate pandas sqlalchemy
+    pip install --upgrade click colorlog 'crate[sqlalchemy]' dask pandas sqlalchemy
 
 Run example programs::
 
