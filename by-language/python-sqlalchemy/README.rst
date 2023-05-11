@@ -40,6 +40,8 @@ Run example programs::
     time python insert_pandas.py --mode=basic --insertmanyvalues-page-size=5000
     time python insert_pandas.py --mode=bulk --bulk-size=20000 --num-records=75000
 
+    time python insert_dask.py
+
     # Connect to CrateDB Cloud.
     time python insert_pandas.py --dburi='crate://admin:<PASSWORD>@example.aks1.westeurope.azure.cratedb.net:4200?ssl=true'
 
