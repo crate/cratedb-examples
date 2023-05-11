@@ -16,6 +16,7 @@ Usage
 import dask.dataframe as dd
 from dask.diagnostics import ProgressBar
 from pandas._testing import makeTimeDataFrame
+from crate.client.sqlalchemy.support import insert_bulk
 
 
 DBURI = "crate://localhost:4200"
@@ -32,10 +33,13 @@ def main():
     # Save DataFrame into CrateDB efficiently.
 
     # Works. Takes ~3 seconds.
-    ddf.to_sql("testdrive", uri=DBURI, index=False, if_exists="replace", chunksize=10_000, parallel=True)
+    # ddf.to_sql("testdrive", uri=DBURI, index=False, if_exists="replace", chunksize=10_000, parallel=True)
 
     # Works. Takes ~10 seconds.
     # ddf.to_sql("testdrive", uri=DBURI, index=False, if_exists="replace", chunksize=10_000, parallel=True, method="multi")
+
+    # Works. Takes ~2 seconds.
+    ddf.to_sql("testdrive", uri=DBURI, index=False, if_exists="replace", chunksize=10_000, parallel=True, method=insert_bulk)
 
 
 if __name__ == "__main__":
