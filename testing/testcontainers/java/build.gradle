@@ -28,7 +28,7 @@ dependencies {
     testImplementation "org.assertj:assertj-core:3.24.2"
     testImplementation 'org.testcontainers:testcontainers:1.18.3'
     testImplementation 'org.testcontainers:cratedb:1.18.3'
-    testImplementation 'org.testcontainers:postgresql:1.18.3'
+    testImplementation 'org.testcontainers:postgresql:1.19.0'
 }
 
 java {
