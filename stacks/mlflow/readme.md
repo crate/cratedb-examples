@@ -39,17 +39,7 @@ and [CrateDB].
   from the [Numenta Anomaly Benchmark] data.
 
 
-## Setup
-
-In order to spin up a CrateDB instance without further ado, you can use
-Docker or Podman.
-
-```shell
-docker run --rm -it --publish=4200:4200 --publish=5432:5432 \
-  --env=CRATE_HEAP_SIZE=4g crate \
-  -Cdiscovery.type=single-node \
-  -Ccluster.routing.allocation.disk.threshold_enabled=false
-```
+## Install
 
 In order to properly setup a development sandbox environment, it is advised
 to create a Python virtualenv, and install the dependencies there. In this
@@ -61,7 +51,8 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-## Usage
+
+## Setup
 
 The upcoming commands expect that you are working on a terminal with
 activated virtualenv.
@@ -69,14 +60,62 @@ activated virtualenv.
 source .venv/bin/activate
 ```
 
-### MLflow Server
-Start the MLflow server, pointing it towards your CrateDB instance.
+### CrateDB on localhost
 
+In order to spin up a CrateDB instance without further ado, you can use
+Docker or Podman.
+```shell
+docker run --rm -it --publish=4200:4200 --publish=5432:5432 \
+  --env=CRATE_HEAP_SIZE=4g crate \
+  -Cdiscovery.type=single-node \
+  -Ccluster.routing.allocation.disk.threshold_enabled=false
+```
+
+Start the MLflow server, pointing it to your [CrateDB] instance,
+running on `localhost`.
 ```shell
 mlflow server --backend-store-uri='crate://crate@localhost'
 ```
 
-### Experiment
+You can use `crash` to query for database records. Please note that the fork
+of MLflow adjusted for CrateDB stores its tables into the `mlflow` schema,
+so you will need to specify it when querying for data.
+```shell
+crash --command 'SELECT * FROM "mlflow"."experiments";'
+crash --command 'SELECT * FROM "mlflow"."runs";'
+```
+
+### CrateDB Cloud
+
+Prepare a few environment variables for convenience purposes.
+```shell
+export CRATEDB_USERNAME='admin'
+export CRATEDB_PASSWORD='<PASSWORD>'
+export CRATEDB_HTTP_URL="https://${CRATEDB_USERNAME}:${CRATEDB_PASSWORD}@example.aks1.westeurope.azure.cratedb.net:4200"
+export CRATEDB_SQLALCHEMY_URL="crate://${CRATEDB_USERNAME}:${CRATEDB_PASSWORD}@example.aks1.westeurope.azure.cratedb.net:4200?ssl=true"
+```
+
+Start the MLflow server, connecting it to your [CrateDB Cloud] instance.
+```shell
+mlflow server --backend-store-uri="${CRATEDB_SQLALCHEMY_URL}"
+```
+
+Use `crash` to connect to the CrateDB Cloud instance, and inquire the relevant
+MLflow database tables.
+```shell
+crash --hosts "${CRATEDB_HTTP_URL}" --command 'SELECT * FROM "mlflow"."experiments";'
+crash --hosts "${CRATEDB_HTTP_URL}" --command 'SELECT * FROM "mlflow"."runs";'
+```
+
+### Operations
+In order to run SQL DDL statements manually, you can use the `crash` program.
+```shell
+crash < mlflow/store/tracking/dbmodels/ddl/cratedb.sql
+crash < mlflow/store/tracking/dbmodels/ddl/drop.sql
+```
+
+
+## Run Experiment
 In another terminal, run the Python program which defines the experiment. You can
 point it towards the MLflow server you just started, using the `MLFLOW_TRACKING_URI`
 environment variable, so the program will send events and outcomes from experiment
@@ -87,24 +126,10 @@ export MLFLOW_TRACKING_URI=http://127.0.0.1:5000
 python tracking_merlion.py
 ```
 
-### Operations
-In order to run SQL DDL statements manually, you can use the `crash` program.
-```shell
-crash < mlflow/store/tracking/dbmodels/ddl/cratedb.sql
-crash < mlflow/store/tracking/dbmodels/ddl/drop.sql
-```
-
-You can also use `crash` to query for database records. Please note that the
-fork of MLflow adjusted for CrateDB stores its tables into the `mlflow` schema,
-so you will need to specify it when querying for data.
-
-```shell
-crash --command 'SELECT * FROM "mlflow"."experiments";'
-crash --command 'SELECT * FROM "mlflow"."runs";'
-```
 
 
 [CrateDB]: https://github.com/crate/crate
+[CrateDB Cloud]: https://console.cratedb.cloud/
 [Merlion]: https://pypi.org/project/salesforce-merlion/
 [MLflow]: https://mlflow.org/
 [mlflow-cratedb]: https://github.com/crate-workbench/mlflow-cratedb
@@ -112,3 +137,4 @@ crash --command 'SELECT * FROM "mlflow"."runs";'
 [MLflow Model Registry]: https://mlflow.org/docs/latest/model-registry.html
 [MLflow Projects]: https://mlflow.org/docs/latest/projects.html
 [MLflow Tracking]: https://mlflow.org/docs/latest/tracking.html
+[Numenta Anomaly Benchmark]: https://github.com/numenta/NAB
