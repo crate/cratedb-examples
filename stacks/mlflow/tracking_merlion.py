@@ -1,6 +1,8 @@
 """
 Use MLflow to track the events and outcome of an ML experiment program using Merlion.
 """
+import os
+
 import numpy as np
 import pandas as pd
 from crate import client
@@ -16,12 +18,8 @@ def connect_database():
     """
     Connect to CrateDB, and return database connection object.
     """
-    # TODO: Unlock for CrateDB Cloud.
-    #       https://github.com/crate-workbench/mlflow-cratedb/blob/07fa889362/mlflow/store/db/utils.py#L222-L236
-    # conn = client.connect("https://<your-instance>.azure.cratedb.net:4200",
-    #                       username="admin",
-    #                       password="<your-password>", verify_ssl_cert=True)
-    return client.connect("http://crate@localhost:4200")
+    dburi = os.getenv("CRATEDB_HTTP_URL", "http://crate@localhost:4200")
+    return client.connect(dburi)
 
 
 def provision_data():
