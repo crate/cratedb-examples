@@ -132,7 +132,7 @@ python tracking_merlion.py
 [CrateDB Cloud]: https://console.cratedb.cloud/
 [Merlion]: https://pypi.org/project/salesforce-merlion/
 [MLflow]: https://mlflow.org/
-[mlflow-cratedb]: https://github.com/crate-workbench/mlflow-cratedb
+[mlflow-cratedb]: https://github.com/crate-workbench/mlflow
 [MLflow Models]: https://mlflow.org/docs/latest/models.html
 [MLflow Model Registry]: https://mlflow.org/docs/latest/model-registry.html
 [MLflow Projects]: https://mlflow.org/docs/latest/projects.html
