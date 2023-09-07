@@ -87,12 +87,14 @@ crash --command 'SELECT * FROM "mlflow"."runs";'
 
 ### CrateDB Cloud
 
-Prepare a few environment variables for convenience purposes.
+Prepare a few environment variables for convenience purposes. Replace `<PASSWORD>`
+and `<CLUSTERNAME>` to match yours, and optionally also adjust `CRATEDB_USERNAME`.
 ```shell
 export CRATEDB_USERNAME='admin'
 export CRATEDB_PASSWORD='<PASSWORD>'
-export CRATEDB_HTTP_URL="https://${CRATEDB_USERNAME}:${CRATEDB_PASSWORD}@example.aks1.westeurope.azure.cratedb.net:4200"
-export CRATEDB_SQLALCHEMY_URL="crate://${CRATEDB_USERNAME}:${CRATEDB_PASSWORD}@example.aks1.westeurope.azure.cratedb.net:4200?ssl=true"
+export CRATEDB_HOSTNAME='<CLUSTERNAME>.aks1.westeurope.azure.cratedb.net'
+export CRATEDB_HTTP_URL="https://${CRATEDB_USERNAME}:${CRATEDB_PASSWORD}@${CRATEDB_HOSTNAME}:4200"
+export CRATEDB_SQLALCHEMY_URL="crate://${CRATEDB_USERNAME}:${CRATEDB_PASSWORD}@${CRATEDB_HOSTNAME}:4200?ssl=true"
 ```
 
 Start the MLflow server, connecting it to your [CrateDB Cloud] instance.
