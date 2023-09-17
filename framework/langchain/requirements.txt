@@ -1,0 +1,5 @@
+crash
+crate[sqlalchemy]
+git+https://github.com/crate-workbench/langchain@cratedb#egg=langchain[cratedb,openai]&subdirectory=libs/langchain
+python-dotenv
+unstructured
