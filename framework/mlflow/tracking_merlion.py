@@ -30,7 +30,7 @@ def provision_data():
         "https://raw.githubusercontent.com/numenta/NAB/master/data/realKnownCause/machine_temperature_system_failure.csv"
     )
 
-    # Connecting to crate
+    # Connecting to CrateDB.
     conn = connect_database()
     try:
         conn.cursor().execute("SELECT * FROM machine_data LIMIT 1;")
