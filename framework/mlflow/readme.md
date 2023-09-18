@@ -65,16 +65,15 @@ source .venv/bin/activate
 In order to spin up a CrateDB instance without further ado, you can use
 Docker or Podman.
 ```shell
-docker run --rm -it --publish=4200:4200 --publish=5432:5432 \
-  --env=CRATE_HEAP_SIZE=4g crate \
-  -Cdiscovery.type=single-node \
-  -Ccluster.routing.allocation.disk.threshold_enabled=false
+docker run --rm -it \
+  --name=cratedb --publish=4200:4200 --publish=5432:5432 \
+  --env=CRATE_HEAP_SIZE=4g crate -Cdiscovery.type=single-node
 ```
 
 Start the MLflow server, pointing it to your [CrateDB] instance,
 running on `localhost`.
 ```shell
-mlflow server --backend-store-uri='crate://crate@localhost'
+mlflow-cratedb server --backend-store-uri='crate://crate@localhost'
 ```
 
 You can use `crash` to query for database records. Please note that the fork
@@ -99,7 +98,7 @@ export CRATEDB_SQLALCHEMY_URL="crate://${CRATEDB_USERNAME}:${CRATEDB_PASSWORD}@$
 
 Start the MLflow server, connecting it to your [CrateDB Cloud] instance.
 ```shell
-mlflow server --backend-store-uri="${CRATEDB_SQLALCHEMY_URL}"
+mlflow-cratedb server --backend-store-uri="${CRATEDB_SQLALCHEMY_URL}"
 ```
 
 Use `crash` to connect to the CrateDB Cloud instance, and inquire the relevant
@@ -118,13 +117,25 @@ crash < mlflow/store/tracking/dbmodels/ddl/drop.sql
 
 
 ## Run Experiment
+
 In another terminal, run the Python program which defines the experiment. You can
 point it towards the MLflow server you just started, using the `MLFLOW_TRACKING_URI`
 environment variable, so the program will send events and outcomes from experiment
 runs, and the MLflow server will record them.
 
 ```shell
+# Use MLflow Tracking Server
 export MLFLOW_TRACKING_URI=http://127.0.0.1:5000
+
+python tracking_merlion.py
+```
+
+You can also record an experiment without running the MLflow Tracking Server.
+
+```shell
+# Use CrateDB database directly
+export MLFLOW_TRACKING_URI="crate://crate@localhost/?schema=mlflow"
+
 python tracking_merlion.py
 ```
 
