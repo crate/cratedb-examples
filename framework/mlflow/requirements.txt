@@ -1,2 +1,3 @@
-git+https://github.com/crate-workbench/mlflow@cratedb#egg=mlflow[cratedb]
+mlflow-cratedb
+pydantic<1
 salesforce-merlion

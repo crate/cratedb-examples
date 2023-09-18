@@ -13,6 +13,10 @@ from merlion.utils import TimeSeries
 
 import mlflow
 
+# Importing `mlflow_cratedb` is important for
+# amalgamating MLflow with adjustments for CrateDB.
+import mlflow_cratedb
+
 
 def connect_database():
     """
