@@ -85,13 +85,17 @@ docker run --rm -it \
 
 ### CrateDB Cloud
 
-Todo.
+Sign up or log in to [CrateDB Cloud], and create a free tier cluster. Within just a few minutes,
+a cloud-based development environment is up and running. As soon as your project scales, you can
+easily move to a different cluster tier or scale horizontally.
+
 
 
 [Agents]: https://python.langchain.com/docs/modules/agents/
 [Callbacks]: https://python.langchain.com/docs/modules/callbacks/
 [Chains]: https://python.langchain.com/docs/modules/chains/
 [CrateDB]: https://github.com/crate/crate
+[CrateDB Cloud]: https://console.cratedb.cloud
 [`FLOAT_VECTOR`]: https://crate.io/docs/crate/reference/en/master/general/ddl/data-types.html#float-vector
 [`KNN_MATCH`]: https://crate.io/docs/crate/reference/en/master/general/builtins/scalar-functions.html#scalar-knn-match
 [LangChain]: https://www.langchain.com/
