@@ -18,7 +18,7 @@ Synopsis::
     # Configure: Set environment variables.
     # Correct OpenAI API key should be used. SQL connection string fits a local instance of CrateDB.
     export OPENAI_API_KEY="<API KEY>"
-    export CRATEDB_CONNECTION_STRING="crate://crate@localhost/?schema=langchain"
+    export CRATEDB_CONNECTION_STRING="crate://crate@localhost/?schema=doc"
 
     # Run program.
     python vector_search.py
