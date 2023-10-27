@@ -24,7 +24,7 @@ Synopsis::
 """
 import os
 
-from langchain.document_loaders.cratedb import CrateDBLoader
+from langchain.document_loaders import CrateDBLoader
 from pprint import pprint
 
 
