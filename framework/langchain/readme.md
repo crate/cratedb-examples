@@ -28,23 +28,33 @@ for the following modules, listed from least to most complex:
 
 ## What's inside
 
+[![Made with Jupyter](https://img.shields.io/badge/Made%20with-Jupyter-orange?logo=Jupyter)](https://jupyter.org/try) [![Made with Markdown](https://img.shields.io/badge/Made%20with-Markdown-1f425f.svg?logo=Markdown)](https://commonmark.org)
+
 This folder provides guidelines and runnable code to get started with [LangChain]
 and [CrateDB].
 
 - [readme.md](readme.md): The file you are currently reading contains a walkthrough
   about how to get started with the LangChain framework and CrateDB, and guides you
   to corresponding example programs how to use different subsystems.
+
 - [requirements.txt](requirements.txt): Pulls in a patched version of LangChain,
   as well as the CrateDB client driver and the `crash` command-line interface.
-- [vector_store.ipynb](vector_search.ipynb): This notebook explores CrateDB's
-  [`FLOAT_VECTOR`] and [`KNN_MATCH`] functionalities for storing and retrieving
+
+- `vector_store.ipynb` [![Open on GitHub](https://img.shields.io/badge/Open%20on-GitHub-lightgray?logo=GitHub)](vector_search.ipynb) [![Launch Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/crate/cratedb-examples/amo/framework-langchain?labpath=framework%2Flangchain%2Fvector_search.ipynb) [![Open in Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/crate/cratedb-examples/blob/amo%2Fframework-langchain/framework/langchain/vector_search.ipynb)
+
+  This notebook explores CrateDB's [`FLOAT_VECTOR`] and [`KNN_MATCH`] functionalities for storing and retrieving
   embeddings, and for conducting similarity searches.
-- [document_loader.ipynb](document_loader.ipynb): The notebook about the Document
-  Loader demonstrates how to query a database table in CrateDB and use it as a
+
+- `document_loader.ipynb` [![Open on GitHub](https://img.shields.io/badge/Open%20on-GitHub-lightgray?logo=GitHub)](document_loader.ipynb) [![Launch Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/crate/cratedb-examples/amo/framework-langchain?labpath=framework%2Flangchain%2Fdocument_loader.ipynb) [![Open in Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/crate/cratedb-examples/blob/amo%2Fframework-langchain/framework/langchain/document_loader.ipynb)
+
+  The notebook about the Document Loader demonstrates how to query a database table in CrateDB and use it as a
   source provider for LangChain documents.
-- [conversational_memory.ipynb](conversational_memory.ipynb): LangChain also
-  supports managing conversation history in SQL databases. This notebook exercises
+
+- `conversational_memory.ipynb` [![Open on GitHub](https://img.shields.io/badge/Open%20on-GitHub-lightgray?logo=GitHub)](conversational_memory.ipynb) [![Launch Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/crate/cratedb-examples/amo/framework-langchain?labpath=framework%2Flangchain%2Fconversational_memory.ipynb) [![Open in Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/crate/cratedb-examples/blob/amo%2Fframework-langchain/framework/langchain/conversational_memory.ipynb)
+
+  LangChain also supports managing conversation history in SQL databases. This notebook exercises
   how that works with CrateDB.
+
 - Accompanied to the Jupyter Notebook files, there are also basic variants of
   corresponding examples, [vector_search.py](vector_search.py),
   [document_loader.py](document_loader.py), and
