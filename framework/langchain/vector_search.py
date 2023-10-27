@@ -1,9 +1,6 @@
 """
 Use CrateDB Vector Search with OpenAI embeddings.
 
-Attention: It will not work yet, because OpenAI embeddings use 1536 dimensions,
-and CrateDB/Lucene only permit a maximum of 1024 dimensions.
-
 The example uses the canonical `state_of_the_union.txt`.
 
 Synopsis::
