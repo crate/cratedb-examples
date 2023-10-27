@@ -16,7 +16,7 @@ Synopsis::
 
     # Provide input data: Acquire text file.
     # The example uses the canonical `state_of_the_union.txt`.
-    wget https://raw.githubusercontent.com/langchain-ai/langchain/v0.0.291/docs/extras/modules/state_of_the_union.txt
+    wget https://github.com/langchain-ai/langchain/raw/v0.0.325/docs/docs/modules/state_of_the_union.txt
 
     # Configure: Set environment variables.
     # Correct OpenAI API key should be used. SQL connection string fits a local instance of CrateDB.
