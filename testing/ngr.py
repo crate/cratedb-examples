@@ -28,6 +28,7 @@ logger = logging.getLogger()
 
 
 class ItemType(Enum):
+    DOTNET = "dotnet"
     PHP = "php"
     PYTHON = "python"
     RUBY = "ruby"
@@ -45,6 +46,7 @@ class NextGenerationRunner:
         self.runner = None
         self.type: ItemType = None
         self.runners = {
+            ItemType.DOTNET: DotNetRunner,
             ItemType.PHP: PhpRunner,
             ItemType.PYTHON: PythonRunner,
             ItemType.RUBY: RubyRunner,
@@ -105,6 +107,8 @@ class RunnerBase:
         os.chdir(self.path)
         self.path = Path(".")
 
+        logger.info("Environment Information")
+        self.info()
         logger.info("Installing")
         self.install()
         logger.info("Testing")
@@ -115,12 +119,72 @@ class RunnerBase:
         raise NotImplementedError("Method must be implemented")
 
     @abstractmethod
+    def info(self) -> None:
+        pass
+
+    @abstractmethod
     def install(self) -> None:
         raise NotImplementedError("Method must be implemented")
 
     @abstractmethod
     def test(self) -> None:
         raise NotImplementedError("Method must be implemented")
+
+
+class DotNetRunner(RunnerBase):
+    """
+    .NET test suite runner.
+
+    - Knows how to invoke `dotnet {restore,list,test}` appropriately.
+    - Optionally accepts the `--npgsql-version=` command-line option, to specify the Npgsql version.
+    """
+
+    def __post_init__(self) -> None:
+        self.has_csproj = None
+        self.framework = None
+
+    def peek(self) -> None:
+        self.has_csproj = mp(self.path, "*.csproj")
+
+        dotnet_version_full = subprocess.check_output(shlex.split("dotnet --version")).decode().strip()
+        dotnet_version_major = dotnet_version_full[0]
+        self.framework = f"net{dotnet_version_major}.0"
+
+        if self.has_csproj:
+            self.type = ItemType.DOTNET
+
+    def info(self) -> None:
+        """
+        Display environment information.
+        """
+        run_command("dotnet --version")
+        run_command("dotnet --info")
+
+    def install(self) -> None:
+        """
+        Install dependencies of from `.csproj` file.
+        """
+        self.adjust_npgql_version()
+        run_command("dotnet restore")
+        run_command("dotnet list . package")
+
+    def adjust_npgql_version(self):
+        if "npgsql_version" not in self.options:
+            logger.info("[MATRIX] Not modifying Npgsql version")
+            return
+        npgsql_version = self.options.get("npgsql_version")
+        logger.info(f"[MATRIX] Modifying Npgsql version: {npgsql_version}")
+        cmd = f"""
+            sed -E 's!<PackageReference Include="Npgsql" Version=".+?" />!<PackageReference Include="Npgsql" Version="{npgsql_version}" />!' \
+            -i demo.csproj
+        """
+        run_command(cmd)
+
+    def test(self) -> None:
+        """
+        Invoke `dotnet test`, with code coverage tracking.
+        """
+        run_command(f'dotnet test --framework={self.framework} --collect:"XPlat Code Coverage"')
 
 
 class PhpRunner(RunnerBase):
@@ -255,6 +319,7 @@ def run_command(command: str, errors="raise") -> t.Union[bool, Exception]:
     """
     A basic convenience wrapper around `subprocess.check_call`.
     """
+    logger.info(f"Running command: {command}")
     try:
         subprocess.check_call(shlex.split(command))
     except subprocess.CalledProcessError as ex:
@@ -293,6 +358,7 @@ def read_command_line_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument("target")
     parser.add_argument("--accept-no-venv", action="store_true", help="Whether to accept not running in venv")
+    parser.add_argument("--npgsql-version", type=str, help="Version of Npgsql")
     return parser.parse_args()
 
 
