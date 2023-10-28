@@ -19,6 +19,7 @@ import shutil
 import subprocess
 import sys
 import typing as t
+from abc import abstractmethod
 from enum import Enum
 from pathlib import Path
 
@@ -27,7 +28,8 @@ logger = logging.getLogger()
 
 
 class ItemType(Enum):
-    PYTHON = 1
+    PHP = "php"
+    PYTHON = "python"
 
 
 class NextGenerationRunner:
@@ -42,6 +44,7 @@ class NextGenerationRunner:
         self.runner = None
         self.type: ItemType = None
         self.runners = {
+            ItemType.PHP: PhpRunner,
             ItemType.PYTHON: PythonRunner,
         }
         self.identify()
@@ -51,12 +54,14 @@ class NextGenerationRunner:
         Identify type of <thing>.
         """
         for type_, class_ in self.runners.items():
+            logger.info(f"Probing: type={type_}, class={class_}")
             try:
                 self.runner = class_(path=self.path, options=self.options)
                 self.type = self.runner.type
-                break
             except:
                 pass
+            if self.type is not None:
+                break
 
         if self.type is None:
             raise NotImplementedError(f"Unable to identify item type. Supported types are: {list(ItemType)}")
@@ -75,22 +80,81 @@ class NextGenerationRunner:
                 raise ValueError(f"Path is neither file nor directory: {self.path}")
 
 
-class PythonRunner:
-    """
-    Basic Python runner.
-    
-    Currently, just knows to invoke `pytest` within a directory.
-    """
-    
+class RunnerBase:
+
     def __init__(self, path: Path, options: t.Dict) -> None:
         self.path = path
         self.options = options
+        self.type: ItemType = None
+        if hasattr(self, "__post_init__"):
+            self.__post_init__()
+        self.peek()
+
+    def run(self) -> None:
+        # Change working directory to designated path.
+        # From there, address paths relatively.
+        os.chdir(self.path)
+        self.path = Path(".")
+
+        logger.info("Installing")
+        self.install()
+        logger.info("Testing")
+        self.test()
+
+    @abstractmethod
+    def peek(self) -> None:
+        raise NotImplementedError("Method must be implemented")
+
+    @abstractmethod
+    def install(self) -> None:
+        raise NotImplementedError("Method must be implemented")
+
+    @abstractmethod
+    def test(self) -> None:
+        raise NotImplementedError("Method must be implemented")
+
+
+class PhpRunner(RunnerBase):
+    """
+    Basic PHP runner.
+
+    Currently, just knows to invoke `composer` within a directory.
+    """
+
+    def __post_init__(self) -> None:
+        self.has_composer_json = None
+
+    def peek(self) -> None:
+        self.has_composer_json = mp(self.path, "composer.json")
+
+        if self.has_composer_json:
+            self.type = ItemType.PHP
+
+    def install(self) -> None:
+        """
+        Install dependencies of PHP Composer package.
+        """
+        run_command("composer install")
+
+    def test(self) -> None:
+        """
+        Invoke a script called `test`, defined in `composer.json`.
+        """
+        run_command("composer run test")
+
+
+class PythonRunner(RunnerBase):
+    """
+    Basic Python runner.
+
+    Currently, just knows to invoke `pytest` within a directory.
+    """
+
+    def __post_init__(self) -> None:
         self.has_python_files = None
         self.has_setup_py = None
         self.has_pyproject_toml = None
         self.has_requirements_txt = None
-        self.type: ItemType = None
-        self.peek()
 
     def peek(self) -> None:
         self.has_python_files = mp(self.path, "*.py")
@@ -110,15 +174,7 @@ class PythonRunner:
                 logger.error("Unable invoke target without virtualenv. Use `--accept-no-venv` to override.")
                 sys.exit(1)
 
-        # Change working directory to designated path.
-        # From there, address paths relatively.
-        os.chdir(self.path)
-        self.path = Path(".")
-
-        logger.info("Installing")
-        self.install()
-        logger.info("Testing")
-        self.test()
+        return super().run()
 
     def install(self) -> None:
         """
