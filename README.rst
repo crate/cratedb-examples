@@ -1,5 +1,5 @@
 ################
-CrateDB examples
+CrateDB Examples
 ################
 
 
@@ -29,5 +29,18 @@ Layout
 - The ``testing`` folder contains reference implementations about how to use
   different kinds of test layers for testing your applications with CrateDB.
 
+
+*******
+Testing
+*******
+
+The repository includes an universal test runner, which can be used to invoke
+test suites of different languages and environments.
+
+Examples::
+
+    python testing/ngr.py by-language/python-sqlalchemy
+
+It is recommended to invoke ``ngr`` from within a Python virtualenv.
 
 .. _CrateDB: https://github.com/crate/crate
