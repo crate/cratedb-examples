@@ -4,3 +4,4 @@ source 'https://rubygems.org'
 
 gem 'crate_ruby', '<1'
 gem 'pg', '<2'
+gem 'rake', '<14'
