@@ -29,6 +29,7 @@ logger = logging.getLogger()
 
 class ItemType(Enum):
     DOTNET = "dotnet"
+    JAVA = "java"
     PHP = "php"
     PYTHON = "python"
     RUBY = "ruby"
@@ -47,6 +48,7 @@ class NextGenerationRunner:
         self.type: ItemType = None
         self.runners = {
             ItemType.DOTNET: DotNetRunner,
+            ItemType.JAVA: JavaRunner,
             ItemType.PHP: PhpRunner,
             ItemType.PYTHON: PythonRunner,
             ItemType.RUBY: RubyRunner,
@@ -99,6 +101,7 @@ class RunnerBase:
         self.type: ItemType = None
         if hasattr(self, "__post_init__"):
             self.__post_init__()
+        self.has_makefile = mp(self.path, "Makefile")
         self.peek()
 
     def run(self) -> None:
@@ -162,7 +165,7 @@ class DotNetRunner(RunnerBase):
 
     def install(self) -> None:
         """
-        Install dependencies of from `.csproj` file.
+        Install dependencies from `.csproj` file.
         """
         self.adjust_npgql_version()
         run_command("dotnet restore")
@@ -185,6 +188,55 @@ class DotNetRunner(RunnerBase):
         Invoke `dotnet test`, with code coverage tracking.
         """
         run_command(f'dotnet test --framework={self.framework} --collect:"XPlat Code Coverage"')
+
+
+class JavaRunner(RunnerBase):
+    """
+    Java test suite runner.
+
+    - Knows how to invoke either Gradle or Maven.
+    """
+
+    def __post_init__(self) -> None:
+        self.has_pom_xml = None
+        self.has_gradle_files = None
+
+    def peek(self) -> None:
+        self.has_pom_xml = mp(self.path, "pom.xml")
+        self.has_gradle_files = mp(self.path, "*.gradle")
+
+        if self.has_pom_xml or self.has_gradle_files:
+            self.type = ItemType.JAVA
+
+    def info(self) -> None:
+        """
+        Display environment information.
+        """
+        run_command("java -version")
+
+    def install(self) -> None:
+        """
+        Install dependencies.
+        """
+        if self.has_pom_xml:
+            run_command("mvn install")
+        elif self.has_gradle_files:
+            run_command("./gradlew install")
+        else:
+            raise NotImplementedError("Unable to invoke target: install")
+
+    def test(self) -> None:
+        """
+        Invoke software tests.
+        """
+        if self.has_makefile:
+            run_command("make test")
+        elif self.has_pom_xml:
+            run_command(f'mvn test')
+        elif self.has_gradle_files:
+            run_command("./gradlew check")
+        else:
+            raise NotImplementedError("Unable to invoke target: test")
 
 
 class PhpRunner(RunnerBase):
