@@ -8,11 +8,13 @@ on:
     paths:
     - '.github/workflows/*npgsql*'
     - 'by-language/csharp-npgsql/**'
+    - 'testing/ngr.py'
   pull_request:
-    branches: [ main ]
+    branches: ~
     paths:
     - '.github/workflows/*npgsql*'
     - 'by-language/csharp-npgsql/**'
+    - 'testing/ngr.py'
 
   # Allow job to be triggered manually.
   workflow_dispatch:
@@ -29,22 +31,22 @@ concurrency:
 defaults:
   run:
     shell: bash
-    working-directory: by-language/csharp-npgsql
 
 jobs:
   test:
-    name: "CrateDB: ${{ matrix.cratedb-version }}
+    name: "
      Npgsql: ${{ matrix.npgsql-version }}
      .NET: ${{ matrix.dotnet-version }}
+     CrateDB: ${{ matrix.cratedb-version }}
      on ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest]  # , macos-latest
         dotnet-version: ['5.0.x', '6.0.x', '7.0.x']
         cratedb-version: ['nightly']
         npgsql-version: ['6.0.9', '7.0.6']
-      fail-fast: false
 
     # https://docs.github.com/en/free-pro-team@latest/actions/guides/about-service-containers
     services:
@@ -63,35 +65,15 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
 
-      - name: Use Npgsql version ${{ matrix.npgsql-version }}
-        run: |
-          sed -E 's!<PackageReference Include="Npgsql" Version=".+?" />!<PackageReference Include="Npgsql" Version="${{ matrix.npgsql-version }}" />!' \
-            -i demo.csproj
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+          architecture: x64
 
-      - name: Display .NET information
+      - name: Validate by-language/csharp-npgsql, Npgsql ${{ matrix.npgsql-version }}
         run: |
-          dotnet --version
-          dotnet --info
-
-      - name: Display package information
-        run: |
-          dotnet restore
-          dotnet list . package
-
-      - name: Invoke tests on .NET 5
-        if: matrix.dotnet-version == '5.0.x'
-        run: |
-          dotnet test --framework=net5.0 --collect:"XPlat Code Coverage"
-
-      - name: Invoke tests on .NET 6
-        if: matrix.dotnet-version == '6.0.x'
-        run: |
-          dotnet test --framework=net6.0 --collect:"XPlat Code Coverage"
-
-      - name: Invoke tests on .NET 7
-        if: matrix.dotnet-version == '7.0.x'
-        run: |
-          dotnet test --framework=net7.0 --collect:"XPlat Code Coverage"
+          python testing/ngr.py by-language/csharp-npgsql --npgsql-version=${{ matrix.npgsql-version }}
 
       # https://github.com/codecov/codecov-action
       - name: Upload coverage results to Codecov

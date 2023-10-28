@@ -14,10 +14,10 @@ updates:
       interval: "monthly"
 
 
-  # Check individual projects in subfolders.
+  # Check individual projects in sub-folders.
 
-  - directory: "/by-language/csharp-npgsql" # Location of package manifests
-    package-ecosystem: "nuget" # See documentation for possible values
+  - directory: "/by-language/csharp-npgsql"
+    package-ecosystem: "nuget"
     schedule:
       interval: "monthly"
 

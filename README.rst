@@ -39,6 +39,8 @@ test suites of different languages and environments.
 
 Examples::
 
+    python testing/ngr.py by-language/csharp-npgsql
+    python testing/ngr.py by-language/csharp-npgsql --npgsql-version=6.0.9
     python testing/ngr.py by-language/php-amphp
     python testing/ngr.py by-language/php-pdo
     python testing/ngr.py by-language/python-sqlalchemy
