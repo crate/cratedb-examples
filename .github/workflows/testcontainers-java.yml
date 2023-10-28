@@ -2,15 +2,17 @@ name: Testcontainers for Java
 on:
 
   pull_request:
-    branches: [ main ]
+    branches: ~
     paths:
     - '.github/workflows/testcontainers-java.yml'
     - 'testing/testcontainers/java/**'
+    - 'testing/ngr.py'
   push:
     branches: [ main ]
     paths:
     - '.github/workflows/testcontainers-java.yml'
     - 'testing/testcontainers/java/**'
+    - 'testing/ngr.py'
 
   # Allow job to be triggered manually.
   workflow_dispatch:
@@ -41,7 +43,6 @@ jobs:
           java-version: "17"
           cache: "gradle"
 
-      - name: Run software tests
+      - name: Validate testing/testcontainers/java
         run: |
-          cd testing/testcontainers/java
-          ./gradlew check
+          python testing/ngr.py testing/testcontainers/java

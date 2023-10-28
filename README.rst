@@ -41,10 +41,16 @@ Examples::
 
     python testing/ngr.py by-language/csharp-npgsql
     python testing/ngr.py by-language/csharp-npgsql --npgsql-version=6.0.9
+    python testing/ngr.py by-language/java-jdbc
+    python testing/ngr.py by-language/java-jooq
     python testing/ngr.py by-language/php-amphp
     python testing/ngr.py by-language/php-pdo
     python testing/ngr.py by-language/python-sqlalchemy
     python testing/ngr.py by-language/ruby
+
+More examples::
+
+    python testing/ngr.py testing/testcontainers/java
 
 It is recommended to invoke ``ngr`` from within a Python virtualenv.
 

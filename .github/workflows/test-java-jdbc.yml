@@ -2,15 +2,17 @@ name: Java JDBC
 on:
 
   pull_request:
-    branches: [ main ]
+    branches: ~
     paths:
     - '.github/workflows/test-java-jdbc.yml'
     - 'by-language/java-jdbc/**'
+    - 'testing/ngr.py'
   push:
     branches: [ main ]
     paths:
     - '.github/workflows/test-java-jdbc.yml'
     - 'by-language/java-jdbc/**'
+    - 'testing/ngr.py'
 
   # Allow job to be triggered manually.
   workflow_dispatch:
@@ -49,9 +51,6 @@ jobs:
           java-version: "11"
           cache: "maven"
 
-      - name: Run software tests
+      - name: Validate by-language/java-jdbc
         run: |
-          cd by-language/java-jdbc
-          mvn install
-          mvn exec:java -Dexec.args="--dburl 'jdbc:postgresql://localhost:5432/'"
-          mvn exec:java -Dexec.args="--dburl 'jdbc:crate://localhost:5432/'"
+          python testing/ngr.py by-language/java-jdbc
