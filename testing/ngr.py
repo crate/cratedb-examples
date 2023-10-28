@@ -30,6 +30,7 @@ logger = logging.getLogger()
 class ItemType(Enum):
     PHP = "php"
     PYTHON = "python"
+    RUBY = "ruby"
 
 
 class NextGenerationRunner:
@@ -46,8 +47,16 @@ class NextGenerationRunner:
         self.runners = {
             ItemType.PHP: PhpRunner,
             ItemType.PYTHON: PythonRunner,
+            ItemType.RUBY: RubyRunner,
         }
         self.identify()
+
+    @property
+    def runner_names(self):
+        names = []
+        for runner in self.runners.keys():
+            names.append(runner.name)
+        return names
 
     def identify(self) -> None:
         """
@@ -64,7 +73,7 @@ class NextGenerationRunner:
                 break
 
         if self.type is None:
-            raise NotImplementedError(f"Unable to identify item type. Supported types are: {list(ItemType)}")
+            raise NotImplementedError(f"Unable to identify invocation target. Supported types are: {self.runner_names}")
 
     def run(self) -> None:
         """
@@ -198,6 +207,40 @@ class PythonRunner(RunnerBase):
             raise NotImplementedError(f"No handler to invoke Python item")
 
 
+class RubyRunner(RunnerBase):
+    """
+    Basic Ruby runner.
+
+    Currently, just knows to invoke Bundler and Rake within a directory.
+
+    - https://bundler.io/
+    - https://en.wikipedia.org/wiki/Rake_(software)
+    """
+
+    def __post_init__(self) -> None:
+        self.has_gemfile = None
+        self.has_rakefile = None
+
+    def peek(self) -> None:
+        self.has_gemfile = mp(self.path, "Gemfile")
+        self.has_rakefile = mp(self.path, "Rakefile")
+
+        if self.has_gemfile or self.has_rakefile:
+            self.type = ItemType.RUBY
+
+    def install(self) -> None:
+        """
+        Install dependencies using Ruby's Bundler, defined in `Gemfile`.
+        """
+        run_command("bundle install")
+
+    def test(self) -> None:
+        """
+        Invoke a rake target called `test`, defined in `Rakefile`.
+        """
+        run_command("bundle exec rake test")
+
+
 def mp(path: Path, pattern: str) -> bool:
     """
     mp -- match path.
@@ -276,7 +319,12 @@ def main():
     if not args.target:
         logger.error("Unable to invoke target. Target not given.")
         sys.exit(1)
-    run(args.target, args.__dict__)
+
+    try:
+        run(args.target, args.__dict__)
+    except NotImplementedError as ex:
+        logger.critical(ex)
+        sys.exit(1)
 
 
 if __name__ == "__main__":
