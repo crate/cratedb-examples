@@ -1,0 +1,21 @@
+{
+    "name": "crate/pdo-pgsql-example",
+    "description": "PDO_PGSQL example for CrateDB",
+    "authors": [
+        {
+            "name": "Crate.io",
+            "email": "office@crate.io",
+            "homepage": "https://cratedb.com/",
+            "role": "maintainer"
+        }
+    ],
+    "license": "Apache-2.0",
+    "homepage": "https://github.com/crate/cratedb-examples/tree/main/by-language/php-pdo",
+    "keywords": ["database", "cratedb", "sql", "postgresql"],
+    "require": {
+        "php":     "^7.1|^8.0|^8.1|^8.2"
+    },
+    "scripts": {
+        "test": "php basic.php 'pgsql:host=localhost;port=5432;user=crate'"
+    }
+}

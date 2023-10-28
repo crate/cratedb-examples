@@ -39,6 +39,8 @@ test suites of different languages and environments.
 
 Examples::
 
+    python testing/ngr.py by-language/php-amphp
+    python testing/ngr.py by-language/php-pdo
     python testing/ngr.py by-language/python-sqlalchemy
 
 It is recommended to invoke ``ngr`` from within a Python virtualenv.

@@ -2,15 +2,17 @@ name: PHP PDO
 on:
 
   pull_request:
-    branches: [ main ]
+    branches: ~
     paths:
     - '.github/workflows/test-php-pdo.yml'
     - 'by-language/php-pdo/**'
+    - 'testing/ngr.py'
   push:
     branches: [ main ]
     paths:
     - '.github/workflows/test-php-pdo.yml'
     - 'by-language/php-pdo/**'
+    - 'testing/ngr.py'
 
   # Allow job to be triggered manually.
   workflow_dispatch:
@@ -52,7 +54,6 @@ jobs:
           php-version: ${{ matrix.php-version }}
           extensions: pdo_pgsql
 
-      - name: Run software tests
+      - name: Validate by-language/php-pdo
         run: |
-          cd by-language/php-pdo
-          php basic.php 'pgsql:host=localhost;port=5432;user=crate'
+          python testing/ngr.py by-language/php-pdo

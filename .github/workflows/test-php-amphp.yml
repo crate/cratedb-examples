@@ -2,15 +2,17 @@ name: PHP AMPHP
 on:
 
   pull_request:
-    branches: [ main ]
+    branches: ~
     paths:
     - '.github/workflows/test-php-amphp.yml'
     - 'by-language/php-amphp/**'
+    - 'testing/ngr.py'
   push:
     branches: [ main ]
     paths:
     - '.github/workflows/test-php-amphp.yml'
     - 'by-language/php-amphp/**'
+    - 'testing/ngr.py'
 
   # Allow job to be triggered manually.
   workflow_dispatch:
@@ -52,8 +54,6 @@ jobs:
           php-version: ${{ matrix.php-version }}
           tools: composer
 
-      - name: Run software tests
+      - name: Validate by-language/php-amphp
         run: |
-          cd by-language/php-amphp
-          composer install
-          php basic.php 'host=localhost port=5432 user=crate'
+          python testing/ngr.py by-language/php-amphp
