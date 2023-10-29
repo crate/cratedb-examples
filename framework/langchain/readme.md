@@ -102,9 +102,15 @@ easily move to a different cluster tier or scale horizontally.
 
 ## Testing
 
+Run all tests.
 ```shell
 pytest
+```
+
+Run tests selectively.
+```shell
 pytest -k document_loader
+pytest -k "notebook and loader"
 ```
 
 In order to force a regeneration of the Jupyter Notebook, use the

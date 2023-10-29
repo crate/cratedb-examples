@@ -19,11 +19,17 @@ from pprint import pprint
 from langchain.memory.chat_message_histories import CrateDBChatMessageHistory
 
 
+CONNECTION_STRING = os.environ.get(
+    "CRATEDB_CONNECTION_STRING",
+    "crate://crate@localhost/?schema=doc"
+)
+
+
 def main():
 
     chat_message_history = CrateDBChatMessageHistory(
         session_id="test_session",
-        connection_string=os.environ.get("CRATEDB_CONNECTION_STRING")
+        connection_string=CONNECTION_STRING,
     )
     chat_message_history.add_user_message("Hello")
     chat_message_history.add_ai_message("Hi")
