@@ -100,6 +100,19 @@ a cloud-based development environment is up and running. As soon as your project
 easily move to a different cluster tier or scale horizontally.
 
 
+## Testing
+
+```shell
+pytest
+pytest -k document_loader
+```
+
+In order to force a regeneration of the Jupyter Notebook, use the
+`--nb-force-regen` option.
+```shell
+pytest -k document_loader --nb-force-regen
+```
+
 
 [Agents]: https://python.langchain.com/docs/modules/agents/
 [Callbacks]: https://python.langchain.com/docs/modules/callbacks/

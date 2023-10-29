@@ -50,6 +50,7 @@ Examples::
 
 More examples::
 
+    python testing/ngr.py framework/langchain
     python testing/ngr.py testing/testcontainers/java
 
 It is recommended to invoke ``ngr`` from within a Python virtualenv.
