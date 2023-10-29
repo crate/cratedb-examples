@@ -28,10 +28,16 @@ from langchain.document_loaders import CrateDBLoader
 from pprint import pprint
 
 
+CONNECTION_STRING = os.environ.get(
+    "CRATEDB_CONNECTION_STRING",
+    "crate://crate@localhost/?schema=doc"
+)
+
+
 def main():
     loader = CrateDBLoader(
         query="SELECT * FROM mlb_teams_2012 LIMIT 3;",
-        url=os.environ.get("CRATEDB_CONNECTION_STRING"),
+        url=CONNECTION_STRING,
         include_rownum_into_metadata=True,
     )
     docs = loader.load()

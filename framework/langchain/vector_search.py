@@ -23,7 +23,7 @@ Synopsis::
     # Run program.
     python vector_search.py
 """  # noqa: E501
-from langchain.document_loaders import TextLoader
+from langchain.document_loaders import UnstructuredURLLoader
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores import CrateDBVectorSearch
@@ -33,7 +33,8 @@ def main():
 
     # Load the document, split it into chunks, embed each chunk,
     # and load it into the vector store.
-    raw_documents = TextLoader("state_of_the_union.txt").load()
+    state_of_the_union_url = "https://github.com/langchain-ai/langchain/raw/v0.0.325/docs/docs/modules/state_of_the_union.txt"
+    raw_documents = UnstructuredURLLoader(urls=[state_of_the_union_url]).load()
     text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
     documents = text_splitter.split_documents(raw_documents)
     db = CrateDBVectorSearch.from_documents(documents, OpenAIEmbeddings())
