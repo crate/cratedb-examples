@@ -28,12 +28,17 @@ concurrency:
 
 jobs:
   test:
-    name: "CrateDB: ${{ matrix.cratedb-version }}
+    name: "
+     Java: ${{ matrix.java-version }}
+     CrateDB: ${{ matrix.cratedb-version }}
      on ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
-        os: [ "ubuntu-latest" ]
+        os: [ 'ubuntu-latest' ]
+        java-version: [ '11', '17' ]
+        cratedb-version: [ 'nightly' ]
 
     steps:
 
@@ -57,7 +62,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: "temurin"
-          java-version: "17"
+          java-version: ${{ matrix.java-version }}
           cache: "gradle"
 
       - name: Validate testing/testcontainers/java
