@@ -15,6 +15,7 @@ Synopsis::
     docker run --rm -it --publish=4200:4200 crate/crate:nightly
 
     # Provide input data: Acquire SQL file and populate database.
+    # TODO: Refactor into general purpose package.
     wget https://github.com/crate-workbench/langchain/raw/cratedb/docs/docs/integrations/document_loaders/example_data/mlb_teams_2012.sql
     crash < mlb_teams_2012.sql
 
