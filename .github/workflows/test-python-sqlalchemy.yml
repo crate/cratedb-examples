@@ -28,16 +28,17 @@ concurrency:
 
 jobs:
   test:
-    name: "CrateDB: ${{ matrix.cratedb-version }}
+    name: "
      Python: ${{ matrix.python-version }}
+     CrateDB: ${{ matrix.cratedb-version }}
      on ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ "ubuntu-latest" ]
-        cratedb-version: [ "nightly" ]
-        python-version: [ "3.11" ]
+        os: [ 'ubuntu-latest' ]
+        python-version: [ '3.11', '3.12' ]
+        cratedb-version: [ 'nightly' ]
 
     services:
       cratedb:
