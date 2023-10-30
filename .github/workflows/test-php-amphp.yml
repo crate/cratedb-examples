@@ -1,6 +1,6 @@
 name: PHP AMPHP
-on:
 
+on:
   pull_request:
     branches: ~
     paths:

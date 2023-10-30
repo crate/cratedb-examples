@@ -1,6 +1,6 @@
 name: Java JDBC
-on:
 
+on:
   pull_request:
     branches: ~
     paths:

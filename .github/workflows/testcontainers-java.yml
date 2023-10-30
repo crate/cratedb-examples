@@ -1,6 +1,6 @@
 name: Testcontainers for Java
-on:
 
+on:
   pull_request:
     branches: ~
     paths:

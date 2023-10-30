@@ -1,6 +1,6 @@
 name: Python SQLAlchemy
-on:
 
+on:
   pull_request:
     branches: ~
     paths:
