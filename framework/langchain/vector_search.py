@@ -1,7 +1,7 @@
 """
 Use CrateDB Vector Search with OpenAI embeddings.
 
-The example uses the canonical `state_of_the_union.txt`.
+As input data, the example uses the canonical `state_of_the_union.txt`.
 
 Synopsis::
 
@@ -10,10 +10,6 @@ Synopsis::
 
     # Start database.
     docker run --rm -it --publish=4200:4200 crate/crate:nightly
-
-    # Provide input data: Acquire text file.
-    # The example uses the canonical `state_of_the_union.txt`.
-    wget https://github.com/langchain-ai/langchain/raw/v0.0.325/docs/docs/modules/state_of_the_union.txt
 
     # Configure: Set environment variables.
     # Correct OpenAI API key should be used. SQL connection string fits a local instance of CrateDB.
