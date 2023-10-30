@@ -8,13 +8,13 @@ on:
     paths:
     - '.github/workflows/*npgsql*'
     - 'by-language/csharp-npgsql/**'
-    - 'testing/ngr.py'
+    - 'requirements.txt'
   pull_request:
     branches: ~
     paths:
     - '.github/workflows/*npgsql*'
     - 'by-language/csharp-npgsql/**'
-    - 'testing/ngr.py'
+    - 'requirements.txt'
 
   # Allow job to be triggered manually.
   workflow_dispatch:
@@ -70,10 +70,17 @@ jobs:
         with:
           python-version: "3.11"
           architecture: x64
+          cache: 'pip'
+          cache-dependency-path: |
+            requirements.txt
+
+      - name: Install utilities
+        run: |
+          pip install -r requirements.txt
 
       - name: Validate by-language/csharp-npgsql, Npgsql ${{ matrix.npgsql-version }}
         run: |
-          python testing/ngr.py by-language/csharp-npgsql --npgsql-version=${{ matrix.npgsql-version }}
+          ngr test by-language/csharp-npgsql --npgsql-version=${{ matrix.npgsql-version }}
 
       # https://github.com/codecov/codecov-action
       - name: Upload coverage results to Codecov

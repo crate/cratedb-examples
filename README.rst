@@ -39,19 +39,19 @@ test suites of different languages and environments.
 
 Examples::
 
-    python testing/ngr.py by-language/csharp-npgsql
-    python testing/ngr.py by-language/csharp-npgsql --npgsql-version=6.0.9
-    python testing/ngr.py by-language/java-jdbc
-    python testing/ngr.py by-language/java-jooq
-    python testing/ngr.py by-language/php-amphp
-    python testing/ngr.py by-language/php-pdo
-    python testing/ngr.py by-language/python-sqlalchemy
-    python testing/ngr.py by-language/ruby
+    ngr test by-language/csharp-npgsql
+    ngr test by-language/csharp-npgsql --npgsql-version=6.0.9
+    ngr test by-language/java-jdbc
+    ngr test by-language/java-jooq
+    ngr test by-language/php-amphp
+    ngr test by-language/php-pdo
+    ngr test by-language/python-sqlalchemy
+    ngr test by-language/ruby
 
 More examples::
 
-    python testing/ngr.py framework/langchain
-    python testing/ngr.py testing/testcontainers/java
+    ngr test framework/langchain
+    ngr test testing/testcontainers/java
 
 It is recommended to invoke ``ngr`` from within a Python virtualenv.
 

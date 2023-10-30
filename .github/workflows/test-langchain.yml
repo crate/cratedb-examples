@@ -6,13 +6,13 @@ on:
     paths:
     - '.github/workflows/test-langchain.yml'
     - 'framework/langchain/**'
-    - 'testing/ngr.py'
+    - 'requirements.txt'
   push:
     branches: [ main ]
     paths:
     - '.github/workflows/test-langchain.yml'
     - 'framework/langchain/**'
-    - 'testing/ngr.py'
+    - 'requirements.txt'
 
   # Allow job to be triggered manually.
   workflow_dispatch:
@@ -57,9 +57,14 @@ jobs:
           architecture: x64
           cache: 'pip'
           cache-dependency-path: |
+            requirements.txt
             framework/langchain/requirements.txt
             framework/langchain/requirements-dev.txt
 
+      - name: Install utilities
+        run: |
+          pip install -r requirements.txt
+
       - name: Validate framework/langchain
         run: |
-          python testing/ngr.py --accept-no-venv framework/langchain
+          ngr test --accept-no-venv framework/langchain

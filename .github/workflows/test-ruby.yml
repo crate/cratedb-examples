@@ -6,13 +6,13 @@ on:
     paths:
     - '.github/workflows/test-ruby.yml'
     - 'by-language/ruby/**'
-    - 'testing/ngr.py'
+    - 'requirements.txt'
   push:
     branches: [ main ]
     paths:
     - '.github/workflows/test-ruby.yml'
     - 'by-language/ruby/**'
-    - 'testing/ngr.py'
+    - 'requirements.txt'
 
   # Allow job to be triggered manually.
   workflow_dispatch:
@@ -47,7 +47,20 @@ jobs:
       - name: Acquire sources
         uses: actions/checkout@v4
 
-      - name: Setup Ruby
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+          architecture: x64
+          cache: 'pip'
+          cache-dependency-path: |
+            requirements.txt
+
+      - name: Install utilities
+        run: |
+          pip install -r requirements.txt
+
+      - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "${{ matrix.ruby-version }}"
@@ -59,4 +72,4 @@ jobs:
 
       - name: Validate by-language/ruby
         run: |
-          python testing/ngr.py by-language/ruby
+          ngr test by-language/ruby
