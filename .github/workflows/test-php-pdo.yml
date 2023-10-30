@@ -1,6 +1,6 @@
 name: PHP PDO
-on:
 
+on:
   pull_request:
     branches: ~
     paths:

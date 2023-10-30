@@ -1,6 +1,6 @@
 name: Ruby
-on:
 
+on:
   pull_request:
     branches: ~
     paths:

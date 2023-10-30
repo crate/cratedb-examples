@@ -1,6 +1,6 @@
 name: LangChain
-on:
 
+on:
   pull_request:
     branches: ~
     paths:

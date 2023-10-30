@@ -1,6 +1,6 @@
 name: Java jOOQ
-on:
 
+on:
   pull_request:
     branches: ~
     paths:

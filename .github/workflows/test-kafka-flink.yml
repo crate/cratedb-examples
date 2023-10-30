@@ -1,13 +1,13 @@
 name: Apache Kafka, Apache Flink, and CrateDB
 
 on:
-  push:
-    branches: [ main ]
+  pull_request:
+    branches: ~
     paths:
     - '.github/workflows/test-kafka-flink.yml'
     - 'stacks/kafka-flink/**'
     - 'requirements.txt'
-  pull_request:
+  push:
     branches: [ main ]
     paths:
     - '.github/workflows/test-kafka-flink.yml'
