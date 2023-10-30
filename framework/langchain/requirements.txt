@@ -1,5 +1,7 @@
 crash
 crate[sqlalchemy]
-git+https://github.com/crate-workbench/langchain@cratedb#egg=langchain[cratedb,openai]&subdirectory=libs/langchain
-python-dotenv
-unstructured
+langchain[cratedb,openai] @ git+https://github.com/crate-workbench/langchain.git@cratedb#subdirectory=libs/langchain
+pueblo[env] @ git+https://github.com/pyveci/pueblo.git@develop
+python-dotenv<2
+requests-cache<2
+unstructured<0.11
