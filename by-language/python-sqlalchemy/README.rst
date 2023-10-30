@@ -11,9 +11,54 @@ About
 
 Example programs demonstrating CrateDB's SQLAlchemy adapter and dialect.
 
+This section and examples are mostly about `DataFrame operations with SQLAlchemy`_,
+specifically about how to insert data into `CrateDB`_ efficiently using `pandas`_ and
+`Dask`_.
+
+
 
 *****
 Usage
+*****
+
+The CrateDB Python driver provides a convenience function ``insert_bulk``. It
+can be used like this::
+
+    # CrateDB Cloud
+    # DBURI = "crate://admin:<PASSWORD>@example.aks1.westeurope.azure.cratedb.net:4200?ssl=true"
+
+    # CrateDB Self-Managed
+    # DBURI = "crate://crate@localhost:4200/"
+
+    import sqlalchemy as sa
+    from crate.client.sqlalchemy.support import insert_bulk
+
+    # pandas
+    engine = sa.create_engine(DBURI, **kwargs)
+    df.to_sql(
+        name="testdrive",
+        con=engine,
+        if_exists="append",
+        index=False,
+        chunksize=5_000,
+        method=insert_bulk,
+    )
+
+    # Dask
+    ddf.to_sql(
+        "testdrive",
+        uri=DBURI,
+        index=False,
+        if_exists="replace",
+        chunksize=10_000,
+        parallel=True,
+        method=insert_bulk,
+    )
+
+
+
+*****
+Setup
 *****
 
 To start a CrateDB instance on your machine for evaluation purposes, invoke::
@@ -29,6 +74,11 @@ Navigate to example program directory, and install prerequisites::
     source .venv/bin/activate
     pip install --upgrade --requirement requirements.txt
 
+
+********
+Examples
+********
+
 Run example programs::
 
     # Connect to CrateDB on localhost.
@@ -42,9 +92,27 @@ Run example programs::
 
     time python insert_dask.py
 
-    # Connect to CrateDB Cloud.
-    time python insert_pandas.py --dburi='crate://admin:<PASSWORD>@example.aks1.westeurope.azure.cratedb.net:4200?ssl=true'
+Use ``insert_pandas.py`` to connect to any other database instance::
+
+    export DBURI="crate://crate@localhost:4200/"
+    export DBURI="crate://admin:<PASSWORD>@example.aks1.westeurope.azure.cratedb.net:4200?ssl=true"
+    time python insert_pandas.py --dburi="${DBURI}"
 
 .. TIP::
 
-    For more information, please refer to the header section of each of the provided example programs.
+    For more information, please refer to the header sections of each of the provided example programs.
+
+
+*****
+Tests
+*****
+
+To test the accompanied example programs all at once, invoke the software tests::
+
+    pytest
+
+
+.. _CrateDB: https://github.com/crate/crate
+.. _Dask: https://www.dask.org/
+.. _DataFrame operations with SQLAlchemy: https://cratedb.com/docs/python/en/latest/by-example/sqlalchemy/dataframe.html
+.. _pandas: https://pandas.pydata.org/
