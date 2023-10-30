@@ -48,7 +48,6 @@ import logging
 
 import click
 import colorlog
-import pkg_resources
 import sqlalchemy as sa
 from colorlog.escape_codes import escape_codes
 from pandas._testing import makeTimeDataFrame
@@ -57,7 +56,6 @@ from crate.client.sqlalchemy.support import insert_bulk
 
 logger = logging.getLogger(__name__)
 
-pkg_resources.require("sqlalchemy>=2.0")
 
 SQLALCHEMY_LOGGING = True
 
