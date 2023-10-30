@@ -1,2 +1,4 @@
-# pueblo[ngr]
-pueblo[ngr] @ git+https://github.com/pyveci/pueblo.git@main
+pueblo[ngr]==0.0.1
+
+# Development.
+# pueblo[ngr] @ git+https://github.com/pyveci/pueblo.git@develop
