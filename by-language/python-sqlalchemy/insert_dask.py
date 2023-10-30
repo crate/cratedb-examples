@@ -14,10 +14,12 @@ Usage
 
 """
 import dask.dataframe as dd
+import pkg_resources
 from dask.diagnostics import ProgressBar
 from pandas._testing import makeTimeDataFrame
 from crate.client.sqlalchemy.support import insert_bulk
 
+pkg_resources.require("sqlalchemy>=2.0")
 
 DBURI = "crate://localhost:4200"
 
