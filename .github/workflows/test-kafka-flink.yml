@@ -6,11 +6,13 @@ on:
     paths:
     - '.github/workflows/test-kafka-flink.yml'
     - 'stacks/kafka-flink/**'
+    - 'requirements.txt'
   pull_request:
     branches: [ main ]
     paths:
     - '.github/workflows/test-kafka-flink.yml'
     - 'stacks/kafka-flink/**'
+    - 'requirements.txt'
 
   # Allow job to be triggered manually.
   workflow_dispatch:

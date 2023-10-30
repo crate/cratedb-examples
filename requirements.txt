@@ -1,0 +1,2 @@
+# pueblo[ngr]
+pueblo[ngr] @ git+https://github.com/pyveci/pueblo.git@main
