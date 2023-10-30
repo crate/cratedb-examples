@@ -3,4 +3,4 @@ colorlog<7
 crate[sqlalchemy]
 dask==2023.10.1
 pandas<2.2
-sqlalchemy<2.1
+sqlalchemy>=2,<2.1
