@@ -139,7 +139,7 @@ def setup_logging(level=logging.INFO):
 
 @click.command()
 @click.option("--dburi", type=str, default="crate://localhost:4200", required=False, help="SQLAlchemy database connection URI.")
-@click.option("--mode", type=str, default="bulk", required=False, help="Insert mode. Choose one of basic, multi, bulk.")
+@click.option("--mode", type=click.Choice(['basic', 'multi', 'bulk']), default="bulk", required=False, help="Insert mode.")
 @click.option("--num-records", type=int, default=23_000, required=False, help="Number of records to insert.")
 @click.option("--bulk-size", type=int, default=5_000, required=False, help="Bulk size / chunk size.")
 @click.option("--insertmanyvalues-page-size", type=int, default=1_000, required=False, help="Page size for SA's insertmanyvalues.")
