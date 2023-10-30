@@ -50,6 +50,18 @@ updates:
     package-ecosystem: "bundler"
     schedule:
       interval: "monthly"
+  # Frameworks.
+
+  - directory: "/framework/langchain"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "weekly"
+
+  - directory: "/framework/mlflow"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "weekly"
+
 
   - directory: "/testing/testcontainers/java"
     package-ecosystem: "gradle"
