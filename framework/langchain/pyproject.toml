@@ -22,7 +22,6 @@ markers = [
 # pytest-notebook settings
 nb_test_files = true
 nb_coverage = true
-nb_exec_allow_errors = true
 nb_diff_replace = [
     # Compensate output of `crash`.
     '"/cells/*/outputs/*/text" "\(\d.\d+ sec\)" "(0.000 sec)"',
