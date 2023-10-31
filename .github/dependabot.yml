@@ -38,6 +38,11 @@ updates:
     schedule:
       interval: "weekly"
 
+  - directory: "/by-language/java-qa"
+    package-ecosystem: "maven"
+    schedule:
+      interval: "weekly"
+
   - directory: "/by-language/php-amphp"
     package-ecosystem: "composer"
     schedule:
