@@ -1,17 +1,19 @@
-name: Java JDBC
+name: "Java: JDBC, QA"
 
 on:
   pull_request:
     branches: ~
     paths:
-    - '.github/workflows/test-java-jdbc.yml'
+    - '.github/workflows/test-java-maven.yml'
     - 'by-language/java-jdbc/**'
+    - 'by-language/java-qa/**'
     - 'requirements.txt'
   push:
     branches: [ main ]
     paths:
-    - '.github/workflows/test-java-jdbc.yml'
+    - '.github/workflows/test-java-maven.yml'
     - 'by-language/java-jdbc/**'
+    - 'by-language/java-qa/**'
     - 'requirements.txt'
 
   # Allow job to be triggered manually.
@@ -75,3 +77,7 @@ jobs:
       - name: Validate by-language/java-jdbc
         run: |
           ngr test by-language/java-jdbc
+
+      - name: Validate by-language/java-qa
+        run: |
+          ngr test by-language/java-qa
