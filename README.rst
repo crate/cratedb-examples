@@ -37,6 +37,11 @@ Testing
 The repository includes an universal test runner, which can be used to invoke
 test suites of different languages and environments.
 
+Before running the examples on your workstation, make sure you are using an
+up-to-date version of CrateDB::
+
+    docker pull crate/crate:nightly
+
 Examples::
 
     ngr test by-language/csharp-npgsql
