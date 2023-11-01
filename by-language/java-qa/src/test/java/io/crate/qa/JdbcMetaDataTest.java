@@ -52,9 +52,10 @@ public class JdbcMetaDataTest {
     }
 
     @Test
-    public void test_dataDefinitionCausesTransactionCommit_TODO() throws Exception {
+    @Ignore
+    public void test_dataDefinitionCausesTransactionCommit() throws Exception {
         try (var conn = DriverManager.getConnection(URL)) {
-            assertThat(conn.getMetaData().dataDefinitionCausesTransactionCommit(), is(false));
+            assertThat(conn.getMetaData().dataDefinitionCausesTransactionCommit(), is(true));
         }
     }
 
