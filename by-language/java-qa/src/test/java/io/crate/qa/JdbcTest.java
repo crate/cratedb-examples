@@ -17,6 +17,7 @@ import static org.hamcrest.Matchers.is;
 @RunWith(JUnit4.class)
 public class JdbcTest {
 
+    // TODO: Maybe use "Testcontainers for Java" here.
     @ClassRule
     public static final CrateTestCluster TEST_CLUSTER = CrateTestCluster
         .fromURL("https://cdn.crate.io/downloads/releases/nightly/crate-latest.tar.gz")
@@ -112,6 +113,7 @@ public class JdbcTest {
             var results = conn.createStatement().executeQuery("SELECT count(*) FROM tbl");
             assertThat(results.next(), is(true));
             assertThat(results.getInt(1), is(20));
+            assertThat(results.next(), is(false));
         }
 
     }
