@@ -1,4 +1,4 @@
-pueblo[ngr]==0.0.1
+pueblo[ngr]==0.0.2
 
 # Development.
 # pueblo[ngr] @ git+https://github.com/pyveci/pueblo.git@develop
