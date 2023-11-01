@@ -1,7 +1,7 @@
 crash
 crate[sqlalchemy]
 # langchain[cratedb,openai]
-pueblo[env,nlp]==0.0.1
+pueblo[env,nlp]==0.0.2
 python-dotenv<2
 requests-cache<2
 unstructured<0.11
