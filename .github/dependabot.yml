@@ -63,14 +63,19 @@ updates:
     schedule:
       interval: "weekly"
 
-  # Frameworks.
+  # Topics.
 
-  - directory: "/framework/langchain"
+  - directory: "/topic/machine-learning/classification-automl"
     package-ecosystem: "pip"
     schedule:
       interval: "weekly"
 
-  - directory: "/framework/mlflow"
+  - directory: "/topic/machine-learning/llm-langchain"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "weekly"
+
+  - directory: "/topic/machine-learning/timeseries-basics"
     package-ecosystem: "pip"
     schedule:
       interval: "weekly"
