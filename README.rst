@@ -55,7 +55,7 @@ Examples::
 
 More examples::
 
-    ngr test framework/langchain
+    ngr test topic/machine-learning/llm-langchain
     ngr test testing/testcontainers/java
 
 It is recommended to invoke ``ngr`` from within a Python virtualenv.
