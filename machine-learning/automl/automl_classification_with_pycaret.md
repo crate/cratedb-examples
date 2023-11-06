@@ -243,11 +243,6 @@ s = setup(
 )
 ```
 
-<style type="text/css">
-#T_ecf45_row12_col1, #T_ecf45_row18_col1 {
-  background-color: lightgreen;
-}
-</style>
 <table id="T_ecf45">
   <thead>
     <tr>
@@ -422,27 +417,6 @@ best_models = compare_models(sort="AUC", exclude=["lightgbm"], n_select=3)
 
 ```
 
-<style type="text/css">
-#T_f50f0 th {
-  text-align: left;
-}
-#T_f50f0_row0_col0, #T_f50f0_row0_col3, #T_f50f0_row0_col5, #T_f50f0_row0_col6, #T_f50f0_row0_col7, #T_f50f0_row1_col0, #T_f50f0_row1_col1, #T_f50f0_row1_col2, #T_f50f0_row1_col3, #T_f50f0_row1_col4, #T_f50f0_row1_col5, #T_f50f0_row1_col6, #T_f50f0_row1_col7, #T_f50f0_row2_col0, #T_f50f0_row2_col1, #T_f50f0_row2_col2, #T_f50f0_row2_col3, #T_f50f0_row2_col4, #T_f50f0_row2_col5, #T_f50f0_row2_col6, #T_f50f0_row2_col7, #T_f50f0_row3_col0, #T_f50f0_row3_col1, #T_f50f0_row3_col2, #T_f50f0_row3_col3, #T_f50f0_row3_col4, #T_f50f0_row3_col5, #T_f50f0_row3_col6, #T_f50f0_row3_col7, #T_f50f0_row4_col0, #T_f50f0_row4_col1, #T_f50f0_row4_col2, #T_f50f0_row4_col4, #T_f50f0_row5_col0, #T_f50f0_row5_col1, #T_f50f0_row5_col2, #T_f50f0_row5_col3, #T_f50f0_row5_col4, #T_f50f0_row5_col5, #T_f50f0_row5_col6, #T_f50f0_row5_col7, #T_f50f0_row6_col0, #T_f50f0_row6_col1, #T_f50f0_row6_col2, #T_f50f0_row6_col3, #T_f50f0_row6_col4, #T_f50f0_row6_col5, #T_f50f0_row6_col6, #T_f50f0_row6_col7, #T_f50f0_row7_col0, #T_f50f0_row7_col1, #T_f50f0_row7_col2, #T_f50f0_row7_col3, #T_f50f0_row7_col4, #T_f50f0_row7_col5, #T_f50f0_row7_col6, #T_f50f0_row7_col7, #T_f50f0_row8_col0, #T_f50f0_row8_col1, #T_f50f0_row8_col2, #T_f50f0_row8_col3, #T_f50f0_row8_col4, #T_f50f0_row8_col5, #T_f50f0_row8_col6, #T_f50f0_row8_col7, #T_f50f0_row9_col0, #T_f50f0_row9_col1, #T_f50f0_row9_col2, #T_f50f0_row9_col3, #T_f50f0_row9_col4, #T_f50f0_row9_col5, #T_f50f0_row9_col6, #T_f50f0_row9_col7, #T_f50f0_row10_col0, #T_f50f0_row10_col1, #T_f50f0_row10_col2, #T_f50f0_row10_col3, #T_f50f0_row10_col4, #T_f50f0_row10_col5, #T_f50f0_row10_col6, #T_f50f0_row10_col7, #T_f50f0_row11_col0, #T_f50f0_row11_col1, #T_f50f0_row11_col2, #T_f50f0_row11_col3, #T_f50f0_row11_col4, #T_f50f0_row11_col5, #T_f50f0_row11_col6, #T_f50f0_row11_col7, #T_f50f0_row12_col0, #T_f50f0_row12_col1, #T_f50f0_row12_col2, #T_f50f0_row12_col3, #T_f50f0_row12_col4, #T_f50f0_row12_col5, #T_f50f0_row12_col6, #T_f50f0_row12_col7, #T_f50f0_row13_col0, #T_f50f0_row13_col1, #T_f50f0_row13_col2, #T_f50f0_row13_col3, #T_f50f0_row13_col4, #T_f50f0_row13_col5, #T_f50f0_row13_col6, #T_f50f0_row13_col7, #T_f50f0_row14_col0, #T_f50f0_row14_col1, #T_f50f0_row14_col2, #T_f50f0_row14_col3, #T_f50f0_row14_col4, #T_f50f0_row14_col5, #T_f50f0_row14_col6, #T_f50f0_row14_col7 {
-  text-align: left;
-}
-#T_f50f0_row0_col1, #T_f50f0_row0_col2, #T_f50f0_row0_col4, #T_f50f0_row4_col3, #T_f50f0_row4_col5, #T_f50f0_row4_col6, #T_f50f0_row4_col7 {
-  text-align: left;
-  background-color: yellow;
-}
-#T_f50f0_row0_col8, #T_f50f0_row1_col8, #T_f50f0_row2_col8, #T_f50f0_row3_col8, #T_f50f0_row4_col8, #T_f50f0_row5_col8, #T_f50f0_row6_col8, #T_f50f0_row7_col8, #T_f50f0_row8_col8, #T_f50f0_row9_col8, #T_f50f0_row10_col8, #T_f50f0_row11_col8, #T_f50f0_row12_col8, #T_f50f0_row13_col8 {
-  text-align: left;
-  background-color: lightgrey;
-}
-#T_f50f0_row14_col8 {
-  text-align: left;
-  background-color: yellow;
-  background-color: lightgrey;
-}
-</style>
 <table id="T_f50f0">
   <thead>
     <tr>
@@ -681,11 +655,6 @@ Again, hyperparameter tuning is just a single line of code.
 tuned_models = [tune_model(model) for model in best_models]
 ```
 
-<style type="text/css">
-#T_3a1db_row10_col0, #T_3a1db_row10_col1, #T_3a1db_row10_col2, #T_3a1db_row10_col3, #T_3a1db_row10_col4, #T_3a1db_row10_col5, #T_3a1db_row10_col6 {
-  background: yellow;
-}
-</style>
 <table id="T_3a1db">
   <thead>
     <tr>
@@ -836,11 +805,6 @@ tuned_models = [tune_model(model) for model in best_models]
     Fitting 10 folds for each of 10 candidates, totalling 100 fits
     Original model was better than the tuned model, hence it will be returned. NOTE: The display metrics are for the tuned model (not the original one).
 
-<style type="text/css">
-#T_1c09f_row10_col0, #T_1c09f_row10_col1, #T_1c09f_row10_col2, #T_1c09f_row10_col3, #T_1c09f_row10_col4, #T_1c09f_row10_col5, #T_1c09f_row10_col6 {
-  background: yellow;
-}
-</style>
 <table id="T_1c09f">
   <thead>
     <tr>
@@ -991,11 +955,6 @@ tuned_models = [tune_model(model) for model in best_models]
     Fitting 10 folds for each of 10 candidates, totalling 100 fits
     Original model was better than the tuned model, hence it will be returned. NOTE: The display metrics are for the tuned model (not the original one).
 
-<style type="text/css">
-#T_f5ed9_row10_col0, #T_f5ed9_row10_col1, #T_f5ed9_row10_col2, #T_f5ed9_row10_col3, #T_f5ed9_row10_col4, #T_f5ed9_row10_col5, #T_f5ed9_row10_col6 {
-  background: yellow;
-}
-</style>
 <table id="T_f5ed9">
   <thead>
     <tr>
@@ -1184,11 +1143,6 @@ a single line of code.
 bagged = [ensemble_model(i, method="Bagging") for i in tuned_models]
 ```
 
-<style type="text/css">
-#T_7bcf3_row10_col0, #T_7bcf3_row10_col1, #T_7bcf3_row10_col2, #T_7bcf3_row10_col3, #T_7bcf3_row10_col4, #T_7bcf3_row10_col5, #T_7bcf3_row10_col6 {
-  background: yellow;
-}
-</style>
 <table id="T_7bcf3">
   <thead>
     <tr>
@@ -1336,11 +1290,6 @@ bagged = [ensemble_model(i, method="Bagging") for i in tuned_models]
   </tbody>
 </table>
 
-<style type="text/css">
-#T_80d05_row10_col0, #T_80d05_row10_col1, #T_80d05_row10_col2, #T_80d05_row10_col3, #T_80d05_row10_col4, #T_80d05_row10_col5, #T_80d05_row10_col6 {
-  background: yellow;
-}
-</style>
 <table id="T_80d05">
   <thead>
     <tr>
@@ -1488,11 +1437,6 @@ bagged = [ensemble_model(i, method="Bagging") for i in tuned_models]
   </tbody>
 </table>
 
-<style type="text/css">
-#T_c3003_row10_col0, #T_c3003_row10_col1, #T_c3003_row10_col2, #T_c3003_row10_col3, #T_c3003_row10_col4, #T_c3003_row10_col5, #T_c3003_row10_col6 {
-  background: yellow;
-}
-</style>
 <table id="T_c3003">
   <thead>
     <tr>
@@ -1656,11 +1600,6 @@ def try_ensemble_model(model):
 boosted = [try_ensemble_model(i) for i in tuned_models]
 ```
 
-<style type="text/css">
-#T_c5f9d_row10_col0, #T_c5f9d_row10_col1, #T_c5f9d_row10_col2, #T_c5f9d_row10_col3, #T_c5f9d_row10_col4, #T_c5f9d_row10_col5, #T_c5f9d_row10_col6 {
-  background: yellow;
-}
-</style>
 <table id="T_c5f9d">
   <thead>
     <tr>
@@ -1808,11 +1747,6 @@ boosted = [try_ensemble_model(i) for i in tuned_models]
   </tbody>
 </table>
 
-<style type="text/css">
-#T_5c608_row10_col0, #T_5c608_row10_col1, #T_5c608_row10_col2, #T_5c608_row10_col3, #T_5c608_row10_col4, #T_5c608_row10_col5, #T_5c608_row10_col6 {
-  background: yellow;
-}
-</style>
 <table id="T_5c608">
   <thead>
     <tr>
@@ -1978,11 +1912,6 @@ the first 5 of our tuned models.
 blend = blend_models(estimator_list = tuned_models)
 ```
 
-<style type="text/css">
-#T_9cd02_row10_col0, #T_9cd02_row10_col1, #T_9cd02_row10_col2, #T_9cd02_row10_col3, #T_9cd02_row10_col4, #T_9cd02_row10_col5, #T_9cd02_row10_col6 {
-  background: yellow;
-}
-</style>
 <table id="T_9cd02">
   <thead>
     <tr>
