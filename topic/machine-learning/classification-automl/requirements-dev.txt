@@ -1,0 +1,6 @@
+coverage~=7.3
+ipykernel
+pytest<8
+pytest-cov<5
+pytest-env<2
+pytest-notebook<0.9
