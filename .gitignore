@@ -3,3 +3,9 @@
 __pycache__
 .coverage
 coverage.xml
+logs.log
+catboost_info/
+.env
+.env.local
+.venv
+mlruns
