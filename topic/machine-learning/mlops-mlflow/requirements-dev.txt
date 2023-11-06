@@ -3,7 +3,7 @@
 # pueblo[testing]
 
 # Development.
-cratedb-toolkit[io] @ git+https://github.com/crate-workbench/cratedb-toolkit.git@amo/add-import-csv
+cratedb-toolkit[io] @ git+https://github.com/crate-workbench/cratedb-toolkit.git@main
 pueblo[testing] @ git+https://github.com/pyveci/pueblo.git@main
 
 # Workstation.

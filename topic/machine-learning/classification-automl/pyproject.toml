@@ -1,0 +1,74 @@
+[tool.pytest.ini_options]
+minversion = "2.0"
+addopts = """
+  -rfEX -p pytester --strict-markers --verbosity=3 --capture=no
+  """
+# --cov=. --cov-report=term-missing --cov-report=xml
+env = [
+    "CRATEDB_CONNECTION_STRING=crate://crate@localhost/?schema=testdrive",
+    "CRATE_USER=crate",
+    "CRATE_PASSWORD=",
+    "CRATE_HOST=localhost",
+    "CRATE_SSL=false",
+    "PYDEVD_DISABLE_FILE_VALIDATION=1",
+]
+
+#log_level = "DEBUG"
+#log_cli_level = "DEBUG"
+
+testpaths = [
+    "*.py",
+]
+xfail_strict = true
+markers = [
+]
+
+# pytest-notebook settings
+nb_test_files = true
+nb_coverage = false
+# 120 seconds is too less on CI/GHA
+nb_exec_timeout = 240
+nb_diff_replace = [
+    # Compensate output of `crash`.
+    '"/cells/*/outputs/*/text" "\(\d.\d+ sec\)" "(0.000 sec)"',
+    # Compensate other outputs.
+    '"/cells/*/outputs/*/data/text/html" "T_....." "T_na"',
+    '"/cells/*/outputs/*/data/text/plain" "IPython.core.display.HTML object" "pandas.io.formats.style.Styler"',
+    '"/cells/*/outputs/*/data/text/plain" "pandas.io.formats.style.Styler at 0x.+" "pandas.io.formats.style.Styler"',
+    '"/cells/*/outputs/*/data/application/vnd.jupyter.widget-view+json" "model_id: .+" "model_id: na"',
+    '"/cells/*/outputs/*/data/text/html" "\>\d+\.\d+\<\/td\>" "0.3333"',
+]
+# `vector_search.py` does not include any output(s).
+nb_diff_ignore = [
+    "/metadata/language_info",
+    "/metadata/widgets",
+    "/cells/*/execution_count",
+    "/cells/*/outputs/*/execution_count",
+    # Ignore images.
+    "/cells/*/outputs/*/data/image/png",
+    # FIXME: Those pacifiers should be revisited.
+    #        Some are warnings, some are semantic ambiguities.
+    #        Maybe they can be improved in one way or another,
+    #        for improved QA.
+    "/cells/5/outputs",
+    "/cells/14/outputs",
+    "/cells/16/outputs",
+    "/cells/16/outputs",
+    "/cells/18/outputs",
+    "/cells/24/outputs",
+    "/cells/30/outputs/0/data/application/vnd.jupyter.widget-view+json",
+    "/cells/34/outputs",
+    "/cells/36/outputs",
+    "/cells/40/outputs",
+]
+
+[tool.coverage.run]
+branch = false
+
+[tool.coverage.report]
+fail_under = 0
+show_missing = true
+omit = [
+    "conftest.py",
+    "test*.py",
+]
