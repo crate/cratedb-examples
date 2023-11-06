@@ -182,7 +182,7 @@ to predict is `Churn` . Let's have a look at the distribution of this feature.
 > one class than of the other. This is important to know because it can lead to
 > biased models - so we can accommodate for this in our model creation process.
 
-![png](automl_classification_with%20pycaret_files/automl_classification_with%20pycaret_5_0.png)
+![png](automl_classification_with_pycaret_files/automl_classification_with_pycaret_5_0.png)
 
 The plot reveals that our dataset is indeed skewed towards non-churned users.
 Let's keep this in mind for later.
@@ -196,7 +196,7 @@ As a general guideline, a Data Scientist is tasked with investigating the
 influence of features on the target variable. Let's start with tenure - as it
 might be reasonable to argue that a clients tenue might influence the churn.
 
-![png](automl_classification_with%20pycaret_files/automl_classification_with%20pycaret_7_0.png)
+![png](automl_classification_with_pycaret_files/automl_classification_with_pycaret_7_0.png)
 
 It's quite obvious, that most people seem to churn with month-to-month
 contracts. Also, the longer the tenure, the less likely it is that a customer
@@ -204,7 +204,7 @@ churns (generally speaking).
 Another interesting angle might be too look at whether users with specific
 services - like internet service - are more likely to churn.
 
-![png](automl_classification_with%20pycaret_files/automl_classification_with%20pycaret_9_0.png)
+![png](automl_classification_with_pycaret_files/automl_classification_with_pycaret_9_0.png)
 
 It's very interesting to find, that users without internet service have very
 low churn rates. It seems, that the internet service might be a problem in terms
