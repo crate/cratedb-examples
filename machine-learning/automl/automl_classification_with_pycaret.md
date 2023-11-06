@@ -2183,7 +2183,7 @@ see the [Pycaret documentation](https://pycaret.gitbook.io/docs/get-started/func
 if not os.path.exists("model"):
     os.makedirs("model")
 # Save the model to disk
-_ = save_model(best_model, "model/classification_model")
+_ = save_model(final_model, "model/classification_model")
 ```
 
     Transformation Pipeline and Model Successfully Saved
@@ -2195,7 +2195,7 @@ method takes the model and the data to predict as input and outputs the
 predictions for these new data.
 
 ```python
-predict_model(best_model, s.X_test)
+predict_model(final_model, s.X_test)
 ```
 
 ## Experiment tracking with MLflow and Pycaret
@@ -2246,7 +2246,7 @@ Make sure to first run `save_model` as described above.
 from mlflow.sklearn import log_model
 
 _ = log_model(
-    sk_model=best_model,
+    sk_model=final_model,
     artifact_path="model/classification_model",
     registered_model_name=f"classification-model",
 )
