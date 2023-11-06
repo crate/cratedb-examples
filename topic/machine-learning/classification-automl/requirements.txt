@@ -1,5 +1,5 @@
 crate[sqlalchemy]==0.34.0
-mlflow-cratedb
+mlflow-cratedb==2.7.1
 plotly==5.18.0
 pycaret[analysis,models,tuner,parallel,test]==3.1.0
 python-dotenv==1.0.0
