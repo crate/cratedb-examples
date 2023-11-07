@@ -1,0 +1,3 @@
+mlflow-cratedb==2.7.1
+pydantic<1
+salesforce-merlion>=2,<3
