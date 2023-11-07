@@ -1,10 +1,8 @@
-import os
-import time
 from pathlib import Path
 
 import pytest
 
-from cratedb_toolkit.io.sql import DatabaseAdapter
+from cratedb_toolkit.util import DatabaseAdapter
 from pueblo.testing.folder import str_list, list_notebooks, list_python_files
 from pueblo.testing.snippet import pytest_module_function, pytest_notebook
 
@@ -21,18 +19,7 @@ def db_init(cratedb):
     """
     Initialize database.
     """
-    cratedb.run_sql("DROP TABLE IF EXISTS mlb_teams_2012;")
-    time.sleep(0.01)
-
-
-def db_provision_mlb_teams_2012(cratedb):
-    """
-    Provision database.
-    """
-    cratedb.run_sql(Path("mlb_teams_2012.sql"))
-    time.sleep(0.01)
-    cratedb.run_sql("REFRESH TABLE mlb_teams_2012;")
-    time.sleep(0.01)
+    cratedb.run_sql("DROP TABLE IF EXISTS machine_data;")
 
 
 @pytest.mark.parametrize("notebook", str_list(list_notebooks(HERE)))
@@ -47,18 +34,8 @@ def test_notebook(request, notebook: str):
 
 
 @pytest.mark.parametrize("pyfile", str_list(list_python_files(HERE)))
-def test_file(request, cratedb, pyfile: Path):
+def test_file(request, pyfile: Path):
     """
     From individual Python file, collect and wrap the `main` function into a test case.
     """
-
-    # Skip `vector_search.py` example, when no `OPENAI_API_KEY` is supplied.
-    if str(pyfile).endswith("vector_search.py"):
-        if "OPENAI_API_KEY" not in os.environ:
-            raise pytest.skip("OPENAI_API_KEY not given")
-
-    # `document_loader.py` needs provisioning.
-    if str(pyfile).endswith("document_loader.py"):
-        db_provision_mlb_teams_2012(cratedb)
-
     pytest_module_function(request, pyfile)

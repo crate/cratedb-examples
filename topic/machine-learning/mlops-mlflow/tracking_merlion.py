@@ -30,9 +30,7 @@ def provision_data():
     """
     Download Numenta Anomaly Benchmark data, and load into database.
     """
-    data = pd.read_csv(
-        "https://raw.githubusercontent.com/numenta/NAB/master/data/realKnownCause/machine_temperature_system_failure.csv"
-    )
+    data = pd.read_csv("https://github.com/crate/cratedb-datasets/raw/main/timeseries/anomaly/nab-machine-failure.csv")
 
     # Connecting to CrateDB.
     conn = connect_database()
@@ -53,14 +51,15 @@ def provision_data():
         # Create the table if it doesn't exist.
         cursor.execute(
             "CREATE TABLE IF NOT EXISTS machine_data "
-            "(timestamp TIMESTAMP, temperature DOUBLE)"
+            "(timestamp TIMESTAMP, temperature DOUBLE);"
         )
         # Insert the data in chunks.
         for chunk in chunks:
             cursor.executemany(
-                "INSERT INTO machine_data (timestamp, temperature) VALUES (?, ?)",
+                "INSERT INTO machine_data (timestamp, temperature) VALUES (?, ?);",
                 list(chunk.itertuples(index=False, name=None)),
             )
+        cursor.execute("REFRESH TABLE machine_data;")
 
 
 def read_data() -> pd.DataFrame:
@@ -73,10 +72,10 @@ def read_data() -> pd.DataFrame:
         cursor.execute(
             """SELECT 
          DATE_BIN('5 min'::INTERVAL, "timestamp", 0) AS timestamp,
-         max(temperature) as value
+         MAX(temperature) AS value
          FROM machine_data
-         group by timestamp
-         order by timestamp asc"""
+         GROUP BY timestamp
+         ORDER BY timestamp ASC;"""
         )
         data = cursor.fetchall()
 

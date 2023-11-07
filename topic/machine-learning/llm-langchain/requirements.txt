@@ -1,11 +1,13 @@
+# Real.
 crash
 crate[sqlalchemy]
 # langchain[cratedb,openai]
-pueblo[env,nlp]==0.0.2
+# pueblo[env,nlp]==0.0.3
+pydantic>=1,<2
 python-dotenv<2
 requests-cache<2
 unstructured<0.11
 
 # Development.
 langchain[cratedb,openai] @ git+https://github.com/crate-workbench/langchain.git@cratedb#subdirectory=libs/langchain
-# pueblo[env,nlp] @ git+https://github.com/pyveci/pueblo.git@develop
+pueblo[nlp] @ git+https://github.com/pyveci/pueblo.git@main

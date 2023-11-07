@@ -37,7 +37,7 @@ CONNECTION_STRING = os.environ.get(
 
 def main():
     loader = CrateDBLoader(
-        query="SELECT * FROM mlb_teams_2012 LIMIT 3;",
+        query="SELECT * FROM doc.mlb_teams_2012 LIMIT 3;",
         url=CONNECTION_STRING,
         include_rownum_into_metadata=True,
     )
