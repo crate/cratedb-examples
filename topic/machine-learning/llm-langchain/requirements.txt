@@ -9,5 +9,5 @@ requests-cache<2
 unstructured<0.11
 
 # Development.
-langchain[cratedb,openai] @ git+https://github.com/crate-workbench/langchain.git@cratedb#subdirectory=libs/langchain
+langchain[cratedb,openai] @ git+https://github.com/crate-workbench/langchain.git@testing#subdirectory=libs/langchain
 pueblo[nlp] @ git+https://github.com/pyveci/pueblo.git@main
