@@ -1,6 +1,6 @@
 # Real.
 # mlflow-cratedb==2.7.1
-pydantic<1
+pydantic<3
 salesforce-merlion>=2,<3
 
 # Development.
