@@ -139,6 +139,27 @@ To follow this notebook, choose `pycaret_churn` for your database name.
 
 This will automatically create a new crate table and import the data.
 
+### Alternative data import using code
+
+If you prefer to use code to import your data, please execute the following lines which read the CSV
+file into a pandas data frame, automatically creates the table in CrateDB and loads the data.
+
+```python
+import os
+import dotenv
+import sqlalchemy as sa
+import pandas as pd
+if os.path.exists(".env"):
+    dotenv.load_dotenv(".env", override=True)
+
+dburi = f"crate://{os.environ['CRATE_USER']}:{os.environ['CRATE_PASSWORD']}@{os.environ['CRATE_HOST']}:4200?ssl={os.environ['CRATE_SSL']}"
+engine = sa.create_engine(dburi, echo=True)
+df = pd.read_csv("churn-dataset.csv")
+
+with engine.connect() as conn:
+    df.to_sql("pycaret_churn", conn, index=False, chunksize=1000, if_exists="replace")
+```
+
 ## Model creation
 
 Now that our data and environment is set up, we can start creating our model.
