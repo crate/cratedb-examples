@@ -9,7 +9,7 @@ should be a good starting point for your own projects.
 ## About Pycaret
 
 [Pycaret] is a Python library that makes it easy to create and train machine
-learning models in python. The outstanding feature of Pycaret ist its AutoML
+learning models in python. The outstanding feature of Pycaret is its AutoML
 capabilities.
 
 Pycaret is a high-level interface on top of popular machine learning

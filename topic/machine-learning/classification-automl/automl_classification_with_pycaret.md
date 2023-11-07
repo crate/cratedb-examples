@@ -27,7 +27,7 @@ Two additional features stand out:
 ## Pycaret
 
 Pycaret is a Python library that makes it easy to create and train machine
-learning models in python. The outstanding feature of Pycaret ist its AutoML
+learning models in python. The outstanding feature of Pycaret is its AutoML
 capabilities.
 
 Pycaret is a high-level interface on top of popular machine learning
@@ -113,7 +113,7 @@ pip install -r requirements.txt
 
 Secondly, we need a CrateDB instance to store and serve the data. The easiest
 way to get started is to use the free CrateDB cloud offering. You can sign up
-for a free account at https://console.crate.io.
+for a free account at https://console.cratedb.cloud.
 
 [Deploy a cluster](https://cratedb.com/docs/cloud/en/latest/tutorials/deploy/stripe.html#deploy-cluster)
 and we're ready to go.
