@@ -17,11 +17,12 @@ def cratedb() -> DatabaseAdapter:
 
 
 @pytest.fixture(scope="function", autouse=True)
-def db_init(cratedb):
+def reset_database(cratedb):
     """
     Initialize database.
     """
     cratedb.run_sql("DROP TABLE IF EXISTS mlb_teams_2012;")
+    cratedb.run_sql("DROP TABLE IF EXISTS text_data;")
     time.sleep(0.01)
 
 
