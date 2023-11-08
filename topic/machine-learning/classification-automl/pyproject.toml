@@ -55,6 +55,7 @@ nb_diff_ignore = [
     "/cells/16/outputs",
     "/cells/16/outputs",
     "/cells/18/outputs",
+    "/cells/22/outputs",
     "/cells/24/outputs",
     "/cells/30/outputs/0/data/application/vnd.jupyter.widget-view+json",
     "/cells/34/outputs",
