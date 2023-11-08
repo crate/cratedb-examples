@@ -1,7 +1,7 @@
-# Create a classification model with CrateDB, Pycaret and MLflow
+# Create a classification model with CrateDB, PyCaret and MLflow
 
 This notebook guides you through the process of creating a classification
-machine learning model with CrateDB and Pycaret. The exciting part: we're
+machine learning model with CrateDB and PyCaret. The exciting part: we're
 using automatic machine learning model selection, benchmarking and
 hyperparameter tuning - commonly known as AutoML.
 
@@ -24,20 +24,20 @@ Two additional features stand out:
    it in a performant way. This is especially useful for time series data
    like sensor data, user tracking data or log data.
 
-## Pycaret
+## PyCaret
 
-Pycaret is a Python library that makes it easy to create and train machine
-learning models in python. The outstanding feature of Pycaret is its AutoML
+PyCaret is a Python library that makes it easy to create and train machine
+learning models in python. The outstanding feature of PyCaret is its AutoML
 capabilities.
 
-Pycaret is a high-level interface on top of popular machine learning
+PyCaret is a high-level interface on top of popular machine learning
 frameworks. Among them are scikit-learn, xgboost, ray, lightgbm and many more.
 
-Pycaret provides a simple low-code interface to utilize these libraries without
+PyCaret provides a simple low-code interface to utilize these libraries without
 needing to know the details of the underlying model architectures and
 parameters.
 
-The general concept of Pycaret - and for the matter of fact for AutoML in
+The general concept of PyCaret - and for the matter of fact for AutoML in
 general - is rather simple: One takes the raw data, splits it into a training
 and a test set and then trains a number of different models on the training
 set. The models are then evaluated on the test set and the best performing
@@ -52,13 +52,13 @@ these methods, see
 [this article](https://medium.com/analytics-vidhya/comparison-of-hyperparameter-tuning-algorithms-grid-search-random-search-bayesian-optimization-5326aaef1bd1).
 
 In the past, all these try-and-error experiments had to be done manually -
-which is a tedious and time-consuming task. Pycaret automates this process
+which is a tedious and time-consuming task. PyCaret automates this process
 and provides a simple interface to execute all these experiments in a
 straightforward way. This notebook shows how.
 
 ## The dataset
 
-The dataset used to demonstrate the use of Pycaret and CrateDB for training
+The dataset used to demonstrate the use of PyCaret and CrateDB for training
 machine learning models is a churn dataset of a telecom provider.
 
 It includes various attributes relating to customer demographics, services
@@ -108,7 +108,7 @@ First, install the required dependencies.
 pip install -r requirements.txt
 ```
 
-> **Note:** As of time of this writing, Pycaret requires Python 3.8, 3.9 or
+> **Note:** As of time of this writing, PyCaret requires Python 3.8, 3.9 or
 > 3.10.
 
 Secondly, we need a CrateDB instance to store and serve the data. The easiest
@@ -240,11 +240,11 @@ of brevity, we'll skip this step here and continue with the model creation.
 
 # Model traning
 
-We use Pycaret to train a model for us. Pycaret will automatically select the
+We use PyCaret to train a model for us. PyCaret will automatically select the
 best performing model class and tune the hyperparameters for us.
 
-1. Set up Pycaret. This step allows for automatic data preprocessing. In our
-   case we tell Pycaret:
+1. Set up PyCaret. This step allows for automatic data preprocessing. In our
+   case we tell PyCaret:
    - to ignore the customerID column (as it's the
      user identifier, therefore different for each and every entry and does by
      definition not contribute to whether a user chursn)
@@ -411,14 +411,14 @@ s = setup(
   </tbody>
 </table>
 
-Using setup, Pycaret automatically creates a training and test dataset,
+Using setup, PyCaret automatically creates a training and test dataset,
 transforms categorical data to numerical ones (required for most machine
 learning models), and uses
 [SMOTE](https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.SMOTE.html)
 
 - an oversampling technique - to fix the imbalance in our dataset. These steps
   would require tens of lines of code and quite intricate knowledge of the
-  modelling process. Pycaret does all this for us.
+  modelling process. PyCaret does all this for us.
 
 The next step is already to train and evaluate models. In this case, we train
 and validate 15 (!) models - all with a single line of code.
@@ -637,10 +637,10 @@ best_models = compare_models(sort="AUC", exclude=["lightgbm"], n_select=3)
   </tbody>
 </table>
 
-Pycaret automatically outputs the performance metrics for each benchmarked
+PyCaret automatically outputs the performance metrics for each benchmarked
 model.
 Please note that the found numeric values for each of the metrics are not
-fully deterministic - meaning they can change from run to run. Pycaret uses
+fully deterministic - meaning they can change from run to run. PyCaret uses
 cross-validation to evaluate the models. This means that the training and test
 set are split into different chunks for each iteration.
 This leads to slightly different performance metrics. Cross-validation is
@@ -648,13 +648,13 @@ generally a good idea, as it helps to avoid overfitting.
 
 > **NOTE:** This is yet another aspect of training machine learning models
 > which is often overlooked by beginners - which is automatically taken care of
-> by Pycaret.
+> by PyCaret.
 
 Judging from the output generating, the Logistic Regression model seems to be
 the best performing model architecture - by quite a margin.
 However we are not done yet - another important step is to tune the
 hyperparameters of the winning models to further improve their performance.
-By setting `n_select=3` in the above benchmarking call, we told Pycaret to
+By setting `n_select=3` in the above benchmarking call, we told PyCaret to
 select the 8 best performing models from the benchmarking run. We can now use
 all 3 of them to tune their hyperparameters. It's quite common, that the model
 ranking shifts after hyperparameter tuning.
@@ -1125,7 +1125,7 @@ tuned_models = [tune_model(model) for model in best_models]
 
     Fitting 10 folds for each of 10 candidates, totalling 100 fits
 
-Pycaret outputs the cross-validation performance metrics for each model.
+PyCaret outputs the cross-validation performance metrics for each model.
 You might notice that for some of the models the metrics for the tuned model
 are worse than for the untuned model. This is quite common - oftentimes the
 default model parameters - especially for rather simple model architectures -
@@ -1157,7 +1157,7 @@ Ensemble
 There are two common approaches to ensemble learning: [bagging](https://pycaret.gitbook.io/docs/get-started/functions/optimize#method-bagging)
 and [boosting](https://pycaret.gitbook.io/docs/get-started/functions/optimize#method-boosting).
 
-Both methods are implemented in Pycaret and can be used - once again - with
+Both methods are implemented in PyCaret and can be used - once again - with
 a single line of code.
 
 ```python
@@ -1605,7 +1605,7 @@ bagged = [ensemble_model(i, method="Bagging") for i in tuned_models]
   </tbody>
 </table>
 
-Boosting works similar to Bagging (at least when using Pycaret), however
+Boosting works similar to Bagging (at least when using PyCaret), however
 models that do not provide probability estimates cannot be used for Boosting.
 
 ```python
@@ -2091,13 +2091,13 @@ machine learning task - making it highly reusable.
 
 The missing step is to identify the best model from all of our experiments.
 While we could manually look at all the mean performance metrics and pick the
-best one, Pycaret provides a function to do this for us.
+best one, PyCaret provides a function to do this for us.
 
 ```python
 best_model = automl(optimize = 'AUC')
 ```
 
-Pycaret also provides methods to investigate the model in more detail. The
+PyCaret also provides methods to investigate the model in more detail. The
 main tool you want to use is `evaluate_model`. This function provides a number
 of plots that help to understand the model performance - from AUC curves to
 confusion matrices, learning curves and model dimensions.
@@ -2117,7 +2117,7 @@ thing, as we need a test set vor validation).
 
 However, now that we know which model works best, we should retrain it on the
 whole dataset to get as many training data as possible. This can in some cases
-improve model quality. For that, Pycaret provides the `finalize_model` method.
+improve model quality. For that, PyCaret provides the `finalize_model` method.
 
 ```python
 final_model = finalize_model(best_model)
@@ -2127,7 +2127,7 @@ final_model = finalize_model(best_model)
 
 To use this newly built model for predicting new data, we can export it using
 either the `deploy_model` or `save_model` methods. For more details on them
-see the [Pycaret documentation](https://pycaret.gitbook.io/docs/get-started/functions/deploy).
+see the [PyCaret documentation](https://pycaret.gitbook.io/docs/get-started/functions/deploy).
 
 ```python
 if not os.path.exists("model"):
@@ -2148,7 +2148,7 @@ predictions for these new data.
 predict_model(final_model, s.X_test)
 ```
 
-## Experiment tracking with MLflow and Pycaret
+## Experiment tracking with MLflow and PyCaret
 
 MLflow is an open source platform for managing the end-to-end machine learning
 lifecycle. It is the defacto standard for experiment tracking in the machine
@@ -2161,7 +2161,7 @@ exactly that - support for MLflow. Therefore we can use CrateDB as our storage
 engine for the full Machine Learning lifecycle - from storing the raw data to
 storing the experiment and model metadata.
 
-Last but not least, Pycaret also provides first-class support for MLflow.
+Last but not least, PyCaret also provides first-class support for MLflow.
 This means that all the experiments we've run above are automatically tracked
 in MLflow. This is especially useful for production scenarios, where we want
 to keep track of all the experiments we've run and the models we've created.
@@ -2204,8 +2204,8 @@ _ = log_model(
 
 # Summary
 
-In this demonstration example we have seen how to use CrateDB and Pycaret to
-train a machine learning model. We've seen how to use Pycaret to train and
+In this demonstration example we have seen how to use CrateDB and PyCaret to
+train a machine learning model. We've seen how to use PyCaret to train and
 evaluate multiple models, how to tune their hyperparameters and how to combine
 them using ensemble learning and blending models. We've alos seen how to use
 MLflow to track our experiments and how to register our trained models.
@@ -2214,7 +2214,7 @@ All these steps used to be a lot of work and required a good amount of know-how
 about the entire machine learning ecosystem. One needs to know the available
 model architectures, state-of-the-art benchmarking and tuning techniques and
 how to combine models. This is a lot of work and requires a lot of experience.
-By using Pycaret, all of this is reduced to a few lines of code. This makes
+By using PyCaret, all of this is reduced to a few lines of code. This makes
 machine learning applicable for a much broader audience.
 
 While this demo explained some of the details around the model training process,

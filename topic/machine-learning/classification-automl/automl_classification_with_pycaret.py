@@ -1,5 +1,5 @@
 """
-Example program for exercising the "AutoML with Pycaret and CrateDB" article.
+Example program for exercising the "AutoML with PyCaret and CrateDB" article.
 This is a standalone variant. A corresponding .ipynb Jupyter Notebook can usually
 be found side-by-side to this file.
 """
