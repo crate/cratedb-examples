@@ -4,6 +4,7 @@ crate[sqlalchemy]
 # langchain[cratedb,openai]
 # pueblo[env,nlp]==0.0.3
 pydantic>=1,<3
+pypdf<4
 python-dotenv<2
 requests-cache<2
 unstructured<0.11
