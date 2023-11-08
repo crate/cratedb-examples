@@ -9,13 +9,13 @@ should be a good starting point for your own projects.
 ## About PyCaret
 
 [PyCaret] is a Python library that makes it easy to create and train machine
-learning models in python. The outstanding feature of PyCaret is its AutoML
+learning models in Python. The outstanding features of PyCaret are its AutoML
 capabilities.
 
-PyCaret is a high-level interface on top of popular machine learning
-frameworks. Among them are scikit-learn, xgboost, ray, lightgbm and many more.
+PyCaret is a high-level interface on top of popular machine learning frameworks.
+Amongst them are scikit-learn, xgboost, ray, lightgbm, and many more.
 
-PyCaret provides a simple low-code interface to utilize these libraries without
+PyCaret provides a universal interface to utilize these libraries without
 needing to know the details of the underlying model architectures and
 parameters.
 
@@ -28,15 +28,15 @@ of the best models. Again, this process is highly empirical. The parameters are
 changed, the model is retrained and evaluated again. This process is repeated
 until the best performing parameters are found.
 
-Modern algorithms for executing all these experiments are - among other -
+Modern algorithms for executing all these experiments are - amongst others -
 GridSearch, RandomSearch and BayesianSearch. For a quick introduction into
-these methods, see this
-[Introduction to hyperparameter tuning][Introduction to hyperparameter tuning]
+these methods, see [Introduction to hyperparameter tuning].
 
-In the past, all these try-and-error experiments had to be done manually -
+In the past, all these trial-and-error experiments had to be done manually -
 which is a tedious and time-consuming task. PyCaret automates this process
 and provides a simple interface to execute all these experiments in a
 straightforward way. This notebook shows how.
+
 
 ## What's inside
 
