@@ -31,6 +31,10 @@ nb_diff_ignore = [
     "/metadata/language_info",
     "/cells/*/execution_count",
     "/cells/*/outputs/*/execution_count",
+
+    # cratedb-vectorstore-rag-openai.ipynb
+    "/cells/13/outputs",
+    "/cells/17/outputs",
 ]
 
 [tool.coverage.run]
