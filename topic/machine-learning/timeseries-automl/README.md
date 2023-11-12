@@ -1,8 +1,7 @@
-# AutoML with PyCaret and CrateDB
+# Time series AutoML with PyCaret and CrateDB
 
 This folder provides examples, tutorials and runnable code on how to use CrateDB
-with PyCaret to automatically create high-performing classification machine 
-learning models.
+with PyCaret to automatically create high-performing time series ML models.
 
 The tutorials and examples focus on being easy to understand and use. They
 should be a good starting point for your own projects.
@@ -54,18 +53,18 @@ and [CrateDB].
 - [requirements.txt](requirements.txt): Pulls the required dependencies to
   run the example programs.
 
-- `automl_classification_with_pycaret.ipynb` [![Open on GitHub](https://img.shields.io/badge/Open%20on-GitHub-lightgray?logo=GitHub)](automl_classification_with_pycaret.ipynb) [![Open in Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/crate/cratedb-examples/blob/main/topic/machine-learning/classification-automl/automl_classification_with_pycaret.ipynb)
+- `automl_timeseries_forecasting_with_pycaret.ipynb` [![Open on GitHub](https://img.shields.io/badge/Open%20on-GitHub-lightgray?logo=GitHub)](automl_timeseries_forecasting_with_pycaret.ipynb) [![Open in Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/crate/cratedb-examples/blob/main/topic/machine-learning/timeseries-automl/automl_timeseries_forecasting_with_pycaret.ipynb)
 
   This notebook explores the PyCaret framework and shows how to use it to
-  train different classification models - using a user churn dataset as an
-  example. The notebook demonstrates the usage of PyCaret to automatically train
-  and benchmark a multitude of models and at the end select the best performing
-  model. The notebook also shows how to use CrateDB as storage for both the raw
-  data and the expirement tracking and model registry data.
+  train various timeseries forecasting models - using a real-world sales dataset
+  as an example. The notebook demonstrates the usage of PyCaret to automatically
+  train and benchmark a multitude of models and at the end select the best
+  performing model. The notebook also shows how to use CrateDB as storage for
+  both the raw data and the expirement tracking and model registry data.
 
 - Accompanied to the Jupyter Notebook files, there are also basic variants of
   the above examples,
-  [automl_classification_with_pycaret.py](automl_classification_with_pycaret.py).
+  [automl_timeseries_forecasting_with_pycaret.py](automl_timeseries_forecasting_with_pycaret.py).
 
 [PyCaret]: https://github.com/pycaret/pycaret
 [CrateDB]: https://github.com/crate/crate
