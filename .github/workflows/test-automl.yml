@@ -5,13 +5,13 @@ on:
     branches: ~
     paths:
     - '.github/workflows/test-automl.yml'
-    - 'topic/machine-learning/classification-automl/**'
+    - 'topic/machine-learning/automl/**'
     - 'requirements.txt'
   push:
     branches: [ main ]
     paths:
     - '.github/workflows/test-automl.yml'
-    - 'topic/machine-learning/classification-automl/**'
+    - 'topic/machine-learning/automl/**'
     - 'requirements.txt'
 
   # Allow job to be triggered manually.
@@ -63,13 +63,13 @@ jobs:
           cache: 'pip'
           cache-dependency-path: |
             requirements.txt
-            topic/machine-learning/classification-automl/requirements.txt
-            topic/machine-learning/classification-automl/requirements-dev.txt
+            topic/machine-learning/automl/requirements.txt
+            topic/machine-learning/automl/requirements-dev.txt
 
       - name: Install utilities
         run: |
           pip install -r requirements.txt
 
-      - name: Validate topic/machine-learning/classification-automl
+      - name: Validate topic/machine-learning/automl
         run: |
-          ngr test --accept-no-venv topic/machine-learning/classification-automl
+          ngr test --accept-no-venv topic/machine-learning/automl
