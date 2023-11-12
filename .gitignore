@@ -3,3 +3,6 @@
 __pycache__
 .coverage
 coverage.xml
+mlruns/
+archive/
+logs.log
