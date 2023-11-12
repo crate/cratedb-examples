@@ -1,0 +1,6 @@
+.env
+.env.local
+*.log
+catboost_info/
+mlruns/
+model/
