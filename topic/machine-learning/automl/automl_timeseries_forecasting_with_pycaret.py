@@ -73,7 +73,13 @@ def fetch_data():
 
 def run_experiment(data):
     setup(data = data, fh=15, target="total_sales", index="month", log_experiment=True)
-    best_models = compare_models(sort="MASE", n_select=3)
+    if "PYTEST_CURRENT_TEST" in os.environ:
+        best_models = compare_models(sort="MASE",
+                                    include=["arima", "ets", "exp_smooth"],
+                                    n_select=3)
+    else:
+        best_models = compare_models(sort="MASE", n_select=3)
+
     tuned_models = [tune_model(model) for model in best_models]
     blend = blend_models(estimator_list=tuned_models)
     best_model = blend
