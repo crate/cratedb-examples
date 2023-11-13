@@ -64,7 +64,6 @@ def run_experiment(data):
     blend_models(estimator_list=tuned_models)
     best_model = automl(optimize="AUC")
 
-    evaluate_model(best_model)
     final_model = finalize_model(best_model)
 
     # Save the model to disk.
