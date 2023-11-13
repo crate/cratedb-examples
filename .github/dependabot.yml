@@ -65,7 +65,7 @@ updates:
 
   # Topics.
 
-  - directory: "/topic/machine-learning/classification-automl"
+  - directory: "/topic/machine-learning/automl"
     package-ecosystem: "pip"
     schedule:
       interval: "weekly"

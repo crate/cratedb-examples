@@ -53,7 +53,7 @@ and [CrateDB].
 - [requirements.txt](requirements.txt): Pulls the required dependencies to
   run the example programs.
 
-- `automl_classification_with_pycaret.ipynb` [![Open on GitHub](https://img.shields.io/badge/Open%20on-GitHub-lightgray?logo=GitHub)](automl_classification_with_pycaret.ipynb) [![Open in Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/crate/cratedb-examples/blob/main/topic/machine-learning/classification-automl/automl_classification_with_pycaret.ipynb)
+- `automl_classification_with_pycaret.ipynb` [![Open on GitHub](https://img.shields.io/badge/Open%20on-GitHub-lightgray?logo=GitHub)](automl_classification_with_pycaret.ipynb) [![Open in Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/crate/cratedb-examples/blob/main/topic/machine-learning/automl/automl_classification_with_pycaret.ipynb)
 
   This notebook explores the PyCaret framework and shows how to use it to
   train different classification models - using a user churn dataset as an
@@ -62,7 +62,7 @@ and [CrateDB].
   model. The notebook also shows how to use CrateDB as storage for both the raw
   data and the expirement tracking and model registry data.
 
-- `automl_timeseries_forecasting_with_pycaret.ipynb` [![Open on GitHub](https://img.shields.io/badge/Open%20on-GitHub-lightgray?logo=GitHub)](automl_timeseries_forecasting_with_pycaret.ipynb) [![Open in Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/crate/cratedb-examples/blob/main/topic/machine-learning/timeseries-automl/automl_timeseries_forecasting_with_pycaret.ipynb)
+- `automl_timeseries_forecasting_with_pycaret.ipynb` [![Open on GitHub](https://img.shields.io/badge/Open%20on-GitHub-lightgray?logo=GitHub)](automl_timeseries_forecasting_with_pycaret.ipynb) [![Open in Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/crate/cratedb-examples/blob/main/topic/machine-learning/automl/automl_timeseries_forecasting_with_pycaret.ipynb)
 
   This notebook explores the PyCaret framework and shows how to use it to
   train various timeseries forecasting models - using a real-world sales dataset
