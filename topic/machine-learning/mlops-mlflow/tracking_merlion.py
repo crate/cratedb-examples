@@ -30,7 +30,7 @@ def provision_data():
     """
     Download Numenta Anomaly Benchmark data, and load into database.
     """
-    data = pd.read_csv("https://github.com/crate/cratedb-datasets/raw/main/timeseries/anomaly/nab-machine-failure.csv")
+    data = pd.read_csv("https://github.com/crate/cratedb-datasets/raw/main/timeseries/nab-machine-failure.csv")
 
     # Connecting to CrateDB.
     conn = connect_database()
