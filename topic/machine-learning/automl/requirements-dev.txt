@@ -1,10 +1,10 @@
 # Real.
 # cratedb-toolkit
-# pueblo[testing]
+# pueblo[notebook,testing]
 
 # Development.
 cratedb-toolkit[io] @ git+https://github.com/crate-workbench/cratedb-toolkit.git@main
-pueblo[testing] @ git+https://github.com/pyveci/pueblo.git@main
+pueblo[notebook,testing] @ git+https://github.com/pyveci/pueblo.git@main
 
 # Workstation.
 # --editable=/Users/amo/dev/crate/ecosystem/cratedb-retentions[io]
