@@ -1,7 +1,7 @@
 # Real.
 crash
 crate[sqlalchemy]
-cratedb-toolkit
+# cratedb-toolkit
 
 # langchain[cratedb,openai]
 # pueblo[env,nlp]==0.0.3
@@ -13,5 +13,5 @@ unstructured<0.11
 
 # Development.
 cratedb-toolkit @ git+https://github.com/crate-workbench/cratedb-toolkit.git@main
-langchain[cratedb,openai] @ git+https://github.com/crate-workbench/langchain.git@testing#subdirectory=libs/langchain
+langchain[cratedb,openai] @ git+https://github.com/crate-workbench/langchain.git@cratedb#subdirectory=libs/langchain
 pueblo[nlp] @ git+https://github.com/pyveci/pueblo.git@main
