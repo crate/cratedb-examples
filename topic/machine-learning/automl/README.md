@@ -4,7 +4,7 @@ This folder provides examples, tutorials and runnable code on how to use CrateDB
 with PyCaret to automatically create high-performing machine learning models.
 
 The tutorials and examples focus on being easy to understand and use. They
-should be a good starting point for your own projects.
+are a good starting point for your own projects.
 
 ## About PyCaret
 
@@ -45,12 +45,12 @@ straightforward way. This notebook shows how.
 This folder provides guidelines and runnable code to get started with [PyCaret]
 and [CrateDB].
 
-- [readme.md](readme.md): The file you are currently reading contains a
+- [README.md](README.md): The file you are currently reading contains a
   walkthrough about how to get started with the PyCaret framework and CrateDB,
   and guides you to corresponding example programs on how to train different
   models.
 
-- [requirements.txt](requirements.txt): Pulls the required dependencies to
+- [requirements.txt](requirements.txt): For pulling the required dependencies to
   run the example programs.
 
 - `automl_classification_with_pycaret.ipynb` [![Open on GitHub](https://img.shields.io/badge/Open%20on-GitHub-lightgray?logo=GitHub)](automl_classification_with_pycaret.ipynb) [![Open in Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/crate/cratedb-examples/blob/main/topic/machine-learning/automl/automl_classification_with_pycaret.ipynb)
