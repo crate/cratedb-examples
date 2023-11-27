@@ -23,7 +23,7 @@ repositories {
 dependencies {
     implementation 'org.jooq:jooq:3.18.7'
     implementation 'org.jooq:jooq-meta:3.18.7'
-    implementation 'org.postgresql:postgresql:42.6.0'
+    implementation 'org.postgresql:postgresql:42.7.0'
     implementation 'org.slf4j:slf4j-api:2.0.9'
     implementation 'org.slf4j:slf4j-simple:2.0.9'
     testImplementation 'junit:junit:4.13.2'
