@@ -5,13 +5,13 @@ cratedb-toolkit==0.0.5
 
 # langchain[cratedb,openai]==0.0.354
 # langchain-community==0.0.8
+langchain-openai==0.0.6
 pueblo[cli,fileio,nlp]>=0.0.7
 pydantic>=1,<3
 pypdf<5
 python-dotenv<2
 requests-cache<2
-unstructured<0.11
-langchain-openai==0.0.6
+unstructured<0.12
 
 # Development.
 # cratedb-toolkit @ git+https://github.com/crate-workbench/cratedb-toolkit.git@main
