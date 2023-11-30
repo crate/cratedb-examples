@@ -57,9 +57,12 @@ and [CrateDB].
 
 - `cratedb-vectorstore-rag-openai-sql.ipynb` [![Open on GitHub](https://img.shields.io/badge/Open%20on-GitHub-lightgray?logo=GitHub)](conversational_memory.ipynb) [![Launch Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/crate/cratedb-examples/main?labpath=topic%2Fmachine-learning%2Fllm-langchain%2Fcratedb-vectorstore-rag-openai-sql.ipynb) [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/crate/cratedb-examples/blob/main/topic/machine-learning/llm-langchain/cratedb-vectorstore-rag-openai-sql.ipynb)
 
-  This example intentially shows how to use the CrateDB Vector Store using SQL. There might be cases where the default parameters of the LangChain integration are not sufficient or you need to crate more advanced SQL queries.
+  This example intentionally shows how to use the CrateDB Vector Store using SQL.
+  There might be cases where the default parameters of the LangChain integration
+  are not sufficient, or you need to use more advanced SQL queries.
 
-  The example still uses LangChain components to split a PDF file into chunks, leverage OpenAI to calculate embeddings and to execute the request towards an LLM.
+  The example still uses LangChain components to split a PDF file into chunks,
+  leverages OpenAI to calculate embeddings, and to execute the request towards an LLM.
 
 - Accompanied to the Jupyter Notebook files, there are also basic variants of
   corresponding examples, [vector_search.py](vector_search.py),
