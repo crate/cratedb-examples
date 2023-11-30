@@ -40,20 +40,26 @@ and [CrateDB].
 - [requirements.txt](requirements.txt): Pulls in a patched version of LangChain,
   as well as the CrateDB client driver and the `crash` command-line interface.
 
-- `vector_store.ipynb` [![Open on GitHub](https://img.shields.io/badge/Open%20on-GitHub-lightgray?logo=GitHub)](vector_search.ipynb) [![Launch Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/crate/cratedb-examples/main?labpath=topic%2Fmachine-learning%2Fllm-langchain%2Fvector_search.ipynb) [![Open in Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/crate/cratedb-examples/blob/main/topic/machine-learning/llm-langchain/vector_search.ipynb)
+- `vector_store.ipynb` [![Open on GitHub](https://img.shields.io/badge/Open%20on-GitHub-lightgray?logo=GitHub)](vector_search.ipynb) [![Launch Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/crate/cratedb-examples/main?labpath=topic%2Fmachine-learning%2Fllm-langchain%2Fvector_search.ipynb) [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/crate/cratedb-examples/blob/main/topic/machine-learning/llm-langchain/vector_search.ipynb)
 
   This notebook explores CrateDB's [`FLOAT_VECTOR`] and [`KNN_MATCH`] functionalities for storing and retrieving
   embeddings, and for conducting similarity searches.
 
-- `document_loader.ipynb` [![Open on GitHub](https://img.shields.io/badge/Open%20on-GitHub-lightgray?logo=GitHub)](document_loader.ipynb) [![Launch Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/crate/cratedb-examples/main?labpath=topic%2Fmachine-learning%2Fllm-langchain%2Fdocument_loader.ipynb) [![Open in Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/crate/cratedb-examples/blob/main/topic/machine-learning/llm-langchain/document_loader.ipynb)
+- `document_loader.ipynb` [![Open on GitHub](https://img.shields.io/badge/Open%20on-GitHub-lightgray?logo=GitHub)](document_loader.ipynb) [![Launch Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/crate/cratedb-examples/main?labpath=topic%2Fmachine-learning%2Fllm-langchain%2Fdocument_loader.ipynb) [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/crate/cratedb-examples/blob/main/topic/machine-learning/llm-langchain/document_loader.ipynb)
 
   The notebook about the Document Loader demonstrates how to query a database table in CrateDB and use it as a
   source provider for LangChain documents.
 
-- `conversational_memory.ipynb` [![Open on GitHub](https://img.shields.io/badge/Open%20on-GitHub-lightgray?logo=GitHub)](conversational_memory.ipynb) [![Launch Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/crate/cratedb-examples/main?labpath=topic%2Fmachine-learning%2Fllm-langchain%2Fconversational_memory.ipynb) [![Open in Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/crate/cratedb-examples/blob/main/topic/machine-learning/llm-langchain/conversational_memory.ipynb)
+- `conversational_memory.ipynb` [![Open on GitHub](https://img.shields.io/badge/Open%20on-GitHub-lightgray?logo=GitHub)](conversational_memory.ipynb) [![Launch Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/crate/cratedb-examples/main?labpath=topic%2Fmachine-learning%2Fllm-langchain%2Fconversational_memory.ipynb) [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/crate/cratedb-examples/blob/main/topic/machine-learning/llm-langchain/conversational_memory.ipynb)
 
   LangChain also supports managing conversation history in SQL databases. This notebook exercises
   how that works with CrateDB.
+
+- `cratedb-vectorstore-rag-openai-sql.ipynb` [![Open on GitHub](https://img.shields.io/badge/Open%20on-GitHub-lightgray?logo=GitHub)](conversational_memory.ipynb) [![Launch Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/crate/cratedb-examples/main?labpath=topic%2Fmachine-learning%2Fllm-langchain%2Fcratedb-vectorstore-rag-openai-sql.ipynb) [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/crate/cratedb-examples/blob/main/topic/machine-learning/llm-langchain/cratedb-vectorstore-rag-openai-sql.ipynb)
+
+  This example intentially shows how to use the CrateDB Vector Store using SQL. There might be cases where the default parameters of the LangChain integration are not sufficient or you need to crate more advanced SQL queries.
+
+  The example still uses LangChain components to split a PDF file into chunks, leverage OpenAI to calculate embeddings and to execute the request towards an LLM.
 
 - Accompanied to the Jupyter Notebook files, there are also basic variants of
   corresponding examples, [vector_search.py](vector_search.py),

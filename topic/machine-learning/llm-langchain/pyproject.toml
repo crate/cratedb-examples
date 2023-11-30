@@ -32,8 +32,9 @@ nb_diff_ignore = [
     "/cells/*/execution_count",
     "/cells/*/outputs/*/execution_count",
 
-    # cratedb-vectorstore-rag-openai.ipynb
+    # cratedb-vectorstore-rag-openai-sql.ipynb
     "/cells/13/outputs",
+    "/cells/15/outputs",
     "/cells/17/outputs",
 ]
 
