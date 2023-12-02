@@ -79,7 +79,7 @@ jobs:
 
       - name: Validate by-language/csharp-npgsql, Npgsql ${{ matrix.npgsql-version }}
         run: |
-          ngr test by-language/csharp-npgsql --npgsql-version=${{ matrix.npgsql-version }}
+          ngr test by-language/csharp-npgsql --dotnet-version=${{ matrix.dotnet-version }} --npgsql-version=${{ matrix.npgsql-version }}
 
       # https://github.com/codecov/codecov-action
       - name: Upload coverage results to Codecov
