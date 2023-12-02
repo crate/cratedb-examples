@@ -27,7 +27,7 @@ markers = [
 nb_test_files = true
 nb_coverage = false
 # 120 seconds is too less on CI/GHA
-nb_exec_timeout = 240
+nb_exec_timeout = 300
 nb_diff_replace = [
     # Compensate output of `crash`.
     '"/cells/*/outputs/*/text" "\(\d.\d+ sec\)" "(0.000 sec)"',
