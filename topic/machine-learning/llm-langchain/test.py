@@ -26,16 +26,6 @@ def reset_database(cratedb):
     time.sleep(0.01)
 
 
-def db_provision_mlb_teams_2012(cratedb):
-    """
-    Provision database.
-    """
-    cratedb.run_sql(Path("mlb_teams_2012.sql"))
-    time.sleep(0.01)
-    cratedb.run_sql("REFRESH TABLE mlb_teams_2012;")
-    time.sleep(0.01)
-
-
 @pytest.mark.parametrize("notebook", str_list(list_notebooks(HERE)))
 def test_notebook(request, notebook: str):
     """
@@ -57,9 +47,5 @@ def test_file(request, cratedb, pyfile: Path):
     if str(pyfile).endswith("vector_search.py"):
         if "OPENAI_API_KEY" not in os.environ:
             raise pytest.skip("OPENAI_API_KEY not given")
-
-    # `document_loader.py` needs provisioning.
-    if str(pyfile).endswith("document_loader.py"):
-        db_provision_mlb_teams_2012(cratedb)
 
     pytest_module_function(request, pyfile)
