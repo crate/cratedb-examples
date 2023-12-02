@@ -11,6 +11,9 @@ python-dotenv<2
 requests-cache<2
 unstructured<0.11
 
+# APIRemovedInV1: You tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0
+openai==0.28
+
 # Development.
 cratedb-toolkit @ git+https://github.com/crate-workbench/cratedb-toolkit.git@main
 langchain[cratedb,openai] @ git+https://github.com/crate-workbench/langchain.git@cratedb#subdirectory=libs/langchain
