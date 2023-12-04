@@ -71,11 +71,31 @@ and [CrateDB].
   performing model. The notebook also shows how to use CrateDB as storage for
   both the raw data and the expirement tracking and model registry data.
 
-- Accompanied to the Jupyter Notebook files, there are also basic variants of
-  the above examples,
-  [automl_timeseries_forecasting_with_pycaret.py](automl_timeseries_forecasting_with_pycaret.py),
-  [automl_classification_with_pycaret.py](automl_classification_with_pycaret.py).
+- Accompanied to the Jupyter Notebook files, there are also basic standalone
+  program variants of the above examples.
+  - [automl_timeseries_forecasting_with_pycaret.py](automl_timeseries_forecasting_with_pycaret.py),
+  - [automl_classification_with_pycaret.py](automl_classification_with_pycaret.py).
 
-[PyCaret]: https://github.com/pycaret/pycaret
+
+## Software Tests
+
+The resources are validated by corresponding software tests on CI. You can
+also use those on your workstation. For example, to invoke the test cases
+validating the Notebook about timeseries classification with PyCaret, run:
+
+```shell
+pytest -k automl_classification_with_pycaret.ipynb
+```
+
+Alternatively, you can validate all resources in this folder by invoking a
+test runner program on the top-level folder of this repository. This is the
+same code path the CI jobs are taking.
+```shell
+pip install -r requirements.txt
+ngr test topic/machine-learning/automl
+```
+
+
 [CrateDB]: https://github.com/crate/crate
 [Introduction to hyperparameter tuning]: https://medium.com/analytics-vidhya/comparison-of-hyperparameter-tuning-algorithms-grid-search-random-search-bayesian-optimization-5326aaef1bd1
+[PyCaret]: https://github.com/pycaret/pycaret
