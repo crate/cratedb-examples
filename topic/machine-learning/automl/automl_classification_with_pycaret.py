@@ -17,16 +17,26 @@ if os.path.exists(".env"):
     dotenv.load_dotenv(".env", override=True)
 
 
-# Configure database connection string.
-dburi = f"crate://{os.environ['CRATE_USER']}:{os.environ['CRATE_PASSWORD']}@{os.environ['CRATE_HOST']}:4200?ssl={os.environ['CRATE_SSL']}"
-os.environ["MLFLOW_TRACKING_URI"] = f"{dburi}&schema=mlflow"
+# Configure to connect to CrateDB server on localhost.
+CONNECTION_STRING = os.environ.get(
+    "CRATEDB_CONNECTION_STRING",
+    "crate://crate@localhost/?ssl=false",
+)
+
+# Compute derived connection strings for SQLAlchemy use vs. MLflow use.
+DBURI_DATA = f"{CONNECTION_STRING}&schema=testdrive"
+DBURI_MLFLOW = f"{CONNECTION_STRING}&schema=mlflow"
+
+# Propagate database connectivity settings.
+engine = sa.create_engine(DBURI_DATA, echo=bool(os.environ.get("DEBUG")))
+os.environ["MLFLOW_TRACKING_URI"] = DBURI_MLFLOW
 
 
 def fetch_data():
     """
     Fetch data from CrateDB, using SQL and SQLAlchemy, and wrap result into pandas data frame.
     """
-    engine = sa.create_engine(dburi, echo=True)
+    engine = sa.create_engine(DBURI_DATA, echo=True)
 
     with engine.connect() as conn:
         with conn.execute(sa.text("SELECT * FROM pycaret_churn")) as cursor:

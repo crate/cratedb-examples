@@ -17,10 +17,19 @@ from pycaret.time_series import (
 if os.path.isfile(".env"):
     load_dotenv(".env", override=True)
 
-# Configure database connection string.
-dburi = f"crate://{os.environ['CRATE_USER']}:{os.environ['CRATE_PASSWORD']}@{os.environ['CRATE_HOST']}:4200?ssl={os.environ['CRATE_SSL']}"
-engine = sa.create_engine(dburi, echo=os.environ.get("DEBUG"))
-os.environ["MLFLOW_TRACKING_URI"] = f"{dburi}&schema=mlflow"
+# Configure to connect to CrateDB server on localhost.
+CONNECTION_STRING = os.environ.get(
+    "CRATEDB_CONNECTION_STRING",
+    "crate://crate@localhost/?ssl=false",
+)
+
+# Compute derived connection strings for SQLAlchemy use vs. MLflow use.
+DBURI_DATA = f"{CONNECTION_STRING}&schema=testdrive"
+DBURI_MLFLOW = f"{CONNECTION_STRING}&schema=mlflow"
+
+# Propagate database connectivity settings.
+engine = sa.create_engine(DBURI_DATA, echo=bool(os.environ.get("DEBUG")))
+os.environ["MLFLOW_TRACKING_URI"] = DBURI_MLFLOW
 
 
 def prepare_data():
@@ -37,7 +46,7 @@ def prepare_data():
     data["date"] = pd.to_datetime(data["date"])
 
     # Insert the data into CrateDB
-    engine = sa.create_engine(dburi, echo=os.environ.get("DEBUG"))
+    engine = sa.create_engine(DBURI_DATA, echo=bool(os.environ.get("DEBUG")))
 
     with engine.connect() as conn:
         data.to_sql(
