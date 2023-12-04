@@ -3,7 +3,7 @@
 # pueblo[notebook,testing]
 
 # Development.
-cratedb-toolkit[io] @ git+https://github.com/crate-workbench/cratedb-toolkit.git@main
+cratedb-toolkit[io] @ git+https://github.com/crate-workbench/cratedb-toolkit.git@7f3a493
 pueblo[notebook,testing] @ git+https://github.com/pyveci/pueblo.git@main
 
 # Workstation.

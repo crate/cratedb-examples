@@ -1,6 +1,6 @@
 # Real.
 crate[sqlalchemy]
-# mlflow-cratedb==2.7.1
+# mlflow-cratedb==2.8.1
 plotly<5.19
 pycaret[analysis,models,tuner,parallel,test]==3.2.0
 pydantic<2
@@ -9,4 +9,4 @@ tqdm<5
 werkzeug==2.2.3
 
 # Development.
-mlflow-cratedb @ git+https://github.com/crate-workbench/mlflow-cratedb.git@testing
+mlflow-cratedb @ git+https://github.com/crate-workbench/mlflow-cratedb.git@toolkit-head
