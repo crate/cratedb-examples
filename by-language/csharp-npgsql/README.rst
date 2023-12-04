@@ -24,7 +24,7 @@ need for a plugin.
 Please note that Npgsql 5 is not supported starting with CrateDB 4.8.4, you
 will need Npgsql 6 or newer.
 
-.NET 5, 6, and 7 are supported, .NET 3.1 and 4.6 may still work.
+.NET 6, 7, and 8 are supported, .NET 3.1, 4.6, and 5.0 may still work.
 
 
 *****
@@ -37,17 +37,17 @@ To invoke a CrateDB instance for evaluation purposes, run::
 
 Invoke example program::
 
-    dotnet run --framework=net5.0
+    dotnet run --framework=net8.0
 
 To connect to CrateDB Cloud, use a command like::
 
-    dotnet run --framework=net5.0 -- \
+    dotnet run --framework=net8.0 -- \
         --host=clustername.aks1.westeurope.azure.cratedb.net --ssl-mode=Require \
         --username=foobar --password='X8F%Shn)TESTvF5ac7%eW4NM'
 
 Explore all available connection options::
 
-    dotnet run --framework=net5.0 -- --help
+    dotnet run --framework=net8.0 -- --help
 
 
 Tests
@@ -55,16 +55,16 @@ Tests
 
 For running the test scenarios wrapped into a xUnit test suite, invoke::
 
-    dotnet test --framework=net5.0
+    dotnet test --framework=net8.0
 
 To generate a Cobertura code coverage report, run::
 
-    dotnet test --framework=net5.0 --collect:"XPlat Code Coverage"
+    dotnet test --framework=net8.0 --collect:"XPlat Code Coverage"
 
 For running the tests against a remote database, use, for example::
 
     export CRATEDB_DSN='Host=clustername.aks1.westeurope.azure.cratedb.net;Port=5432;SSL Mode=Require;Username=foobar;Password=X8F%Shn)TESTvF5ac7%eW4NM;Database=testdrive'
-    dotnet test --framework=net5.0
+    dotnet test --framework=net8.0
 
 
 .. _C#: https://en.wikipedia.org/wiki/C_Sharp_(programming_language)
