@@ -1,0 +1,20 @@
+[tool.poe.tasks]
+
+test = [
+
+  # Acquire Singer file in JSONL format.
+  { cmd = "wget --no-clobber https://github.com/MeltanoLabs/target-postgres/raw/v0.0.9/target_postgres/tests/data_files/tap_countries.singer" },
+
+  # Install recipe.
+  { cmd = "meltano install" },
+
+  # Discover data schema.
+  { shell = "meltano invoke tap-singer-jsonl --discover > catalog.json" },
+
+  # Run plugin standalone, testdrive.
+  { cmd = "meltano invoke tap-singer-jsonl --catalog catalog.json" },
+
+  # Invoke pipeline, loading data into database, for real.
+  { cmd = "meltano run tap-singer-jsonl target-cratedb" },
+
+]

@@ -1,0 +1,52 @@
+# A Meltano project is just a directory on your filesystem containing text-based files.
+# At a minimum, a Meltano project must contain a project file named `meltano.yml`,
+# which contains your project configuration, and tells Meltano that a particular
+# directory is a Meltano project.
+---
+version: 1
+default_environment: dev
+send_anonymous_usage_stats: false
+project_id: 57d4c2d8-e053-49da-8cc2-8472de112c69
+
+environments:
+- name: dev
+- name: staging
+- name: prod
+
+plugins:
+
+  # Configure data source.
+  # In Singer jargon, it is an "extractor", wrapped into a "tap".
+  extractors:
+
+  - name: tap-singer-jsonl
+    variant: kgpayne
+    pip_url: git+https://github.com/crate-workbench/tap-singer-jsonl@fix-paths
+    config:
+      source: local
+      add_record_metadata: false
+      local:
+        # Note: Configure Singer file(s) here.
+        paths:
+          - "tap_countries.singer"
+
+  # Configure data sinks.
+  # In Singer jargon, it is a "loader", wrapped into a "target".
+  loaders:
+
+  - name: target-jsonl
+    variant: andyh1203
+    pip_url: target-jsonl
+
+  - name: target-cratedb
+    namespace: cratedb
+    variant: cratedb
+    # Acquire from PyPI.
+    pip_url: meltano-target-cratedb
+    # Acquire from GitHub.
+    # pip_url: git+https://github.com/crate-workbench/meltano-target-cratedb.git
+
+    # Note: Configure your database server and credentials here.
+    config:
+      sqlalchemy_url: crate://crate@localhost/
+      add_record_metadata: true
