@@ -1,0 +1,85 @@
+{
+  "plugin_type": "extractors",
+  "name": "tap-singer-jsonl",
+  "namespace": "tap_singer_jsonl",
+  "variant": "kgpayne",
+  "label": "Singer JSONL",
+  "docs": "https://hub.meltano.com/extractors/tap-singer-jsonl--kgpayne",
+  "repo": "https://github.com/kgpayne/tap-singer-jsonl",
+  "pip_url": "tap-singer-jsonl",
+  "executable": "tap-singer-jsonl",
+  "description": "Read Singer-formatted JSONL Files",
+  "logo_url": "https://hub.meltano.com/assets/logos/extractors/singer.png",
+  "capabilities": [
+    "discover"
+  ],
+  "settings_group_validation": [
+    [
+      "local.folders"
+    ],
+    [
+      "local.paths"
+    ],
+    [
+      "source",
+      "s3.bucket"
+    ],
+    [
+      "source",
+      "s3.paths"
+    ]
+  ],
+  "settings": [
+    {
+      "name": "source",
+      "kind": "string",
+      "value": "local",
+      "label": "Source",
+      "description": "The source configuration to use when reading `.singer.gz` files. Currently `local` and `s3` are supported."
+    },
+    {
+      "name": "add_record_metadata",
+      "kind": "boolean",
+      "value": true,
+      "label": "Add Record Metadata",
+      "description": "Whether to inject `_sdc_*` metadata columns."
+    },
+    {
+      "name": "local.folders",
+      "kind": "array",
+      "label": "Folders",
+      "description": "Array of directory paths to scan for `.singer.gz` files."
+    },
+    {
+      "name": "local.recursive",
+      "kind": "boolean",
+      "value": false,
+      "label": "Recursive",
+      "description": "Whether to scan directories recursively when discovering `.singer.gz` files."
+    },
+    {
+      "name": "local.paths",
+      "kind": "array",
+      "label": "Paths",
+      "description": "Array of file paths to singer-formatted files. **Note:** extension is ignored, and compression is inferred automatically by `smart_open`. Both `local.folders` and `local.paths` can be specified together."
+    },
+    {
+      "name": "s3.bucket",
+      "kind": "string",
+      "label": "Bucket",
+      "description": "S3 bucket name."
+    },
+    {
+      "name": "s3.prefix",
+      "kind": "string",
+      "label": "Prefix",
+      "description": "S3 key prefix. **Note:** key prefixes will be scanned recursively."
+    },
+    {
+      "name": "s3.paths",
+      "kind": "array",
+      "label": "Paths",
+      "description": "S3 file paths to singer-formatted files. **Note:** extension is ignored, and compression is inferred automatically by `smart_open`. Both `s3.prefix` and `s3.paths` can be specified together."
+    }
+  ]
+}
