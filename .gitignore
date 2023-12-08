@@ -1,4 +1,6 @@
+.DS_Store
 .idea
+.env
 .venv*
 __pycache__
 _build
