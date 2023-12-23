@@ -1,4 +1,3 @@
-import os
 import shlex
 import subprocess
 import pytest
@@ -33,4 +32,19 @@ def test_insert_pandas():
 
 def test_insert_dask():
     cmd = "time python insert_dask.py"
+    run(cmd)
+
+
+def test_sync_table():
+    cmd = "time python sync_table.py urllib3 psycopg"
+    run(cmd)
+
+
+def test_async_table():
+    cmd = "time python async_table.py psycopg asyncpg"
+    run(cmd)
+
+
+def test_async_streaming():
+    cmd = "time python async_streaming.py psycopg asyncpg"
     run(cmd)

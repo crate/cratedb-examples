@@ -79,9 +79,7 @@ Navigate to example program directory, and install prerequisites::
 Examples
 ********
 
-Run example programs::
-
-    # Connect to CrateDB on localhost.
+The ``insert`` example programs are about efficient data loading::
 
     time python insert_efficient.py cratedb multirow
     time python insert_efficient.py cratedb batched
@@ -92,7 +90,21 @@ Run example programs::
 
     time python insert_dask.py
 
-Use ``insert_pandas.py`` to connect to any other database instance::
+The ``sync`` and ``async`` example programs demonstrate SQLAlchemy's
+low-level table/core API using both the HTTP-based transport driver
+using ``urllib3``, as well as the canonical ``asyncpg`` and ``psycopg3``
+drivers using the PostgreSQL wire protocol::
+
+    time python sync_table.py urllib3 psycopg
+    time python async_table.py asyncpg psycopg
+    time python async_streaming.py asyncpg psycopg
+
+Connect to CrateDB Cloud
+========================
+
+By default, the example programs will connect to CrateDB on ``localhost``.
+In order to connect to any other database instance, for example on CrateDB
+Cloud::
 
     export DBURI="crate://crate@localhost:4200/"
     export DBURI="crate://admin:<PASSWORD>@example.aks1.westeurope.azure.cratedb.net:4200?ssl=true"
@@ -100,7 +112,8 @@ Use ``insert_pandas.py`` to connect to any other database instance::
 
 .. TIP::
 
-    For more information, please refer to the header sections of each of the provided example programs.
+    For more information, please refer to the header sections of each of the
+    provided example programs.
 
 
 *****
