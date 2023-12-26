@@ -1,8 +1,9 @@
+.DS_Store
 .idea
+.env
 .venv*
 __pycache__
 .coverage
 coverage.xml
 mlruns/
 archive/
-logs.log
