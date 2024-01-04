@@ -68,6 +68,16 @@ and [CrateDB].
   corresponding examples, [vector_search.py](vector_search.py),
   [document_loader.py](document_loader.py), and
   [conversational_memory.py](conversational_memory.py).
+  
+- `cratedb_rag_customer_support_langchain.ipynb` [![Open on GitHub](https://img.shields.io/badge/Open%20on-GitHub-lightgray?logo=GitHub)](cratedb_rag_customer_support_langchain.ipynb)[![Open in Colab](https://colab.research.google.com/github/crate/cratedb-examples/blob/main/topic/machine-learning/llm-langchain/cratedb_rag_customer_support_langchain.ipynb)
+    
+  This example illustrates the RAG implementation of a customer support scenario.
+  The dataset used in this example is based on a collection of customer support interactions 
+  from Twitter related to Microsoft products or services.
+
+  The example shows how to use the CrateDB vector store functionality to create a retrieval 
+  augmented generation (RAG) pipeline. To implement RAG we use the Python client driver for 
+  CrateDB and vector store support in LangChain.
 
 
 ## Install
