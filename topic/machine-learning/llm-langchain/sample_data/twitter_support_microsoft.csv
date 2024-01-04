@@ -1,0 +1,144 @@
+tweet_id,author_id,inbound,created_at,text,response_tweet_id,in_response_to_tweet_id
+2301,116231,True,Tue Oct 31 20:22:23 +0000 2017,@MicrosoftHelps Please get back to me immediately this is of the upmost importance,2299,2306
+11879,MicrosoftHelps,False,Wed Nov 01 08:30:56 +0000 2017,"@118331 Great! We're glad that the issue was resolved. Should you need further help, please let us know.",,11877
+11881,MicrosoftHelps,False,Thu Oct 26 20:01:31 +0000 2017,@118331 Thank you for the info. Since the driver is already up-to-date. We suggest performing a clean boot: https://t.co/XbaHzIjbi4.,11878,11882
+11890,118332,True,Thu Oct 26 17:29:03 +0000 2017,@MicrosoftHelps How can i deactivate the Built in Administrator?,11889,
+11912,MicrosoftHelps,False,Wed Nov 01 19:12:00 +0000 2017,@118337 Thank you for the update. We encourage you to be persistent and keep trying to recover your account using the recovery form.,,11911
+11913,MicrosoftHelps,False,Sat Nov 04 19:09:24 +0000 2017,@118337 We'd like to follow up on the status of your concern. Feel free to reach us back if you need further assistance.,11914,11911
+12871,118604,True,Tue Oct 31 12:26:24 +0000 2017,@MicrosoftHelps I'm having trouble signing in. I tried to reset my password via text to my phone but I didn't receive any text. Any help?,12869,
+12872,MicrosoftHelps,False,Wed Nov 01 01:35:00 +0000 2017,"@118605 Got it. To resolve issues with the error code 0x803FB005, follow WPhoneUSer88's advice on this thread: https://t.co/awXxhdJLhb.",,12873
+12888,118606,True,Fri Oct 27 17:23:41 +0000 2017,@MicrosoftHelps hi! ever since I updated my windows 10 recently...the screen saver settings have been altered!,12887,
+13789,MicrosoftHelps,False,Sun Oct 29 17:26:00 +0000 2017,"@118890 Let's dig further into your concern. Just to clarify, were there any recent changes prior to this issue? Any error message?","13790,13791,13787",13792
+11905,MicrosoftHelps,False,Thu Nov 02 01:17:25 +0000 2017,"@118336 Hi. Just doing a follow-up. Do you still need assistance with your concern? If yes, send us a Direct Message.",,11902
+12868,MicrosoftHelps,False,Tue Oct 31 13:23:00 +0000 2017,@118604 1/2 We don't have direct email. You can post your query via Community Forum for assistance: https://t.co/jsa5yeYZ1T.,,12867
+205,115751,True,Tue Oct 31 22:04:20 +0000 2017,"@MicrosoftHelps hi, having trouble making purchases on Xbox one store for fifa points, can you help?","203,206",
+2300,116231,True,Tue Oct 31 22:20:10 +0000 2017,@MicrosoftHelps Are you trying to help? Because helping would be trying to shut that down. I’m not looking for avoiding I’m looking for you to deal w/ it.,2302,2299
+2302,MicrosoftHelps,False,Wed Nov 01 00:29:55 +0000 2017,"@116231 Let us guide you to report scams. On the link provided to you. Kindly go to ""How to report tech support scams"".","2303,2304,2305",2300
+11898,118335,True,Fri Oct 27 17:10:59 +0000 2017,"@MicrosoftHelps Windows 10 update this morning, and now my second monitor looks like this. Already restarted and updated graphics driver. https://t.co/iQMD3UIuKI","11897,11899,11900",
+11901,MicrosoftHelps,False,Wed Nov 01 01:07:54 +0000 2017,"@118336 Allow us to help, Damian. Meet us through Direct Message and we'll take it from there. https://t.co/3qcAsLFkaY",,11902
+11914,118337,True,Sun Nov 05 08:44:09 +0000 2017,@MicrosoftHelps Hi I just keep getting rejected by the form so I have given up,,11913
+12879,MicrosoftHelps,False,Wed Nov 01 11:41:28 +0000 2017,"@118606 No worries, Alice. Our technical team will further assist you with this. You can reach them on this link: https://t.co/kWTy40Cj8w.","12880,12881,12882",12877
+13767,MicrosoftHelps,False,Tue Oct 31 18:21:00 +0000 2017,"@118889 We got your back, Kyle. Just to clarify, are you getting any error messages when signing into your Microsoft account?","13768,13765",13769
+13771,118890,True,Tue Oct 31 23:51:30 +0000 2017,"@MicrosoftHelps That link just gives me gibberish: 2a0 TQo0~_­&amp;6Eci/P'(BsM!%j5L@ZnTa,&amp;NER&lt;umd&gt;o=RSzw^m9H&lt;vcd&gt;:r{A^PhmX$9Y)","13770,13772",13773
+13778,118890,True,Mon Oct 30 23:13:58 +0000 2017,@MicrosoftHelps What can my dialup service provider do to stop Windows 10 from flooding connection?,"13775,13779",13780
+13779,MicrosoftHelps,False,Tue Oct 31 02:44:24 +0000 2017,"@118890 2/2 10. Also, if possible, can you send us a DM for further assistance? Thank you. https://t.co/3qcAsLFkaY",1571867,13778
+4511,116767,True,Tue Oct 31 21:09:59 +0000 2017,"@MicrosoftHelps hi this is happening once a week, it's stuck in a very annoying cycle &amp; I can't restore it https://t.co/2GYVvFwPs8",4507,
+8464,117488,True,Sat Nov 18 22:16:46 +0000 2017,@MicrosoftHelps I just checked and the computer says I am the administrator on my computer.,,8463
+8462,117488,True,Sat Nov 18 06:14:47 +0000 2017,@MicrosoftHelps I sent a private message describing my problem.,8460,8465
+11876,MicrosoftHelps,False,Wed Nov 01 01:13:28 +0000 2017,@118331 Hello. Just doing a follow-up on your case. Are you still experiencing the issue?,11877,11878
+11878,118331,True,Fri Oct 27 21:14:21 +0000 2017,"@MicrosoftHelps Hm, that's fixed it. I'll try selectively re-enabling things to see what it was.","11876,11880",11881
+11885,118331,True,Thu Oct 26 14:49:26 +0000 2017,https://t.co/iLD1l6kRgL any idea why I'm seeing this @MicrosoftHelps? I'm also seeing inconsistent lag in Chrome and other apps.,11884,
+13765,118889,True,Tue Oct 31 23:52:11 +0000 2017,"@MicrosoftHelps I tried to chat &amp; email support but both ask you to log in first, which I can't do. Really, really frustrating so thanks for helping!","13764,13766",13767
+13770,MicrosoftHelps,False,Wed Nov 01 01:47:00 +0000 2017,@118890 2/2 https://t.co/XCt8AifoxD to get in touch with our Answer Desk team.,,13771
+9692,MicrosoftHelps,False,Fri Oct 20 23:34:51 +0000 2017,@117762 Hellos James. You will need to cancel your current order and place a new one so you can include your updated details.,,9691
+207,MicrosoftHelps,False,Tue Oct 31 22:04:21 +0000 2017,@115752 Help is here. To assist you in recovering your account we recommend that you contact our Answer desk team: https://t.co/7zSM1QXPMD.,,208
+208,115752,True,Tue Oct 31 20:28:11 +0000 2017,@MicrosoftHelps I need assistance recovering 2 hotmail accounts. I have  filled the recovery forms but am told am not providing enough info,207,
+11897,MicrosoftHelps,False,Wed Nov 01 01:08:29 +0000 2017,"@118335 Hello, Domenico. Let us know on how we can improve our support here: https://t.co/EUlptOQnck. Thank you.",,11898
+12854,MicrosoftHelps,False,Wed Nov 01 03:38:28 +0000 2017,@118602 Thanks for the info. Could you please send us a DM so we could go in detail with our troubleshooting? https://t.co/3qcAsLFkaY,,12852
+12858,118603,True,Mon Oct 30 18:33:00 +0000 2017,"@MicrosoftHelps The store never gave me an error message.  It's STILL sitting there ""thinking/working"" after 2 hours.","12857,12859",12860
+12862,118603,True,Mon Oct 30 16:11:40 +0000 2017,"@MicrosoftHelps (2/?) Long story short, tried to buy a new Win10 key through the store, got charged, but store just gave a ""try again"" button and ...",12861,12863
+13791,118890,True,Sun Oct 29 22:05:12 +0000 2017,"@MicrosoftHelps ...data light on modem flashing constantly, TELNET and other normal dialup usage very sluggish or unusable.",,13789
+204,115751,True,Tue Oct 31 22:09:13 +0000 2017,"@MicrosoftHelps @XboxSupport Brilliant, thank you!",,203
+8465,MicrosoftHelps,False,Sat Nov 18 05:51:00 +0000 2017,@117488 Hi. We're here to help. Could you give us more details regarding your concern? Which device are you pertaining to? https://t.co/3qcAsLFkaY,8462,8466
+8466,117488,True,Sat Nov 18 02:32:24 +0000 2017,"@5646 @MicrosoftHelps I am having a problem with my computer games. I just tried playing 3 of them and a message came up saying ""Game Could Not Intiate"" Some of my other game do not load at all or a message comes up saying ""You need administrative access"" Plz help.",8465,
+9691,117762,True,Fri Oct 20 21:44:33 +0000 2017,@MicrosoftHelps Is there anyway to update the shipping address on an existing Microsoft Store order? I just recently moved.,"9692,9690",
+11891,MicrosoftHelps,False,Wed Nov 01 01:09:50 +0000 2017,"@118333 Hello, Bill. Let us know on how we can improve our support here: https://t.co/ofGxB7VRWk. Thank you.",,11892
+13764,MicrosoftHelps,False,Wed Nov 01 01:53:00 +0000 2017,"@118889 Since the password reset didn't work, let's try to recover your account. Follow the steps found here: https://t.co/vavT1TA3kk.",,13765
+13772,MicrosoftHelps,False,Wed Nov 01 01:46:30 +0000 2017,"@118890 1/2 That's strange. The link provided is working on our end. However, you can directly click this link:",,13771
+13776,118890,True,Tue Oct 31 23:46:31 +0000 2017,@MicrosoftHelps Dialup service provider said no previous customer reported same problem.,,13775
+13777,118890,True,Tue Oct 31 23:44:37 +0000 2017,"@MicrosoftHelps When Windows 10 first is connected to net, does it try to download upgrades to latest version?",,13775
+11900,MicrosoftHelps,False,Sun Oct 29 02:11:00 +0000 2017,"@118335 Hello, Domenico. Just doing a follow-up on your case. Are you still experiencing the issue?",2028043,11898
+13768,118889,True,Tue Oct 31 23:48:20 +0000 2017,"@MicrosoftHelps Thanks! No error other than ""the password is incorrect"". I've reset my password many times (across weeks) &amp; it's never worked.",,13767
+2293,MicrosoftHelps,False,Tue Oct 31 21:07:00 +0000 2017,"@116229 Just to clarify, have your tried following the troubleshooting methods provided by Andre Da Costa on the link you provided?",2292,2294
+12860,MicrosoftHelps,False,Mon Oct 30 18:30:29 +0000 2017,@118603 Hello there! Let's sort this out. Can you send us a screenshot of the exact error message that you received?,12858,12861
+12863,118603,True,Mon Oct 30 16:00:00 +0000 2017,"@MicrosoftHelps Your automated phone support system really needs a ""just let me talk to an actual person NOW"" option.",12862,
+13780,MicrosoftHelps,False,Mon Oct 30 19:04:00 +0000 2017,"@118890 We highly suggest you to contact your Internet service provider. If you need assistance, we're just a tweet away.",13778,13781
+13785,118890,True,Wed Nov 01 05:29:48 +0000 2017,@MicrosoftHelps https://t.co/7MGGNUiyxi -&gt; https://t.co/DccmlONsXq which claims to have sent a code to my landline.,21266,13784
+11880,MicrosoftHelps,False,Sat Oct 28 00:25:30 +0000 2017,@118331 That's good to hear! Let us know how things go.,,11878
+2299,MicrosoftHelps,False,Tue Oct 31 22:15:53 +0000 2017,@116231 Hello! It's our utmost pleasure to help. The best way to avoid phone scam is in this link: https://t.co/ZycMz6l77L.,2300,2301
+8460,MicrosoftHelps,False,Sat Nov 18 08:58:28 +0000 2017,@117488 Hi! Thanks for bringing this up. Which version of Windows are you running? Did you make any changes prior to this issue? Have you tried checking the games support site for troubleshooting steps?,8461,8462
+11910,MicrosoftHelps,False,Wed Nov 01 08:38:52 +0000 2017,@118337 Thanks for the info. Let's try to reset your password using this link: https://t.co/JpnONEeZuA. Let us know how it goes. https://t.co/3qcAsLFkaY,11911,11908
+12878,118606,True,Sat Oct 28 17:10:28 +0000 2017,@MicrosoftHelps so as to log back on. kindly help!,"12876,12883",12884
+13792,118890,True,Sun Oct 29 15:18:02 +0000 2017,"@MicrosoftHelps What kind of details do you need? From Friday afternoon when I first opened dialup PPP, massive data churning.",13789,13793
+12883,MicrosoftHelps,False,Sat Oct 28 20:38:58 +0000 2017,@118606 Thanks for the video. We suggest performing the SFC and DISM scan. Check the steps here: https://t.co/6hQTvb57dK. Let us know how it goes.,,12878
+13788,118890,True,Wed Nov 08 17:31:29 +0000 2017,"@MicrosoftHelps Update: I found live view of total data sent and received during connection: 200bps sent, 5000bps rcvd.",1571864,13787
+2305,116231,True,Wed Nov 01 00:52:55 +0000 2017,@MicrosoftHelps I apologize for sounding like a jerk but you know they are scamming older people and ripping money off of those who don’t know better,,2302
+11902,118336,True,Tue Oct 31 23:04:06 +0000 2017,"I just did the latest Windows 10 upgrades, @MicrosoftHelps. Now YouTube won't work, and live streams have no sound. How are these upgrades?","11903,11904,11901,11905,11906",
+12884,118606,True,Sat Oct 28 17:09:29 +0000 2017,@MicrosoftHelps here is the video...its showing my PC on screen saver...but does not respond whenever i touch any keys or mouse pad...i have to switch off.. https://t.co/8B9WsrzmoI,12878,12885
+13769,118889,True,Tue Oct 31 17:10:44 +0000 2017,@MicrosoftHelps I've had ongoing account access issues w/ my Microsoft acc. All troubleshooting ask me to log in first but I can't. Ideas?,13767,
+13773,MicrosoftHelps,False,Tue Oct 31 07:49:30 +0000 2017,"@118890 In that case, kindly contact our Answer Desk support for more in-depth troubleshooting on this link: https://t.co/yMM7mSfwLF.",13771,13774
+12859,MicrosoftHelps,False,Mon Oct 30 21:56:00 +0000 2017,"@118603 For us to assist you and check your concern, contact support here: https://t.co/cL1bjse6Th.",,12858
+4509,116767,True,Wed Nov 01 15:04:46 +0000 2017,@MicrosoftHelps I don't have an installation USB anymore to restore my Notebook,,4507
+4510,116767,True,Wed Nov 01 15:04:12 +0000 2017,@MicrosoftHelps Not much beyond 1) installing updates &amp; 2) uninstalling updates as instructed,,4507
+7884,MicrosoftHelps,False,Tue Oct 31 23:37:50 +0000 2017,"@117342 Hi, John! We want to know your experience with us. Please rate our support by clicking this link:  https://t.co/WZSiH8UqZU.",,7885
+8463,MicrosoftHelps,False,Sat Nov 18 18:13:28 +0000 2017,"@117488 We suggest creating a temporary admin account and try to sign, then try to check if you will encounter the same issue.",8464,8461
+11909,118337,True,Tue Oct 31 23:02:44 +0000 2017,@MicrosoftHelps I can't reset my password and I can't talk to an agent as I need to log into my account please help,11907,
+12869,MicrosoftHelps,False,Tue Oct 31 12:55:29 +0000 2017,"@118604 Hi, Yuyut. On what account or device are you trying to sign in?","12867,12870",12871
+12876,MicrosoftHelps,False,Wed Nov 01 01:16:54 +0000 2017,"@118606 Hello, Alice. Just doing a follow-up on your case. Are you still experiencing the issue?",12877,12878
+12882,118606,True,Wed Nov 01 21:39:13 +0000 2017,@MicrosoftHelps The resolution did not work. #DisappointedCustomer 😒 we'll talk tomorrow. need to go sleep now. thanks,,12879
+206,MicrosoftHelps,False,Sun Dec 03 03:30:55 +0000 2017,"@115751 Hello, Josh! Please help us improve our Twitter support by answering our survey on this link: https://t.co/eTy5gzzUfj. Thank you.",,205
+2291,MicrosoftHelps,False,Tue Oct 31 22:35:58 +0000 2017,@116229 We want to resolve this for you. We suggest you to get in touch with our Answer desk team: https://t.co/Jo5IpyEY0u.,,2292
+4507,MicrosoftHelps,False,Tue Oct 31 22:46:30 +0000 2017,"@116767 Hello, Chris. Let's investigate this. Are you still experiencing the issue? What troubleshooting steps have you tried so far?","4508,4509,4510",4511
+11887,118332,True,Fri Oct 27 20:17:48 +0000 2017,"@MicrosoftHelps Hi! Id like to clear a folder in my Programm(x86) file, but everytime i get this message (In German). Oh,and i use Windows 10 Pro https://t.co/a7BEtXDiY1","11886,11888",11889
+12873,118605,True,Tue Oct 31 22:35:46 +0000 2017,"@MicrosoftHelps Yes, I am using wifi. Date and time are correct. Only this game can't be download Mobile Store. Other apps are fine.",12872,12874
+12881,118606,True,Wed Nov 01 12:18:10 +0000 2017,@MicrosoftHelps okay. let me contact them,,12879
+12887,118606,True,Fri Oct 27 17:28:16 +0000 2017,@MicrosoftHelps the screen saver cannot be stopped whenever I touch the mouse or any of the keys of the keyboard as it used to before...,12886,12888
+13775,MicrosoftHelps,False,Tue Oct 31 02:43:52 +0000 2017,@118890 1/2 Your Internet Service Provider can check if they have another customer experiencing the same issue that you have with Windows https://t.co/3qcAsLFkaY,"13776,13777,13774",13778
+13781,118890,True,Mon Oct 30 16:43:17 +0000 2017,"@MicrosoftHelps No, didn't modify modem. No, didn't ask dialup provider about problem with Windows 10.",13780,13782
+13790,118890,True,Sun Oct 29 21:58:45 +0000 2017,"@MicrosoftHelps Brand new computer, setup, plugged 56k Zoom modem into USB port, configured dial-up parameters, connected, and immediate data flood...",,13789
+12870,118604,True,Tue Oct 31 12:57:48 +0000 2017,@MicrosoftHelps To this account: __email__. This account is linked to my office 365.,,12869
+4508,116767,True,Wed Nov 01 15:04:55 +0000 2017,@MicrosoftHelps Which would be my next step,4512,4507
+9687,MicrosoftHelps,False,Thu Oct 26 10:13:55 +0000 2017,@117762 Just checking if you need further help. Is everything good now? https://t.co/3qcAsLFkaY,9685,9688
+11892,118333,True,Fri Oct 27 19:43:19 +0000 2017,"@MicrosoftHelps Finally downloaded app but hangs on ""Just a moment"" then times out.","11891,11893",11894
+11907,MicrosoftHelps,False,Wed Nov 01 00:59:24 +0000 2017,"@118337 Let's work on this, Claire. Are you getting an error message when resetting your password? Send us a screenshot through DM.",11908,11909
+11911,118337,True,Wed Nov 01 17:42:37 +0000 2017,@MicrosoftHelps Says my information was not sufficient and submit a new form,"11912,11913",11910
+12851,MicrosoftHelps,False,Wed Nov 01 01:37:52 +0000 2017,@118602 Hi. Let's take a look at this. Which Windows version are you using? Have you made any changes prior to the issue?,12852,12853
+12874,MicrosoftHelps,False,Tue Oct 31 20:54:56 +0000 2017,"@118605 Hi, Yudhi. Let's sort this out. Are you using Wi-Fi? Can you check your phone's date and time? Have you tried any troubleshooting?",12873,12875
+12880,118606,True,Wed Nov 01 12:31:39 +0000 2017,@MicrosoftHelps am in a different time zone and seems like you will come online at 4pm EAT. (in the next 30 minutes),,12879
+12885,MicrosoftHelps,False,Sat Oct 28 04:34:00 +0000 2017,"@118606 Hi, Alice! Let's work on this together. Can you send us a screenshot or video, so we can easily figure it out?",12884,12886
+13774,118890,True,Tue Oct 31 05:49:07 +0000 2017,@MicrosoftHelps Has any other Windows 10 user noticed massive data when first connecting to net?,13773,13775
+13784,MicrosoftHelps,False,Mon Oct 30 01:01:00 +0000 2017,@118890 May we know what troubleshooting steps have you done so far?,"13785,13786,13783",13787
+13787,118890,True,Sun Oct 29 22:18:25 +0000 2017,"@MicrosoftHelps When modem data flood stops for awhile, TELNET responds immediately, and all other net appls run normal dialup speed.","13788,13784",13789
+4512,MicrosoftHelps,False,Wed Nov 01 16:24:32 +0000 2017,"@116767 Yikes! Just to clarify, which device are you using? Let's continue this troubleshooting via DM. We'll wait for you. https://t.co/3qcAsLFkaY",,4508
+11882,118331,True,Thu Oct 26 17:29:08 +0000 2017,@MicrosoftHelps Which drivers do you want me to check? My GPU is running Nvidia 388.00 (latest) and I've checked the System Firmware too.,11881,11883
+11884,118331,True,Thu Oct 26 14:53:54 +0000 2017,"@MicrosoftHelps I'm running Windows FCU 1709, and an Asus Prime X370-Pro motherboard. Let me know if you need any other info.",11883,11885
+11894,MicrosoftHelps,False,Fri Oct 27 19:42:25 +0000 2017,@118333 2/2 Store app or via Microsoft Store online?,11892,11895
+12857,MicrosoftHelps,False,Wed Nov 01 01:36:27 +0000 2017,@118603 We'd love to hear from you. Share us your thoughts about our support here: https://t.co/mDHzxcLaWY.,,12858
+12865,118604,True,Tue Oct 31 23:21:32 +0000 2017,@MicrosoftHelps Thanks. Do you have any other suggestion?,12864,12866
+12886,118606,True,Fri Oct 27 17:29:15 +0000 2017,@MicrosoftHelps i have to switch it off (to sleep) then back on to log on...kindly help!,12885,12887
+13794,118890,True,Sat Oct 28 19:23:32 +0000 2017,"@MicrosoftHelps Brand new Acer Spin 1 running Windows 10, using 56k dialup modem; unknown process constantly churning modem hogging bandw.",13793,
+9689,MicrosoftHelps,False,Wed Oct 25 03:40:50 +0000 2017,@117762 Thank you for your response. What was the feedback given to you by the support team? https://t.co/3qcAsLFkaY,,9688
+11888,MicrosoftHelps,False,Sat Oct 28 00:23:26 +0000 2017,@118332 Hello. Let's get this sorted. Have you tried to delete the folder in safe mode? Please tell us more details about your concern.,,11887
+11893,MicrosoftHelps,False,Fri Oct 27 22:52:28 +0000 2017,@118333 That's strange. It'd be best if you contact Skype team for them to have this checked: https://t.co/GXtywAwJoV. You'll be in good hands.,,11892
+203,MicrosoftHelps,False,Tue Oct 31 22:08:00 +0000 2017,"@115751 Hello, Josh! To get better assistance and support, we suggest that you post a tweet or DM our friends from @XboxSupport.",204,205
+9688,117762,True,Wed Oct 25 01:36:41 +0000 2017,"@MicrosoftHelps I was helped when I called support again. However, the address hasn't changed in the order status yet.","9689,9687",9690
+12852,118602,True,Wed Nov 01 01:53:49 +0000 2017,@MicrosoftHelps Windows 10,12854,12851
+12864,MicrosoftHelps,False,Wed Nov 01 01:36:27 +0000 2017,"@118604 To better assist you, send us a Direct Message. For security purposes, kindly delete your tweet that contains your email address.",,12865
+12866,MicrosoftHelps,False,Tue Oct 31 13:25:56 +0000 2017,"@118604 2/2  Click ""Ask a Question"" on the upper right corner. Thank you.",12865,12867
+13783,118890,True,Mon Oct 30 02:48:45 +0000 2017,"@MicrosoftHelps I.e. Task Manager claims no process is using even 1% of available net bandwidth, contrary to fact.",13782,13784
+13786,118890,True,Mon Oct 30 02:39:45 +0000 2017,"@MicrosoftHelps In Task Manager I looked for any task using bandwidth, but total was 0%.",,13784
+11896,MicrosoftHelps,False,Fri Oct 27 19:41:30 +0000 2017,"@118333 1/2 Hi there, Bill! Were here to help. Just to clarify, where are you trying yo download an app? Is it from the Windows",,11895
+11899,MicrosoftHelps,False,Fri Oct 27 20:33:29 +0000 2017,"@118335 Let's investigate this, Domenico. Have you tried to change the wire of the monitor? Can you try to extend the screen?",,11898
+2303,116231,True,Wed Nov 01 00:48:07 +0000 2017,"@MicrosoftHelps Thanks for the outstanding assistance, I get it, it is your company that takes the heat for these people hurting your rep",,2302
+2304,116231,True,Wed Nov 01 00:53:20 +0000 2017,@MicrosoftHelps Or even worse hacking them and hurting them. Just trying to show my concern.,,2302
+2306,116231,True,Tue Oct 31 20:18:53 +0000 2017,"@MicrosoftHelps I got a phone call claiming to be you but I discovered they weren’t. The number is +1(818)930-5703
+They tried to bribe me.",2301,
+9690,MicrosoftHelps,False,Wed Oct 25 01:03:00 +0000 2017,"@117762 Hello, James. Just doing a follow-up on your case. Are you successful in updating your address?",9688,9691
+12861,118603,True,Mon Oct 30 16:12:49 +0000 2017,"@MicrosoftHelps (3/3) ... Windows didn't activate. Clicked ""try again"", and now the store is just sitting there with the ""thinking/working"" animation.",12860,12862
+12875,118605,True,Tue Oct 31 14:38:26 +0000 2017,@MicrosoftHelps Microsoft Minesweeper game from Microsoft Store can't be installed on phone. It says error 0x803FB005.,12874,
+13782,MicrosoftHelps,False,Mon Oct 30 05:24:50 +0000 2017,@118890 Did you modify your modem? Have you tried contacting your Internet Service Provider?,13781,13783
+9686,MicrosoftHelps,False,Thu Oct 26 20:05:31 +0000 2017,@117762 That sounds good! Feel free to contact us if you need assistance. 🙂,,9685
+13766,MicrosoftHelps,False,Thu Nov 02 01:52:00 +0000 2017,"@118889 Hi, Kyle. Just checking up on you. Were you able to recover your account?",1415015,13765
+2292,116229,True,Tue Oct 31 21:09:31 +0000 2017,"@MicrosoftHelps Yes, none of it worked. I didn't try the reset because I don't want to reinstall everything. But when i went back to 1703 everything worked",2291,2293
+8461,117488,True,Sat Nov 18 16:34:05 +0000 2017,"@MicrosoftHelps I have windows 10. I do not remember making any changes myself, but I did take the computer to a store to get it cleaned up. how could I get those troubleshooting steps?",8463,8460
+11877,118331,True,Wed Nov 01 07:19:16 +0000 2017,@MicrosoftHelps Hey - I'm not entirely sure; it sort of resolved itself. I suspect it might have been either a Windows or Nvidia update but I'm not sure 🤔,11879,11876
+11883,MicrosoftHelps,False,Thu Oct 26 16:30:01 +0000 2017,@118331 Hi. That's strange. Let's make sure that all your driver was updated. Here's how: https://t.co/paTrSXK1Xn. Update us.,11882,11884
+11886,MicrosoftHelps,False,Wed Nov 01 01:13:00 +0000 2017,@118332 Hello. Just doing a follow-up on your case. Are you still experiencing the issue?,,11887
+11889,MicrosoftHelps,False,Thu Oct 26 19:57:26 +0000 2017,@118332 Hi! Let's investigate this. Which version of Windows are you using? What do you mean by built-in administrator?,11887,11890
+11908,118337,True,Wed Nov 01 07:45:47 +0000 2017,"@MicrosoftHelps Hi, I can't take a screen shot as it's the only place I'm logged in is there a way of someone telling me the password?",11910,11907
+12867,118604,True,Tue Oct 31 13:00:43 +0000 2017,@MicrosoftHelps Would you mind if we discuss this matter via email instead?,"12866,12868",12869
+9684,MicrosoftHelps,False,Wed Nov 01 00:06:53 +0000 2017,"@117762 We want to know your experience with us, James! Rate our support by clicking this link: https://t.co/V2K0N6f79E. Thanks!",,9685
+9685,117762,True,Thu Oct 26 17:54:08 +0000 2017,"@MicrosoftHelps Seems to be good.  Support responded by email saying that the order status won't change online, but the warehouse will ship to the new addr.","9684,9686",9687
+12877,118606,True,Wed Nov 01 11:19:08 +0000 2017,"@MicrosoftHelps apparently yes, i did the dism scan, but kept on giving me the error message of couldn't find the source files...",12879,12876
+13793,MicrosoftHelps,False,Sat Oct 28 21:40:26 +0000 2017,"@118890 Hi. We're here to help. For us to assist you further, could you tell us more details about the issue?",13792,13794
+7886,MicrosoftHelps,False,Thu Oct 26 17:58:26 +0000 2017,"@117342 Hi, John! Thank you for reaching out. You can contact our Groove support through this link: https://t.co/FrC82ogbx1.",,7885
