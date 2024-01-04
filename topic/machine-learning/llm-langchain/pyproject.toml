@@ -36,6 +36,9 @@ nb_diff_ignore = [
     "/cells/13/outputs",
     "/cells/15/outputs",
     "/cells/17/outputs",
+
+    # cratedb_rag_customer_support.ipynb
+    "/cells/*/outputs",
 ]
 
 [tool.coverage.run]
