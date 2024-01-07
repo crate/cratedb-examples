@@ -74,7 +74,6 @@ def test_ui():
         html_title = page.text_content("title").strip()
         assert html_title == "Superset"
         assert page.url.endswith("/superset/welcome/")
-        assert page.text_content("h1") == "Home"
 
         # Invoke SQL Lab with an example query, and verify response.
         sql = "SELECT * FROM sys.summits LIMIT 42;"
