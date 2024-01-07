@@ -35,7 +35,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-22.04 ]
-        superset-version: [ "2.*" ]
+        superset-version: [ "2.*", "3.*" ]
         python-version: [ "3.11" ]
 
     services:

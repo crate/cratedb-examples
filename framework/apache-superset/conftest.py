@@ -104,7 +104,14 @@ def provision_superset(start_superset):
     )
 
     assert response.status_code == 201
-    assert response.json() == {
+    payload = response.json()
+
+    # Superset 3 uses UUIDs to identify resources.
+    # Remove them for comparison purposes.
+    if "uuid" in payload["result"]:
+        del payload["result"]["uuid"]
+
+    assert payload == {
         "id": 1,
         "result": {
             "configuration_method": "sqlalchemy_form",
