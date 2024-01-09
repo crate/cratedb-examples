@@ -191,6 +191,8 @@ public class JdbcMetaDataTest {
     }
 
     @Test
+    @Ignore("Not supported by CrateDB after pgjdbc 42.7.0 changed the implementation")
+    // https://github.com/crate/crate/issues/15113
     public void test_getDefaultTransactionIsolation() throws Exception {
         try (var conn = DriverManager.getConnection(URL)) {
             assertThat(conn.getMetaData().getDefaultTransactionIsolation(), is(Connection.TRANSACTION_READ_COMMITTED));
