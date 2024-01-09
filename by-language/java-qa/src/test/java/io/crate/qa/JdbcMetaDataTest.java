@@ -122,7 +122,7 @@ public class JdbcMetaDataTest {
         try (var conn = DriverManager.getConnection(URL)) {
             var result = conn.getMetaData().getCatalogs();
             assertThat(result.next(), is(true));
-            assertThat(result.getString(1), is("doc"));
+            assertThat(result.getString(1), is("crate"));
         }
     }
 
