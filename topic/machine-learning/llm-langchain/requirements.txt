@@ -5,7 +5,7 @@ cratedb-toolkit==0.0.3
 
 # langchain[cratedb,openai]==0.0.354
 # langchain-community==0.0.8
-# pueblo[cli,fileio,nlp]==0.0.4
+pueblo[cli,fileio,nlp]>=0.0.6
 pydantic>=1,<3
 pypdf<4
 python-dotenv<2
@@ -16,4 +16,4 @@ unstructured<0.11
 # cratedb-toolkit @ git+https://github.com/crate-workbench/cratedb-toolkit.git@main
 langchain[cratedb,openai] @ git+https://github.com/crate-workbench/langchain.git@cratedb#subdirectory=libs/langchain
 langchain-community @ git+https://github.com/crate-workbench/langchain.git@cratedb#subdirectory=libs/community
-pueblo[cli,fileio,nlp] @ git+https://github.com/pyveci/pueblo.git@main
+# pueblo[cli,fileio,nlp] @ git+https://github.com/pyveci/pueblo.git@main
