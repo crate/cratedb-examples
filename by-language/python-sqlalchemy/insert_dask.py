@@ -15,8 +15,8 @@ Usage
 """
 import dask.dataframe as dd
 from dask.diagnostics import ProgressBar
-from pandas._testing import makeTimeDataFrame
 from crate.client.sqlalchemy.support import insert_bulk
+from pueblo.testing.pandas import makeTimeDataFrame
 
 
 DBURI = "crate://localhost:4200"
