@@ -38,11 +38,11 @@ jobs:
       matrix:
         os: [ 'ubuntu-latest' ]
         python-version: [ '3.11' ]
-        cratedb-version: [ 'nightly' ]
+        cratedb-version: [ '5.5.3' ]
 
     services:
       cratedb:
-        image: crate/crate:nightly
+        image: crate/crate:${{ matrix.cratedb-version }}
         ports:
           - 4200:4200
           - 5432:5432
