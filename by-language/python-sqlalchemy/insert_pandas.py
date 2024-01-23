@@ -50,9 +50,9 @@ import click
 import colorlog
 import sqlalchemy as sa
 from colorlog.escape_codes import escape_codes
-from pandas._testing import makeTimeDataFrame
-
 from crate.client.sqlalchemy.support import insert_bulk
+from pueblo.testing.pandas import makeTimeDataFrame
+
 
 logger = logging.getLogger(__name__)
 
