@@ -32,11 +32,9 @@ nb_diff_ignore = [
     "/cells/*/execution_count",
     "/cells/*/outputs/*/execution_count",
 
-    # cratedb-vectorstore-rag-openai-sql.ipynb
-    "/cells/4/outputs",
-    "/cells/13/outputs",
-    "/cells/15/outputs",
-    "/cells/17/outputs",
+    # Do not compare details of cell outputs.
+    # It is impossible to maintain efficiently.
+    "/cells/*/outputs",
 ]
 
 [tool.coverage.run]
