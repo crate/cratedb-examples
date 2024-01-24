@@ -1,6 +1,7 @@
 # Real.
 crash
-crate[sqlalchemy]
+# crate[sqlalchemy]
+sqlalchemy-cratedb @ git+https://github.com/crate-workbench/sqlalchemy-cratedb@amo/fix-inspector
 cratedb-toolkit==0.0.3
 
 # langchain[cratedb,openai]==0.0.354
