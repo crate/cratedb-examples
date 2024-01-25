@@ -83,7 +83,7 @@ def test_ui():
         page.get_by_role("button", name="Run").click()
         page.wait_for_timeout(500)
         page_body = page.text_content("div.ant-tabs-content-holder")
-        assert "42 rows returned" in page_body
+        assert "42 rows" in page_body
         assert "Monte Rosa" in page_body
 
         # That's it.
