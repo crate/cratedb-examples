@@ -9,4 +9,4 @@ tqdm<5
 werkzeug==2.2.3
 
 # Development.
-mlflow-cratedb @ git+https://github.com/crate-workbench/mlflow-cratedb.git@toolkit-head
+mlflow-cratedb @ git+https://github.com/crate-workbench/mlflow-cratedb.git@main
