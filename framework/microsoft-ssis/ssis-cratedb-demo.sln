@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34511.84
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{C9674DCB-5085-4A16-B785-4C70DD1589BD}") = "ssis-cratedb-demo", "ssis-cratedb-demo\ssis-cratedb-demo.dtproj", "{F5FAA1CD-14E9-4E6B-8389-784DA75AC8C9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F5FAA1CD-14E9-4E6B-8389-784DA75AC8C9}.Development|Default.ActiveCfg = Development
+		{F5FAA1CD-14E9-4E6B-8389-784DA75AC8C9}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2FB11F7F-C2E1-4584-B8AE-07CF2EC637E8}
+	EndGlobalSection
+EndGlobal

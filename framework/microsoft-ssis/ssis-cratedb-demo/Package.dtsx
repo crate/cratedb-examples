@@ -1,0 +1,794 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/29/2024 2:12:34 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="THINKPAD"
+  DTS:CreatorName="ThinkPad\Peter"
+  DTS:DTSID="{73AC0AF3-DD9B-4BBC-8C96-F1D09C9A3045}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5397.1"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:VersionBuild="2"
+  DTS:VersionGUID="{635D6F37-F3B7-4175-9469-C2E7C9DDD85E}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Data Flow Task"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{141C726B-A51B-4D9D-AE0B-ACE91C8BCB94}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Data Flow Task"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Data Flow Task\ODBC Destination"
+              componentClassID="Microsoft.SSISODBCDst"
+              contactInfo="ODBC Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="ODBC Destination"
+              name="ODBC Destination"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="The name of the table to be fetched."
+                  expressionType="Notify"
+                  name="TableName">"doc"."nyc_taxi_target"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the number of rows fetched per batch."
+                  expressionType="Notify"
+                  name="BatchSize">1000</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of rows inserted under the same transaction."
+                  expressionType="Notify"
+                  name="TransactionSize">1000</property>
+                <property
+                  dataType="System.Int32"
+                  description="Determines the chunk size allocation for LOB columns"
+                  expressionType="Notify"
+                  name="LobChunkSize">32768</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds to wait for an SQL statement to execute before returning to the application."
+                  expressionType="Notify"
+                  name="StatementTimeout">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The code page to use when code page information is unavailable from the data source."
+                  expressionType="Notify"
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Int32"
+                  description="The method used for inserting data. Possible values are 'Batch' or 'Row by row'."
+                  expressionType="Notify"
+                  name="InsertMethod">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="The ODBC C data type for binding numeric data."
+                  expressionType="Notify"
+                  name="BindNumericAs">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Determines how the component would bind columns of (multi)-byte string types (i.e., SQL_CHAR, SQL_VARCHAR, SQL_LONGVARCHAR). The options are: Unicode (SQL_C_WCHAR) and ANSI (SQL_C_CHAR)."
+                  expressionType="Notify"
+                  name="BindCharColumnsAs">0</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\ODBC Destination.Connections[ODBCConnection]"
+                  connectionManagerID="{AFE3FCA3-BD98-4CB4-8CD8-8A8E7350FFAA}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[cratedb]"
+                  description="The ODBC runtime connection used to access the database."
+                  name="ODBCConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="ODBC Destination Input"
+                  truncationRowDisposition="FailComponent">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].Columns[congestion_surcharge]"
+                      cachedDataType="r4"
+                      cachedName="congestion_surcharge"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[congestion_surcharge]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[congestion_surcharge]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].Columns[dolocationid]"
+                      cachedDataType="i4"
+                      cachedName="dolocationid"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[dolocationid]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[dolocationid]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].Columns[extra]"
+                      cachedDataType="r4"
+                      cachedName="extra"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[extra]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[extra]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].Columns[fare_amount]"
+                      cachedDataType="r4"
+                      cachedName="fare_amount"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[fare_amount]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[fare_amount]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].Columns[improvement_surcharge]"
+                      cachedDataType="r4"
+                      cachedName="improvement_surcharge"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[improvement_surcharge]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[improvement_surcharge]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].Columns[mta_tax]"
+                      cachedDataType="r4"
+                      cachedName="mta_tax"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[mta_tax]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[mta_tax]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].Columns[passenger_count]"
+                      cachedDataType="i4"
+                      cachedName="passenger_count"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[passenger_count]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[passenger_count]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].Columns[payment_type]"
+                      cachedDataType="i4"
+                      cachedName="payment_type"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[payment_type]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[payment_type]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].Columns[pickup_datetime]"
+                      cachedDataType="dbTimeStamp2"
+                      cachedName="pickup_datetime"
+                      cachedScale="6"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[pickup_datetime]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[pickup_datetime]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].Columns[pulocationid]"
+                      cachedDataType="i4"
+                      cachedName="pulocationid"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[pulocationid]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[pulocationid]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].Columns[ratecodeid]"
+                      cachedDataType="i4"
+                      cachedName="ratecodeid"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[ratecodeid]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[ratecodeid]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].Columns[store_and_fwd_flag]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="store_and_fwd_flag"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[store_and_fwd_flag]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[store_and_fwd_flag]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].Columns[tip_amount]"
+                      cachedDataType="r4"
+                      cachedName="tip_amount"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[tip_amount]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[tip_amount]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].Columns[tolls_amount]"
+                      cachedDataType="r4"
+                      cachedName="tolls_amount"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[tolls_amount]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[tolls_amount]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].Columns[total_amount]"
+                      cachedDataType="r4"
+                      cachedName="total_amount"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[total_amount]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[total_amount]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].Columns[trip_distance]"
+                      cachedDataType="r4"
+                      cachedName="trip_distance"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[trip_distance]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[trip_distance]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].Columns[vendorid]"
+                      cachedDataType="i4"
+                      cachedName="vendorid"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[vendorid]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[vendorid]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[congestion_surcharge]"
+                      dataType="r4"
+                      name="congestion_surcharge" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[dolocationid]"
+                      dataType="i4"
+                      name="dolocationid" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[extra]"
+                      dataType="r4"
+                      name="extra" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[fare_amount]"
+                      dataType="r4"
+                      name="fare_amount" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[improvement_surcharge]"
+                      dataType="r4"
+                      name="improvement_surcharge" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[mta_tax]"
+                      dataType="r4"
+                      name="mta_tax" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[passenger_count]"
+                      dataType="i4"
+                      name="passenger_count" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[payment_type]"
+                      dataType="i4"
+                      name="payment_type" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[pickup_datetime]"
+                      dataType="dbTimeStamp2"
+                      name="pickup_datetime"
+                      scale="6" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[pulocationid]"
+                      dataType="i4"
+                      name="pulocationid" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[ratecodeid]"
+                      dataType="i4"
+                      name="ratecodeid" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[store_and_fwd_flag]"
+                      dataType="wstr"
+                      length="255"
+                      name="store_and_fwd_flag" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[tip_amount]"
+                      dataType="r4"
+                      name="tip_amount" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[tolls_amount]"
+                      dataType="r4"
+                      name="tolls_amount" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[total_amount]"
+                      dataType="r4"
+                      name="total_amount" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[trip_distance]"
+                      dataType="r4"
+                      name="trip_distance" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input].ExternalColumns[vendorid]"
+                      dataType="i4"
+                      name="vendorid" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\ODBC Destination.Outputs[ODBC Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="ODBC Destination Error Output"
+                  synchronousInputId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Outputs[ODBC Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\ODBC Destination.Outputs[ODBC Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Destination.Outputs[ODBC Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\ODBC Destination.Outputs[ODBC Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task\ODBC Source"
+              componentClassID="Microsoft.SSISODBCSrc"
+              contactInfo="ODBC Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="ODBC Source"
+              name="ODBC Source"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="The name of the table to be fetched."
+                  expressionType="Notify"
+                  name="TableName">"doc"."nyc_taxi"</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the number of rows fetched per batch."
+                  expressionType="Notify"
+                  name="BatchSize">1000</property>
+                <property
+                  dataType="System.Int32"
+                  description="Determines the chunk size allocation for LOB columns"
+                  expressionType="Notify"
+                  name="LobChunkSize">32768</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines how the component exposes CHAR columns. If False, CHAR columns are exposed as (multi-)byte strings (DT_STR), if True, CHAR columns are exposed as wide strings (DT_WSTR)"
+                  expressionType="Notify"
+                  name="ExposeCharColumnsAsUnicode">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds to wait for an SQL statement to execute before returning to the application."
+                  expressionType="Notify"
+                  name="StatementTimeout">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The code page to use when code page information is unavailable from the data source."
+                  expressionType="Notify"
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Int32"
+                  description="The method used for fetching data."
+                  expressionType="Notify"
+                  name="FetchMethod">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="The ODBC C data type for binding numeric data."
+                  expressionType="Notify"
+                  name="BindNumericAs">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Determines how the component would bind columns of (multi)-byte string types (i.e., SQL_CHAR, SQL_VARCHAR, SQL_LONGVARCHAR). The options are: Unicode (SQL_C_WCHAR) and ANSI (SQL_C_CHAR)."
+                  expressionType="Notify"
+                  name="BindCharColumnsAs">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The mode used to access the database."
+                  expressionType="Notify"
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\ODBC Source.Connections[ODBCConnection]"
+                  connectionManagerID="{AFE3FCA3-BD98-4CB4-8CD8-8A8E7350FFAA}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[cratedb]"
+                  description="The ODBC runtime connection used to access the database."
+                  name="ODBCConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output]"
+                  errorRowDisposition="FailComponent"
+                  name="ODBC Source Output"
+                  truncationRowDisposition="FailComponent">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[congestion_surcharge]"
+                      dataType="r4"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[congestion_surcharge]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[congestion_surcharge]"
+                      name="congestion_surcharge" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[dolocationid]"
+                      dataType="i4"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[dolocationid]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[dolocationid]"
+                      name="dolocationid" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[extra]"
+                      dataType="r4"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[extra]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[extra]"
+                      name="extra" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[fare_amount]"
+                      dataType="r4"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[fare_amount]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[fare_amount]"
+                      name="fare_amount" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[improvement_surcharge]"
+                      dataType="r4"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[improvement_surcharge]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[improvement_surcharge]"
+                      name="improvement_surcharge" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[mta_tax]"
+                      dataType="r4"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[mta_tax]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[mta_tax]"
+                      name="mta_tax" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[passenger_count]"
+                      dataType="i4"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[passenger_count]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[passenger_count]"
+                      name="passenger_count" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[payment_type]"
+                      dataType="i4"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[payment_type]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[payment_type]"
+                      name="payment_type" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[pickup_datetime]"
+                      dataType="dbTimeStamp2"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[pickup_datetime]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[pickup_datetime]"
+                      name="pickup_datetime"
+                      scale="6" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[pulocationid]"
+                      dataType="i4"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[pulocationid]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[pulocationid]"
+                      name="pulocationid" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[ratecodeid]"
+                      dataType="i4"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[ratecodeid]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[ratecodeid]"
+                      name="ratecodeid" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[store_and_fwd_flag]"
+                      dataType="wstr"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[store_and_fwd_flag]"
+                      length="255"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[store_and_fwd_flag]"
+                      name="store_and_fwd_flag" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[tip_amount]"
+                      dataType="r4"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[tip_amount]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[tip_amount]"
+                      name="tip_amount" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[tolls_amount]"
+                      dataType="r4"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[tolls_amount]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[tolls_amount]"
+                      name="tolls_amount" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[total_amount]"
+                      dataType="r4"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[total_amount]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[total_amount]"
+                      name="total_amount" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[trip_distance]"
+                      dataType="r4"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[trip_distance]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[trip_distance]"
+                      name="trip_distance" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[vendorid]"
+                      dataType="i4"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[vendorid]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].Columns[vendorid]"
+                      name="vendorid" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[congestion_surcharge]"
+                      dataType="r4"
+                      name="congestion_surcharge" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[dolocationid]"
+                      dataType="i4"
+                      name="dolocationid" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[extra]"
+                      dataType="r4"
+                      name="extra" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[fare_amount]"
+                      dataType="r4"
+                      name="fare_amount" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[improvement_surcharge]"
+                      dataType="r4"
+                      name="improvement_surcharge" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[mta_tax]"
+                      dataType="r4"
+                      name="mta_tax" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[passenger_count]"
+                      dataType="i4"
+                      name="passenger_count" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[payment_type]"
+                      dataType="i4"
+                      name="payment_type" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[pickup_datetime]"
+                      dataType="dbTimeStamp2"
+                      name="pickup_datetime"
+                      scale="6" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[pulocationid]"
+                      dataType="i4"
+                      name="pulocationid" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[ratecodeid]"
+                      dataType="i4"
+                      name="ratecodeid" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[store_and_fwd_flag]"
+                      dataType="wstr"
+                      length="255"
+                      name="store_and_fwd_flag" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[tip_amount]"
+                      dataType="r4"
+                      name="tip_amount" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[tolls_amount]"
+                      dataType="r4"
+                      name="tolls_amount" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[total_amount]"
+                      dataType="r4"
+                      name="total_amount" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[trip_distance]"
+                      dataType="r4"
+                      name="trip_distance" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[vendorid]"
+                      dataType="i4"
+                      name="vendorid" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output]"
+                  isErrorOut="true"
+                  name="ODBC Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[congestion_surcharge]"
+                      dataType="r4"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[congestion_surcharge]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[congestion_surcharge]"
+                      name="congestion_surcharge" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[dolocationid]"
+                      dataType="i4"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[dolocationid]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[dolocationid]"
+                      name="dolocationid" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[extra]"
+                      dataType="r4"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[extra]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[extra]"
+                      name="extra" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[fare_amount]"
+                      dataType="r4"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[fare_amount]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[fare_amount]"
+                      name="fare_amount" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[improvement_surcharge]"
+                      dataType="r4"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[improvement_surcharge]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[improvement_surcharge]"
+                      name="improvement_surcharge" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[mta_tax]"
+                      dataType="r4"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[mta_tax]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[mta_tax]"
+                      name="mta_tax" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[passenger_count]"
+                      dataType="i4"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[passenger_count]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[passenger_count]"
+                      name="passenger_count" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[payment_type]"
+                      dataType="i4"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[payment_type]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[payment_type]"
+                      name="payment_type" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[pickup_datetime]"
+                      dataType="dbTimeStamp2"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[pickup_datetime]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[pickup_datetime]"
+                      name="pickup_datetime"
+                      scale="6" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[pulocationid]"
+                      dataType="i4"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[pulocationid]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[pulocationid]"
+                      name="pulocationid" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[ratecodeid]"
+                      dataType="i4"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[ratecodeid]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[ratecodeid]"
+                      name="ratecodeid" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[store_and_fwd_flag]"
+                      dataType="wstr"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[store_and_fwd_flag]"
+                      length="255"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[store_and_fwd_flag]"
+                      name="store_and_fwd_flag" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[tip_amount]"
+                      dataType="r4"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[tip_amount]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[tip_amount]"
+                      name="tip_amount" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[tolls_amount]"
+                      dataType="r4"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[tolls_amount]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[tolls_amount]"
+                      name="tolls_amount" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[total_amount]"
+                      dataType="r4"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[total_amount]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[total_amount]"
+                      name="total_amount" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[trip_distance]"
+                      dataType="r4"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[trip_distance]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[trip_distance]"
+                      name="trip_distance" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[vendorid]"
+                      dataType="i4"
+                      externalMetadataColumnId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[vendorid]"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[vendorid]"
+                      name="vendorid" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Data Flow Task.Paths[ODBC Source Output]"
+              endId="Package\Data Flow Task\ODBC Destination.Inputs[ODBC Destination Input]"
+              name="ODBC Source Output"
+              startId="Package\Data Flow Task\ODBC Source.Outputs[ODBC Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="153.333333333334,42.6666666666667"
+          Id="Package\Data Flow Task"
+          TopLeft="214.374990416691,160.105261399971" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Data Flow Task">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="146.666666666667,42.6666666666667"
+          Id="Package\Data Flow Task\ODBC Source"
+          TopLeft="61.2499972619117,49.9473678726404" />
+        <NodeLayout
+          Size="166.666666666667,42.6666666666667"
+          Id="Package\Data Flow Task\ODBC Destination"
+          TopLeft="53.7499975971879,160.105261399971" />
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[ODBC Source Output]"
+          TopLeft="135.833330762883,92.6140345393071">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,67.4912268606635"
+              Start="0,0"
+              End="0,59.9912268606635">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,59.9912268606635" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\ODBC Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\ODBC Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
