@@ -1,0 +1,10 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="cratedb"
+  DTS:DTSID="{AFE3FCA3-BD98-4CB4-8CD8-8A8E7350FFAA}"
+  DTS:CreationName="ODBC">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectionString="Dsn=cratedb;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>
