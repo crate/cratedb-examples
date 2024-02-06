@@ -1,0 +1,24 @@
+[tool.pytest.ini_options]
+minversion = "2.0"
+addopts = """
+  -rfEX -p pytester --strict-markers --verbosity=3
+  --cov --cov-report=term-missing
+  --capture=no
+  """
+log_level = "DEBUG"
+log_cli_level = "DEBUG"
+testpaths = ["*.py"]
+xfail_strict = true
+markers = [
+]
+
+
+[tool.coverage.run]
+branch = false
+omit = [
+    "test*",
+]
+
+[tool.coverage.report]
+fail_under = 0
+show_missing = true

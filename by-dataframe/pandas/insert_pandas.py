@@ -2,6 +2,8 @@
 About
 =====
 
+Evaluate inserting data from pandas dataframes into CrateDB.
+
 Example program to demonstrate efficient batched inserts using CrateDB and
 pandas, based on SQLAlchemy's `insertmanyvalues` vs. CrateDB's bulk import
 HTTP endpoint.
@@ -14,7 +16,7 @@ Setup
 =====
 ::
 
-    pip install --upgrade click colorlog 'crate[sqlalchemy]' pandas sqlalchemy
+    pip install --upgrade click colorlog 'crate[sqlalchemy]' pandas
 
 
 Synopsis
@@ -22,7 +24,7 @@ Synopsis
 ::
 
     # Run CrateDB.
-    docker run --rm -it --publish=4200:4200 crate
+    docker run --rm -it --publish=4200:4200 crate:latest
 
     # Use local CrateDB.
     time python insert_pandas.py
@@ -47,12 +49,10 @@ To watch the HTTP traffic to your local CrateDB instance, invoke::
 import logging
 
 import click
-import colorlog
 import sqlalchemy as sa
-from colorlog.escape_codes import escape_codes
 from crate.client.sqlalchemy.support import insert_bulk
 from pueblo.testing.pandas import makeTimeDataFrame
-
+from pueblo.util.logging import setup_logging
 
 logger = logging.getLogger(__name__)
 
@@ -62,7 +62,7 @@ SQLALCHEMY_LOGGING = True
 
 class DatabaseWorkload:
 
-    table_name = "foo"
+    table_name = "testdrive_pandas"
 
     def __init__(self, dburi: str):
         self.dburi = dburi
@@ -105,7 +105,7 @@ class DatabaseWorkload:
         elif mode == "bulk":
             df.to_sql(name=self.table_name, con=engine, if_exists="append", index=False, chunksize=bulk_size, method=insert_bulk)
 
-        else:
+        else:  # pragma: nocover
             raise ValueError(f"Unknown mode: {mode}")
 
     def show_table_stats(self):
@@ -121,14 +121,7 @@ class DatabaseWorkload:
         #engine.dispose()
 
 
-def setup_logging(level=logging.INFO):
-    reset = escape_codes["reset"]
-    log_format = f"%(asctime)-15s [%(name)-26s] %(log_color)s%(levelname)-8s:{reset} %(message)s"
-
-    handler = colorlog.StreamHandler()
-    handler.setFormatter(colorlog.ColoredFormatter(log_format))
-
-    logging.basicConfig(format=log_format, level=level, handlers=[handler])
+def tweak_log_levels(level=logging.INFO):
 
     # Enable SQLAlchemy logging.
     if SQLALCHEMY_LOGGING:
@@ -144,6 +137,7 @@ def setup_logging(level=logging.INFO):
 @click.help_option()
 def main(dburi: str, mode: str, num_records: int, bulk_size: int, insertmanyvalues_page_size: int):
     setup_logging()
+    tweak_log_levels()
     dbw = DatabaseWorkload(dburi=dburi)
     dbw.process(mode, num_records, bulk_size, insertmanyvalues_page_size)
     dbw.show_table_stats()

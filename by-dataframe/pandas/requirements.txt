@@ -1,0 +1,5 @@
+click<9
+colorlog<7
+crate[sqlalchemy]
+pandas<2.3
+pueblo>=0.0.7

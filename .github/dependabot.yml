@@ -23,6 +23,16 @@ updates:
 
   # Languages.
 
+  - directory: "/by-dataframe/dask"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "weekly"
+
+  - directory: "/by-dataframe/pandas"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "weekly"
+
   - directory: "/by-language/csharp-npgsql"
     package-ecosystem: "nuget"
     schedule:
