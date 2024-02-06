@@ -25,16 +25,6 @@ def test_insert_efficient_unknown(capfd):
     assert "ValueError: Unknown variant: unknown" in err
 
 
-def test_insert_pandas():
-    cmd = "time python insert_pandas.py"
-    run(cmd)
-
-
-def test_insert_dask():
-    cmd = "time python insert_dask.py"
-    run(cmd)
-
-
 def test_sync_table():
     cmd = "time python sync_table.py urllib3 psycopg"
     run(cmd)
