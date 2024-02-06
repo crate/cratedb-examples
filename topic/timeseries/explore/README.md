@@ -1,7 +1,9 @@
-# Time Series with CrateDB
+# CrateDB Time Series Exploration and Visualization
 
-This folder provides examples, tutorials and runnable code on how to use CrateDB
-for time series use cases.
+This folder provides examples, tutorials and runnable code on how to use
+[CrateDB] for time series use cases, together with software packages from
+the [PyViz] ecosystem, to analyze and explore data on behalf of visually
+stunning data plots.
 
 The tutorials and examples focus on being easy to understand and use. They
 are a good starting point for your own projects.
@@ -17,13 +19,27 @@ This folder provides guidelines and runnable code to get started with time serie
   walkthrough about how to get started with time series and CrateDB,
   and guides you to corresponding example programs.
 
+- [requirements.txt](requirements.txt): For pulling the required dependencies to
+  run the example programs.
+
+- `cloud-datashader.ipynb` [![Open on GitHub](https://img.shields.io/badge/Open%20on-GitHub-lightgray?logo=GitHub)](cloud-datashader.ipynb) [![Open in Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/crate/cratedb-examples/blob/main/topic/timeseries/explore/cloud-datashader.ipynb)
+
+  This notebook explores the [HoloViews] and [Datashader] frameworks and outlines
+  how to use them to plot the venerable NYC Taxi dataset, after importing it into
+  a CrateDB Cloud database cluster.
+
 - `timeseries-queries-and-visualization.ipynb` [![Open on GitHub](https://img.shields.io/badge/Open%20on-GitHub-lightgray?logo=GitHub)](timeseries-queries-and-visualization.ipynb) [![Open in Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/crate/cratedb-examples/blob/main/topic/timeseries/explore/timeseries-queries-and-visualization.ipynb)
 
   This notebook explores how to access timeseries data from CrateDB via SQL, 
-  load it into pandas data frames, and visulaize it via plotly.
+  load it into pandas DataFrames, and visualize it using [Plotly].
   
-  It also demonstrates more advanced time series queries in SQL, e.g. aggregations,
+  It also demonstrates advanced time series queries in SQL, e.g. aggregations,
   window functions, interpolation of missing data, common table expressions, 
-  moving averages, JOINs and the handling of JSON data.
+  moving averages, JOINs, and document store details about handling of JSON data.
+
 
 [CrateDB]: https://github.com/crate/crate
+[Datashader]: https://datashader.org/
+[HoloViews]: https://www.holoviews.org/
+[Plotly]: https://plotly.com/python/
+[PyViz]: https://pyviz.org/

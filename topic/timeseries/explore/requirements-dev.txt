@@ -1,0 +1,11 @@
+# Real.
+# pueblo[testing]
+
+# Development.
+pueblo[notebook,testing] @ git+https://github.com/pyveci/pueblo.git@main
+#pytest-mock<4
+#testbook<0.5
+
+# Workstation.
+# --editable=/Users/amo/dev/crate/ecosystem/cratedb-retentions[io]
+# --editable=/Users/amo/dev/pyveci/sources/pueblo[testing]
