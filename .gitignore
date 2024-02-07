@@ -2,7 +2,10 @@
 .venv*
 __pycache__
 .coverage*
+.env
 .DS_Store
+.meltano
+.pytest_cache
 coverage.xml
 mlruns/
 archive/
