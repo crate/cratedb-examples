@@ -73,6 +73,13 @@ updates:
     schedule:
       interval: "weekly"
 
+  # Frameworks.
+
+  - directory: "/framework/apache-superset"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "weekly"
+
   # Topics.
 
   - directory: "/topic/machine-learning/automl"
