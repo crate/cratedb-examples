@@ -1,17 +1,17 @@
-name: SQLAlchemy
+name: PHP AMPHP
 
 on:
   pull_request:
     branches: ~
     paths:
-    - '.github/workflows/sqlalchemy.yml'
-    - 'by-language/python-sqlalchemy/**'
+    - '.github/workflows/lang-php-amphp.yml'
+    - 'by-language/php-amphp/**'
     - 'requirements.txt'
   push:
     branches: [ main ]
     paths:
-    - '.github/workflows/sqlalchemy.yml'
-    - 'by-language/python-sqlalchemy/**'
+    - '.github/workflows/lang-php-amphp.yml'
+    - 'by-language/php-amphp/**'
     - 'requirements.txt'
 
   # Allow job to be triggered manually.
@@ -29,7 +29,7 @@ concurrency:
 jobs:
   test:
     name: "
-     Python: ${{ matrix.python-version }}
+     PHP: ${{ matrix.php-version }}
      CrateDB: ${{ matrix.cratedb-version }}
      on ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
@@ -37,17 +37,15 @@ jobs:
       fail-fast: false
       matrix:
         os: [ 'ubuntu-latest' ]
-        python-version: [ '3.11', '3.12' ]
+        php-version: [ '7.4', '8.2', '8.3' ]
         cratedb-version: [ 'nightly' ]
 
     services:
       cratedb:
-        image: crate/crate:${{ matrix.cratedb-version }}
+        image: crate/crate:nightly
         ports:
           - 4200:4200
           - 5432:5432
-        env:
-          CRATE_HEAP_SIZE: 4g
 
     steps:
 
@@ -57,18 +55,23 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: "3.11"
           architecture: x64
           cache: 'pip'
           cache-dependency-path: |
             requirements.txt
-            by-language/python-sqlalchemy/requirements.txt
-            by-language/python-sqlalchemy/requirements-dev.txt
 
       - name: Install utilities
         run: |
           pip install -r requirements.txt
 
-      - name: Validate by-language/python-sqlalchemy
+      # https://github.com/marketplace/actions/setup-php-action
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          tools: composer
+
+      - name: Validate by-language/php-amphp
         run: |
-          ngr test --accept-no-venv by-language/python-sqlalchemy
+          ngr test by-language/php-amphp

@@ -1,17 +1,17 @@
-name: Dask
+name: SQLAlchemy
 
 on:
   pull_request:
     branches: ~
     paths:
-    - '.github/workflows/df-dask.yml'
-    - 'by-dataframe/dask/**'
+    - '.github/workflows/lang-python-sqlalchemy.yml'
+    - 'by-language/python-sqlalchemy/**'
     - 'requirements.txt'
   push:
     branches: [ main ]
     paths:
-    - '.github/workflows/df-dask.yml'
-    - 'by-dataframe/dask/**'
+    - '.github/workflows/lang-python-sqlalchemy.yml'
+    - 'by-language/python-sqlalchemy/**'
     - 'requirements.txt'
 
   # Allow job to be triggered manually.
@@ -62,13 +62,13 @@ jobs:
           cache: 'pip'
           cache-dependency-path: |
             requirements.txt
-            by-dataframe/dask/requirements.txt
-            by-dataframe/dask/requirements-dev.txt
+            by-language/python-sqlalchemy/requirements.txt
+            by-language/python-sqlalchemy/requirements-dev.txt
 
       - name: Install utilities
         run: |
           pip install -r requirements.txt
 
-      - name: Validate by-dataframe/dask
+      - name: Validate by-language/python-sqlalchemy
         run: |
-          ngr test --accept-no-venv by-dataframe/dask
+          ngr test --accept-no-venv by-language/python-sqlalchemy

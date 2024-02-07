@@ -1,17 +1,17 @@
-name: LangChain
+name: Dask
 
 on:
   pull_request:
     branches: ~
     paths:
-    - '.github/workflows/test-langchain.yml'
-    - 'topic/machine-learning/llm-langchain/**'
+    - '.github/workflows/dataframe-dask.yml'
+    - 'by-dataframe/dask/**'
     - 'requirements.txt'
   push:
     branches: [ main ]
     paths:
-    - '.github/workflows/test-langchain.yml'
-    - 'topic/machine-learning/llm-langchain/**'
+    - '.github/workflows/dataframe-dask.yml'
+    - 'by-dataframe/dask/**'
     - 'requirements.txt'
 
   # Allow job to be triggered manually.
@@ -37,7 +37,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ 'ubuntu-latest' ]
-        python-version: [ '3.11' ]
+        python-version: [ '3.11', '3.12' ]
         cratedb-version: [ 'nightly' ]
 
     services:
@@ -46,9 +46,8 @@ jobs:
         ports:
           - 4200:4200
           - 5432:5432
-
-    env:
-      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        env:
+          CRATE_HEAP_SIZE: 4g
 
     steps:
 
@@ -63,13 +62,13 @@ jobs:
           cache: 'pip'
           cache-dependency-path: |
             requirements.txt
-            topic/machine-learning/llm-langchain/requirements.txt
-            topic/machine-learning/llm-langchain/requirements-dev.txt
+            by-dataframe/dask/requirements.txt
+            by-dataframe/dask/requirements-dev.txt
 
       - name: Install utilities
         run: |
           pip install -r requirements.txt
 
-      - name: Validate topic/machine-learning/llm-langchain
+      - name: Validate by-dataframe/dask
         run: |
-          ngr test --accept-no-venv topic/machine-learning/llm-langchain
+          ngr test --accept-no-venv by-dataframe/dask

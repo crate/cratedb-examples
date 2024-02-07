@@ -4,14 +4,14 @@ on:
   pull_request:
     branches: ~
     paths:
-    - '.github/workflows/test-java-maven.yml'
+    - '.github/workflows/lang-java-maven.yml'
     - 'by-language/java-jdbc/**'
     - 'by-language/java-qa/**'
     - 'requirements.txt'
   push:
     branches: [ main ]
     paths:
-    - '.github/workflows/test-java-maven.yml'
+    - '.github/workflows/lang-java-maven.yml'
     - 'by-language/java-jdbc/**'
     - 'by-language/java-qa/**'
     - 'requirements.txt'
