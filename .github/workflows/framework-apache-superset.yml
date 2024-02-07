@@ -1,17 +1,17 @@
-name: pandas
+name: Apache Superset
 
 on:
   pull_request:
     branches: ~
     paths:
-    - '.github/workflows/df-pandas.yml'
-    - 'by-dataframe/pandas/**'
+    - '.github/workflows/framework-apache-superset.yml'
+    - 'framework/apache-superset/**'
     - 'requirements.txt'
   push:
     branches: [ main ]
     paths:
-    - '.github/workflows/df-pandas.yml'
-    - 'by-dataframe/pandas/**'
+    - '.github/workflows/framework-apache-superset.yml'
+    - 'framework/apache-superset/**'
     - 'requirements.txt'
 
   # Allow job to be triggered manually.
@@ -27,48 +27,49 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
-  test:
-    name: "
-     Python: ${{ matrix.python-version }}
-     CrateDB: ${{ matrix.cratedb-version }}
-     on ${{ matrix.os }}"
+
+  tests:
     runs-on: ${{ matrix.os }}
+
     strategy:
       fail-fast: false
       matrix:
-        os: [ 'ubuntu-latest' ]
-        python-version: [ '3.11', '3.12' ]
-        cratedb-version: [ 'nightly' ]
+        os: [ ubuntu-22.04 ]
+        superset-version: [ "2.*", "3.*" ]
+        python-version: [ "3.11" ]
 
     services:
       cratedb:
-        image: crate/crate:${{ matrix.cratedb-version }}
+        image: crate/crate:nightly
         ports:
           - 4200:4200
           - 5432:5432
-        env:
-          CRATE_HEAP_SIZE: 4g
 
+    name: Superset ${{ matrix.superset-version }}, Python ${{ matrix.python-version }}
     steps:
 
       - name: Acquire sources
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
           architecture: x64
-          cache: 'pip'
+          cache: "pip"
           cache-dependency-path: |
+            pyproject.toml
             requirements.txt
-            by-dataframe/pandas/requirements.txt
-            by-dataframe/pandas/requirements-dev.txt
+            requirements-test.txt
 
       - name: Install utilities
         run: |
           pip install -r requirements.txt
 
-      - name: Validate by-dataframe/pandas
+      - name: Install Apache Superset ${{ matrix.superset-version }}
         run: |
-          ngr test --accept-no-venv by-dataframe/pandas
+          pip install 'apache-superset==${{ matrix.superset-version }}'
+
+      - name: Validate framework/apache-superset
+        run: |
+          ngr test --accept-no-venv framework/apache-superset

@@ -1,17 +1,17 @@
-name: MLflow
+name: LangChain
 
 on:
   pull_request:
     branches: ~
     paths:
-    - '.github/workflows/test-mlflow.yml'
-    - 'topic/machine-learning/mlops-mlflow/**'
+    - '.github/workflows/ml-langchain.yml'
+    - 'topic/machine-learning/llm-langchain/**'
     - 'requirements.txt'
   push:
     branches: [ main ]
     paths:
-    - '.github/workflows/test-mlflow.yml'
-    - 'topic/machine-learning/mlops-mlflow/**'
+    - '.github/workflows/ml-langchain.yml'
+    - 'topic/machine-learning/llm-langchain/**'
     - 'requirements.txt'
 
   # Allow job to be triggered manually.
@@ -42,10 +42,13 @@ jobs:
 
     services:
       cratedb:
-        image: crate/crate:nightly
+        image: crate/crate:${{ matrix.cratedb-version }}
         ports:
           - 4200:4200
           - 5432:5432
+
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
     steps:
 
@@ -60,13 +63,13 @@ jobs:
           cache: 'pip'
           cache-dependency-path: |
             requirements.txt
-            topic/machine-learning/mlops-mlflow/requirements.txt
-            topic/machine-learning/mlops-mlflow/requirements-dev.txt
+            topic/machine-learning/llm-langchain/requirements.txt
+            topic/machine-learning/llm-langchain/requirements-dev.txt
 
       - name: Install utilities
         run: |
           pip install -r requirements.txt
 
-      - name: Validate topic/machine-learning/mlops-mlflow
+      - name: Validate topic/machine-learning/llm-langchain
         run: |
-          ngr test --accept-no-venv topic/machine-learning/mlops-mlflow
+          ngr test --accept-no-venv topic/machine-learning/llm-langchain

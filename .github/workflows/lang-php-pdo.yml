@@ -1,17 +1,17 @@
-name: Testcontainers for Java
+name: PHP PDO
 
 on:
   pull_request:
     branches: ~
     paths:
-    - '.github/workflows/testcontainers-java.yml'
-    - 'testing/testcontainers/java/**'
+    - '.github/workflows/lang-php-pdo.yml'
+    - 'by-language/php-pdo/**'
     - 'requirements.txt'
   push:
     branches: [ main ]
     paths:
-    - '.github/workflows/testcontainers-java.yml'
-    - 'testing/testcontainers/java/**'
+    - '.github/workflows/lang-php-pdo.yml'
+    - 'by-language/php-pdo/**'
     - 'requirements.txt'
 
   # Allow job to be triggered manually.
@@ -29,7 +29,7 @@ concurrency:
 jobs:
   test:
     name: "
-     Java: ${{ matrix.java-version }}
+     PHP: ${{ matrix.php-version }}
      CrateDB: ${{ matrix.cratedb-version }}
      on ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
@@ -37,8 +37,15 @@ jobs:
       fail-fast: false
       matrix:
         os: [ 'ubuntu-latest' ]
-        java-version: [ '11', '17', '21' ]
+        php-version: [ '7.4', '8.2', '8.3' ]
         cratedb-version: [ 'nightly' ]
+
+    services:
+      cratedb:
+        image: crate/crate:nightly
+        ports:
+          - 4200:4200
+          - 5432:5432
 
     steps:
 
@@ -58,13 +65,13 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Set up Java
-        uses: actions/setup-java@v4
+      # https://github.com/marketplace/actions/setup-php-action
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
         with:
-          distribution: "temurin"
-          java-version: ${{ matrix.java-version }}
-          cache: "gradle"
+          php-version: ${{ matrix.php-version }}
+          extensions: pdo_pgsql
 
-      - name: Validate testing/testcontainers/java
+      - name: Validate by-language/php-pdo
         run: |
-          ngr test testing/testcontainers/java
+          ngr test by-language/php-pdo

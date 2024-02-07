@@ -4,13 +4,13 @@ on:
   pull_request:
     branches: ~
     paths:
-    - '.github/workflows/test-kafka-flink.yml'
+    - '.github/workflows/stack-kafka-flink.yml'
     - 'stacks/kafka-flink/**'
     - 'requirements.txt'
   push:
     branches: [ main ]
     paths:
-    - '.github/workflows/test-kafka-flink.yml'
+    - '.github/workflows/stack-kafka-flink.yml'
     - 'stacks/kafka-flink/**'
     - 'requirements.txt'
 

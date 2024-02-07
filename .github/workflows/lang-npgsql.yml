@@ -1,17 +1,17 @@
-name: PHP AMPHP
+name: C# Npgsql
 
 on:
   pull_request:
     branches: ~
     paths:
-    - '.github/workflows/test-php-amphp.yml'
-    - 'by-language/php-amphp/**'
+    - '.github/workflows/lang-npgsql.yml'
+    - 'by-language/csharp-npgsql/**'
     - 'requirements.txt'
   push:
     branches: [ main ]
     paths:
-    - '.github/workflows/test-php-amphp.yml'
-    - 'by-language/php-amphp/**'
+    - '.github/workflows/lang-npgsql.yml'
+    - 'by-language/csharp-npgsql/**'
     - 'requirements.txt'
 
   # Allow job to be triggered manually.
@@ -26,10 +26,15 @@ concurrency:
   cancel-in-progress: true
   group: ${{ github.workflow }}-${{ github.ref }}
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   test:
     name: "
-     PHP: ${{ matrix.php-version }}
+     .NET: ${{ matrix.dotnet-version }}
+     Npgsql: ${{ matrix.npgsql-version }}
      CrateDB: ${{ matrix.cratedb-version }}
      on ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
@@ -37,12 +42,14 @@ jobs:
       fail-fast: false
       matrix:
         os: [ 'ubuntu-latest' ]
-        php-version: [ '7.4', '8.2', '8.3' ]
+        dotnet-version: [ '6.0.x', '7.0.x', '8.0.x' ]
+        npgsql-version: [ '6.0.10', '7.0.6', '8.0.1' ]
         cratedb-version: [ 'nightly' ]
 
+    # https://docs.github.com/en/free-pro-team@latest/actions/guides/about-service-containers
     services:
       cratedb:
-        image: crate/crate:nightly
+        image: crate/crate:${{ matrix.cratedb-version }}
         ports:
           - 4200:4200
           - 5432:5432
@@ -51,6 +58,11 @@ jobs:
 
       - name: Acquire sources
         uses: actions/checkout@v4
+
+      - name: Set up .NET ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -65,13 +77,13 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      # https://github.com/marketplace/actions/setup-php-action
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php-version }}
-          tools: composer
-
-      - name: Validate by-language/php-amphp
+      - name: Validate by-language/csharp-npgsql, Npgsql ${{ matrix.npgsql-version }}
         run: |
-          ngr test by-language/php-amphp
+          ngr test by-language/csharp-npgsql --dotnet-version=${{ matrix.dotnet-version }} --npgsql-version=${{ matrix.npgsql-version }}
+
+      # https://github.com/codecov/codecov-action
+      - name: Upload coverage results to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          flags: by-language-csharp-npgsql
+          fail_ci_if_error: false
