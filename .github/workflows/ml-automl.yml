@@ -19,7 +19,7 @@ on:
 
   # Run job each night after CrateDB nightly has been published.
   schedule:
-    - cron: '0 3 * * *'
+    - cron: '0 6 * * *'
 
 # Cancel in-progress jobs when pushing to the same branch.
 concurrency:
