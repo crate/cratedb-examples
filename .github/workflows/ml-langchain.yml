@@ -46,6 +46,8 @@ jobs:
         ports:
           - 4200:4200
           - 5432:5432
+        env:
+          CRATE_HEAP_SIZE: 4g
 
     env:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
