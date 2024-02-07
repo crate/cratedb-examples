@@ -28,7 +28,12 @@ concurrency:
 
 jobs:
 
-  tests:
+  test:
+    name: "
+     Superset: ${{ matrix.superset-version }}
+     Python: ${{ matrix.python-version }}
+     CrateDB: ${{ matrix.cratedb-version }}
+     on ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -37,17 +42,17 @@ jobs:
         os: [ ubuntu-22.04 ]
         superset-version: [ "2.*", "3.*" ]
         python-version: [ "3.11" ]
+        cratedb-version: [ 'nightly' ]
 
     services:
       cratedb:
-        image: crate/crate:nightly
+        image: crate/crate:${{ matrix.cratedb-version }}
         ports:
           - 4200:4200
           - 5432:5432
         env:
           CRATE_HEAP_SIZE: 4g
 
-    name: Superset ${{ matrix.superset-version }}, Python ${{ matrix.python-version }}
     steps:
 
       - name: Acquire sources
