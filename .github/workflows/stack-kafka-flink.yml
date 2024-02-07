@@ -28,7 +28,7 @@ concurrency:
 
 jobs:
 
-  tests:
+  test:
     runs-on: ${{ matrix.os }}
 
     strategy:

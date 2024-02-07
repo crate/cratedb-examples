@@ -44,7 +44,7 @@ jobs:
 
     services:
       cratedb:
-        image: crate/crate:nightly
+        image: crate/crate:${{ matrix.cratedb-version }}
         ports:
           - 4200:4200
           - 5432:5432
