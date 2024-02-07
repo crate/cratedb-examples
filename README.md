@@ -11,8 +11,6 @@ blueprints for your own projects.
 -   The `by-language` folder contains demo programs / technical
     investigations outlining how to get started quickly with CrateDB
     using different programming languages and frameworks.
--   The `queries` folder contains different SQL query examples for
-    typical use cases in order to explain specific features of CrateDB.
 -   The `stacks` folder contains more grown-up, complete usage scenarios
     where CrateDB is part of a larger software stack. Those resources
     may also be used within \"reference architecture\" types of
