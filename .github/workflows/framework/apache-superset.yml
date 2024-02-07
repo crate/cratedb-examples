@@ -4,13 +4,13 @@ on:
   pull_request:
     branches: ~
     paths:
-    - '.github/workflows/apache-superset.yml'
+    - '.github/workflows/framework/apache-superset.yml'
     - 'framework/apache-superset/**'
     - 'requirements.txt'
   push:
     branches: [ main ]
     paths:
-    - '.github/workflows/apache-superset.yml'
+    - '.github/workflows/framework/apache-superset.yml'
     - 'framework/apache-superset/**'
     - 'requirements.txt'
 
