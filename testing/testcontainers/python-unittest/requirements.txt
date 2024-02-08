@@ -1,0 +1,2 @@
+crash==0.31.2
+cratedb-toolkit[testing]==0.0.4
