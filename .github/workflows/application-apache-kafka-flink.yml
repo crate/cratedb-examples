@@ -1,4 +1,4 @@
-name: Apache Kafka, Apache Flink, and CrateDB
+name: Apache Kafka, Apache Flink
 
 on:
   pull_request:
