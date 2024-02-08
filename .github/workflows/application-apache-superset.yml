@@ -4,14 +4,14 @@ on:
   pull_request:
     branches: ~
     paths:
-    - '.github/workflows/framework-apache-superset.yml'
-    - 'framework/apache-superset/**'
+    - '.github/workflows/application-apache-superset.yml'
+    - 'application/apache-superset/**'
     - 'requirements.txt'
   push:
     branches: [ main ]
     paths:
-    - '.github/workflows/framework-apache-superset.yml'
-    - 'framework/apache-superset/**'
+    - '.github/workflows/application-apache-superset.yml'
+    - 'application/apache-superset/**'
     - 'requirements.txt'
 
   # Allow job to be triggered manually.
@@ -77,6 +77,6 @@ jobs:
         run: |
           pip install 'apache-superset==${{ matrix.superset-version }}'
 
-      - name: Validate framework/apache-superset
+      - name: Validate application/apache-superset
         run: |
-          ngr test --accept-no-venv framework/apache-superset
+          ngr test --accept-no-venv application/apache-superset
