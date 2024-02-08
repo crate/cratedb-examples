@@ -103,3 +103,23 @@ updates:
     package-ecosystem: "gradle"
     schedule:
       interval: "weekly"
+
+  - directory: "/testing/native/python-pytest"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "weekly"
+
+  - directory: "/testing/native/python-unittest"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "weekly"
+
+  - directory: "/testing/testcontainers/python-pytest"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "weekly"
+
+  - directory: "/testing/testcontainers/python-unittest"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "weekly"
