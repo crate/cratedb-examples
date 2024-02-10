@@ -63,92 +63,8 @@ folders.
 
 ## ✅ CI Status
 
-This section outlines the status of integration tests on CI/GHA.
-
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Status</th>
-</tr>
-</thead>
-
-<tbody>
-
-<tr>
-<td>
-<b>Application</b>
-</td>
-<td>
-<a href="https://github.com/crate/cratedb-examples/actions/workflows/application-apache-kafka-flink.yml">
-    <img src="https://github.com/crate/cratedb-examples/actions/workflows/application-apache-kafka-flink.yml/badge.svg" loading="lazy"></a>
-<a href="https://github.com/crate/cratedb-examples/actions/workflows/application-apache-superset.yml">
-    <img src="https://github.com/crate/cratedb-examples/actions/workflows/application-apache-superset.yml/badge.svg" loading="lazy"></a>
-</td>
-</tr>
-
-<tr>
-<td>
-<b>Dataframe</b>
-</td>
-<td>
-<a href="https://github.com/crate/cratedb-examples/actions/workflows/dataframe-dask.yml">
-    <img src="https://github.com/crate/cratedb-examples/actions/workflows/dataframe-dask.yml/badge.svg" loading="lazy"></a>
-<a href="https://github.com/crate/cratedb-examples/actions/workflows/dataframe-pandas.yml">
-    <img src="https://github.com/crate/cratedb-examples/actions/workflows/dataframe-pandas.yml/badge.svg" loading="lazy"></a>
-</td>
-</tr>
-
-<tr>
-<td>
-<b>Language</b>
-</td>
-<td>
-<a href="https://github.com/crate/cratedb-examples/actions/workflows/lang-npgsql.yml">
-      <img src="https://github.com/crate/cratedb-examples/actions/workflows/lang-npgsql.yml/badge.svg" loading="lazy"></a>
-<a href="https://github.com/crate/cratedb-examples/actions/workflows/lang-java-jooq.yml">
-      <img src="https://github.com/crate/cratedb-examples/actions/workflows/lang-java-jooq.yml/badge.svg" loading="lazy"></a>
-<a href="https://github.com/crate/cratedb-examples/actions/workflows/lang-java-maven.yml">
-      <img src="https://github.com/crate/cratedb-examples/actions/workflows/lang-java-maven.yml/badge.svg" loading="lazy"></a>
-<a href="https://github.com/crate/cratedb-examples/actions/workflows/lang-php-amphp.yml">
-      <img src="https://github.com/crate/cratedb-examples/actions/workflows/lang-php-amphp.yml/badge.svg" loading="lazy"></a>
-<a href="https://github.com/crate/cratedb-examples/actions/workflows/lang-php-pdo.yml">
-      <img src="https://github.com/crate/cratedb-examples/actions/workflows/lang-php-pdo.yml/badge.svg" loading="lazy"></a>
-<a href="https://github.com/crate/cratedb-examples/actions/workflows/lang-python-sqlalchemy.yml">
-      <img src="https://github.com/crate/cratedb-examples/actions/workflows/lang-python-sqlalchemy.yml/badge.svg" loading="lazy"></a>
-<a href="https://github.com/crate/cratedb-examples/actions/workflows/lang-ruby.yml">
-      <img src="https://github.com/crate/cratedb-examples/actions/workflows/lang-ruby.yml/badge.svg" loading="lazy"></a>
-</td>
-</tr>
-
-<tr>
-<td>
-<b>Testing</b>
-</td>
-<td>
-<a href="https://github.com/crate/cratedb-examples/actions/workflows/testing-testcontainers-java.yml">
-    <img src="https://github.com/crate/cratedb-examples/actions/workflows/testing-testcontainers-java.yml/badge.svg" loading="lazy"></a>
-</td>
-</tr>
-
-<tr>
-<td>
-<b>Topic</b>
-</td>
-<td>
-<b>Machine Learning</b>
-<br>
-<a href="https://github.com/crate/cratedb-examples/actions/workflows/ml-automl.yml">
-    <img src="https://github.com/crate/cratedb-examples/actions/workflows/ml-automl.yml/badge.svg" loading="lazy"></a>
-<a href="https://github.com/crate/cratedb-examples/actions/workflows/ml-langchain.yml">
-    <img src="https://github.com/crate/cratedb-examples/actions/workflows/ml-langchain.yml/badge.svg" loading="lazy"></a>
-<a href="https://github.com/crate/cratedb-examples/actions/workflows/ml-mlflow.yml">
-    <img src="https://github.com/crate/cratedb-examples/actions/workflows/ml-mlflow.yml/badge.svg" loading="lazy"></a>
-</td>
-</tr>
-
-</tbody>
-</table>
+Please visit the [Build Status] page to inspect the build status of relevant
+drivers, applications, and integrations for CrateDB, on one page.
 
 
 ## 🏕️ Testing
@@ -235,5 +151,6 @@ Your bug reports, feature requests, and patches are greatly appreciated.
 [![Contributors to CrateDB Examples](https://contrib.rocks/image?repo=crate/cratedb-examples)](https://github.com/crate/cratedb-examples/graphs/contributors)
 
 
+[Build Status]: https://cratedb.com/docs/crate/clients-tools/en/latest/status.html
 [CrateDB]: https://github.com/crate/crate
 [searching for "jdbc"]: https://github.com/search?q=repo%3Acrate%2Fcratedb-examples+jdbc
