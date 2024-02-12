@@ -1,7 +1,7 @@
 # Real.
 crash
 crate[sqlalchemy]>=0.34
-cratedb-toolkit==0.0.3
+# cratedb-toolkit==0.0.3
 
 # langchain[cratedb,openai]==0.0.354
 # langchain-community==0.0.8
