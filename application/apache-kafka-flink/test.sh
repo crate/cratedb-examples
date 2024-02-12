@@ -93,7 +93,7 @@ function feed-data() {
   # Publish data to the Kafka topic.
   title "Publishing NDJSON data to Kafka topic"
   cat nyc-yellow-taxi-2017-subset.ndjson | docker compose run --rm --no-TTY publish-data
-  echo
+  echo "Done."
 
   # Wait a bit for the data to transfer and converge successfully.
   sleep 3
