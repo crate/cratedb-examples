@@ -82,10 +82,14 @@ def fetch_data():
 
 def run_experiment(data):
     setup(data = data, fh=15, target="total_sales", index="month", log_experiment=True)
+
+    # On CI, only evaluate a single cheap model.
     if "PYTEST_CURRENT_TEST" in os.environ:
         best_models = compare_models(sort="MASE",
-                                    include=["arima", "ets", "exp_smooth"],
+                                    include=["et_cds_dt"],
                                     n_select=3)
+
+    # When not on CI/testing, compare all available models.
     else:
         best_models = compare_models(sort="MASE", n_select=3)
 
