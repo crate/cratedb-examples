@@ -28,5 +28,11 @@ repository, e.g. about machine learning, to see predictions and AutoML in action
   window functions, interpolation of missing data, common table expressions, 
   moving averages, JOINs and the handling of JSON data.
 
+- `exploratory_data_analysis.ipynb` [![Open on GitHub](https://img.shields.io/badge/Open%20on-GitHub-lightgray?logo=GitHub)](exploratory_data_analysis.ipynb) [![Open in Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/crate/cratedb-examples/blob/main/topic/timeseries/exploratory_data_analysis.ipynb)
+
+  This notebook explores how to access timeseries data from CrateDB via SQL, 
+  and do the exploratory data analysis with PyCaret.
+  
+  It also shows how you can generate various plots and charts for EDA, helping you understand data distributions, relationships between variables, and identify patterns.
 
 [CrateDB]: https://github.com/crate/crate
