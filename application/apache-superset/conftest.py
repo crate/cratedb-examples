@@ -27,7 +27,7 @@ def invoke_superset(command: str):
     Invoke `superset` command.
     """
     command = f"{superset_bin} {command}"
-    subprocess.check_call(shlex.split(command), env=superset_env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    subprocess.check_call(shlex.split(command), env=superset_env)
 
 
 # Test suite fixtures.
