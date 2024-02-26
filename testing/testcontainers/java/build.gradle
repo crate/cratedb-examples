@@ -20,15 +20,15 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.postgresql:postgresql:42.7.1'
+    implementation 'org.postgresql:postgresql:42.7.2'
     implementation 'io.crate:crate-jdbc:2.7.0'
     implementation 'org.slf4j:slf4j-api:2.0.12'
     implementation 'org.slf4j:slf4j-simple:2.0.12'
     testImplementation 'junit:junit:4.13.2'
     testImplementation "org.assertj:assertj-core:3.25.3"
-    testImplementation 'org.testcontainers:testcontainers:1.19.5'
-    testImplementation 'org.testcontainers:cratedb:1.19.5'
-    testImplementation 'org.testcontainers:postgresql:1.19.5'
+    testImplementation 'org.testcontainers:testcontainers:1.19.6'
+    testImplementation 'org.testcontainers:cratedb:1.19.6'
+    testImplementation 'org.testcontainers:postgresql:1.19.6'
 }
 
 java {
