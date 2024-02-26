@@ -30,6 +30,6 @@ Change script::
 
 Run script::
 
-    python autscale.py
+    python autoscale.py
 
 
