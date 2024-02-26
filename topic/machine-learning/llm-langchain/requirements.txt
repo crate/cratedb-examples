@@ -11,7 +11,7 @@ pypdf<5
 python-dotenv<2
 requests-cache<2
 unstructured<0.11
-langchain-openai==0.0.6
+langchain-openai==0.0.7
 
 # Development.
 # cratedb-toolkit @ git+https://github.com/crate-workbench/cratedb-toolkit.git@main
