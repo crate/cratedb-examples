@@ -1,3 +1,3 @@
 pycaret>=3.0
 refinitiv-data
-
+crate[sqlalchemy]==0.34.0
