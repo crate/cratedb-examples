@@ -2,7 +2,7 @@
 crate[sqlalchemy]
 # mlflow-cratedb==2.8.1
 plotly<5.20
-pycaret[analysis,models,tuner,parallel,test]==3.2.0
+pycaret[analysis,models,tuner,parallel,test]==3.3.0
 pydantic<2
 python-dotenv<2
 tqdm<5
