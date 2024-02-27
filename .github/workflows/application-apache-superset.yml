@@ -41,7 +41,7 @@ jobs:
       matrix:
         os: [ ubuntu-22.04 ]
         superset-version: [ "3.*" ]
-        python-version: [ "3.11" ]
+        python-version: [ "3.9", "3.11" ]
         cratedb-version: [ 'nightly' ]
 
     services:
