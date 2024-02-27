@@ -76,6 +76,7 @@ while True:
             requests.put(f'https://console.cratedb.cloud/api/v2/clusters/{cluster_id}/scale/', json={'product_unit': num_nodes + 1}, auth=auth_data)
             time.sleep(delay_seconds)
             while get_cluster_running_op(cluster_status, cluster_id) != '':
+                time.sleep(delay_seconds)
                 cluster_status = get_cluster_status(cluster_id)
             print('Scaled up successfully!')
         elif num < (0.5 * max_num_shard):
