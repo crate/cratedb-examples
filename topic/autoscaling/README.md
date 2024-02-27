@@ -5,7 +5,7 @@ How to run the autoscale script
 About
 *****
 
-This python script can be used to autoscale a CrateDB Cloud Cluster. This script monitors the amount of shards that are on the nodes in the cluster. 
+This Python script can be used to autoscale a CrateDB Cloud Cluster. This script monitors the number of shards that are on the nodes in the cluster. 
 When this crosses a threshold the cluster will add a node and when it goes back down below another threshold the cluster will be scaled-back.
 
 For more depth and background on this please see the community post about autoscaling. <ADD LINK>
