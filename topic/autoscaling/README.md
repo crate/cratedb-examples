@@ -18,6 +18,13 @@ Run dedicated cluster in CrateDB Cloud::
 
     https://console.cratedb.cloud/
 
+The script uses a couple of python libraries. Make sure you have installed those::
+
+    pip install datetime
+    pip install requests
+    pip install prometheus_client
+
+
 Install script::
 
     git clone https://github.com/crate/cratedb-examples
