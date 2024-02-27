@@ -14,7 +14,7 @@ For more depth and background on this please see the community post about autosc
 Usage
 *****
 
-Run dedicated cluster in CrateDB Cloud::
+Run a dedicated cluster in CrateDB Cloud:
 
     https://console.cratedb.cloud/
 
