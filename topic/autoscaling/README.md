@@ -26,7 +26,7 @@ Install script::
 
 Change script::
   Make sure to edit the script before running it. 
-  Update line 7, 10 and 11 with your API credentials, organization id and cluster id. 
+  Update lines 7, 10, and 11 with your API credentials, organization id and cluster id. 
 
 Run script::
 
