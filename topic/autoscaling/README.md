@@ -1,40 +1,49 @@
-How to run the autoscale script
-===============================
+# Autoscaling
 
-*****
-About
-*****
+## Introduction
 
-This Python script can be used to autoscale a CrateDB Cloud Cluster. This script monitors the number of shards that are on the nodes in the cluster. 
-When this crosses a threshold the cluster will add a node and when it goes back down below another threshold the cluster will be scaled-back.
+Autoscaling is the process of scaling up and down your CrateDB Cluster
+on demand.
 
-For more depth and background on this please see the community post about autoscaling. <ADD LINK>
+## About
 
-*****
-Usage
-*****
+This Python program can be used to autoscale a CrateDB Cloud Cluster.
+
+The program monitors the number of shards that are on the nodes in the
+cluster. If that number crosses a threshold, a new node will be added
+to the database cluster.
+
+When the number of shards goes back down below another threshold, the
+cluster will be scaled-back, by decommissioning excess nodes again.
+
+For more depth and background on this please see the community post
+about autoscaling. \<ADD LINK\>
+
+## Usage
 
 Run a dedicated cluster in CrateDB Cloud:
 
-    https://console.cratedb.cloud/
+> <https://console.cratedb.cloud/>
 
-The script uses a couple of python libraries. Make sure you have installed those::
+### Install
 
-    pip install datetime
-    pip install requests
+The script uses a couple of Python libraries. Make sure you have installed those:
+```shell
+pip install datetime
+pip install requests
+```
 
-Install script::
+```shell
+git clone https://github.com/crate/cratedb-examples
+cd cratedb-examples/topic/autoscaling
+```
 
-    git clone https://github.com/crate/cratedb-examples
-    cd cratedb-examples/topic/autoscaling
+### Configure
 
+Make sure to edit the script before running it. Update lines 7, 10,
+and 11 with your API credentials, organization id and cluster id.
 
-Change script::
-  Make sure to edit the script before running it. 
-  Update lines 7, 10, and 11 with your API credentials, organization id and cluster id. 
-
-Run script::
-
-    python autoscale.py
-
-
+### Run
+```shell
+python autoscale.py
+```
