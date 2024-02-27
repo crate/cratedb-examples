@@ -22,8 +22,6 @@ The script uses a couple of python libraries. Make sure you have installed those
 
     pip install datetime
     pip install requests
-    pip install prometheus_client
-
 
 Install script::
 
