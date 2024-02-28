@@ -5,7 +5,7 @@ cratedb-toolkit==0.0.5
 
 # langchain[cratedb,openai]==0.0.354
 # langchain-community==0.0.8
-langchain-openai==0.0.6
+langchain-openai==0.0.8
 pueblo[cli,fileio,nlp]>=0.0.7
 pydantic>=1,<3
 pypdf<5
