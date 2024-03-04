@@ -7,7 +7,9 @@ import logging
 import time
 import os
 import argparse
+from functools import reduce
 from datetime import datetime
+from prometheus_client.parser import text_string_to_metric_families
 import requests
 from requests.auth import HTTPBasicAuth
 
@@ -42,31 +44,25 @@ auth_data = HTTPBasicAuth(
 
 
 def num_shards():
-    """Function to calculate the average number of shards per node for a given cluster"""
-    headers = {"accept": "plain/text"}
+    "Calculate the average number of shards per node for a given cluster"
     api_url = f"https://console.cratedb.cloud/api/v2/organizations/{args.organization_id}/metrics/prometheus/"
-    response = requests.get(api_url, auth=auth_data, headers=headers, timeout=60)
-    if response.status_code == 200:
-        lines = response.text.split("\n")
-        total_shard_count = 0
-        shard_count_instances = 0
-        for line in lines:
+    response = requests.get(api_url, auth=auth_data, timeout=60)
+
+    samples = []
+    for family in text_string_to_metric_families(response.text):
+        for sample in family.samples:
             if (
-                "crate_node" in line
-                and "shard_stats" in line
-                and args.cluster_id in line
-                and 'property="total"' in line
+                sample.name == "crate_node"
+                and sample.labels["name"] == "shard_stats"
+                and args.cluster_id in sample.labels["pod_name"]
+                and sample.labels["property"] == "total"
             ):
-                shard_count = float(line.split()[1])
-                total_shard_count += shard_count
-                shard_count_instances += 1
-        if shard_count_instances == 0:
-            return None  # Return None if no shard counts were found
-        return (
-            total_shard_count / shard_count_instances
-        )  # Calculate and return the average
-    logging.info(f"Failed to retrieve metrics. Status code: {response.status_code}")
-    return None
+                samples.append(sample.value)
+
+    if len(samples) == 0:
+        return None
+
+    return reduce(lambda a, b: a + b, samples) / len(samples)
 
 
 def get_cluster_status():
@@ -142,9 +138,7 @@ while True:
         number_shards = num_shards()  # Calculate average shard count
         if number_shards is not None:
             logging.info(f"Current avg number of shards: {number_shards}")
-            scale_cluster(
-                number_shards, status, MAX_NUM_SHARDS
-            )  # Refactored scaling logic into this function
+            scale_cluster(number_shards, status, MAX_NUM_SHARDS)
         else:
             logging.error("Failed to retrieve shard metrics.")
     except Exception as e:

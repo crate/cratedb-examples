@@ -28,7 +28,7 @@ Run a dedicated cluster in [CrateDB Cloud](https://console.cratedb.cloud/).
 The script uses a couple of Python libraries. Make sure you have installed those:
 
 ```shell
-pip install requests
+pip install requests prometheus-client
 ```
 
 ```shell
