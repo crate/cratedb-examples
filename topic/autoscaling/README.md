@@ -17,7 +17,8 @@ When the number of shards goes back down below another threshold, the
 cluster will be scaled-back, by decommissioning excess nodes again.
 
 For more depth and background on this please see the community post
-about autoscaling. \<ADD LINK\>
+about autoscaling. 
+> <https://community.cratedb.com/t/autoscale-a-cratedb-cloud-cluster/1731>
 
 ## Usage
 
