@@ -1,18 +1,16 @@
-""" Needed modules """
+"""
+An example of how to scale your CrateDB Cloud cluster automatically,
+based on its Prometheus metrics endpoint.
+"""
+
 import logging
 import time
+import os
+import argparse
 from datetime import datetime
 import requests
 from requests.auth import HTTPBasicAuth
 
-auth_data = HTTPBasicAuth(
-    "YOUR API KEY",
-    "YOUR API SECRET",
-)
-
-""" Organization and cluster IDs (to be filled by the user) """
-# ORGANIZATION_ID = "FILL IN YOUR ORGANIZATION ID"
-# CLUSTER_ID = "FILL IN YOUR CLUSTER ID"
 
 """ Date format for parsing datetime strings """
 DATE_FORMAT = "%Y-%m-%dT%H:%M:%S.%f"
@@ -22,11 +20,31 @@ logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
 )
 
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    "-o",
+    "--organization_id",
+    help="The ID of your CrateDB Cloud organization",
+    required=True,
+)
+parser.add_argument(
+    "-c",
+    "--cluster_id",
+    help="The ID of your CrateDB Cloud cluster",
+    required=True,
+)
+args = parser.parse_args()
+
+auth_data = HTTPBasicAuth(
+    os.getenv("CRATEDB_CLOUD_API_KEY"),
+    os.getenv("CRATEDB_CLOUD_API_SECRET"),
+)
+
 
 def num_shards():
     """Function to calculate the average number of shards per node for a given cluster"""
     headers = {"accept": "plain/text"}
-    api_url = f"https://console.cratedb.cloud/api/v2/organizations/{ORGANIZATION_ID}/metrics/prometheus/"
+    api_url = f"https://console.cratedb.cloud/api/v2/organizations/{args.organization_id}/metrics/prometheus/"
     response = requests.get(api_url, auth=auth_data, headers=headers, timeout=60)
     if response.status_code == 200:
         lines = response.text.split("\n")
@@ -36,7 +54,7 @@ def num_shards():
             if (
                 "crate_node" in line
                 and "shard_stats" in line
-                and CLUSTER_ID in line
+                and args.cluster_id in line
                 and 'property="total"' in line
             ):
                 shard_count = float(line.split()[1])
@@ -53,7 +71,7 @@ def num_shards():
 
 def get_cluster_status():
     """Function to get the current status of a cluster"""
-    api_url = f"https://console.cratedb.cloud/api/v2/clusters/{CLUSTER_ID}/"
+    api_url = f"https://console.cratedb.cloud/api/v2/clusters/{args.cluster_id}/"
     return requests.get(api_url, auth=auth_data, timeout=60).json()
 
 
@@ -84,7 +102,7 @@ def scale_cluster(num, cluster_status, max_num_shard):
         num_nodes = get_cluster_num_nodes(cluster_status)
         logging.info(f"Start scaling out from {num_nodes + 1} to {num_nodes + 2}")
         requests.put(
-            f"https://console.cratedb.cloud/api/v2/clusters/{CLUSTER_ID}/scale/",
+            f"https://console.cratedb.cloud/api/v2/clusters/{args.cluster_id}/scale/",
             json={"product_unit": num_nodes + 1},
             auth=auth_data,
             timeout=60,
@@ -99,7 +117,7 @@ def scale_cluster(num, cluster_status, max_num_shard):
         num_nodes = get_cluster_num_nodes(cluster_status)
         logging.info(f"Start scaling down from {num_nodes + 1} to {num_nodes}")
         requests.put(
-            f"https://console.cratedb.cloud/api/v2/clusters/{CLUSTER_ID}/scale/",
+            f"https://console.cratedb.cloud/api/v2/clusters/{args.cluster_id}/scale/",
             json={"product_unit": num_nodes - 1},
             auth=auth_data,
             timeout=60,

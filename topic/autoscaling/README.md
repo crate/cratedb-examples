@@ -21,15 +21,13 @@ about autoscaling. \<ADD LINK\>
 
 ## Usage
 
-Run a dedicated cluster in CrateDB Cloud:
-
-> <https://console.cratedb.cloud/>
+Run a dedicated cluster in [CrateDB Cloud](https://console.cratedb.cloud/).
 
 ### Install
 
 The script uses a couple of Python libraries. Make sure you have installed those:
+
 ```shell
-pip install datetime
 pip install requests
 ```
 
@@ -38,12 +36,10 @@ git clone https://github.com/crate/cratedb-examples
 cd cratedb-examples/topic/autoscaling
 ```
 
-### Configure
-
-Make sure to edit the script before running it. Update lines 7, 10,
-and 11 with your API credentials, organization id and cluster id.
-
 ### Run
+
 ```shell
-python autoscale.py
+export CRATEDB_CLOUD_API_KEY="<Cloud API Key>"
+export CRATEDB_CLOUD_API_SECRET="<Cloud API Secret>"
+python autoscale.py --organization_id "<Organization ID>" --cluster_id "<Cluster ID>"
 ```
