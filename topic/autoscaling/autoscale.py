@@ -7,20 +7,14 @@ import argparse
 import logging
 import os
 import time
-from datetime import datetime
 from functools import reduce
 
-import requests
 from prometheus_client.parser import text_string_to_metric_families
-from requests.auth import HTTPBasicAuth
 
-# Date format for parsing datetime strings
-DATE_FORMAT = "%Y-%m-%dT%H:%M:%S.%f"
+from cratedb_cloud_api import CrateDBCloudAPI
 
 # Configure logging
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-)
+logging.basicConfig(level=logging.INFO)
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -37,16 +31,17 @@ parser.add_argument(
 )
 args = parser.parse_args()
 
-auth_data = HTTPBasicAuth(
+cloud_api = CrateDBCloudAPI(
     os.getenv("CRATEDB_CLOUD_API_KEY"),
     os.getenv("CRATEDB_CLOUD_API_SECRET"),
+    args.organization_id,
+    args.cluster_id,
 )
 
 
-def num_shards():
+def num_shards(cluster_id):
     "Calculate the average number of shards per node for a given cluster"
-    api_url = f"https://console.cratedb.cloud/api/v2/organizations/{args.organization_id}/metrics/prometheus/"
-    response = requests.get(api_url, auth=auth_data, timeout=60)
+    response = cloud_api.get_metrics()
 
     samples = []
     for family in text_string_to_metric_families(response.text):
@@ -55,96 +50,74 @@ def num_shards():
                 sample.name == "crate_node"
                 and sample.labels["name"] == "shard_stats"
                 and args.cluster_id in sample.labels["pod_name"]
+                and cluster_id in sample.labels["pod_name"]
                 and sample.labels["property"] == "total"
             ):
                 samples.append(sample.value)
 
     if len(samples) == 0:
-        return None
+        return 0
 
     return reduce(lambda a, b: a + b, samples) / len(samples)
 
 
-def get_cluster_status():
-    """Function to get the current status of a cluster"""
-    api_url = f"https://console.cratedb.cloud/api/v2/clusters/{args.cluster_id}/"
-    return requests.get(api_url, auth=auth_data, timeout=60).json()
+def get_cluster_num_nodes():
+    "Get the current number of nodes in a cluster"
+    num_nodes = cloud_api.get_cluster_status()["num_nodes"]
+
+    # The scale unit represents the number of nodes added from a minimum deployment perspective.
+    # I.e., it is 0 for a single-node cluster, 1 for a two-nodes cluster,
+    # 2 for a three-nodes cluster, ...
+    return {
+        "nodes": num_nodes,
+        "scale_unit": num_nodes - 1,
+    }
 
 
-def get_cluster_running_op(cluster_status):
-    """Function to get the current running operation in a cluster"""
-    if (
-        datetime.now()
-        - datetime.strptime(cluster_status["health"]["last_seen"], DATE_FORMAT)
-    ).seconds > 30:
-        cluster_status = get_cluster_status()
-    return cluster_status["health"]["running_operation"]
+def scale(increment):
+    "Initiates the scaling based on a given increment"
+    num_nodes = get_cluster_num_nodes()
+    if increment == 0:
+        return
+
+    direction = "up" if increment > 0 else "down"
+
+    logging.info(
+        "Start scaling %s from %s to %s",
+        direction,
+        num_nodes["nodes"],
+        num_nodes["nodes"] + increment,
+    )
+    cloud_api.scale(num_nodes["scale_unit"] + increment)
+    cloud_api.wait_for_operation()
+    logging.info("Scaled %s successfully!", direction)
 
 
-def get_cluster_num_nodes(cluster_status):
-    """Function to get the current number of nodes minus one in a cluster"""
-    if (
-        datetime.now()
-        - datetime.strptime(cluster_status["health"]["last_seen"], DATE_FORMAT)
-    ).seconds > 30:
-        cluster_status = get_cluster_status()
-    return cluster_status["num_nodes"] - 1
+def scale_cluster(cur_num_shards, max_num_shards):
+    "Scale out of back when reaching the treshold(s)"
+    shard_ratio = cur_num_shards / max_num_shards
 
-
-def scale_cluster(num, cluster_status, max_num_shard):
-    """Function to scale out of back when reaching the treshold(s)"""
-    operation_in_progress_msg = "Scaling operation in progress."
-    if num > (0.8 * max_num_shard):
-        num_nodes = get_cluster_num_nodes(cluster_status)
-        logging.info(f"Start scaling out from {num_nodes + 1} to {num_nodes + 2}")
-        requests.put(
-            f"https://console.cratedb.cloud/api/v2/clusters/{args.cluster_id}/scale/",
-            json={"product_unit": num_nodes + 1},
-            auth=auth_data,
-            timeout=60,
-        )
-        logging.info(operation_in_progress_msg)
-        while get_cluster_running_op(cluster_status) != "":
-            time.sleep(10)  # Check every 10 seconds instead of immediately looping back
-            # Optionally, log at intervals rather than trying to print dots
-            logging.info(operation_in_progress_msg)
-        logging.info("Scaled up successfully!")
-    elif num < (0.5 * max_num_shard):
-        num_nodes = get_cluster_num_nodes(cluster_status)
-        logging.info(f"Start scaling down from {num_nodes + 1} to {num_nodes}")
-        requests.put(
-            f"https://console.cratedb.cloud/api/v2/clusters/{args.cluster_id}/scale/",
-            json={"product_unit": num_nodes - 1},
-            auth=auth_data,
-            timeout=60,
-        )
-        logging.info(operation_in_progress_msg)
-        while get_cluster_running_op(cluster_status) != "":
-            time.sleep(10)  # Check every 10 seconds
-            # Optionally, log at intervals rather than trying to print dots
-            logging.info(operation_in_progress_msg)
-        logging.info("Scaled down successfully!")
+    if shard_ratio > 0.8:
+        scale(1)
+    elif shard_ratio < 0.5:
+        scale(-1)
     else:
         logging.info("Nothing to do!")
 
 
-DELAY_SECONDS = 5
+DELAY_SECONDS = 10
 MAX_NUM_SHARDS = 30
 
 
 def main():
-    # Main loop to monitor and adjust cluster size based on shard count
+    "Main loop to monitor and adjust cluster size based on shard count"
     while True:
-        try:
-            status = get_cluster_status()  # Fetch current cluster status
-            number_shards = num_shards()  # Calculate average shard count
-            if number_shards is not None:
-                logging.info(f"Current avg number of shards: {number_shards}")
-                scale_cluster(number_shards, status, MAX_NUM_SHARDS)
-            else:
-                logging.error("Failed to retrieve shard metrics.")
-        except Exception as e:
-            logging.error(f"An error occurred: {e}")
+        # Calculate average shard count
+        number_shards = num_shards(args.cluster_id)
+        logging.info("Current avg number of shards: %s", number_shards)
+
+        scale_cluster(number_shards, MAX_NUM_SHARDS)
+
         time.sleep(DELAY_SECONDS)
 
 
