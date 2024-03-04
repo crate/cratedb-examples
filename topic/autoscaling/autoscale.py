@@ -12,10 +12,10 @@ import requests
 from requests.auth import HTTPBasicAuth
 
 
-""" Date format for parsing datetime strings """
+# Date format for parsing datetime strings
 DATE_FORMAT = "%Y-%m-%dT%H:%M:%S.%f"
 
-""" Configure logging """
+# Configure logging
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
 )
@@ -135,7 +135,7 @@ def scale_cluster(num, cluster_status, max_num_shard):
 DELAY_SECONDS = 5
 MAX_NUM_SHARDS = 30
 
-""" Main loop to monitor and adjust cluster size based on shard count """
+# Main loop to monitor and adjust cluster size based on shard count
 while True:
     try:
         status = get_cluster_status()  # Fetch current cluster status
