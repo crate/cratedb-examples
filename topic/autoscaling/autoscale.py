@@ -3,16 +3,16 @@ An example of how to scale your CrateDB Cloud cluster automatically,
 based on its Prometheus metrics endpoint.
 """
 
-import logging
-import time
-import os
 import argparse
-from functools import reduce
+import logging
+import os
+import time
 from datetime import datetime
-from prometheus_client.parser import text_string_to_metric_families
-import requests
-from requests.auth import HTTPBasicAuth
+from functools import reduce
 
+import requests
+from prometheus_client.parser import text_string_to_metric_families
+from requests.auth import HTTPBasicAuth
 
 # Date format for parsing datetime strings
 DATE_FORMAT = "%Y-%m-%dT%H:%M:%S.%f"
