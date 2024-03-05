@@ -1,5 +1,5 @@
 # Real.
-# pueblo[notebook,testing]>=0.0.7
+pueblo[notebook,testing]>=0.0.9
 
 # Development.
-pueblo[notebook,testing] @ git+https://github.com/pyveci/pueblo.git@amo/testbook
+# pueblo[notebook,testing] @ git+https://github.com/pyveci/pueblo.git@amo/testbook
