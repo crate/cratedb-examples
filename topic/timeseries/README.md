@@ -28,5 +28,17 @@ repository, e.g. about machine learning, to see predictions and AutoML in action
   window functions, interpolation of missing data, common table expressions, 
   moving averages, JOINs and the handling of JSON data.
 
+- `exploratory_data_analysis.ipynb` [![Open on GitHub](https://img.shields.io/badge/Open%20on-GitHub-lightgray?logo=GitHub)](exploratory_data_analysis.ipynb) [![Open in Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/crate/cratedb-examples/blob/main/topic/timeseries/exploratory_data_analysis.ipynb)
+
+  This notebook explores how to access timeseries data from CrateDB via SQL, 
+  and do the exploratory data analysis (EDA) with PyCaret.
+  
+  It also shows how you can generate various plots and charts for EDA, helping you understand data distributions, relationships between variables, and identify patterns.
+  
+- `time-series-decomposition.ipynb` [![Open on GitHub](https://img.shields.io/badge/Open%20on-GitHub-lightgray?logo=GitHub)](time-series-decomposition.ipynb) [![Open in Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/crate/cratedb-examples/blob/main/topic/timeseries/time-series-decomposition.ipynb)
+
+  This notebook illustrates how to extract data from CrateDB and how to use PyCaret for time-series decomposition.
+  
+  Furthermore, it shows how to preprocess data and plot time series decomposition by breaking it down into its basic components: trend, seasonality, and residual (or irregular) fluctuations.
 
 [CrateDB]: https://github.com/crate/crate
