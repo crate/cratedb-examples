@@ -48,4 +48,28 @@ repository, e.g. about machine learning, to see predictions and AutoML in action
   To ensure the dashboard functions correctly, it's necessary to configure the data source within Grafana. This dashboard uses the `grafana-postgresql-datasource` or another configured default data source. In the data source settings, fill in the necessary parameters to connect to your CrateDB instance. This includes setting up the database name (`database=doc`), user, password, and host.
 
 
+## Software Tests
+
+For running the software tests, install a development sandbox in this
+folder, also satisfying all the dependencies.
+```console
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt -r requirements-dev.txt
+```
+
+Then, invoke the software tests, roughly validating all notebooks within
+this folder, by running them to completion.
+```console
+time pytest
+```
+
+In order to run tests for individual notebooks by name, use the
+`-k` option for selecting by name fragment.
+```console
+time pytest -k explo
+time pytest -k visu
+```
+
+
 [CrateDB]: https://github.com/crate/crate
