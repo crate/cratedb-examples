@@ -131,16 +131,22 @@ def scale_cluster(num, cluster_status, max_num_shard):
 DELAY_SECONDS = 5
 MAX_NUM_SHARDS = 30
 
-# Main loop to monitor and adjust cluster size based on shard count
-while True:
-    try:
-        status = get_cluster_status()  # Fetch current cluster status
-        number_shards = num_shards()  # Calculate average shard count
-        if number_shards is not None:
-            logging.info(f"Current avg number of shards: {number_shards}")
-            scale_cluster(number_shards, status, MAX_NUM_SHARDS)
-        else:
-            logging.error("Failed to retrieve shard metrics.")
-    except Exception as e:
-        logging.error(f"An error occurred: {e}")
-    time.sleep(DELAY_SECONDS)
+
+def main():
+    # Main loop to monitor and adjust cluster size based on shard count
+    while True:
+        try:
+            status = get_cluster_status()  # Fetch current cluster status
+            number_shards = num_shards()  # Calculate average shard count
+            if number_shards is not None:
+                logging.info(f"Current avg number of shards: {number_shards}")
+                scale_cluster(number_shards, status, MAX_NUM_SHARDS)
+            else:
+                logging.error("Failed to retrieve shard metrics.")
+        except Exception as e:
+            logging.error(f"An error occurred: {e}")
+        time.sleep(DELAY_SECONDS)
+
+
+if __name__ == "__main__":
+    main()
