@@ -1,7 +1,7 @@
 # Real.
-# mlflow-cratedb==2.8.1
+mlflow-cratedb==2.10.2
 pydantic<3
 salesforce-merlion>=2,<3
 
 # Development.
-mlflow-cratedb @ git+https://github.com/crate-workbench/mlflow-cratedb.git@main
+# mlflow-cratedb @ git+https://github.com/crate-workbench/mlflow-cratedb.git@main
