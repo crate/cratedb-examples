@@ -122,7 +122,7 @@ public class JdbcMetaDataTest {
         try (var conn = DriverManager.getConnection(URL)) {
             var result = conn.getMetaData().getCatalogs();
             assertThat(result.next(), is(true));
-            assertThat(result.getString(1), is("doc"));
+            assertThat(result.getString(1), is("crate"));
         }
     }
 
@@ -191,6 +191,8 @@ public class JdbcMetaDataTest {
     }
 
     @Test
+    @Ignore("Not supported by CrateDB after pgjdbc 42.7.0 changed the implementation")
+    // https://github.com/crate/crate/issues/15113
     public void test_getDefaultTransactionIsolation() throws Exception {
         try (var conn = DriverManager.getConnection(URL)) {
             assertThat(conn.getMetaData().getDefaultTransactionIsolation(), is(Connection.TRANSACTION_READ_COMMITTED));

@@ -23,6 +23,16 @@ updates:
 
   # Languages.
 
+  - directory: "/by-dataframe/dask"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "weekly"
+
+  - directory: "/by-dataframe/pandas"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "weekly"
+
   - directory: "/by-language/csharp-npgsql"
     package-ecosystem: "nuget"
     schedule:
@@ -63,6 +73,13 @@ updates:
     schedule:
       interval: "weekly"
 
+  # Frameworks.
+
+  - directory: "/framework/apache-superset"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "weekly"
+
   # Topics.
 
   - directory: "/topic/machine-learning/automl"
@@ -84,5 +101,25 @@ updates:
 
   - directory: "/testing/testcontainers/java"
     package-ecosystem: "gradle"
+    schedule:
+      interval: "weekly"
+
+  - directory: "/testing/native/python-pytest"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "weekly"
+
+  - directory: "/testing/native/python-unittest"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "weekly"
+
+  - directory: "/testing/testcontainers/python-pytest"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "weekly"
+
+  - directory: "/testing/testcontainers/python-unittest"
+    package-ecosystem: "pip"
     schedule:
       interval: "weekly"

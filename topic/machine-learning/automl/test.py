@@ -1,7 +1,7 @@
 """
 ## About
 
-Test cases for classification model examples with CrateDB, PyCaret and MLflow.
+Test cases for classification and forecasting examples with CrateDB, PyCaret, and MLflow.
 
 
 ## Synopsis
@@ -17,6 +17,7 @@ pytest -k file
 pytest -k notebook
 ```
 """
+import os
 from pathlib import Path
 
 import pytest
@@ -32,7 +33,8 @@ def cratedb() -> DatabaseAdapter:
     """
     Provide test cases with a connection to CrateDB, with additional tooling.
     """
-    return DatabaseAdapter(dburi="crate://crate@localhost:4200")
+    dburi = os.environ.get("CRATEDB_CONNECTION_STRING")
+    return DatabaseAdapter(dburi=f"{dburi}&schema=testdrive")
 
 
 @pytest.fixture(scope="function", autouse=True)
