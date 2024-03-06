@@ -41,4 +41,11 @@ repository, e.g. about machine learning, to see predictions and AutoML in action
   
   Furthermore, it shows how to preprocess data and plot time series decomposition by breaking it down into its basic components: trend, seasonality, and residual (or irregular) fluctuations.
 
+- `weather-data-grafana-dashboard.json`
+
+  An exported JSON representation of a Grafana dashboard specifically designed to visualize weather data. This dashboard includes a set of pre-defined panels and widgets that display various weather metrics.
+
+  Additionally, within this dashboard configuration, there are advanced time-series analysis queries. These queries are tailored to fetch, aggregate, interpolate and process weather data over time.
+
+
 [CrateDB]: https://github.com/crate/crate
