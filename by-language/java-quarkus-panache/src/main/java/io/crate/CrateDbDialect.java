@@ -16,8 +16,10 @@ import static org.hibernate.type.SqlTypes.JSON;
 import static org.hibernate.type.SqlTypes.TIMESTAMP;
 import static org.hibernate.type.SqlTypes.TIMESTAMP_WITH_TIMEZONE;
 import static org.hibernate.type.SqlTypes.NUMERIC;
+
 /**
- * extends postgres sql dialect with crate specialities and also cover limitations
+ * extends postgres sql dialect with crate specialities and also cover
+ * limitations
  *
  * @author mackerl
  */
@@ -52,7 +54,7 @@ public class CrateDbDialect extends PostgreSQLDialect {
             case TIMESTAMP_WITH_TIMEZONE:
                 return "timestamp with time zone"; // TODO does not support precision for timestamps
             case NUMERIC:
-                return "text";
+                return "double"; // TODO bigdecimal not supported
             case JSON:
                 return "OBJECT(DYNAMIC)";
             default:
@@ -61,7 +63,7 @@ public class CrateDbDialect extends PostgreSQLDialect {
     }
 
     @Override
-    public String getArrayTypeName(String elementTypeName) {
+    public String getArrayTypeName(String javaElementTypeName, String elementTypeName, Integer maxLength) {
         return supportsStandardArrays() ? " array(" + elementTypeName + ") " : null;
     }
 

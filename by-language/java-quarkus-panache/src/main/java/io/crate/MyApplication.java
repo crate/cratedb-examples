@@ -23,7 +23,7 @@ public class MyApplication {
 
         log.info("Print populated data");
 
-        for (MyEntity entity: data) {
+        for (MyEntity entity : data) {
             log.info(entity.toString());
         }
     }

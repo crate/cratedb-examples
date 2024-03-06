@@ -26,7 +26,6 @@ public class MyEntity extends PanacheEntityBase { // using PanacheEntityBase ins
     @Column(updatable = false, nullable = false, length = 36)
     public String myUUId; // using uuid as sequence replacement
 
-
     /**
      * demonstrate usage of JSON as Object(dynamic) -> see dialect
      */
@@ -37,17 +36,17 @@ public class MyEntity extends PanacheEntityBase { // using PanacheEntityBase ins
      * demonstrate usage of timestamp with timezone
      */
     @Column
-    public Instant timestamp=Instant.now();
+    public Instant timestamp = Instant.now();
 
     // TODO Bigdecimal not yet supported
     @Column(name = "\"value\"")
-    public Long myBigValue;
+    public Long myValue;
 
     /**
      * demonstrates usage of array type
      */
     @Column
-    public List<String> myArray= new ArrayList<>();
+    public List<String> myArray = new ArrayList<>();
 
     @PrePersist
     /**
@@ -59,7 +58,6 @@ public class MyEntity extends PanacheEntityBase { // using PanacheEntityBase ins
         }
     }
 
-
     @Override
     public String toString() {
         try {
@@ -70,9 +68,13 @@ public class MyEntity extends PanacheEntityBase { // using PanacheEntityBase ins
             throw new RuntimeException(e);
         }
     }
+
     @Transactional
     /**
-     * Crate DB does not support transactions - however for JPA this is required so that the data is persisted.
+     * Crate DB does not support transactions - however for JPA this is required so
+     * that the data is persisted.
+     * As CrateDB does not support transactions, the only effect of this command is
+     * to close all existing cursors WITHOUT HOLD in the current session.
      */
     public static void populateWithData() {
         MyEntity entity = new MyEntity();
@@ -80,7 +82,7 @@ public class MyEntity extends PanacheEntityBase { // using PanacheEntityBase ins
         entity.key2Value.put("key1", "value1");
         entity.key2Value.put("key2", "value2");
 
-        entity.myBigValue= 10L;
+        entity.myValue = 10L;
 
         entity.myArray.add("item1");
         entity.myArray.add("item2");
