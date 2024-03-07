@@ -79,7 +79,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT\n  COUNT(timestamp) AS \"Measurements\",\n  COUNT(DISTINCT location) AS \"Cities\"\nFROM demo.weather_data\n",
+          "rawSql": "SELECT\n  COUNT(timestamp) AS \"Measurements\",\n  COUNT(DISTINCT location) AS \"Cities\"\nFROM doc.weather_data\n",
           "refId": "A",
           "sql": {
             "columns": [
@@ -164,7 +164,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT\nMIN(timestamp) \"First Measurement\",\nMAX(timestamp) \"Last Measurement\"\nFROM demo.weather_data;",
+          "rawSql": "SELECT\nMIN(timestamp) \"First Measurement\",\nMAX(timestamp) \"Last Measurement\"\nFROM doc.weather_data;",
           "refId": "A",
           "sql": {
             "columns": [
@@ -252,7 +252,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT location,\n    max(temperature) AS highest_temp,\n    max_by(timestamp, temperature) AS time_of_highest_temp\nFROM demo.weather_data\nGROUP BY location;",
+          "rawSql": "SELECT location,\n    max(temperature) AS highest_temp,\n    max_by(timestamp, temperature) AS time_of_highest_temp\nFROM doc.weather_data\nGROUP BY location;",
           "refId": "A",
           "sql": {
             "columns": [
@@ -367,7 +367,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "WITH OrderedData AS (\n    SELECT timestamp,\n           location,\n           temperature,\n           LAG(temperature, 1) IGNORE NULLS OVER w AS prev_temp,\n           LEAD(temperature, 1) IGNORE NULLS OVER w AS next_temp\n    FROM demo.weather_data\n    WINDOW w AS (PARTITION BY location ORDER BY timestamp)\n)\nSELECT timestamp,\n       location,\n       COALESCE(temperature, (prev_temp + next_temp)/2) AS interpolated_temperature,\n       temperature AS temperature\nFROM OrderedData\nWHERE location='Berlin'\nORDER BY timestamp,location;",
+          "rawSql": "WITH OrderedData AS (\n    SELECT timestamp,\n           location,\n           temperature,\n           LAG(temperature, 1) IGNORE NULLS OVER w AS prev_temp,\n           LEAD(temperature, 1) IGNORE NULLS OVER w AS next_temp\n    FROM doc.weather_data\n    WINDOW w AS (PARTITION BY location ORDER BY timestamp)\n)\nSELECT timestamp,\n       location,\n       COALESCE(temperature, (prev_temp + next_temp)/2) AS interpolated_temperature,\n       temperature AS temperature\nFROM OrderedData\nWHERE location='Berlin'\nORDER BY timestamp,location;",
           "refId": "A",
           "sql": {
             "columns": [
@@ -479,7 +479,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT \n    timestamp, \n    location,\n    temperature,\n    AVG(temperature) OVER w_10 AS temperature_ma_10,\n    AVG(temperature) OVER w_20 AS temperature_ma_20,\n    humidity,\n    AVG(humidity) OVER w_10 AS humidity_ma_10,\n    AVG(humidity) OVER w_20 AS humidity_ma_20,\n    wind_speed,\n    AVG(wind_speed) OVER w_10 AS wind_speed_ma_10,\n    AVG(wind_speed) OVER w_20 AS wind_speed_ma_20\nFROM \n    demo.weather_data\nWINDOW\n    w_10 AS (ORDER BY location, timestamp ROWS BETWEEN 10 PRECEDING AND CURRENT ROW),\n    w_20 AS (ORDER BY location, timestamp ROWS BETWEEN 20 PRECEDING AND CURRENT ROW)\n",
+          "rawSql": "SELECT \n    timestamp, \n    location,\n    temperature,\n    AVG(temperature) OVER w_10 AS temperature_ma_10,\n    AVG(temperature) OVER w_20 AS temperature_ma_20,\n    humidity,\n    AVG(humidity) OVER w_10 AS humidity_ma_10,\n    AVG(humidity) OVER w_20 AS humidity_ma_20,\n    wind_speed,\n    AVG(wind_speed) OVER w_10 AS wind_speed_ma_10,\n    AVG(wind_speed) OVER w_20 AS wind_speed_ma_20\nFROM \n    doc.weather_data\nWINDOW\n    w_10 AS (ORDER BY location, timestamp ROWS BETWEEN 10 PRECEDING AND CURRENT ROW),\n    w_20 AS (ORDER BY location, timestamp ROWS BETWEEN 20 PRECEDING AND CURRENT ROW)\n",
           "refId": "A",
           "sql": {
             "columns": [
@@ -629,7 +629,7 @@
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT  city,\n    latitude(geopoint) AS latitude,\n    longitude(geopoint) AS longitude\nFROM demo.weather_stations\nWHERE distance('POINT(13.4050 52.5200)'::GEO_POINT, geopoint) < 1000000 \n",
+          "rawSql": "SELECT  city,\n    latitude(geopoint) AS latitude,\n    longitude(geopoint) AS longitude\nFROM doc.weather_stations\nWHERE distance('POINT(13.4050 52.5200)'::GEO_POINT, geopoint) < 1000000 \n",
           "refId": "A",
           "sql": {
             "columns": [
