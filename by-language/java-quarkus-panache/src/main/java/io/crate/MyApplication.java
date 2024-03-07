@@ -17,7 +17,7 @@ public class MyApplication {
     void onStart(@Observes StartupEvent event) {
         log.info("starting the crate demo application.");
 
-        MyEntity.populateWithData();
+        MyEntity.populateWithData(1);
 
         List<MyEntity> data = MyEntity.listAll();
 

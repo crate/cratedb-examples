@@ -76,19 +76,22 @@ public class MyEntity extends PanacheEntityBase { // using PanacheEntityBase ins
      * As CrateDB does not support transactions, the only effect of this command is
      * to close all existing cursors WITHOUT HOLD in the current session.
      */
-    public static void populateWithData() {
-        MyEntity entity = new MyEntity();
+    public static void populateWithData(int numberOfEntitesToCreate) {
 
-        entity.key2Value.put("key1", "value1");
-        entity.key2Value.put("key2", "value2");
+        for(int i=0;i<numberOfEntitesToCreate;i++) {
+            MyEntity entity = new MyEntity();
 
-        entity.myValue = 10L;
+            entity.key2Value.put("key"+i, "value"+i);
+            entity.key2Value.put("key"+(i+1), "value"+(i+1));
 
-        entity.myArray.add("item1");
-        entity.myArray.add("item2");
-        entity.myArray.add("item3");
+            entity.myValue = (long) i;
 
-        entity.persist();
+            entity.myArray.add("item1");
+            entity.myArray.add("item2");
+            entity.myArray.add("item3");
+
+            entity.persist();
+        }
     }
 
     private boolean isNullOrEmpty(String s) {

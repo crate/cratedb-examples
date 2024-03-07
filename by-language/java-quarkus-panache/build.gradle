@@ -16,6 +16,8 @@ dependencies {
     implementation 'io.quarkus:quarkus-hibernate-orm'
     implementation 'io.quarkus:quarkus-jackson' // needed for json serializing
     testImplementation 'io.quarkus:quarkus-junit5'
+    testImplementation 'org.testcontainers:cratedb:1.19.7'
+    testImplementation "org.testcontainers:junit-jupiter:1.19.7"
 }
 
 group 'org.acme'
