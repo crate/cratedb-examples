@@ -1,0 +1,58 @@
+services:
+  weather_producer:
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python -m weather_producer
+    depends_on:
+      - kafka
+
+  flink_job:
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: flink_job.Dockerfile
+      args:
+        - POSTGRESQL_JAR_URL=jdbc.postgresql.org/download/postgresql-${POSTGRESQL_JAR_VERSION}.jar
+        - FLINK_SQL_JAR_URL=https://repo1.maven.org/maven2/org/apache/flink/flink-connector-jdbc/${FLINK_CONNECTOR_JDBC_VERSION}/flink-connector-jdbc-${FLINK_CONNECTOR_JDBC_VERSION}.jar
+        - FLINK_KAFKA_JAR_URL=https://repo1.maven.org/maven2/org/apache/flink/flink-sql-connector-kafka/${FLINK_KAFKA_JAR_URL_VERSION}/flink-sql-connector-kafka-${FLINK_KAFKA_JAR_URL_VERSION}.jar
+    command: python -m flink_consumer
+    depends_on:
+      - kafka
+
+  crate:
+    image: crate:5.6.2
+    ports:
+      - "4200:4200"
+    command: [ "crate",
+               "-Cdiscovery.type=single-node",
+    ]
+    environment:
+      - CRATE_HEAP_SIZE=2g
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:6.2.0
+    hostname: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka:
+    image: confluentinc/cp-server:6.2.0
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+      - "9101:9101"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
