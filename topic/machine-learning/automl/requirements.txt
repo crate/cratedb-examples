@@ -5,7 +5,6 @@ plotly<5.20
 pycaret[models,parallel,test]==3.3.0
 pydantic<2
 python-dotenv<2
-tqdm<5
 
 # Development.
 # mlflow-cratedb @ git+https://github.com/crate-workbench/mlflow-cratedb.git@main
