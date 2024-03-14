@@ -41,4 +41,9 @@ repository, e.g. about machine learning, to see predictions and AutoML in action
   
   Furthermore, it shows how to preprocess data and plot time series decomposition by breaking it down into its basic components: trend, seasonality, and residual (or irregular) fluctuations.
 
+- `time-series-anomaly-detection.ipynb` [![Open on GitHub](https://img.shields.io/badge/Open%20on-GitHub-lightgray?logo=GitHub)](time-series-anomaly-detection.ipynb) [![Open in Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/crate/cratedb-examples/blob/main/topic/timeseries/time-series-anomaly-detection.ipynb)
+
+  This notebook walks you through the anomaly detection analysis using the PyCaret library.
+  
+
 [CrateDB]: https://github.com/crate/crate
