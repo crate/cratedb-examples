@@ -11,8 +11,6 @@ We use.
 - Apache Flink
 - CrateDB 
 - Python >=3.7<=3.11
-- 
-[img of the thing]
 
 ## Overview
 
@@ -20,7 +18,7 @@ An HTTP call is scheduled to run every 60 seconds on `weather_producer`, the API
 with the specified city's weather, the json is then sent through `Kafka`.
 
 `flink_consumer` is a flink application consuming the same kafka topic;
-upon receiving data, it sends the resulting datastream to the sink, which is `CrateDB`
+upon receiving data, it sends the resulting datastream to the sink, which is CrateDB.
 
 Both `flink_consumer` and `weather_producer` are written using their respective Python Wrappers.
 
@@ -31,28 +29,37 @@ Both `flink_consumer` and `weather_producer` are written using their respective 
 Everything is customizable via environment variables, the API schedule, the topic, credentials...
 etc.
 
-See `.env` more details.
+See `.env` for more details.
 
 ## How to use
 
-There is ready-to-use docker-compose, fill in the .env with the API
-Key (Get it here https://www.weatherapi.com/).
+The Docker Compose configuration will get you started quickly.
+You will need to fill in the API key of [Weather API](https://www.weatherapi.com/)
+into your local `.env` file.
 
 ### Run the docker compose (and build the images)
 
-`docker compose up -d --build`
+```
+docker compose up -d --build
+```
 
 ### Stop the docker compose
 
-`docker compose down`
+```
+docker compose down
+```
 
 ### Poetry
 
-`poetry install`
+```
+poetry install
+```
 
 ### Pip
 
-`pip install -r requirements.txt`
+```
+pip install -r requirements.txt
+```
 
 ## Notes
 
@@ -67,9 +74,9 @@ for more information see: [this](https://cratedb.com/docs/guide/admin/bootstrap-
 ### Mock API call.
 
 If you don't want to register in the weather api we use, you can use the
-provided `mock_fetch_weather_data`, call this instead in the scheduler call.
+provided function `mock_fetch_weather_data`, call this instead in the scheduler call.
 
-This is what it'd look like.
+This is how it would look like:
 
 ```python
 scheduler.enter(
@@ -80,7 +87,7 @@ scheduler.enter(
 )
 ```
 
-*after changing this, re-build the docker compose.*
+*After changing this, re-build the docker compose.*
 
 ### Initial kafka topic.
 
@@ -90,7 +97,7 @@ if the API takes too long to respond *the very first time this project*.
 
 To solve this, you should [configure](https://kafka.apache.org/quickstart#quickstart_createtopic)
 the
-topics on boot time. This is recommended for production scenarios.
+topics at boot time. This is recommended for production scenarios.
 
 If you are just testing things around, you can solve this by re-running `docker compose up -d`, it
 will only start `flink_job` and assuming everything went ok, the topic should already exist and
