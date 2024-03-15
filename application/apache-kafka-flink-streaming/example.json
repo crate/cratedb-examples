@@ -1,0 +1,41 @@
+{
+  "location": {
+    "localtime": "2024-03-07 18:20",
+    "country": "France",
+    "localtime_epoch": 1709832024,
+    "name": "Nonette",
+    "lon": 3.28,
+    "region": "Auvergne",
+    "lat": 45.48,
+    "tz_id": "Europe/Paris"
+  },
+  "current": {
+    "feelslike_c": 11,
+    "uv": 3,
+    "last_updated": "2024-03-07 18:15",
+    "feelslike_f": 51.7,
+    "wind_degree": 30,
+    "last_updated_epoch": 1709831700,
+    "is_day": 1,
+    "precip_in": 0,
+    "wind_dir": "NNE",
+    "gust_mph": 12.1,
+    "temp_c": 12,
+    "pressure_in": 29.83,
+    "gust_kph": 19.5,
+    "temp_f": 53.6,
+    "precip_mm": 0,
+    "cloud": 0,
+    "wind_kph": 6.8,
+    "condition": {
+      "code": 1000,
+      "icon": "//cdn.weatherapi.com/weather/64x64/day/113.png",
+      "text": "Sunny"
+    },
+    "wind_mph": 4.3,
+    "vis_km": 10,
+    "humidity": 50,
+    "pressure_mb": 1010,
+    "vis_miles": 6
+  }
+}

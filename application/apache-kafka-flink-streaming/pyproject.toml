@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "cratedb-weather-data"
+version = "0.1.0"
+description = ""
+authors = ["ivan.sanchez <ivan.sanchez@crate.io>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+requests = "^2.31.0"
+kafka-python = "^2.0.2"
+apache-flink = "^1.18.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
