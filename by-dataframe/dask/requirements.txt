@@ -1,5 +1,5 @@
 click<9
 colorlog<7
 crate[sqlalchemy]
-dask[dataframe]<=2024.2.1
+dask[dataframe]<=2024.3.1
 pueblo>=0.0.7
