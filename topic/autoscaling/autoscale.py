@@ -3,16 +3,16 @@ An example of how to scale your CrateDB Cloud cluster automatically,
 based on its Prometheus metrics endpoint.
 """
 
-import logging
-import time
-import os
 import argparse
-from functools import reduce
+import logging
+import os
+import time
 from datetime import datetime
-from prometheus_client.parser import text_string_to_metric_families
-import requests
-from requests.auth import HTTPBasicAuth
+from functools import reduce
 
+import requests
+from prometheus_client.parser import text_string_to_metric_families
+from requests.auth import HTTPBasicAuth
 
 # Date format for parsing datetime strings
 DATE_FORMAT = "%Y-%m-%dT%H:%M:%S.%f"
@@ -131,16 +131,22 @@ def scale_cluster(num, cluster_status, max_num_shard):
 DELAY_SECONDS = 5
 MAX_NUM_SHARDS = 30
 
-# Main loop to monitor and adjust cluster size based on shard count
-while True:
-    try:
-        status = get_cluster_status()  # Fetch current cluster status
-        number_shards = num_shards()  # Calculate average shard count
-        if number_shards is not None:
-            logging.info(f"Current avg number of shards: {number_shards}")
-            scale_cluster(number_shards, status, MAX_NUM_SHARDS)
-        else:
-            logging.error("Failed to retrieve shard metrics.")
-    except Exception as e:
-        logging.error(f"An error occurred: {e}")
-    time.sleep(DELAY_SECONDS)
+
+def main():
+    # Main loop to monitor and adjust cluster size based on shard count
+    while True:
+        try:
+            status = get_cluster_status()  # Fetch current cluster status
+            number_shards = num_shards()  # Calculate average shard count
+            if number_shards is not None:
+                logging.info(f"Current avg number of shards: {number_shards}")
+                scale_cluster(number_shards, status, MAX_NUM_SHARDS)
+            else:
+                logging.error("Failed to retrieve shard metrics.")
+        except Exception as e:
+            logging.error(f"An error occurred: {e}")
+        time.sleep(DELAY_SECONDS)
+
+
+if __name__ == "__main__":
+    main()

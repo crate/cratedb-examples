@@ -44,6 +44,13 @@ repository, e.g. about machine learning, to see predictions and AutoML in action
 - `time-series-anomaly-detection.ipynb` [![Open on GitHub](https://img.shields.io/badge/Open%20on-GitHub-lightgray?logo=GitHub)](time-series-anomaly-detection.ipynb) [![Open in Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/crate/cratedb-examples/blob/main/topic/timeseries/time-series-anomaly-detection.ipynb)
 
   This notebook walks you through the anomaly detection analysis using the PyCaret library.
-  
+
+- `weather-data-grafana-dashboard.json`
+
+  An exported JSON representation of a Grafana dashboard designed to visualize weather data. This dashboard includes a set of pre-defined panels and widgets that display various weather metrics. Additionally, within this dashboard configuration, there are advanced time-series analysis queries. These queries are tailored to fetch, aggregate, interpolate, and process weather data over time.
+
+  To ensure the dashboard functions correctly, it's necessary to configure the data source within Grafana. This dashboard uses the `grafana-postgresql-datasource` or another configured default data source. In the data source settings, fill in the necessary parameters to connect to your CrateDB instance. This includes setting up the database name (`database=doc`), user, password, and host.
+
+
 
 [CrateDB]: https://github.com/crate/crate
