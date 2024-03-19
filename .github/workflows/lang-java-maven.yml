@@ -7,14 +7,14 @@ on:
     - '.github/workflows/lang-java-maven.yml'
     - 'by-language/java-jdbc/**'
     - 'by-language/java-qa/**'
-    - 'requirements.txt'
+    - '/requirements.txt'
   push:
     branches: [ main ]
     paths:
     - '.github/workflows/lang-java-maven.yml'
     - 'by-language/java-jdbc/**'
     - 'by-language/java-qa/**'
-    - 'requirements.txt'
+    - '/requirements.txt'
 
   # Allow job to be triggered manually.
   workflow_dispatch:

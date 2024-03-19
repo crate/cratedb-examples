@@ -6,13 +6,13 @@ on:
     paths:
     - '.github/workflows/testing-testcontainers-java.yml'
     - 'testing/testcontainers/java/**'
-    - 'requirements.txt'
+    - '/requirements.txt'
   push:
     branches: [ main ]
     paths:
     - '.github/workflows/testing-testcontainers-java.yml'
     - 'testing/testcontainers/java/**'
-    - 'requirements.txt'
+    - '/requirements.txt'
 
   # Allow job to be triggered manually.
   workflow_dispatch:
