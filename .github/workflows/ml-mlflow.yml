@@ -6,13 +6,13 @@ on:
     paths:
     - '.github/workflows/ml-mlflow.yml'
     - 'topic/machine-learning/mlops-mlflow/**'
-    - 'requirements.txt'
+    - '/requirements.txt'
   push:
     branches: [ main ]
     paths:
     - '.github/workflows/ml-mlflow.yml'
     - 'topic/machine-learning/mlops-mlflow/**'
-    - 'requirements.txt'
+    - '/requirements.txt'
 
   # Allow job to be triggered manually.
   workflow_dispatch:

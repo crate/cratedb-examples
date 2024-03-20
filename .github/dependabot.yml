@@ -97,6 +97,11 @@ updates:
     schedule:
       interval: "weekly"
 
+  - directory: "/topic/timeseries"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "weekly"
+
   # Testing.
 
   - directory: "/testing/testcontainers/java"

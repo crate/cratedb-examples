@@ -6,13 +6,13 @@ on:
     paths:
     - '.github/workflows/lang-python-sqlalchemy.yml'
     - 'by-language/python-sqlalchemy/**'
-    - 'requirements.txt'
+    - '/requirements.txt'
   push:
     branches: [ main ]
     paths:
     - '.github/workflows/lang-python-sqlalchemy.yml'
     - 'by-language/python-sqlalchemy/**'
-    - 'requirements.txt'
+    - '/requirements.txt'
 
   # Allow job to be triggered manually.
   workflow_dispatch:
