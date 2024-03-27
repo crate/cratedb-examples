@@ -79,6 +79,13 @@ and [CrateDB].
   augmented generation (RAG) pipeline. To implement RAG we use the Python client driver for 
   CrateDB and vector store support in LangChain.
 
+  - `cratedb_rag_customer_support_vertexai.ipynb` [![Open on GitHub](https://img.shields.io/badge/Open%20on-GitHub-lightgray?logo=GitHub)](cratedb_rag_customer_support_vertexai.ipynb)[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/crate/cratedb-examples/blob/main/topic/machine-learning/llm-langchain/cratedb_rag_customer_support_vertexai.ipynb)
+    
+  This example illustrates the RAG implementation of a customer support scenario. 
+  It is based on the previous notebook, and it illustrates how to use Vertex AI platform
+  on Google Cloud for RAG pipeline.
+  
+
 
 ## Install
 
