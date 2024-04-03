@@ -1,4 +1,4 @@
-FROM python:3.10
+FROM python:3.10-bullseye
 # Python version is important, because as of today (2024-03-04) kafka-flink is only
 # supported for python<=3.10
 
