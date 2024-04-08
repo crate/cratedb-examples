@@ -34,6 +34,11 @@ def test_notebook(request, notebook: str):
 
     Not using `NBRegressionFixture`, because it would manually need to be configured.
     """
+
+    # Skip Vertex AI examples, because authenticating is more complicated.
+    if "vertexai" in str(notebook):
+        raise pytest.skip("Skipping Vertex AI due to lack of authentication")
+
     pytest_notebook(request=request, filepath=notebook)
 
 
