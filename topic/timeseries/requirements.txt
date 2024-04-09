@@ -1,5 +1,6 @@
 crate[sqlalchemy]==0.35.2
 cratedb-toolkit[datasets]==0.0.8
+dask>=2024.4.1  # Python 3.11.9 breaks previous Dask
 joblib<1.4  # Joblib 1.4.0 is not compatible with PyCaret 3.3.0
 refinitiv-data<1.7
 pandas<2
