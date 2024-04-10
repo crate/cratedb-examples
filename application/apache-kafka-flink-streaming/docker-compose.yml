@@ -1,5 +1,6 @@
 services:
   weather_producer:
+    restart: unless-stopped
     env_file:
       - .env
     build:
@@ -13,6 +14,7 @@ services:
   flink_job:
     env_file:
       - .env
+    restart: unless-stopped
     build:
       context: .
       dockerfile: flink_job.Dockerfile

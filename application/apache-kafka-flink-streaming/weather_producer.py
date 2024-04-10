@@ -25,6 +25,7 @@ RUN_EVERY_SECONDS = int(os.getenv('WEATHER_PRODUCER_FETCH_EVERY_SECONDS', 5))
 BOOTSTRAP_SERVER = os.getenv('WEATHER_PRODUCER_KAFKA_BOOTSTRAP_SERVER')
 KAFKA_TOPIC = os.getenv('WEATHER_PRODUCER_KAFKA_TOPIC')
 
+
 producer = KafkaProducer(bootstrap_servers=BOOTSTRAP_SERVER,
                          value_serializer=lambda m: json.dumps(m).encode('utf-8'))
 
@@ -36,12 +37,14 @@ def mocked_fetch_weather_data():
 
 
 def fetch_weather_data(api_uri) -> dict:
+    logger.debug('Fetching weather data')
     response = requests.get(api_uri)
     response.raise_for_status()
     return response.json()
 
 
 def send_to_kafka(topic: str, producer) -> None:
+    logger.debug('Sending weather data to Kafka')
     data = fetch_weather_data(WEATHER_URI)
     producer.send(topic, value=data)
     producer.flush()
