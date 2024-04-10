@@ -2,7 +2,7 @@ crate[sqlalchemy]==0.35.2
 cratedb-toolkit[datasets]==0.0.8
 joblib<1.4  # Joblib 1.4.0 is not compatible with PyCaret 3.3.0
 refinitiv-data<1.7
-pandas<2
+pandas<3
 pycaret>=3.0,<3.4
 pydantic<2
 sqlalchemy<2
