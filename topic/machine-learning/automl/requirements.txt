@@ -1,6 +1,7 @@
 # Real.
 crate[sqlalchemy]
 dask>=2024.4.1  # Python 3.11.9 breaks previous Dask
+distributed>=2024.4.1  # Python 3.11.9 breaks previous Dask
 joblib<1.4  # Joblib 1.4.0 is not compatible with PyCaret 3.3.0
 mlflow-cratedb==2.11.3
 plotly<5.21
