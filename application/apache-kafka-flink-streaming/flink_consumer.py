@@ -18,9 +18,12 @@ JARS_PATH = Path(__file__).parent / 'jars'
 
 KAFKA_BOOTSTRAP_SERVER = os.getenv('FLINK_CONSUMER_BOOTSTRAP_SERVER')
 KAFKA_TOPIC = os.getenv('FLINK_CONSUMER_KAFKA_TOPIC')
-CRATEDB_PG_URI = os.getenv('FLINK_CONSUMER_CRATEDB_PG_URI', 'jdbc:postgresql://localhost:5432/crate')
+CRATEDB_PG_URI = os.getenv('FLINK_CONSUMER_CRATEDB_PG_URI',
+                           'jdbc:postgresql://localhost:5432/crate')
 CRATEDB_USER = os.getenv('FLINK_CONSUMER_CRATEDB_USER')
 CRATEDB_PASSWORD = os.getenv('FLINK_CONSUMER_CRATEDB_PASSWORD')
+
+logging.debug(f'Starting Flink consumer for Kafka topic: {KAFKA_TOPIC} in {KAFKA_BOOTSTRAP_SERVER}')
 
 
 def kafka_to_cratedb(env: StreamExecutionEnvironment):
