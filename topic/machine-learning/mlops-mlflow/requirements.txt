@@ -1,6 +1,6 @@
 # Real.
 dask>=2024.4.1  # Python 3.11.9 breaks previous Dask
-mlflow-cratedb==2.10.2
+mlflow-cratedb==2.11.3
 pydantic<3
 salesforce-merlion>=2,<3
 
