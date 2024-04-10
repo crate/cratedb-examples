@@ -2,7 +2,7 @@
 crate[sqlalchemy]
 dask>=2024.4.1  # Python 3.11.9 breaks previous Dask
 joblib<1.4  # Joblib 1.4.0 is not compatible with PyCaret 3.3.0
-mlflow-cratedb==2.10.2
+mlflow-cratedb==2.11.3
 plotly<5.21
 pycaret[models,parallel,test]==3.3.0
 pydantic<2
