@@ -107,6 +107,15 @@ If it still fails, check if any other container/service is down,
 it could be a symptom of a wrong api token or an unresponsive Kafka server, for example.
 
 ## Data and schema
+Create the table in CrateDB:
+
+```sql
+CREATE TABLE IF NOT EXISTS "doc"."weather_flink_sink" (
+  "inserted_at" TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+  "location" OBJECT(DYNAMIC),
+  "current" OBJECT(DYNAMIC)
+)
+```
 
 See `example.json` for the schema, as you can see in `weather_producer` and `flink_consumer`, schema
 manipulation is minimum,
