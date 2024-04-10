@@ -7,7 +7,8 @@ services:
       dockerfile: Dockerfile
     command: python -m weather_producer
     depends_on:
-      - kafka
+      zookeeper:
+        condition: service_healthy
 
   flink_job:
     env_file:
@@ -21,7 +22,8 @@ services:
         - FLINK_KAFKA_JAR_URL=https://repo1.maven.org/maven2/org/apache/flink/flink-sql-connector-kafka/${FLINK_KAFKA_JAR_URL_VERSION}/flink-sql-connector-kafka-${FLINK_KAFKA_JAR_URL_VERSION}.jar
     command: python -m flink_consumer
     depends_on:
-      - kafka
+      zookeeper:
+        condition: service_healthy
 
   crate:
     image: crate:latest
@@ -36,6 +38,10 @@ services:
   zookeeper:
     image: confluentinc/cp-zookeeper:6.2.0
     hostname: zookeeper
+    healthcheck:
+      test: echo srvr | nc zookeeper 2181 || exit 1
+      retries: 20
+      interval: 10s
     ports:
       - "2181:2181"
     environment:
@@ -44,15 +50,19 @@ services:
 
   kafka:
     image: confluentinc/cp-server:6.2.0
+    restart: always
     depends_on:
-      - zookeeper
+      zookeeper:
+        condition: service_healthy
     ports:
       - "9092:9092"
-      - "9101:9101"
+      - "29092:29092"
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: "1"
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: "1"
+      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: "1"
