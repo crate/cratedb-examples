@@ -26,9 +26,9 @@ Synopsis::
 """
 import os
 
+import requests
 from cratedb_toolkit.util import DatabaseAdapter
 from langchain.document_loaders import CrateDBLoader
-from pueblo.io import to_io
 from pprint import pprint
 
 
@@ -46,8 +46,8 @@ def import_mlb_teams_2012():
     """
     cratedb = DatabaseAdapter(dburi=CONNECTION_STRING)
     url = "https://github.com/crate-workbench/langchain/raw/cratedb/docs/docs/integrations/document_loaders/example_data/mlb_teams_2012.sql"
-    with to_io(url) as fp:
-        cratedb.run_sql(fp.read())
+    sql = requests.get(url).text
+    cratedb.run_sql(sql)
     cratedb.refresh_table("mlb_teams_2012")
 
 
