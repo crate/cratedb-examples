@@ -27,6 +27,7 @@ def reset_database_tables():
 
     reset_tables = [
         "cities",
+        "machine_data",
         "weather_data",
         "weather_stations",
     ]
