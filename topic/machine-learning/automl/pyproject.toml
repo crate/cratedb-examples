@@ -19,38 +19,6 @@ xfail_strict = true
 markers = [
 ]
 
-# pytest-notebook settings
-nb_test_files = true
-nb_coverage = false
-# Default cell timeout is 120 seconds. For heavy computing, it needs to be increased.
-nb_exec_timeout = 240
-nb_diff_replace = [
-    # Compensate output of `crash`.
-    '"/cells/*/outputs/*/text" "\(\d.\d+ sec\)" "(0.000 sec)"',
-    # Compensate other outputs.
-    '"/cells/*/outputs/*/data/text/html" "T_....." "T_na"',
-    '"/cells/*/outputs/*/data/text/plain" "IPython.core.display.HTML object" "pandas.io.formats.style.Styler"',
-    '"/cells/*/outputs/*/data/text/plain" "pandas.io.formats.style.Styler at 0x.+" "pandas.io.formats.style.Styler"',
-    '"/cells/*/outputs/*/data/application/vnd.jupyter.widget-view+json" "model_id: .+" "model_id: na"',
-    '"/cells/*/outputs/*/data/text/html" "\>\d+\.\d+\<\/td\>" "0.3333"',
-]
-# `vector_search.py` does not include any output(s).
-nb_diff_ignore = [
-    "/metadata/language_info",
-    "/metadata/widgets",
-    "/cells/*/execution_count",
-    "/cells/*/outputs/*/execution_count",
-    "/cells/*/outputs/*/metadata/nbreg",
-    # Ignore images.
-    "/cells/*/outputs/*/data/image/png",
-    # Ignore all cell output. It is too tedious to compare and maintain.
-    # The validation hereby extends exclusively to the _execution_ of notebook cells,
-    # able to catch syntax errors, module import flaws, and runtime errors.
-    # However, the validation will not catch any regressions on actual cell output,
-    # or whether any output is produced at all.
-    "/cells/*/outputs",
-]
-
 [tool.coverage.run]
 branch = false
 

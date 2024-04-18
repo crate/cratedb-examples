@@ -5,8 +5,11 @@ from pathlib import Path
 import pytest
 
 from cratedb_toolkit.io.sql import DatabaseAdapter
-from pueblo.testing.folder import str_list, list_notebooks, list_python_files
-from pueblo.testing.snippet import pytest_module_function, pytest_notebook
+from nbclient.exceptions import CellExecutionError
+from pueblo.testing.folder import str_list, list_python_files
+from pueblo.testing.notebook import generate_tests
+from pueblo.testing.snippet import pytest_module_function
+from testbook import testbook
 
 HERE = Path(__file__).parent
 
@@ -26,20 +29,32 @@ def reset_database(cratedb):
     time.sleep(0.01)
 
 
-@pytest.mark.parametrize("notebook", str_list(list_notebooks(HERE)))
-def test_notebook(request, notebook: str):
+def pytest_generate_tests(metafunc):
     """
-    From individual Jupyter Notebook file, collect cells as pytest
-    test cases, and run them.
-
-    Not using `NBRegressionFixture`, because it would manually need to be configured.
+    Generate pytest test case per Jupyter Notebook.
     """
+    here = Path(__file__).parent
+    generate_tests(metafunc, path=here)
 
+
+def test_notebook(notebook):
+    """
+    Execute Jupyter Notebook, one test case per .ipynb file.
+    """
     # Skip Vertex AI examples, because authenticating is more complicated.
-    if "vertexai" in str(notebook):
-        raise pytest.skip("Skipping Vertex AI due to lack of authentication")
+    if "vertexai" in notebook.name:
+        raise pytest.skip(f"Skipping Vertex AI due to lack of authentication: {notebook.name}")
 
-    pytest_notebook(request=request, filepath=notebook)
+    with testbook(notebook) as tb:
+        try:
+            tb.execute()
+
+        # Skip notebook if `pytest.exit()` is invoked, usually by
+        # `getenvpass()`, when authentication token is not given.
+        except CellExecutionError as ex:
+            msg = str(ex)
+            if "[skip-notebook]" in msg:
+                raise pytest.skip(msg)
 
 
 @pytest.mark.parametrize("pyfile", str_list(list_python_files(HERE)))

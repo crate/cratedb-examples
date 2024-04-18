@@ -19,24 +19,6 @@ xfail_strict = true
 markers = [
 ]
 
-# pytest-notebook settings
-nb_test_files = true
-nb_coverage = true
-nb_diff_replace = [
-    # Compensate output of `crash`.
-    '"/cells/*/outputs/*/text" "\(\d.\d+ sec\)" "(0.000 sec)"',
-]
-# `vector_search.py` does not include any output(s).
-nb_diff_ignore = [
-    "/metadata/language_info",
-    "/cells/*/execution_count",
-    "/cells/*/outputs/*/execution_count",
-
-    # Do not compare details of cell outputs.
-    # It is impossible to maintain efficiently.
-    "/cells/*/outputs",
-]
-
 [tool.coverage.run]
 branch = false
 
