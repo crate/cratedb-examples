@@ -22,8 +22,10 @@ from pathlib import Path
 
 import pytest
 from cratedb_toolkit.util import DatabaseAdapter
-from pueblo.testing.folder import str_list, list_notebooks, list_python_files
-from pueblo.testing.snippet import pytest_notebook, pytest_module_function
+from pueblo.testing.folder import str_list, list_python_files
+from pueblo.testing.notebook import generate_tests
+from pueblo.testing.snippet import pytest_module_function
+from testbook import testbook
 
 HERE = Path(__file__).parent
 
@@ -57,15 +59,20 @@ def churn_dataset(cratedb):
     cratedb.run_sql("REFRESH TABLE pycaret_churn;")
 
 
-@pytest.mark.parametrize("notebook", str_list(list_notebooks(HERE)))
-def test_notebook(request, notebook: str):
+def pytest_generate_tests(metafunc):
     """
-    From individual Jupyter Notebook file, collect cells as pytest
-    test cases, and run them.
+    Generate pytest test case per Jupyter Notebook.
+    """
+    here = Path(__file__).parent
+    generate_tests(metafunc, path=here)
 
-    Not using `NBRegressionFixture`, because it would manually need to be configured.
+
+def test_notebook(notebook):
     """
-    pytest_notebook(request=request, filepath=notebook)
+    Execute Jupyter Notebook, one test case per .ipynb file.
+    """
+    with testbook(notebook) as tb:
+        tb.execute()
 
 
 @pytest.mark.parametrize("pyfile", str_list(list_python_files(HERE)))
