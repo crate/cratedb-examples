@@ -51,6 +51,9 @@ repository, e.g. about machine learning, to see predictions and AutoML in action
 
   To ensure the dashboard functions correctly, it's necessary to configure the data source within Grafana. This dashboard uses the `grafana-postgresql-datasource` or another configured default data source. In the data source settings, fill in the necessary parameters to connect to your CrateDB instance. This includes setting up the database name (`database=doc`), user, password, and host.
 
+- `dask-weather-data-import.ipynb` [![Open on GitHub](https://img.shields.io/badge/Open%20on-GitHub-lightgray?logo=GitHub)](dask-weather-data-import.ipynb) [![Open in Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/crate/cratedb-examples/blob/main/topic/timeseries/dask-weather-data-import.ipynb)
+
+  This notebook walks you through an example to download and insert a larger data set via pandas and dask into CrateDB utilizing dask's capabilities to parallelize operations.
 
 ## Software Tests
 
