@@ -1,4 +1,4 @@
-crash==0.31.4
+crash==0.31.5
 pytest<9
 pytest-crate==0.3.0
 setuptools  # Temporary, until next cr8 release.
