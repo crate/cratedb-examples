@@ -1,7 +1,7 @@
 # Real.
 crate[sqlalchemy]
 mlflow-cratedb==2.11.3
-plotly<5.22
+plotly<5.23
 pycaret[models,parallel,test]==3.3.2
 pydantic<2
 python-dotenv<2
