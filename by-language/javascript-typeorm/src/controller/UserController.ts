@@ -11,7 +11,7 @@ export class UserController {
     }
 
     async one(request: Request, response: Response, next: NextFunction) {
-        const id = parseInt(request.params.id)
+        const id = request.params.id
 
 
         const user = await this.userRepository.findOne({
@@ -37,7 +37,7 @@ export class UserController {
     }
 
     async remove(request: Request, response: Response, next: NextFunction) {
-        const id = parseInt(request.params.id)
+        const id = request.params.id
 
         let userToRemove = await this.userRepository.findOneBy({ id })
 
