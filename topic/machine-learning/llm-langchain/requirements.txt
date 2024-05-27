@@ -13,7 +13,7 @@ python-dotenv<2
 requests<3
 requests-cache<2
 sqlalchemy==2.*
-unstructured<0.12
+unstructured<0.15
 google-cloud-aiplatform
 langchain-google-vertexai
 
