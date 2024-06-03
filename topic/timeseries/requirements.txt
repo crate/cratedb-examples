@@ -1,5 +1,5 @@
 crate[sqlalchemy]==0.35.2
-cratedb-toolkit[datasets]==0.0.10
+cratedb-toolkit[datasets]==0.0.12
 refinitiv-data<1.7
 pandas<2
 pycaret==3.3.2
