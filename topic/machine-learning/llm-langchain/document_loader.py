@@ -27,8 +27,10 @@ Synopsis::
 import os
 
 import requests
+import sqlalchemy as sa
 from cratedb_toolkit.util import DatabaseAdapter
-from langchain.document_loaders import CrateDBLoader
+from langchain_community.document_loaders import CrateDBLoader
+from langchain_community.utilities.sql_database import SQLDatabase
 from pprint import pprint
 
 
@@ -55,10 +57,12 @@ def main():
     # Load data.
     import_mlb_teams_2012()
 
+    db = SQLDatabase(engine=sa.create_engine(CONNECTION_STRING))
+
     # Query data.
     loader = CrateDBLoader(
         query="SELECT * FROM mlb_teams_2012 LIMIT 3;",
-        url=CONNECTION_STRING,
+        db=db,
         include_rownum_into_metadata=True,
     )
     docs = loader.load()

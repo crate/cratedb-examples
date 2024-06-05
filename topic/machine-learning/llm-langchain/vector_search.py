@@ -19,10 +19,10 @@ Synopsis::
     # Run program.
     python vector_search.py
 """  # noqa: E501
-from langchain.document_loaders import UnstructuredURLLoader
-from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.text_splitter import CharacterTextSplitter
-from langchain.vectorstores import CrateDBVectorSearch
+from langchain_community.document_loaders import UnstructuredURLLoader
+from langchain_community.vectorstores import CrateDBVectorSearch
+from langchain_text_splitters import CharacterTextSplitter
+from langchain_openai import OpenAIEmbeddings
 
 
 def main():
