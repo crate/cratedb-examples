@@ -5,7 +5,10 @@ cratedb-toolkit==0.0.12
 
 # langchain[cratedb,openai]==0.0.354
 # langchain-community==0.0.8
-langchain-openai==0.0.6
+
+google-cloud-aiplatform<2
+langchain-google-vertexai<2
+langchain-openai<0.2
 pueblo[cli,nlp]>=0.0.7
 pydantic>=1,<3
 pypdf<5
@@ -13,9 +16,7 @@ python-dotenv<2
 requests<3
 requests-cache<2
 sqlalchemy==2.*
-unstructured<0.12
-google-cloud-aiplatform
-langchain-google-vertexai
+unstructured<0.15
 
 # Development.
 # cratedb-toolkit @ git+https://github.com/crate-workbench/cratedb-toolkit.git@main
