@@ -16,7 +16,7 @@ Synopsis::
 import os
 from pprint import pprint
 
-from langchain.memory.chat_message_histories import CrateDBChatMessageHistory
+from langchain_community.chat_message_histories import CrateDBChatMessageHistory
 
 
 CONNECTION_STRING = os.environ.get(
