@@ -8,7 +8,7 @@ Setup
 =====
 ::
 
-    pip install --upgrade click colorlog 'crate[sqlalchemy]' pandas
+    pip install --upgrade click colorlog pandas sqlalchemy-cratedb
 
 Synopsis
 ========
@@ -21,11 +21,10 @@ import logging
 
 import click
 import dask.dataframe as dd
-import sqlalchemy as sa
-from crate.client.sqlalchemy.support import insert_bulk
 from dask.diagnostics import ProgressBar
 from pueblo.testing.pandas import makeTimeDataFrame
 from pueblo.util.logging import setup_logging
+from sqlalchemy_cratedb.support import insert_bulk
 
 logger = logging.getLogger(__name__)
 

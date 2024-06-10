@@ -14,7 +14,7 @@ Setup
 =====
 ::
 
-    pip install --upgrade 'crate[sqlalchemy]'
+    pip install --upgrade sqlalchemy-cratedb
 
 
 Synopsis

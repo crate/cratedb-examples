@@ -1,2 +1,2 @@
 apache-superset
-crate[sqlalchemy]==0.35.2
+sqlalchemy-cratedb>=0.36.1,<1
