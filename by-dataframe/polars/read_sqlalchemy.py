@@ -1,9 +1,7 @@
 """
-Install the dependencies with:
+Install the dependencies to run this program::
 
-```
-$ pip install crate[sqlalchemy] polars
-```
+    pip install --upgrade polars sqlalchemy-cratedb
 """
 
 import polars

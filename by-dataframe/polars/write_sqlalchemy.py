@@ -1,9 +1,9 @@
 """
 Import a parquet file into CrateDB using polars + sqlalchemy
 
-Install the dependencies with to run this script:
+Install the dependencies to run this program::
 
-`$ pip install polars pandas crate[sqlalchemy] pyarrow`
+    pip install --upgrade pandas polars pyarrow sqlalchemy-cratedb
 """
 
 import polars

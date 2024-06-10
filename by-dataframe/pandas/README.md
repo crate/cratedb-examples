@@ -22,7 +22,7 @@ database table in a single operation. It can be used like this:
 # DBURI = "crate://crate@localhost:4200/"
 
 import sqlalchemy as sa
-from crate.client.sqlalchemy.support import insert_bulk
+from sqlalchemy_cratedb.support import insert_bulk
 
 engine = sa.create_engine(DBURI, **kwargs)
 df.to_sql(
