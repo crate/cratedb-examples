@@ -19,112 +19,112 @@ updates:
   - directory: "/"
     package-ecosystem: "pip"
     schedule:
-      interval: "weekly"
+      interval: "daily"
 
   # Languages.
 
   - directory: "/by-dataframe/dask"
     package-ecosystem: "pip"
     schedule:
-      interval: "weekly"
+      interval: "daily"
 
   - directory: "/by-dataframe/pandas"
     package-ecosystem: "pip"
     schedule:
-      interval: "weekly"
+      interval: "daily"
 
   - directory: "/by-language/csharp-npgsql"
     package-ecosystem: "nuget"
     schedule:
-      interval: "weekly"
+      interval: "daily"
 
   - directory: "/by-language/java-jdbc"
     package-ecosystem: "maven"
     schedule:
-      interval: "weekly"
+      interval: "daily"
 
   - directory: "/by-language/java-jooq"
     package-ecosystem: "gradle"
     schedule:
-      interval: "weekly"
+      interval: "daily"
 
   - directory: "/by-language/java-qa"
     package-ecosystem: "maven"
     schedule:
-      interval: "weekly"
+      interval: "daily"
 
   - directory: "/by-language/php-amphp"
     package-ecosystem: "composer"
     schedule:
-      interval: "weekly"
+      interval: "daily"
 
   - directory: "/by-language/php-pdo"
     package-ecosystem: "composer"
     schedule:
-      interval: "weekly"
+      interval: "daily"
 
   - directory: "/by-language/python-sqlalchemy"
     package-ecosystem: "pip"
     schedule:
-      interval: "weekly"
+      interval: "daily"
 
   - directory: "/by-language/ruby"
     package-ecosystem: "bundler"
     schedule:
-      interval: "weekly"
+      interval: "daily"
 
   # Frameworks.
 
   - directory: "/framework/apache-superset"
     package-ecosystem: "pip"
     schedule:
-      interval: "weekly"
+      interval: "daily"
 
   # Topics.
 
   - directory: "/topic/machine-learning/automl"
     package-ecosystem: "pip"
     schedule:
-      interval: "weekly"
+      interval: "daily"
 
   - directory: "/topic/machine-learning/llm-langchain"
     package-ecosystem: "pip"
     schedule:
-      interval: "weekly"
+      interval: "daily"
 
   - directory: "/topic/machine-learning/mlops-mlflow"
     package-ecosystem: "pip"
     schedule:
-      interval: "weekly"
+      interval: "daily"
 
   - directory: "/topic/timeseries"
     package-ecosystem: "pip"
     schedule:
-      interval: "weekly"
+      interval: "daily"
 
   # Testing.
 
   - directory: "/testing/testcontainers/java"
     package-ecosystem: "gradle"
     schedule:
-      interval: "weekly"
+      interval: "daily"
 
   - directory: "/testing/native/python-pytest"
     package-ecosystem: "pip"
     schedule:
-      interval: "weekly"
+      interval: "daily"
 
   - directory: "/testing/native/python-unittest"
     package-ecosystem: "pip"
     schedule:
-      interval: "weekly"
+      interval: "daily"
 
   - directory: "/testing/testcontainers/python-pytest"
     package-ecosystem: "pip"
     schedule:
-      interval: "weekly"
+      interval: "daily"
 
   - directory: "/testing/testcontainers/python-unittest"
     package-ecosystem: "pip"
     schedule:
-      interval: "weekly"
+      interval: "daily"
