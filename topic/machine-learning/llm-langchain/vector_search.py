@@ -6,7 +6,7 @@ As input data, the example uses the canonical `state_of_the_union.txt`.
 Synopsis::
 
     # Install prerequisites.
-    pip install -r requirements.txt
+    pip install -U -r requirements.txt
 
     # Start database.
     docker run --rm -it --publish=4200:4200 crate/crate:nightly

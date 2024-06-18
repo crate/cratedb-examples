@@ -4,7 +4,7 @@ Demonstrate conversational memory with CrateDB.
 Synopsis::
 
     # Install prerequisites.
-    pip install -r requirements.txt
+    pip install -U -r requirements.txt
 
     # Start database.
     docker run --rm -it --publish=4200:4200 crate/crate:nightly
