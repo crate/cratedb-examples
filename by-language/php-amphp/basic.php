@@ -27,8 +27,8 @@ error_reporting(E_ALL);
 
 require __DIR__ . '/vendor/autoload.php';
 
-use Amp\Loop;
 use Amp\Postgres;
+use Revolt\EventLoop;
 
 
 function print_header($title)
@@ -58,7 +58,7 @@ class DatabaseWorkload
 
         print_header("Display all settings using `SHOW ALL`");
 
-        Loop::run(function () {
+        EventLoop::run(function () {
 
             // Connect to CrateDB's PostgreSQL interface.
             $config = Postgres\ConnectionConfig::fromString($this->dsn);
@@ -85,7 +85,7 @@ class DatabaseWorkload
 
         print_header("Run DDL, DML, and DQL statements subsequently");
 
-        Loop::run(function () {
+        EventLoop::run(function () {
 
             // Connect to CrateDB's PostgreSQL interface.
             $config = Postgres\ConnectionConfig::fromString($this->dsn);
@@ -132,7 +132,7 @@ class DatabaseWorkload
 
         print_header("Using a connection pool");
 
-        Loop::run(function () {
+        EventLoop::run(function () {
 
             // Connect to CrateDB's PostgreSQL interface, using a connection pool.
             $config = Postgres\ConnectionConfig::fromString($this->dsn);
