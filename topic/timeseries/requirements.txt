@@ -3,5 +3,5 @@ refinitiv-data<1.7
 pandas==1.*
 pycaret==3.3.2
 pydantic<2
-sqlalchemy==1.*
+sqlalchemy==2.*
 sqlalchemy-cratedb==0.37.0
