@@ -91,7 +91,7 @@ Alternatively, you can validate all resources in this folder by invoking a
 test runner program on the top-level folder of this repository. This is the
 same code path the CI jobs are taking.
 ```shell
-pip install -r requirements.txt
+pip install -U -r requirements.txt
 ngr test topic/machine-learning/automl
 ```
 

@@ -62,7 +62,7 @@ folder, also satisfying all the dependencies.
 ```console
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt -r requirements-dev.txt
+pip install -U -r requirements.txt -r requirements-dev.txt
 ```
 
 Then, invoke the software tests, roughly validating all notebooks within
