@@ -1,5 +1,5 @@
 click<9
 colorlog<7
 pandas==2.2.*
-pueblo>=0.0.7
-sqlalchemy-cratedb>=0.36.1,<1
+pueblo==0.0.9
+sqlalchemy-cratedb==0.37.0
