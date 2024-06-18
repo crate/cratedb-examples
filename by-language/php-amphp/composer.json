@@ -14,7 +14,7 @@
     "keywords": ["database", "cratedb", "sql"],
     "require": {
         "php":     "^7.1|^8.0|^8.1|^8.2",
-        "amphp/postgres": "^1.4"
+        "amphp/postgres": "^2.0"
     },
     "scripts": {
         "test": "php basic.php 'host=localhost port=5432 user=crate'"
