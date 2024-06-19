@@ -19,8 +19,5 @@ def test_notebook(notebook):
             raise pytest.skip(f"Kaggle dataset can not be tested "
                               f"without authentication: {notebook.name}")
 
-    if notebook.name in ["exploratory_data_analysis.ipynb", "time-series-decomposition.ipynb"]:
-        raise pytest.skip(f"Notebook is not compatible with pandas 2.x: {notebook.name}")
-
     with testbook(notebook) as tb:
         tb.execute()
