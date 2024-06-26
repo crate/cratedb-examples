@@ -9,12 +9,23 @@ Configure database connection address and credentials within
 make sure to use valid credentials matching your environment.
 
 ## Usage
+
+### CrateDB on localhost
 To start a CrateDB instance on your machine, invoke:
 ```shell
 docker run -it --rm \
   --publish=4200:4200 --publish=5432:5432 \
   --env=CRATE_HEAP_SIZE=2g \
   crate:latest -Cdiscovery.type=single-node
+```
+
+### CrateDB Cloud
+Please have a look at the [secrets-cratedb-cloud.toml](.streamlit/secrets-cratedb-cloud.toml)
+file as a blueprint. It includes a configuration snippet that is essential for
+connecting to CrateDB Cloud.
+```toml
+[connections.cratedb.create_engine_kwargs.connect_args]
+ssl = true
 ```
 
 Install dependencies.
@@ -36,7 +47,7 @@ Enjoy the list of mountains.
 
 ## Development
 
-Acquire `cratedb-example` repository, and set up sandbox:
+Acquire `cratedb-example` repository, and set up development sandbox.
 ```shell
 git clone https://github.com/crate/cratedb-examples
 cd cratedb-examples
@@ -45,7 +56,7 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Then, invoke the integration test cases:
+Invoke the integration test cases.
 ```shell
 ngr test framework/streamlit
 ```
