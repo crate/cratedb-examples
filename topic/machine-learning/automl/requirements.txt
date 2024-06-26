@@ -6,7 +6,7 @@ pycaret[models,parallel,test]==3.3.2
 pydantic<2
 python-dotenv<2
 sqlalchemy==2.*
-sqlalchemy-cratedb==0.37.0
+sqlalchemy-cratedb==0.38.0
 
 # Development.
 # mlflow-cratedb @ git+https://github.com/crate-workbench/mlflow-cratedb.git@main
