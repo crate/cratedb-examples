@@ -32,3 +32,20 @@ streamlit run basic_sys_summits.py
 Enjoy the list of mountains.
 
 ![image](https://github.com/crate/cratedb-examples/assets/453543/7dc54224-06d0-4cfb-a5e0-b216c03bf3d2)
+
+
+## Development
+
+Acquire `cratedb-example` repository, and set up sandbox:
+```shell
+git clone https://github.com/crate/cratedb-examples
+cd cratedb-examples
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+Then, invoke the integration test cases:
+```shell
+ngr test framework/streamlit
+```

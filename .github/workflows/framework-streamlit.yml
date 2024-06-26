@@ -1,0 +1,74 @@
+name: Streamlit
+
+on:
+  pull_request:
+    branches: ~
+    paths:
+    - '.github/workflows/framework-streamlit.yml'
+    - 'framework/streamlit/**'
+    - '/requirements.txt'
+  push:
+    branches: [ main ]
+    paths:
+    - '.github/workflows/framework-streamlit.yml'
+    - 'framework/streamlit/**'
+    - '/requirements.txt'
+
+  # Allow job to be triggered manually.
+  workflow_dispatch:
+
+  # Run job each night after CrateDB nightly has been published.
+  schedule:
+    - cron: '0 3 * * *'
+
+# Cancel in-progress jobs when pushing to the same branch.
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  test:
+    name: "
+     Python: ${{ matrix.python-version }}
+     CrateDB: ${{ matrix.cratedb-version }}
+     on ${{ matrix.os }}"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ 'ubuntu-latest' ]
+        python-version: [ '3.10', '3.11', '3.12' ]
+        cratedb-version: [ 'nightly' ]
+
+    services:
+      cratedb:
+        image: crate/crate:${{ matrix.cratedb-version }}
+        ports:
+          - 4200:4200
+          - 5432:5432
+        env:
+          CRATE_HEAP_SIZE: 4g
+
+    steps:
+
+      - name: Acquire sources
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          architecture: x64
+          cache: 'pip'
+          cache-dependency-path: |
+            requirements.txt
+            framework/streamlit/requirements.txt
+            framework/streamlit/requirements-dev.txt
+
+      - name: Install utilities
+        run: |
+          pip install -r requirements.txt
+
+      - name: Validate framework/streamlit
+        run: |
+          ngr test --accept-no-venv framework/streamlit
