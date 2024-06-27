@@ -1,0 +1,2 @@
+gradio-client==1.0.*
+pytest<9
