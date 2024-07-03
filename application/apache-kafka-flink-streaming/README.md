@@ -40,7 +40,7 @@ into your local `.env` file.
 ### Run the docker compose (and build the images)
 
 ```
-docker compose up -d --build
+docker-compose up -d --build
 ```
 
 ### Stop the docker compose
@@ -111,7 +111,7 @@ Create the table in CrateDB:
 
 ```sql
 CREATE TABLE IF NOT EXISTS "doc"."weather_flink_sink" (
-  "inserted_at" TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+  "inserted_at" TIMESTAMP WITH TIME ZONE NOT NULL GENERATED ALWAYS AS now(),
   "location" OBJECT(DYNAMIC),
   "current" OBJECT(DYNAMIC)
 )
