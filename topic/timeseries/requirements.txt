@@ -1,6 +1,6 @@
 cratedb-toolkit[datasets]>=0.0.30
 refinitiv-data<1.7
-pandas==2.0.*
+pandas==2.2.*
 pycaret==3.3.2
 pydantic<3
 sqlalchemy==2.0.*
