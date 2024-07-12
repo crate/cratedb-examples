@@ -12,7 +12,7 @@ It assumes there is a CrateDB instance running on localhost accepting connection
         jsonpayload     OBJECT
     );
 
-In environments with very high volumes of data you may want to consider replacing scalaj.http with async calls with `akka.http` or `AsyncHttpClient`.
+When applicable for your environment, you may want to consider to replace `scalaj.http` with async calls like `akka.http` or `AsyncHttpClient`.
 You may also want to explore if connection pooling is useful in your environment, and if JDBC calls leveraging the PostgreSQL wire protocol are more convenient for your particular case.
 
 You can run this example with [sbt]:
