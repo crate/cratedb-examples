@@ -1,6 +1,6 @@
-# Scala example loading data from Spark to CrateDB via http
+# Load Spark data frame into CrateDB using Scala and HTTP
 
-This example aims to demonstrate how a Spark data frame can be loaded into CrateDB using the CrateDB http endpoint.
+This example aims to demonstrate how a Spark data frame can be loaded into CrateDB using the CrateDB HTTP endpoint.
 
 It assumes there is a CrateDB instance running on localhost accepting connections with the default `crate` superuser, and it relies on the following table being created:
 
@@ -12,8 +12,15 @@ It assumes there is a CrateDB instance running on localhost accepting connection
         jsonpayload     OBJECT
     );
 
-In environments with very high volumes of data you may want to consider replacing scalaj.http with async calls with `akka.http` or `AsyncHttpClient`.
-You may also want to explore if connection pooling is useful in your environment, and if JDBC calls leveraging the PostgreSQL wire protocol are more convenient for your particular case.
+When applicable for your environment, you may want to consider to replace `scalaj.http` with async calls like `akka.http` or `AsyncHttpClient`.
+You may also want to explore if connection pooling is useful in your environment,
+and if JDBC calls leveraging the PostgreSQL wire protocol are more convenient
+for your particular case.
+
+Saying this, note that this example uses [CrateDB's HTTP bulk operations] to ingest
+data, which is currently the most efficient way to do it.
+
+[CrateDB's HTTP bulk operations]: https://cratedb.com/docs/guide/performance/inserts/bulk.html
 
 You can run this example with [sbt]:
 
