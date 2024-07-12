@@ -1,4 +1,4 @@
-# Scala example loading data from Spark to CrateDB via http
+# Load Spark data frame into CrateDB using Scala and HTTP
 
 This example aims to demonstrate how a Spark data frame can be loaded into CrateDB using the CrateDB http endpoint.
 
