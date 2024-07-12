@@ -13,7 +13,14 @@ It assumes there is a CrateDB instance running on localhost accepting connection
     );
 
 When applicable for your environment, you may want to consider to replace `scalaj.http` with async calls like `akka.http` or `AsyncHttpClient`.
-You may also want to explore if connection pooling is useful in your environment, and if JDBC calls leveraging the PostgreSQL wire protocol are more convenient for your particular case.
+You may also want to explore if connection pooling is useful in your environment,
+and if JDBC calls leveraging the PostgreSQL wire protocol are more convenient
+for your particular case.
+
+Saying this, note that this example uses [CrateDB's HTTP bulk operations] to ingest
+data, which is currently the most efficient way to do it.
+
+[CrateDB's HTTP bulk operations]: https://cratedb.com/docs/guide/performance/inserts/bulk.html
 
 You can run this example with [sbt]:
 
