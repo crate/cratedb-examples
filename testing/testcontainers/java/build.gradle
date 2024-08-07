@@ -22,7 +22,7 @@ repositories {
 dependencies {
     implementation 'org.postgresql:postgresql:42.7.3'
     implementation 'io.crate:crate-jdbc:2.7.0'
-    implementation 'org.slf4j:slf4j-api:2.0.13'
+    implementation 'org.slf4j:slf4j-api:2.0.14'
     implementation 'org.slf4j:slf4j-simple:2.0.14'
     testImplementation 'junit:junit:4.13.2'
     testImplementation "org.assertj:assertj-core:3.26.3"
