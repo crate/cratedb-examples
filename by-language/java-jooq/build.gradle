@@ -25,7 +25,7 @@ dependencies {
     implementation 'org.jooq:jooq-meta:3.19.11'
     implementation 'org.postgresql:postgresql:42.7.4'
     implementation 'org.slf4j:slf4j-api:2.0.15'
-    implementation 'org.slf4j:slf4j-simple:2.0.15'
+    implementation 'org.slf4j:slf4j-simple:2.0.16'
     testImplementation 'junit:junit:4.13.2'
 }
 
