@@ -1,2 +1,2 @@
 gradio==4.*
-sqlalchemy-cratedb==0.38.0
+sqlalchemy-cratedb==0.39.0
