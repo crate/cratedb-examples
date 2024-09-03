@@ -1,5 +1,5 @@
 # Real.
-cratedb-toolkit[io]==0.0.20
+cratedb-toolkit[io]==0.0.21
 pueblo[notebook,testing]==0.0.9
 
 # Development.
