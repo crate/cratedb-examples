@@ -1,7 +1,7 @@
 # Real.
 crash
 google-cloud-aiplatform<2
-langchain-google-vertexai<2
+langchain-google-vertexai<3
 langchain-openai<0.2
 langchain-text-splitters<0.4
 pueblo[cli,nlp]==0.0.9
