@@ -73,12 +73,19 @@ updates:
     schedule:
       interval: "daily"
 
-  # Frameworks.
+  # Applications.
 
-  - directory: "/framework/apache-superset"
+  - directory: "/application/apache-superset"
     package-ecosystem: "pip"
     schedule:
       interval: "daily"
+
+  - directory: "/application/cratedb-toolkit"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "daily"
+
+  # Frameworks.
 
   - directory: "/framework/gradio"
     package-ecosystem: "pip"

@@ -1,0 +1,4 @@
+gitpython<4
+platformdirs<5
+pytest<9
+requests<3
