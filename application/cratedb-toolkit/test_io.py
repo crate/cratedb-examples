@@ -109,7 +109,7 @@ def test_ctk_load_table_mongodb_json(drop_testing_tables):
     table_cardinalities = {
         "books": 431,
         "city_inspections": 81047,
-        "companies": 2537,
+        "companies": 18801,
         "countries-big": 21640,
         "countries-small": 248,
         "covers": 5071,
@@ -138,7 +138,8 @@ def test_ctk_load_table_mongodb_json(drop_testing_tables):
     command = f"""
 ctk load table \
     "file+bson://{datasets_path}/*.json?batch-size=2500" \
-    --cratedb-sqlalchemy-url="crate://localhost:4200/from-mongodb"
+    --cratedb-sqlalchemy-url="crate://localhost:4200/from-mongodb" \
+    --transformation=zyp-mongodb-json-files.yaml
 """
     print(f"Invoking CTK: {command}", file=sys.stderr)
     subprocess.check_call(shlex.split(command))
