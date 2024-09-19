@@ -1,0 +1,48 @@
+# A Zyp Transformation [1] file to support importing datasets
+# from mongodb-json-files [2] into CrateDB [3].
+#
+# [1] https://commons-codec.readthedocs.io/zyp/
+# [2] https://github.com/ozlerhakan/mongodb-json-files
+# [3] https://cratedb.com/docs/guide/feature/
+
+# Because CrateDB can not store nested arrays into OBJECT(DYNAMIC) columns,
+# this file defines a corresponding transformation to work around the problem.
+#
+# The workaround applied here is to just exclude/omit relevant `available_sizes`
+# elements completely. Converting them right can be implemented on behalf of a
+# later iteration.
+#
+# "image": {
+#   "available_sizes": [
+#     [
+#       [
+#         150,
+#         99
+#       ],
+#       "assets/images/resized/0001/3896/13896v3-max-150x150.jpg"
+#     ],
+#   ]
+#
+# A possible representation could be:
+#
+# "image": {
+#   "available_sizes": [
+#     {
+#       "path": "assets/images/resized/0001/3896/13896v3-max-150x150.jpg",
+#       "size": {"width": 150, "height": 99},
+#     }
+#   ]
+# }
+---
+
+meta:
+  type: zyp-project
+  version: 1
+collections:
+- address:
+    container: datasets
+    name: companies
+  pre:
+    rules:
+    - expression: .[] |= del(.image.available_sizes, .screenshots[].available_sizes)
+      type: jq
