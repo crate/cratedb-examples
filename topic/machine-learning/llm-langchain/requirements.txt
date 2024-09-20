@@ -1,6 +1,6 @@
 # Real.
 crash
-cratedb-toolkit==0.0.15
+cratedb-toolkit==0.0.24
 google-cloud-aiplatform<2
 langchain-google-vertexai<2
 langchain-openai<0.2
