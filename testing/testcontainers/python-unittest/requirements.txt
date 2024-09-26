@@ -1,2 +1,2 @@
 crash==0.31.5
-cratedb-toolkit[testing]==0.0.25
+cratedb-toolkit[testing]==0.0.26
