@@ -3,4 +3,4 @@ colorlog<7
 crate>=1.0.0.dev2
 pandas==2.2.*
 pueblo>=0.0.10
-sqlalchemy-cratedb>=0.40.0
+sqlalchemy-cratedb[all] @ git+https://github.com/crate-workbench/sqlalchemy-cratedb@amo/postgresql-async
