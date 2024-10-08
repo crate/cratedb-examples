@@ -12,7 +12,7 @@ python-dotenv<2
 requests<3
 requests-cache<2
 sqlalchemy==2.*
-sqlalchemy-cratedb==0.38.0
+sqlalchemy-cratedb==0.40.0
 unstructured<0.15
 
 # Development.
