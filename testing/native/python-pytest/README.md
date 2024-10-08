@@ -1,12 +1,12 @@
-# Using "pytest-crate" with CrateDB and pytest
+# Using "pytest-cratedb" with CrateDB and pytest
 
-[pytest-crate] wraps the CrateDB test layer from [cr8], and provides
+[pytest-cratedb] wraps the CrateDB test layer from [cr8], and provides
 a few pytest fixtures to conveniently make it accessible for test
 cases based on pytest.
 
 This folder contains example test cases demonstrating how to use the
 `crate`, `crate_cursor`, and `crate_cursor` pytest fixtures exported
-by [pytest-crate].
+by [pytest-cratedb].
 
 > [!TIP]
 > Please also refer to the header sections of each of the provided
@@ -40,4 +40,4 @@ pytest
 
 
 [cr8]: https://pypi.org/project/cr8/
-[pytest-crate]: https://pypi.org/project/pytest-crate/
+[pytest-cratedb]: https://pypi.org/project/pytest-cratedb/
