@@ -1,3 +1,3 @@
 crash==0.31.5
-cratedb-toolkit[testing]==0.0.27
+cratedb-toolkit[testing]==0.0.28
 pytest<9
