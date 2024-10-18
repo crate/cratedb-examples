@@ -1,11 +1,11 @@
 """
-Using "pytest-crate" with CrateDB and pytest
+Using "pytest-cratedb" with CrateDB and pytest
 
 Build test harnesses around CrateDB using the `crate` pytest fixture
-exported by `pytest-crate`. In turn, this is using `CrateNode`
+exported by `pytest-cratedb`. In turn, this is using `CrateNode`
 exported by `cr8`.
 
-https://pypi.org/project/pytest-crate/
+https://pypi.org/project/pytest-cratedb/
 https://pypi.org/project/cr8/
 """
 import subprocess
