@@ -12,7 +12,7 @@ requests<3
 requests-cache<2
 sqlalchemy==2.*
 sqlalchemy-cratedb==0.40.0
-unstructured<0.15
+unstructured<0.17
 
 # Development.
 # cratedb-toolkit @ git+https://github.com/crate-workbench/cratedb-toolkit.git@main
