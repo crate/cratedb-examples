@@ -9,6 +9,7 @@ __pycache__
 coverage.xml
 mlruns/
 archive/
+venv/
 logs.log
 *.tmp
 *.swp
