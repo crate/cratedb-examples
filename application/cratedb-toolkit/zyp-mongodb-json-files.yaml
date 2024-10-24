@@ -38,11 +38,79 @@
 meta:
   type: zyp-project
   version: 1
+
 collections:
-- address:
-    container: datasets
-    name: companies
-  pre:
-    rules:
-    - expression: .[] |= del(.image.available_sizes, .screenshots[].available_sizes)
-      type: jq
+
+  - address:
+      container: datasets
+      name: books
+    pre:
+      rules:
+        - expression: .[] |= (._id |= tostring)
+          type: jq
+
+  - address:
+      container: datasets
+      name: city_inspections
+    pre:
+      rules:
+        - expression: |
+            .[] |= (
+              select(true)
+              | .address.number |= numbers
+              | .address.zip |= numbers
+              | .certificate_number |= tostring
+            )
+          type: jq
+
+  - address:
+      container: datasets
+      name: companies
+    pre:
+      rules:
+        - expression: |
+                .[] |= 
+                  del(
+                    .image.available_sizes,
+                    .screenshots[].available_sizes,
+                    .created_at
+                  )
+          type: jq
+
+  - address:
+      container: datasets
+      name: countries-big
+    pre:
+      rules:
+        - expression: .[] |= (.ISO |= tostring)
+          type: jq
+
+  - address:
+      container: datasets
+      name: products
+    pre:
+      rules:
+        - expression: |
+            .[] |= (
+              select(true)
+              | if (.for) then .for |= to_array end
+              | if (.type) then .type |= to_array end
+              | if (.limits.data.n) then .limits.data.n |= tostring end
+              | if (.limits.sms.n) then .limits.sms.n |= tostring end
+              | if (.limits.voice.n) then .limits.voice.n |= tostring end
+              | del(.additional_tarriffs)
+            )
+          type: jq
+
+  - address:
+      container: datasets
+      name: restaurant
+    pre:
+      rules:
+        - expression: |
+            .[] |= (
+              select(true)
+              | .rating |= tostring
+              | .type |= to_array
+            )
+          type: jq

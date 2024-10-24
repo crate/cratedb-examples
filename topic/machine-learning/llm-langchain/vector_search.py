@@ -24,8 +24,13 @@ from langchain_community.vectorstores import CrateDBVectorSearch
 from langchain_text_splitters import CharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
 
+import nltk
+
 
 def main():
+
+    nltk.download("averaged_perceptron_tagger_eng")
+    nltk.download("punkt_tab")
 
     # Load the document, split it into chunks, embed each chunk,
     # and load it into the vector store.

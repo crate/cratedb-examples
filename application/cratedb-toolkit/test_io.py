@@ -134,6 +134,12 @@ def test_ctk_load_table_mongodb_json(drop_testing_tables):
             progress=GitProgressPrinter(),
         )
 
+        # The `countries-big.json` file contains bogus characters.
+        countries_big_path = datasets_path / "countries-big.json"
+        payload = countries_big_path.read_text()
+        payload = payload.replace("\ufeff", "")
+        countries_big_path.write_text(payload)
+
     # Invoke data transfer.
     command = f"""
 ctk load table \
