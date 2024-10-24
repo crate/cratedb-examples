@@ -24,7 +24,7 @@ need for a plugin.
 Please note that Npgsql 5 is not supported starting with CrateDB 4.8.4, you
 will need Npgsql 6 or newer.
 
-.NET 7 and 8 are supported, .NET 3.1, 4.6, 5.0 and 6.0 may still work.
+.NET 7, 8, and 9 are supported, .NET 3.1, 4.6, 5.0, and 6.0 may still work.
 
 
 *****
