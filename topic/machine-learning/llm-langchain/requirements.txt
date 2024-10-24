@@ -1,11 +1,11 @@
 # Real.
 crash
 google-cloud-aiplatform<2
-langchain-google-vertexai<2
-langchain-openai<0.2
+langchain-google-vertexai<3
+langchain-openai<0.3
 langchain-text-splitters<0.4
 pueblo[cli,nlp]==0.0.9
-pydantic>=1,<3
+pydantic>=2,<3
 pypdf<5
 python-dotenv<2
 requests<3
