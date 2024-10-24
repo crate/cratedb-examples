@@ -1,0 +1,7 @@
+databases:
+  tutorial:
+    db_host: cratedb
+    db_port: 5432
+    db_name: tutorial
+    db_user: crate
+    db_password: crate
