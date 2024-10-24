@@ -10,3 +10,6 @@ coverage.xml
 mlruns/
 archive/
 logs.log
+*.tmp
+*.swp
+*.bak
