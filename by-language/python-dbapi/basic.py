@@ -21,7 +21,7 @@ Synopsis
     docker run --rm -it --publish=4200:4200 crate
 
     # Invoke example program.
-    time python insert_basic.py
+    time python basic.py
 
 """
 import sys
@@ -31,11 +31,28 @@ from pprint import pprint
 import crate.client
 
 
-def insert_basic():
+CRATEDB_URL = "http://localhost:4200"
+
+
+def select_summits():
+    """
+    Demonstrate a basic conversation with CrateDB, querying its built-in `sys.summits` table.
+    """
+    connection = crate.client.connect(CRATEDB_URL)
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM sys.summits LIMIT 3;")
+    results = cursor.fetchall()
+    cursor.close()
+    connection.close()
+
+    pprint(results)
+
+
+def insert_datetime():
     """
     Demonstrate a basic conversation with CrateDB, inserting a record including a timestamp.
     """
-    connection = crate.client.connect("http://localhost:4200")
+    connection = crate.client.connect(CRATEDB_URL)
     cursor = connection.cursor()
     cursor.execute("DROP TABLE IF EXISTS testdrive.foo;")
     cursor.execute("CREATE TABLE testdrive.foo (id INT, timestamp TIMESTAMP WITH TIME ZONE);")
@@ -52,4 +69,5 @@ def insert_basic():
 
 
 if __name__ == "__main__":
-    insert_basic()
+    select_summits()
+    insert_datetime()
