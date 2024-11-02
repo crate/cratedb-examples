@@ -114,6 +114,11 @@ updates:
     schedule:
       interval: "daily"
 
+  - directory: "/topic/machine-learning/llama-index"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "daily"
+
   - directory: "/topic/machine-learning/mlops-mlflow"
     package-ecosystem: "pip"
     schedule:
