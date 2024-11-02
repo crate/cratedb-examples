@@ -4,15 +4,24 @@ This folder contains the codebase for [this tutorial](https://community.cratedb.
 
 This has been tested using:
 
-* Python 3.12.2
-* macOS Sequoia 15.0.1
-* CrateDB 5.8.3 running in CrateDB Cloud on AWS Europe (Ireland)
+* Python 3.12
+* macOS
+* CrateDB 5.8 and higher
 
 ## Database Setup
 
 You will need a CrateDB Cloud database: sign up [here](https://console.cratedb.cloud/) and use the free "CRFREE" tier.
 
 Make a note of the hostname, username and password for your database.  You'll need those when configuring the environment file later.
+
+If you don't use CrateDB Cloud, you can also provide an instance for testing
+purposes like this:
+
+```shell
+docker run --rm -it --name=cratedb \
+  --publish=4200:4200 --publish=5432:5432 \
+  --env=CRATE_HEAP_SIZE=2g crate:latest -Cdiscovery.type=single-node
+```
 
 Create a table in CrateDB:
 
@@ -61,7 +70,7 @@ pip install -r requirements.txt
 
 ## Configure your Environment
 
-To configure your environment, copy the provided [`env.example`](./env.example) file to a new file named `.env`, then open it with a text editor.
+To configure your environment, copy the provided [`env.azure`](./env.azure) or [`env.standalone`](./env.standalone) file to a new file named `.env`, then open it with a text editor.
 
 Set the values in the file as follows:
 
@@ -72,7 +81,7 @@ OPENAI_AZURE_ENDPOINT=https://<Your endpoint from Azure e.g. myendpoint.openai.a
 OPENAI_AZURE_API_VERSION=2024-08-01-preview
 LLM_INSTANCE=<The name of your Chat GPT 3.5 turbo instance from Azure>
 EMBEDDING_MODEL_INSTANCE=<The name of your Text Embedding Ada 2.0 instance from Azure>
-CRATEDB_URL="crate://<Database user name>:<Database password>@<Database host>:4200/?ssl=true"
+CRATEDB_SQLALCHEMY_URL="crate://<Database user name>:<Database password>@<Database host>:4200/?ssl=true"
 CRATEDB_TABLE_NAME=time_series_data
 ```
 
