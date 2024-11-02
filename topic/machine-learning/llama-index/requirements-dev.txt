@@ -1,0 +1,3 @@
+cratedb-toolkit
+pueblo[testing]==0.0.9
+sqlparse
