@@ -67,7 +67,7 @@ def main():
 
     # Configure database connection and query engine.
     print("Connecting to CrateDB")
-    engine_crate = sa.create_engine(os.getenv("CRATEDB_SQLALCHEMY_URL"))
+    engine_crate = sa.create_engine(os.getenv("CRATEDB_SQLALCHEMY_URL"), echo=True)
     engine_crate.connect()
 
     print("Creating LlamaIndex QueryEngine")
