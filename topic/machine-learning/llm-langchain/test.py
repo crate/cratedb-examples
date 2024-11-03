@@ -55,6 +55,7 @@ def test_notebook(notebook):
             msg = str(ex)
             if "[skip-notebook]" in msg:
                 raise pytest.skip(msg)
+            raise
 
 
 @pytest.mark.parametrize("pyfile", str_list(list_python_files(HERE)))
