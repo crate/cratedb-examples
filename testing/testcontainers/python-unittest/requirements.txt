@@ -1,2 +1,3 @@
 crash>=0.31.5
+crate>=1.0.0.dev2
 cratedb-toolkit[testing]>=0.0.29

@@ -11,7 +11,7 @@ certifi==2024.8.30
 cffi==1.17.1
 charset-normalizer==3.4.0
 click==8.1.7
-crate==1.0.0.dev1
+crate>=1.0.0.dev2
 cryptography==43.0.3
 dataclasses-json==0.6.7
 Deprecated==1.2.14

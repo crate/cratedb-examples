@@ -1,5 +1,6 @@
 click<9
 colorlog<7
+crate>=1.0.0.dev2
 dask[dataframe]>=2024.4.1   # Python 3.11.9 breaks previous Dask
 distributed>=2024.4.1       # Python 3.11.9 breaks previous Dask
 pueblo>=0.0.10

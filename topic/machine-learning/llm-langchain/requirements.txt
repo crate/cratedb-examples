@@ -1,5 +1,6 @@
 # Real.
 crash
+crate>=1.0.0.dev2
 google-cloud-aiplatform<2
 langchain-google-vertexai<3
 langchain-openai<0.3
