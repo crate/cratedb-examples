@@ -1,1 +1,1 @@
-cratedb-toolkit[influxdb,mongodb]==0.0.29
+cratedb-toolkit[influxdb,mongodb]>=0.0.29
