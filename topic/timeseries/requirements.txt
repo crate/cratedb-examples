@@ -1,3 +1,4 @@
+crate>=1.0.0.dev2
 cratedb-toolkit[datasets]>=0.0.29
 refinitiv-data<1.7
 pandas==2.0.*

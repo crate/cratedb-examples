@@ -1,4 +1,5 @@
 # Real.
+crate>=1.0.0.dev2
 mlflow-cratedb==2.14.1
 plotly<5.25
 pycaret[models,parallel,test]==3.3.2
