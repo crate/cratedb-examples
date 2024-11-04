@@ -1,4 +1,3 @@
-crash==0.31.5
+crash>=0.31.5
 pytest<9
-pytest-cratedb==0.4.0
-setuptools  # Temporary, until next cr8 release.
+pytest-cratedb>=0.4.0

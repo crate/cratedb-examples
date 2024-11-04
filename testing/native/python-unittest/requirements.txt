@@ -1,3 +1,2 @@
-cr8==0.27.2
-crash==0.31.5
-setuptools  # Temporary, until next cr8 release.
+cr8>=0.27.2
+crash>=0.31.5
