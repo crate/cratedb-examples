@@ -21,8 +21,8 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.jooq:jooq:3.19.14'
-    implementation 'org.jooq:jooq-meta:3.19.14'
+    implementation 'org.jooq:jooq:3.19.15'
+    implementation 'org.jooq:jooq-meta:3.19.15'
     implementation 'org.postgresql:postgresql:42.7.4'
     implementation 'org.slf4j:slf4j-api:2.0.16'
     implementation 'org.slf4j:slf4j-simple:2.0.16'
