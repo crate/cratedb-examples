@@ -1,0 +1,14 @@
+cratedb_localhost:
+  outputs:
+    dev:
+      type: postgres
+      host: localhost
+      user: crate
+      pass: crate
+      port: 5432
+      dbname: crate
+      schema: doc
+      search_path: doc
+      threads: 1
+  catalog: crate
+  target: dev
