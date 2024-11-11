@@ -1,0 +1,2 @@
+dbt-postgres<1.7
+snowplow-tracker<0.13
