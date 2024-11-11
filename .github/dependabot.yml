@@ -92,6 +92,11 @@ updates:
 
   # Frameworks.
 
+  - directory: "/framework/dbt/basic"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "daily"
+
   - directory: "/framework/gradio"
     package-ecosystem: "pip"
     schedule:
