@@ -1,2 +1,2 @@
 dbt-postgres<1.7
-snowplow-tracker<0.13
+snowplow-tracker<1.1
