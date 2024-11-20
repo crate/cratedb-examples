@@ -1,3 +1,8 @@
+# Disable telemetry using Scarf.
+# https://about.scarf.sh/
+# https://github.com/apache/superset/issues/25639
+ENABLE_TELEMETRY = False
+
 # Superset specific config
 ROW_LIMIT = 5000
 
