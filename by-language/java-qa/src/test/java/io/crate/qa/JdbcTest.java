@@ -23,12 +23,12 @@ public class JdbcTest {
         .fromURL("https://cdn.crate.io/downloads/releases/nightly/crate-latest.tar.gz")
         .settings(Map.of("psql.port", 55433))
         .build();
-    public static final String URL = "jdbc:postgresql://localhost:55433/doc?user=crate";
+    public static final String URL = "jdbc:postgresql://localhost:55433/testdrive?user=crate";
 
     @After
     public void after() throws Exception {
         try (var conn = DriverManager.getConnection(URL)) {
-            var tables = conn.getMetaData().getTables(null, "doc", null, null);
+            var tables = conn.getMetaData().getTables(null, "testdrive", null, null);
             while (tables.next()) {
                 String schema = tables.getString(2);
                 String table = tables.getString(3);

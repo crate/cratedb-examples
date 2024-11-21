@@ -28,7 +28,7 @@ public class JdbcMetaDataTest {
         .fromURL("https://cdn.crate.io/downloads/releases/nightly/crate-latest.tar.gz")
         .settings(Map.of("psql.port", 55432))
         .build();
-    public static final String URL = "jdbc:postgresql://localhost:55432/doc?user=crate";
+    public static final String URL = "jdbc:postgresql://localhost:55432/testdrive?user=crate";
 
     @Test
     public void test_allProceduresAreCallable() throws Exception {
