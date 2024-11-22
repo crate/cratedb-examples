@@ -15,6 +15,12 @@ ROW_LIMIT = 5000
 # to start and you will see an error in the logs accordingly.
 SECRET_KEY = 'VcKzHS4g2h+dP33tCbqOghtKaU37wvFECMhVqrfccaoI/17qh/j3+VDV'
 
+# Configure JWT subsystem to not enforce that the sub claim is a string.
+# https://github.com/crate/cratedb-examples/issues/741
+# https://github.com/apache/superset/issues/30995
+# https://github.com/dpgaspar/Flask-AppBuilder/issues/2287
+JWT_VERIFY_SUB = False
+
 # The SQLAlchemy connection string to your database backend
 # This connection defines the path to the database that stores your
 # superset metadata (slices, connections, tables, dashboards, ...).
