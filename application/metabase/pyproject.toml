@@ -1,0 +1,14 @@
+[tool.pytest.ini_options]
+minversion = "2.0"
+addopts = """
+  -rfEXs -p pytester --strict-markers --verbosity=3
+  --capture=no
+  --docker-compose-no-build
+  --use-running-containers
+  """
+log_level = "DEBUG"
+log_cli_level = "DEBUG"
+testpaths = ["*.py"]
+xfail_strict = true
+markers = [
+]

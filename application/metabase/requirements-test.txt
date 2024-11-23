@@ -1,0 +1,2 @@
+pytest<9
+pytest-docker-compose-v2<0.2
