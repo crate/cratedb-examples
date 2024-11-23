@@ -1,6 +1,41 @@
 # CrateDB <-> Metabase backlog
 
 
+## metabase/metabase:v0.48.4
+Starts tripping with a hard error.
+```
+metabase  | 2024-11-23 16:34:33,843 WARN sync.util :: Error in sync step Sync postgres Database 2 'cratedb-testdrive'
+metabase  | org.postgresql.util.PSQLException: ERROR: line 5:20: no viable alternative at input 'select\n   NULL as role,\n   t.schemaname as schema,\n   t.objectname as table'
+```
+```sql
+with table_privileges as (
+ select
+   NULL as role,
+   t.schemaname as schema,
+   t.objectname as table,
+   pg_catalog.has_table_privilege(current_user, '"' || t.schemaname || '"' || '.' || '"' || t.objectname || '"',  'UPDATE') as update,
+   pg_catalog.has_table_privilege(current_user, '"' || t.schemaname || '"' || '.' || '"' || t.objectname || '"',  'SELECT') as select,
+   pg_catalog.has_table_privilege(current_user, '"' || t.schemaname || '"' || '.' || '"' || t.objectname || '"',  'INSERT') as insert,
+   pg_catalog.has_table_privilege(current_user, '"' || t.schemaname || '"' || '.' || '"' || t.objectname || '"',  'DELETE') as delete
+ from (
+   select schemaname, tablename as objectname from pg_catalog.pg_tables
+   union
+   select schemaname, viewname as objectname from pg_catalog.pg_views
+   union
+   select schemaname, matviewname as objectname from pg_catalog.pg_matviews
+ ) t
+ where t.schemaname !~ '^pg_'
+   and t.schemaname <> 'information_schema'
+   and pg_catalog.has_schema_privilege(current_user, t.schemaname, 'USAGE')
+)
+select t.*
+from table_privileges t;
+```
+```
+SQLParseException[line 5:17: no viable alternative at input 'select\nNULL as role,\nt.schemaname as schema,\nt.objectname as table']
+```
+
+
 ## metabase/metabase:v0.45.4.3
 
 ```
