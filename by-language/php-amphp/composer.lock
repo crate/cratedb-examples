@@ -156,16 +156,16 @@
         },
         {
             "name": "amphp/postgres",
-            "version": "v2.1.0",
+            "version": "v2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/amphp/postgres.git",
-                "reference": "48ee97e6899427f68d66c6319b778507e5f1abea"
+                "reference": "c62555c6497782399a166f15c8da8e64be456141"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/amphp/postgres/zipball/48ee97e6899427f68d66c6319b778507e5f1abea",
-                "reference": "48ee97e6899427f68d66c6319b778507e5f1abea",
+                "url": "https://api.github.com/repos/amphp/postgres/zipball/c62555c6497782399a166f15c8da8e64be456141",
+                "reference": "c62555c6497782399a166f15c8da8e64be456141",
                 "shasum": ""
             },
             "require": {
@@ -216,7 +216,7 @@
             ],
             "support": {
                 "issues": "https://github.com/amphp/postgres/issues",
-                "source": "https://github.com/amphp/postgres/tree/v2.1.0"
+                "source": "https://github.com/amphp/postgres/tree/v2.1.1"
             },
             "funding": [
                 {
@@ -224,20 +224,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-10-11T02:41:50+00:00"
+            "time": "2024-11-21T04:45:08+00:00"
         },
         {
             "name": "amphp/sql",
-            "version": "v2.0.0",
+            "version": "v2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/amphp/sql.git",
-                "reference": "4cf80b477b5d40089ba2c162373a604e06d57d7b"
+                "reference": "2a7962dba23bf017bbdd3c3a0af0eb212481627b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/amphp/sql/zipball/4cf80b477b5d40089ba2c162373a604e06d57d7b",
-                "reference": "4cf80b477b5d40089ba2c162373a604e06d57d7b",
+                "url": "https://api.github.com/repos/amphp/sql/zipball/2a7962dba23bf017bbdd3c3a0af0eb212481627b",
+                "reference": "2a7962dba23bf017bbdd3c3a0af0eb212481627b",
                 "shasum": ""
             },
             "require": {
@@ -270,7 +270,7 @@
             ],
             "support": {
                 "issues": "https://github.com/amphp/sql/issues",
-                "source": "https://github.com/amphp/sql/tree/v2.0.0"
+                "source": "https://github.com/amphp/sql/tree/v2.0.1"
             },
             "funding": [
                 {
@@ -278,20 +278,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-03-10T15:03:32+00:00"
+            "time": "2024-11-23T16:16:34+00:00"
         },
         {
             "name": "amphp/sql-common",
-            "version": "v2.0.1",
+            "version": "v2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/amphp/sql-common.git",
-                "reference": "85449d526f33e1b24a17ae0f1b729536707b165b"
+                "reference": "069183d57f17f85c60842ea3a8ce5ff52dba5399"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/amphp/sql-common/zipball/85449d526f33e1b24a17ae0f1b729536707b165b",
-                "reference": "85449d526f33e1b24a17ae0f1b729536707b165b",
+                "url": "https://api.github.com/repos/amphp/sql-common/zipball/069183d57f17f85c60842ea3a8ce5ff52dba5399",
+                "reference": "069183d57f17f85c60842ea3a8ce5ff52dba5399",
                 "shasum": ""
             },
             "require": {
@@ -326,7 +326,7 @@
             ],
             "support": {
                 "issues": "https://github.com/amphp/sql-common/issues",
-                "source": "https://github.com/amphp/sql-common/tree/v2.0.1"
+                "source": "https://github.com/amphp/sql-common/tree/v2.0.2"
             },
             "funding": [
                 {
@@ -334,7 +334,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-10-02T20:30:11+00:00"
+            "time": "2024-10-27T16:04:14+00:00"
         },
         {
             "name": "revolt/event-loop",
