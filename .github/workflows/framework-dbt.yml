@@ -67,4 +67,5 @@ jobs:
         run: |
           cd framework/dbt/basic
           pip install -r requirements.txt
-          dbt build
+          dbt run --debug
+          dbt test --debug
