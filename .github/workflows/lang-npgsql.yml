@@ -85,7 +85,7 @@ jobs:
 
       # https://github.com/codecov/codecov-action
       - name: Upload coverage results to Codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           flags: by-language-csharp-npgsql
           fail_ci_if_error: false
