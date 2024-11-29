@@ -1,2 +1,2 @@
-gradio==4.*
+gradio==5.*
 sqlalchemy-cratedb>=0.40.0
