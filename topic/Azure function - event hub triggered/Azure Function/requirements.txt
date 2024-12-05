@@ -4,4 +4,4 @@
 
 azure-functions
 azure-eventhub
-crate==0.35.2
+crate==1.0.1
