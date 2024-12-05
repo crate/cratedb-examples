@@ -45,7 +45,7 @@ def test_ui():
     Log in to Superset UI, navigate to SQL Lab, and exercise a query.
     """
     uri_home = "http://127.0.0.1:8088/"
-    uri_sqllab = "http://127.0.0.1:8088/superset/sqllab"
+    uri_sqllab = "http://127.0.0.1:8088/sqllab"
 
     with sync_playwright() as p:
         browser = p.firefox.launch(

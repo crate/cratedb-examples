@@ -1,5 +1,3 @@
-version: "3.8"
-
 networks:
   scada-demo:
     name: scada-demo

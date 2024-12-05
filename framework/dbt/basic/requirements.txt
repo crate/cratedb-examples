@@ -1,2 +1,1 @@
-dbt-postgres<1.7
-snowplow-tracker<0.13
+dbt-cratedb2>=0.0.1
