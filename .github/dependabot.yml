@@ -90,6 +90,16 @@ updates:
     schedule:
       interval: "daily"
 
+  - directory: "/application/metabase"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "daily"
+
+  - directory: "/application/metabase"
+    package-ecosystem: "docker"
+    schedule:
+      interval: "daily"
+
   # Frameworks.
 
   - directory: "/framework/dbt/basic"

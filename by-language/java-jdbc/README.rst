@@ -41,18 +41,18 @@ Invoke example program::
 Connect to instance on ``localhost``::
 
     # Use vanilla PostgreSQL JDBC driver.
-    mvn exec:java -Dexec.args="--dburl 'jdbc:postgresql://localhost:5432/'"
+    mvn exec:java -Dexec.args="--dburl 'jdbc:postgresql://localhost:5432/testdrive'"
 
     # Use CrateDB legacy JDBC driver.
-    mvn exec:java -Dexec.args="--dburl 'jdbc:crate://localhost:5432/'"
+    mvn exec:java -Dexec.args="--dburl 'jdbc:crate://localhost:5432/testdrive'"
 
 Connect to CrateDB Cloud::
 
     # Use vanilla PostgreSQL JDBC driver.
-    mvn exec:java -Dexec.args="--dburl 'jdbc:postgresql://example.aks1.westeurope.azure.cratedb.net:5432/' --user 'admin' --password '<PASSWORD>'"
+    mvn exec:java -Dexec.args="--dburl 'jdbc:postgresql://example.aks1.westeurope.azure.cratedb.net:5432/testdrive' --user 'admin' --password '<PASSWORD>'"
 
     # Use CrateDB legacy JDBC driver.
-    mvn exec:java -Dexec.args="--dburl 'jdbc:crate://example.aks1.westeurope.azure.cratedb.net:5432/' --user 'admin' --password '<PASSWORD>'"
+    mvn exec:java -Dexec.args="--dburl 'jdbc:crate://example.aks1.westeurope.azure.cratedb.net:5432/testdrive' --user 'admin' --password '<PASSWORD>'"
 
 In order to clean the build artefacts, invoke::
 
