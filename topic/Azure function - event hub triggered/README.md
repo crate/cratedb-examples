@@ -26,6 +26,7 @@ You have to configure the Environment variables in the Function app to ensure it
     "DB_PASSWORD": "<PASSWORD>"
 }
   ```
+You can find the connection string in Event Hub namespace > Shared access policies.
 
 ### Create Tables
 You should create the following tables in your CrateDB instance:
@@ -71,8 +72,11 @@ CREATE TABLE IF NOT EXISTS "enrichment"."reading" (
   ```
 </details>
 
+### Deploy the Azure Function in VS Code
+In the Azure plugin tab in the VS Code, there is an option to deploy the function to your already-created Function App. You can find the details [here](https://learn.microsoft.com/en-us/azure/azure-functions/functions-develop-vs-code?tabs=node-v4%2Cpython-v2%2Cisolated-process%2Cquick-create&pivots=programming-language-python#republish-project-files). This should send your function to your Azure account.
+
 ### Manually trigger event in Event Hub
-The Event hub is not connected to any source, so to test your function after it is configured, you can go to Event Hubs Instance > Data Explorer > Send events. In the payload text box, write the following json:
+The Event hub is not connected to any source, so to test your function after it is configured and deployed, you go to Event Hubs Instance > Data Explorer > Send events. In the payload text box, write the following json:
 ```json
 {
     "country":"PT",
