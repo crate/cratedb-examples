@@ -112,6 +112,11 @@ updates:
     schedule:
       interval: "daily"
 
+  - directory: "/framework/records"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "daily"
+
   - directory: "/framework/streamlit"
     package-ecosystem: "pip"
     schedule:
