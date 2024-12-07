@@ -1,0 +1,3 @@
+records<0.7
+sqlalchemy-cratedb<0.41
+tablib[ods]
