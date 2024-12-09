@@ -49,7 +49,7 @@ RECORD_IN = dict(
     bit="01010101",
     bool=True,
     text="foobar",
-    character="foo",
+    char="foo",
     timestamp_tz="1970-01-02T00:00:00+01:00",
     timestamp_notz="1970-01-02T00:00:00",
     ip="127.0.0.1",
@@ -64,7 +64,7 @@ RECORD_IN = dict(
 RECORD_OUT = deepcopy(RECORD_IN)
 RECORD_OUT.update(
     dict(
-        character="foo  ",
+        char="foo  ",
         timestamp_tz=dt.datetime(1970, 1, 1, 23, 0, tzinfo=dt.timezone.utc),
         timestamp_notz=dt.datetime(1970, 1, 2, 0, 0, tzinfo=dt.timezone.utc),
         # FIXME: `geopoint` comes back as string, `'(85.42999997735023,66.22999997343868)'`
@@ -106,7 +106,7 @@ def sqlframe_ddl_dml_dql():
         bit BIT(8),
         bool BOOLEAN,
         text TEXT,
-        character CHARACTER(5),
+        char CHAR(5),
         timestamp_tz TIMESTAMP WITH TIME ZONE,
         timestamp_notz TIMESTAMP WITHOUT TIME ZONE,
         ip IP,
