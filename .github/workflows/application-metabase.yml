@@ -1,17 +1,17 @@
-name: Python DB API
+name: Metabase
 
 on:
   pull_request:
     branches: ~
     paths:
-    - '.github/workflows/lang-python-dbapi.yml'
-    - 'by-language/python-dbapi/**'
+    - '.github/workflows/application-metabase.yml'
+    - 'application/metabase/**'
     - '/requirements.txt'
   push:
     branches: [ main ]
     paths:
-    - '.github/workflows/lang-python-dbapi.yml'
-    - 'by-language/python-dbapi/**'
+    - '.github/workflows/application-metabase.yml'
+    - 'application/metabase/**'
     - '/requirements.txt'
 
   # Allow job to be triggered manually.
@@ -27,54 +27,45 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
+
   test:
     name: "
-     Python: ${{ matrix.python-version }}
      CrateDB: ${{ matrix.cratedb-version }}
      on ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
+
     strategy:
       fail-fast: false
       matrix:
-        os: [ 'ubuntu-latest' ]
-        python-version: [
-          '3.7',
-          '3.13',
-        ]
-        cratedb-version: [ 'nightly' ]
-
-    services:
-      cratedb:
-        image: crate/crate:${{ matrix.cratedb-version }}
-        ports:
-          - 4200:4200
-          - 5432:5432
-        env:
-          CRATE_HEAP_SIZE: 4g
+        os: [ "ubuntu-22.04" ]
+        python-version: [ "3.12" ]
+        cratedb-version: [ "nightly" ]
 
     steps:
 
       - name: Acquire sources
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
           architecture: x64
-          cache: 'pip'
+          cache: "pip"
           cache-dependency-path: |
+            pyproject.toml
             requirements.txt
-            by-language/python-dbapi/requirements.txt
-            by-language/python-dbapi/requirements-dev.txt
+            requirements-test.txt
 
       - name: Install uv
         uses: astral-sh/setup-uv@v4
+        with:
+          version: "latest"
 
       - name: Install utilities
         run: |
           uv pip install --system -r requirements.txt
 
-      - name: Validate by-language/python-dbapi
+      - name: Validate application/metabase
         run: |
-          ngr test --accept-no-venv by-language/python-dbapi
+          ngr test --accept-no-venv application/metabase

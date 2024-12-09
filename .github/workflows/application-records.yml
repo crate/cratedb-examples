@@ -1,17 +1,17 @@
-name: Python DB API
+name: records (application)
 
 on:
   pull_request:
     branches: ~
     paths:
-    - '.github/workflows/lang-python-dbapi.yml'
-    - 'by-language/python-dbapi/**'
+    - '.github/workflows/application-records.yml'
+    - 'application/records/**'
     - '/requirements.txt'
   push:
     branches: [ main ]
     paths:
-    - '.github/workflows/lang-python-dbapi.yml'
-    - 'by-language/python-dbapi/**'
+    - '.github/workflows/application-records.yml'
+    - 'application/records/**'
     - '/requirements.txt'
 
   # Allow job to be triggered manually.
@@ -37,10 +37,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ 'ubuntu-latest' ]
-        python-version: [
-          '3.7',
-          '3.13',
-        ]
+        python-version: [ '3.9', '3.13' ]
         cratedb-version: [ 'nightly' ]
 
     services:
@@ -65,16 +62,13 @@ jobs:
           cache: 'pip'
           cache-dependency-path: |
             requirements.txt
-            by-language/python-dbapi/requirements.txt
-            by-language/python-dbapi/requirements-dev.txt
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@v4
+            application/records/requirements.txt
+            application/records/requirements-dev.txt
 
       - name: Install utilities
         run: |
-          uv pip install --system -r requirements.txt
+          pip install -r requirements.txt
 
-      - name: Validate by-language/python-dbapi
+      - name: Validate application/records
         run: |
-          ngr test --accept-no-venv by-language/python-dbapi
+          ngr test --accept-no-venv application/records

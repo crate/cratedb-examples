@@ -1,17 +1,17 @@
-name: Apache Kafka, Apache Flink
+name: "Apache Flink: Kafka to JDBC sink (Java)"
 
 on:
   pull_request:
     branches: ~
     paths:
-    - '.github/workflows/application-apache-kafka-flink.yml'
-    - 'application/apache-kafka-flink/**'
+    - '.github/workflows/framework-flink-kafka-java.yml'
+    - 'framework/flink/kafka-jdbcsink-java/**'
     - '/requirements.txt'
   push:
     branches: [ main ]
     paths:
-    - '.github/workflows/application-apache-kafka-flink.yml'
-    - 'application/apache-kafka-flink/**'
+    - '.github/workflows/framework-flink-kafka-java.yml'
+    - 'framework/flink/kafka-jdbcsink-java/**'
     - '/requirements.txt'
 
   # Allow job to be triggered manually.
@@ -42,8 +42,8 @@ jobs:
       - name: Acquire sources
         uses: actions/checkout@v4
 
-      - name: Validate application/apache-kafka-flink
+      - name: Validate framework/flink/kafka-jdbcsink-java
         run: |
           # TODO: Generalize invocation into `ngr` test runner.
-          cd application/apache-kafka-flink
+          cd framework/flink/kafka-jdbcsink-java
           bash test.sh

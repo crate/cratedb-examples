@@ -43,7 +43,7 @@ jobs:
       matrix:
         os: [ 'ubuntu-latest' ]
         dotnet-version: [ '7.0.x', '8.0.x', '9.0.x' ]
-        npgsql-version: [ '7.0.8', '8.0.5' ]
+        npgsql-version: [ '7.0.9', '8.0.6', '9.0.2' ]
         cratedb-version: [ 'nightly' ]
 
     # https://docs.github.com/en/free-pro-team@latest/actions/guides/about-service-containers
@@ -82,10 +82,3 @@ jobs:
       - name: Validate by-language/csharp-npgsql, Npgsql ${{ matrix.npgsql-version }}
         run: |
           ngr test by-language/csharp-npgsql --dotnet-version=${{ matrix.dotnet-version }} --npgsql-version=${{ matrix.npgsql-version }}
-
-      # https://github.com/codecov/codecov-action
-      - name: Upload coverage results to Codecov
-        uses: codecov/codecov-action@v4
-        with:
-          flags: by-language-csharp-npgsql
-          fail_ci_if_error: false

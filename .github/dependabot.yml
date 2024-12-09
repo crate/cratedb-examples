@@ -90,6 +90,21 @@ updates:
     schedule:
       interval: "daily"
 
+  - directory: "/application/metabase"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "daily"
+
+  - directory: "/application/metabase"
+    package-ecosystem: "docker"
+    schedule:
+      interval: "daily"
+
+  - directory: "/application/records"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "daily"
+
   # Frameworks.
 
   - directory: "/framework/dbt/basic"
@@ -98,6 +113,11 @@ updates:
       interval: "daily"
 
   - directory: "/framework/gradio"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "daily"
+
+  - directory: "/framework/records"
     package-ecosystem: "pip"
     schedule:
       interval: "daily"

@@ -1,0 +1,51 @@
+networks:
+  metanet-demo:
+    driver: bridge
+
+services:
+
+  # Metabase
+  # https://www.metabase.com/docs/latest/installation-and-operation/running-metabase-on-docker#example-docker-compose-yaml-file
+  metabase:
+    image: metabase/metabase:v0.48.3
+    container_name: metabase
+    hostname: metabase
+    volumes:
+      - /dev/urandom:/dev/random:ro
+    ports:
+      - 3000:3000
+    networks:
+      - metanet-demo
+    healthcheck:
+      test: curl --fail -I http://localhost:3000/api/health || exit 1
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  # CrateDB
+  # https://github.com/crate/crate
+  cratedb:
+    image: crate/crate:nightly
+    container_name: cratedb
+    hostname: cratedb
+    ports:
+      - 4200:4200
+      - 5432:5432
+    networks:
+      - metanet-demo
+    healthcheck:
+      # https://github.com/crate/docker-crate/pull/151/files
+      test: curl --max-time 25 http://localhost:4200 || exit 1
+      interval: 30s
+      timeout: 30s
+
+  # Wait for all defined services to be fully available by probing their health
+  # status, even when using `docker compose up --detach`.
+  # https://marcopeg.com/2019/docker-compose-healthcheck/
+  wait:
+    image: dadarek/wait-for-dependencies
+    depends_on:
+      metabase:
+        condition: service_healthy
+      cratedb:
+        condition: service_healthy
