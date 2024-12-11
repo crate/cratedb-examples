@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Npgsql;
 using Xunit;
 
@@ -41,44 +42,41 @@ namespace demo.tests
         }
 
         [Fact]
-        public void TestSystemQueryExample()
+        public async Task TestSystemQueryExample()
         {
             var conn = fixture.Db;
 
             // Invoke database workload.
-            var task = program.SystemQueryExample(conn);
-            task.Wait();
+            var task = DatabaseWorkloads.SystemQueryExample(conn);
+            var mountains = await task.WaitAsync(TimeSpan.FromSeconds(0.5));
 
             // Check results.
-            var mountains = task.Result;
             Assert.Equal("Acherkogel", mountains[0]);
         }
 
         [Fact]
-        public void TestBasicConversationExample()
+        public async Task TestBasicConversationExample()
         {
             var conn = fixture.Db;
 
             // Invoke database workload.
-            var task = program.BasicConversationExample(conn);
-            task.Wait();
+            var task = DatabaseWorkloads.BasicConversationExample(conn);
+            var results = await task.WaitAsync(TimeSpan.FromSeconds(0.5));
 
             // Check results.
-            var results = task.Result;
             Assert.Equal(new List<int>() { -999, 10, 20, 30, 40, 50, 60, 70, 80, 90 }, results);
         }
 
         [Fact]
-        public void TestAsyncUnnestExample()
+        public async Task TestUnnestExample()
         {
             var conn = fixture.Db;
 
             // Invoke database workload.
-            var task = program.AsyncUnnestExample(conn);
-            task.Wait();
+            var task = DatabaseWorkloads.UnnestExample(conn);
+            var resultCount = await task.WaitAsync(TimeSpan.FromSeconds(0.5));
 
             // Check results.
-            var resultCount = task.Result;
             Assert.Equal(10, resultCount);
         }
         
