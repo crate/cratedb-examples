@@ -66,6 +66,10 @@ For running the tests against a remote database, use, for example::
     export CRATEDB_DSN='Host=clustername.aks1.westeurope.azure.cratedb.net;Port=5432;SSL Mode=Require;Username=foobar;Password=X8F%Shn)TESTvF5ac7%eW4NM;Database=testdrive'
     dotnet test --framework=net8.0
 
+For running tests selectively, use::
+
+    dotnet test --framework=net8.0 --filter SystemQueryExample
+
 
 .. _C#: https://en.wikipedia.org/wiki/C_Sharp_(programming_language)
 .. _crate-npgsql: https://github.com/crate/crate-npgsql
