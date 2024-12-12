@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Npgsql;
@@ -111,8 +112,12 @@ namespace demo.tests
             Assert.Equal("127.0.0.1", row["ip"]);
 
             // Container types
+            // FIXME: While doing conversations with ARRAY types works natively,
+            //        it doesn't work for OBJECT types.
+            //        Yet, they can be submitted as STRING in JSON format.
             Assert.Equal(new List<string>{"foo", "bar"}, row["array"]);
-            Assert.Equal(DBNull.Value, row["object"]);  // FIXME
+            Assert.Equal(@"{""foo"":""bar""}", row["object"]);
+
             // Geospatial types
             // Assert.Equal(new List<double>{85.43, 66.23}, row["geopoint"]);  // TODO
             Assert.Equal("(85.42999997735023,66.22999997343868)", row["geopoint"].ToString());  // FIXME
@@ -120,6 +125,43 @@ namespace demo.tests
 
             // Vector type
             Assert.Equal((new List<double>{1.1, 2.2, 3.3}).Select(d => (float) d).ToArray(), row["float_vector"]);
+        }
+
+        [Fact]
+        public async Task TestContainerTypesExample()
+        {
+            var conn = fixture.Db;
+
+            // Invoke database workload.
+            var task = DatabaseWorkloadsMore.ContainerTypesExample(conn);
+            var dt = await task.WaitAsync(TimeSpan.FromSeconds(0.5));
+
+            // Check results.
+            var row = dt.Rows[0];
+            // FIXME: While doing conversations with ARRAY types works natively,
+            //        it doesn't work for OBJECT types.
+            //        Yet, they can be submitted as STRING in JSON format.
+            Assert.Equal(new List<string>{"foo", "bar"}, row["array"]);
+            Assert.Equal(@"{""foo"":""bar""}", row["object"]);
+
+            // Run a special query indexing into ARRAY types.
+            await using (var cmd = new NpgsqlCommand(@"SELECT ""array[2]"" AS foo FROM testdrive.container", conn))
+            await using (var reader = cmd.ExecuteReader())
+            {
+                var dataTable = new DataTable();
+                dataTable.Load(reader);
+                Assert.Equal("bar", dataTable.Rows[0]["foo"]);
+            }
+
+            // Run a special query indexing into OBJECT types.
+            await using (var cmd = new NpgsqlCommand(@"SELECT ""object['foo']"" AS foo FROM testdrive.container", conn))
+            await using (var reader = cmd.ExecuteReader())
+            {
+                var dataTable = new DataTable();
+                dataTable.Load(reader);
+                Assert.Equal("bar", dataTable.Rows[0]["foo"]);
+            }
+
         }
 
     }

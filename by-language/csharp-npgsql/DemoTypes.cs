@@ -114,7 +114,7 @@ namespace demo
                 timestamp_notz,
                 ip,
                 ""array"",
-                -- ""object"",
+                ""object"",
                 geopoint,
                 -- geoshape,
                 float_vector
@@ -133,7 +133,7 @@ namespace demo
                 @timestamp_notz,
                 @ip,
                 @array,
-                -- @object,
+                @object,
                 @geopoint,
                 -- @egoshape,
                 @float_vector
@@ -157,6 +157,7 @@ namespace demo
                 cmd.Parameters.AddWithValue("array", new List<string>{"foo", "bar"});
                 // FIXME: System.NotSupportedException: Cannot resolve 'hstore' to a fully qualified datatype name. The datatype was not found in the current database info.
                 // cmd.Parameters.AddWithValue("object", new Dictionary<string, string>(){{"foo", "bar"}});
+                cmd.Parameters.AddWithValue("object", @"{""foo"": ""bar""}");
                 cmd.Parameters.AddWithValue("geopoint", new List<double>{85.43, 66.23});
                 // FIXME: Npgsql.PostgresException : XX000: line 38:9: no viable alternative at input 'VALUES
                 // cmd.Parameters.AddWithValue("geoshape", "POLYGON ((5 5, 10 5, 10 10, 5 10, 5 5))");
@@ -172,6 +173,66 @@ namespace demo
 
             // Query back data.
             await using (var cmd = new NpgsqlCommand("SELECT * FROM testdrive.example", conn))
+            await using (var reader = cmd.ExecuteReader())
+            {
+                var dataTable = new DataTable();
+                dataTable.Load(reader);
+                var payload = JsonConvert.SerializeObject(dataTable);
+                Console.WriteLine(payload);
+                return (DataTable) dataTable;
+            }
+
+        }
+
+        public static async Task<DataTable> ContainerTypesExample(NpgsqlConnection conn)
+        {
+            Console.WriteLine("Running AllTypesExample");
+
+            // Submit DDL, create database schema.
+            await using (var cmd = new NpgsqlCommand("DROP TABLE IF EXISTS testdrive.container", conn))
+            {
+                cmd.ExecuteNonQuery();
+            }
+
+            await using (var cmd = new NpgsqlCommand(@"
+                CREATE TABLE testdrive.container (
+                    -- Container types
+                    ""array"" ARRAY(STRING),
+                    ""object"" OBJECT(DYNAMIC)
+                );
+            ", conn))
+            {
+                cmd.ExecuteNonQuery();
+            }
+
+            // Insert single data point.
+            await using (var cmd = new NpgsqlCommand(@"
+                INSERT INTO testdrive.container (
+                    ""array"",
+                    ""object""
+                ) VALUES (
+                    @array,
+                    @object
+                );
+        ", conn))
+            {
+                Console.WriteLine(cmd);
+                // FIXME: While doing conversations with ARRAY types works natively,
+                //        it doesn't work for OBJECT types.
+                //        Yet, they can be submitted as STRING in JSON format.
+                cmd.Parameters.AddWithValue("array", new List<string>{"foo", "bar"});
+                cmd.Parameters.AddWithValue("object", @"{""foo"": ""bar""}");
+                cmd.ExecuteNonQuery();
+            }
+
+            // Flush data.
+            await using (var cmd = new NpgsqlCommand("REFRESH TABLE testdrive.container", conn))
+            {
+                cmd.ExecuteNonQuery();
+            }
+
+            // Query back data.
+            await using (var cmd = new NpgsqlCommand("SELECT * FROM testdrive.container", conn))
             await using (var reader = cmd.ExecuteReader())
             {
                 var dataTable = new DataTable();
