@@ -71,6 +71,21 @@ For running tests selectively, use::
     dotnet test --framework=net8.0 --filter SystemQueryExample
 
 
+Troubleshooting
+===============
+
+If you observe an error like this when invoking the program or test case::
+
+    Microsoft.PackageDependencyResolution.targets(266,5): error NETSDK1005:
+    Assets file '/path/to/csharp-npgsql/obj/project.assets.json' doesn't have a target for 'net9.0'.
+    Ensure that restore has run and that you have included 'net9.0' in the TargetFrameworks for your project.
+
+please adjust ``demo.csproj`` like that::
+
+-    <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
++    <TargetFrameworks>net6.0;net8.0;net9.0</TargetFrameworks>
+
+
 .. _C#: https://en.wikipedia.org/wiki/C_Sharp_(programming_language)
 .. _crate-npgsql: https://github.com/crate/crate-npgsql
 .. _Npgsql - .NET Access to PostgreSQL: https://github.com/npgsql/npgsql

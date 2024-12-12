@@ -23,6 +23,7 @@ namespace demo
                     await DatabaseWorkloads.SystemQueryExample(conn);
                     await DatabaseWorkloads.BasicConversationExample(conn);
                     await DatabaseWorkloads.UnnestExample(conn);
+                    await DatabaseWorkloadsMore.AllTypesExample(conn);
                     conn.Close();
                 });
 
