@@ -6,7 +6,7 @@ using Xunit;
 
 namespace demo.tests
 {
-    
+
     public class DatabaseFixture : IDisposable
     {
         public NpgsqlConnection Db { get; private set; }
@@ -29,10 +29,10 @@ namespace demo.tests
         }
 
     }
-    
+
     public class DemoProgramTest : IClassFixture<DatabaseFixture>
     {
-        
+
         DatabaseFixture fixture;
         DatabaseWorkloads program = new DatabaseWorkloads();
 
@@ -51,7 +51,7 @@ namespace demo.tests
             var mountains = await task.WaitAsync(TimeSpan.FromSeconds(0.5));
 
             // Check results.
-            Assert.Equal("Acherkogel", mountains[0]);
+            Assert.Equal("Mont Blanc - 4808 - (6.86444,45.8325)", mountains[0]);
         }
 
         [Fact]
@@ -79,6 +79,5 @@ namespace demo.tests
             // Check results.
             Assert.Equal(10, resultCount);
         }
-        
     }
 }

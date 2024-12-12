@@ -57,15 +57,19 @@ namespace demo
         {
             Console.WriteLine("Running SystemQueryExample");
             var mountains = new List<string>();
-            await using (var cmd = new NpgsqlCommand("SELECT mountain FROM sys.summits ORDER BY 1 LIMIT 25", conn))
+            const string sql = "SELECT mountain, height, coordinates FROM sys.summits ORDER BY height DESC LIMIT 25";
+            await using (var cmd = new NpgsqlCommand(sql, conn))
             await using (var reader = cmd.ExecuteReader())
             {
                 while (await reader.ReadAsync())
                 {
-                    mountains.Add(reader.GetString(0));
+                    mountains.Add(
+                        reader["mountain"].ToString() + " - " +
+                        reader["height"].ToString() + " - " +
+                        reader["coordinates"].ToString());
                 }
 
-                Console.WriteLine($"Mountains: {string.Join(",", mountains)}");
+                Console.WriteLine($"Mountains:\n{string.Join("\n", mountains)}");
             }
 
             Console.WriteLine();
