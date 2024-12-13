@@ -119,9 +119,12 @@ namespace demo.tests
             Assert.Equal(@"{""foo"":""bar""}", row["object"]);
 
             // Geospatial types
+            // TODO: Unlock native data types?
+            //       GEO_POINT and GEO_SHAPE types can be marshalled back and forth using STRING.
+            //       GEO_POINT is using a tuple format, GEO_SHAPE is using the GeoJSON format.
             // Assert.Equal(new List<double>{85.43, 66.23}, row["geopoint"]);  // TODO
             Assert.Equal("(85.42999997735023,66.22999997343868)", row["geopoint"].ToString());  // FIXME
-            Assert.Equal(DBNull.Value, row["geoshape"]);  // FIXME
+            Assert.Equal(@"{""coordinates"":[[[5.0,5.0],[5.0,10.0],[10.0,10.0],[10.0,5.0],[5.0,5.0]]],""type"":""Polygon""}", row["geoshape"]);
 
             // Vector type
             Assert.Equal((new List<double>{1.1, 2.2, 3.3}).Select(d => (float) d).ToArray(), row["float_vector"]);

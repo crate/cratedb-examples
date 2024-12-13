@@ -116,7 +116,7 @@ namespace demo
                 ""array"",
                 ""object"",
                 geopoint,
-                -- geoshape,
+                geoshape,
                 float_vector
             ) VALUES (
                 @null_integer,
@@ -135,7 +135,7 @@ namespace demo
                 @array,
                 @object,
                 @geopoint,
-                -- @egoshape,
+                @geoshape,
                 @float_vector
             );
         ", conn))
@@ -159,8 +159,7 @@ namespace demo
                 // cmd.Parameters.AddWithValue("object", new Dictionary<string, string>(){{"foo", "bar"}});
                 cmd.Parameters.AddWithValue("object", @"{""foo"": ""bar""}");
                 cmd.Parameters.AddWithValue("geopoint", new List<double>{85.43, 66.23});
-                // FIXME: Npgsql.PostgresException : XX000: line 38:9: no viable alternative at input 'VALUES
-                // cmd.Parameters.AddWithValue("geoshape", "POLYGON ((5 5, 10 5, 10 10, 5 10, 5 5))");
+                cmd.Parameters.AddWithValue("geoshape", "POLYGON ((5 5, 10 5, 10 10, 5 10, 5 5))");
                 cmd.Parameters.AddWithValue("float_vector", new List<double> {1.1, 2.2, 3.3});
                 cmd.ExecuteNonQuery();
             }
