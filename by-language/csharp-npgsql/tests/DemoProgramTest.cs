@@ -98,8 +98,8 @@ namespace demo.tests
             Assert.Equal(DBNull.Value, row["null_integer"]);
             Assert.Equal(42, row["integer"]);
             Assert.Equal((Int64) 42, row["bigint"]);
-            //Assert.Equal(42.42, (float) row["float"], 0.01);
-            //Assert.Equal(42.42, (double) row["double"], 0.01);
+            Assert.Equal(42.42, (float) row["float"], 0.01);
+            Assert.Equal(42.42, (double) row["double"], 0.01);
             Assert.Equal(new decimal(42.42), row["decimal"]);
 
             // Other scalar types
