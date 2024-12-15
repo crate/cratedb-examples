@@ -1,22 +1,12 @@
-# Real.
 crash
-crate>=1.0.0.dev2
 google-cloud-aiplatform<2
+langchain-cratedb<0.0.1
 langchain-google-vertexai<3
 langchain-openai<0.3
 langchain-text-splitters<0.4
 pueblo[cli,nlp]>=0.0.10
-pydantic>=2,<3
 pypdf<6
 python-dotenv<2
 requests<3
 requests-cache<2
-sqlalchemy==2.*
-sqlalchemy-cratedb>=0.40.0
 unstructured<0.17
-
-# Development.
-# cratedb-toolkit @ git+https://github.com/crate-workbench/cratedb-toolkit.git@main
-langchain @ git+https://github.com/crate-workbench/langchain.git@cratedb#subdirectory=libs/langchain
-langchain-community @ git+https://github.com/crate-workbench/langchain.git@cratedb#subdirectory=libs/community
-# pueblo[cli,fileio,nlp] @ git+https://github.com/pyveci/pueblo.git@main

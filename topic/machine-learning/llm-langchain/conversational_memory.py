@@ -16,7 +16,7 @@ Synopsis::
 import os
 from pprint import pprint
 
-from langchain_community.chat_message_histories import CrateDBChatMessageHistory
+from langchain_cratedb.chat_history import CrateDBChatMessageHistory
 
 
 CONNECTION_STRING = os.environ.get(
@@ -27,13 +27,13 @@ CONNECTION_STRING = os.environ.get(
 
 def main():
 
-    chat_message_history = CrateDBChatMessageHistory(
+    chat_history = CrateDBChatMessageHistory(
         session_id="test_session",
-        connection_string=CONNECTION_STRING,
+        connection=CONNECTION_STRING,
     )
-    chat_message_history.add_user_message("Hello")
-    chat_message_history.add_ai_message("Hi")
-    pprint(chat_message_history.messages)
+    chat_history.add_user_message("Hello")
+    chat_history.add_ai_message("Hi")
+    pprint(chat_history.messages)
 
 
 if __name__ == "__main__":
