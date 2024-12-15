@@ -20,7 +20,7 @@ Synopsis::
     python vector_search.py
 """  # noqa: E501
 
-from langchain_community.vectorstores import CrateDBVectorSearch
+from langchain_cratedb.vectorstores import CrateDBVectorStore
 from langchain_openai import OpenAIEmbeddings
 
 import nltk
@@ -37,7 +37,7 @@ def main():
     documents = CachedWebResource(url).langchain_documents(chunk_size=1000, chunk_overlap=0)
 
     # Embed each chunk, and load them into the vector store.
-    db = CrateDBVectorSearch.from_documents(documents, OpenAIEmbeddings())
+    db = CrateDBVectorStore.from_documents(documents, OpenAIEmbeddings(), connection="crate://")
 
     # Invoke a query, and display the first result.
     query = "What did the president say about Ketanji Brown Jackson"
