@@ -156,6 +156,7 @@ namespace demo
                 cmd.Parameters.AddWithValue("ip", "127.0.0.1");
                 cmd.Parameters.AddWithValue("array", new List<string>{"foo", "bar"});
                 // FIXME: System.NotSupportedException: Cannot resolve 'hstore' to a fully qualified datatype name. The datatype was not found in the current database info.
+                // https://github.com/crate/zk/issues/26
                 // cmd.Parameters.AddWithValue("object", new Dictionary<string, string>(){{"foo", "bar"}});
                 cmd.Parameters.AddWithValue("object", @"{""foo"": ""bar""}");
                 cmd.Parameters.AddWithValue("geopoint", new List<double>{85.43, 66.23});
