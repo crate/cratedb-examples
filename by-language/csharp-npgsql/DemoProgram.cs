@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CommandLine;
 using Npgsql;
+using Npgsql.CrateDb;
 using NpgsqlTypes;
 
 namespace demo
@@ -15,6 +16,11 @@ namespace demo
             await Parser.Default.ParseArguments<Options>(args)
                 .WithParsedAsync<Options>(async options =>
                 {
+
+                    // Before connecting to CrateDB, set up the plugin.
+                    // https://cratedb.com/docs/npgsql/en/latest/connect.html
+                    NpgsqlDatabaseInfo.RegisterFactory(new CrateDbDatabaseInfoFactory());
+
                     var connString = $"Host={options.Host};Port={options.Port};SSL Mode={options.SslMode};" +
                                      $"Username={options.Username};Password={options.Password};Database={options.Database}";
                     Console.WriteLine($"Connecting to {connString}\n");
