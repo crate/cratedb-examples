@@ -21,10 +21,8 @@ data provider for PostgreSQL, `crate-npgsql`_. CrateDB versions 4.2 and later
 work with the vanilla `Npgsql - .NET Access to PostgreSQL`_ driver without the
 need for a plugin.
 
-Please note that Npgsql 5 is not supported starting with CrateDB 4.8.4, you
-will need Npgsql 6 or newer.
-
-.NET 7, 8, and 9 are supported, .NET 3.1, 4.6, 5.0, and 6.0 may still work.
+The example program in this folder is validated on .NET 8 and 9,
+using Npgsql 8.x and 9.x.
 
 
 *****
@@ -37,38 +35,41 @@ To invoke a CrateDB instance for evaluation purposes, run::
 
 Invoke example program::
 
-    dotnet run --framework=net8.0
+    dotnet run
 
 To connect to CrateDB Cloud, use a command like::
 
-    dotnet run --framework=net8.0 -- \
+    dotnet run -- \
         --host=clustername.aks1.westeurope.azure.cratedb.net --ssl-mode=Require \
         --username=foobar --password='X8F%Shn)TESTvF5ac7%eW4NM'
 
 Explore all available connection options::
 
-    dotnet run --framework=net8.0 -- --help
+    dotnet run -- --help
 
+.. note::
+
+    Use the ``--framework=net8.0`` option to target a specific .NET framework version.
 
 Tests
 =====
 
 For running the test scenarios wrapped into a xUnit test suite, invoke::
 
-    dotnet test --framework=net8.0
+    dotnet test
 
 To generate a Cobertura code coverage report, run::
 
-    dotnet test --framework=net8.0 --collect:"XPlat Code Coverage"
+    dotnet test --collect:"XPlat Code Coverage"
 
 For running the tests against a remote database, use, for example::
 
     export CRATEDB_DSN='Host=clustername.aks1.westeurope.azure.cratedb.net;Port=5432;SSL Mode=Require;Username=foobar;Password=X8F%Shn)TESTvF5ac7%eW4NM;Database=testdrive'
-    dotnet test --framework=net8.0
+    dotnet test
 
 For running tests selectively, use::
 
-    dotnet test --framework=net8.0 --filter SystemQueryExample
+    dotnet test --filter SystemQueryExample
 
 
 Troubleshooting
@@ -82,7 +83,7 @@ If you observe an error like this when invoking the program or test case::
 
 please adjust ``demo.csproj`` like that::
 
--    <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
+-    <TargetFramework>net$(NETCoreAppMaximumVersion)</TargetFramework>
 +    <TargetFrameworks>net6.0;net8.0;net9.0</TargetFrameworks>
 
 
