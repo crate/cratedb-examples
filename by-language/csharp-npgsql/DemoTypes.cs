@@ -1,9 +1,8 @@
 #nullable enable
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data;
-using System.Reflection;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Npgsql;
@@ -57,9 +56,9 @@ namespace demo
     public class DatabaseWorkloadsMore
     {
 
-        public static async Task<DataTable> AllTypesNativeExample(NpgsqlConnection conn)
+        public static async Task ProvisionAllTypes(NpgsqlConnection conn)
         {
-            Console.WriteLine("Running AllTypesNativeExample");
+            Console.WriteLine("Running ProvisionAllTypes");
 
             // Submit DDL, create database schema.
             await using (var cmd = new NpgsqlCommand("DROP TABLE IF EXISTS testdrive.example", conn))
@@ -169,6 +168,15 @@ namespace demo
                 cmd.ExecuteNonQuery();
             }
 
+        }
+
+        public static async Task<DataTable> AllTypesNativeExample(NpgsqlConnection conn)
+        {
+            Console.WriteLine("Running AllTypesNativeExample");
+
+            // Provision data.
+            await ProvisionAllTypes(conn);
+
             // Query back data.
             await using (var cmd = new NpgsqlCommand("SELECT * FROM testdrive.example", conn))
             await using (var reader = cmd.ExecuteReader())
@@ -180,6 +188,69 @@ namespace demo
                 return (DataTable) dataTable;
             }
 
+        }
+
+        public static async Task<JsonDocument> ObjectJsonDocumentExample(NpgsqlConnection conn)
+        {
+            Console.WriteLine("Running ObjectJsonDocumentExample");
+
+            // Provision data.
+            await ProvisionAllTypes(conn);
+
+            // This test uses the central DDL, but a blank slate to focus on the test case at hand.
+            await using (var cmd = new NpgsqlCommand("DELETE FROM testdrive.example", conn))
+            {
+                cmd.ExecuteNonQuery();
+            }
+
+            await using (var cmd = new NpgsqlCommand("""
+            INSERT INTO testdrive.example (
+              "object"
+            ) VALUES (
+              @object
+            )
+            """, conn))
+            {
+                cmd.Parameters.AddWithValue("object", NpgsqlDbType.Json, JsonDocument.Parse("""{"foo":"bar"}"""));
+                cmd.ExecuteNonQuery();
+            }
+
+            // Flush data.
+            await using (var cmd = new NpgsqlCommand("REFRESH TABLE testdrive.example", conn))
+            {
+                cmd.ExecuteNonQuery();
+            }
+
+            // Query back data.
+            await using (var cmd = new NpgsqlCommand("SELECT * FROM testdrive.example", conn))
+            await using (var reader = cmd.ExecuteReader())
+            {
+                reader.Read();
+                var obj = reader.GetFieldValue<JsonDocument>("object");
+                Console.WriteLine(obj);
+                return obj;
+            }
+        }
+
+        public static async Task<List<JsonDocument>> ArrayJsonDocumentExample(NpgsqlConnection conn)
+        {
+            Console.WriteLine("Running ArrayJsonDocumentExample");
+
+            // Provision data.
+            await ProvisionAllTypes(conn);
+
+            // Query back data.
+            await using (var cmd = new NpgsqlCommand("SELECT * FROM testdrive.example", conn))
+            await using (var reader = cmd.ExecuteReader())
+            {
+                reader.Read();
+                // TODO: System.InvalidCastException: Reading as 'System.Text.Json.JsonDocument' or [1]
+                //       is not supported for fields having DataTypeName 'character varying[]'.
+                //       [1] `System.Collections.Generic.List`1[[System.Text.Json.JsonDocument]`
+                var obj = reader.GetFieldValue<List<JsonDocument>>("array");
+                Console.WriteLine(obj);
+                return obj;
+            }
         }
 
         public static async Task ProvisionPoco(NpgsqlConnection conn)
