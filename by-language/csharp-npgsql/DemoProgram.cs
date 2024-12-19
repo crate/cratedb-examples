@@ -18,12 +18,18 @@ namespace demo
                     var connString = $"Host={options.Host};Port={options.Port};SSL Mode={options.SslMode};" +
                                      $"Username={options.Username};Password={options.Password};Database={options.Database}";
                     Console.WriteLine($"Connecting to {connString}\n");
-                    await using var conn = new NpgsqlConnection(connString);
-                    conn.Open();
+
+                    var dataSourceBuilder = new NpgsqlDataSourceBuilder(connString);
+                    dataSourceBuilder.EnableDynamicJson();
+                    await using var dataSource = dataSourceBuilder.Build();
+                    await using var conn = dataSource.OpenConnection();
+
                     await DatabaseWorkloads.SystemQueryExample(conn);
                     await DatabaseWorkloads.BasicConversationExample(conn);
                     await DatabaseWorkloads.UnnestExample(conn);
-                    await DatabaseWorkloadsMore.AllTypesExample(conn);
+                    await DatabaseWorkloadsMore.AllTypesNativeExample(conn);
+                    await DatabaseWorkloadsMore.ObjectPocoExample(conn);
+                    await DatabaseWorkloadsMore.ArrayPocoExample(conn);
                     conn.Close();
                 });
 
