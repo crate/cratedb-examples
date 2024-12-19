@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Npgsql;
 using Xunit;
@@ -166,6 +167,19 @@ namespace demo.tests
                 Assert.Equal("bar", dataTable.Rows[0]["foo"]);
             }
 
+        }
+
+        [Fact]
+        public async Task TestObjectJsonDocumentExample()
+        {
+            var conn = fixture.Db;
+
+            // Invoke database workload.
+            var task = DatabaseWorkloadsMore.ObjectJsonDocumentExample(conn);
+            var obj = await task.WaitAsync(TimeSpan.FromSeconds(0.5));
+
+            // Validate the outcome.
+            Assert.Equal("""{"foo":"bar"}""", JsonSerializer.Serialize(obj));
         }
 
         [Fact]

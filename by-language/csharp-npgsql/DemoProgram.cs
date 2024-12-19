@@ -28,6 +28,8 @@ namespace demo
                     await DatabaseWorkloads.BasicConversationExample(conn);
                     await DatabaseWorkloads.UnnestExample(conn);
                     await DatabaseWorkloadsMore.AllTypesNativeExample(conn);
+                    await DatabaseWorkloadsMore.ObjectJsonDocumentExample(conn);
+                    // await DatabaseWorkloadsMore.ArrayJsonDocumentExample(conn);
                     await DatabaseWorkloadsMore.ObjectPocoExample(conn);
                     await DatabaseWorkloadsMore.ArrayPocoExample(conn);
                     conn.Close();
