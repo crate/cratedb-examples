@@ -21,8 +21,11 @@ namespace demo.tests
                 CRATEDB_DSN = $"Host=localhost;Port=5432;Username=crate;Password=;Database=testdrive";
             }
             Console.WriteLine($"Connecting to {CRATEDB_DSN}\n");
-            Db = new NpgsqlConnection(CRATEDB_DSN);
-            Db.Open();
+            
+            var dataSourceBuilder = new NpgsqlDataSourceBuilder(CRATEDB_DSN);
+            dataSourceBuilder.EnableDynamicJson();
+            using var dataSource = dataSourceBuilder.Build();
+            Db = dataSource.OpenConnection();
         }
 
         public void Dispose()
@@ -83,12 +86,12 @@ namespace demo.tests
         }
 
         [Fact]
-        public async Task TestAllTypesExample()
+        public async Task TestAllTypesNativeExample()
         {
             var conn = fixture.Db;
 
-            // Invoke database workload.
-            var task = DatabaseWorkloadsMore.AllTypesExample(conn);
+            // Provision data.
+            var task = DatabaseWorkloadsMore.AllTypesNativeExample(conn);
             var dt = await task.WaitAsync(TimeSpan.FromSeconds(0.5));
 
             // Check results.
@@ -112,11 +115,17 @@ namespace demo.tests
             Assert.Equal("127.0.0.1", row["ip"]);
 
             // Container types
-            // FIXME: While doing conversations with ARRAY types works natively,
-            //        it doesn't work for OBJECT types.
-            //        Yet, they can be submitted as STRING in JSON format.
             Assert.Equal(new List<string>{"foo", "bar"}, row["array"]);
             Assert.Equal("""{"foo":"bar"}""", row["object"]);
+
+            // Note: While it works on the ingress side to communicate `Dictionary` types,
+            //       this kind of equality check does not work on the egress side,
+            //       presenting an error that indicates a different internal representation,
+            //       or a programming error ;].
+            //
+            //       Expected: [["foo"] = "bar"]
+            //       Actual:   {"foo":"bar"}
+            // Assert.Equal(new Dictionary<string, string>{{"foo", "bar"}}, row["object"]);
 
             // Geospatial types
             // TODO: Unlock native data types?
@@ -135,35 +144,60 @@ namespace demo.tests
         {
             var conn = fixture.Db;
 
+            // Provision data.
+            var task = DatabaseWorkloadsMore.AllTypesNativeExample(conn);
+            await task.WaitAsync(TimeSpan.FromSeconds(0.5));
+
+            // Run an SQL query indexing into ARRAY types.
+            await using (var cmd = new NpgsqlCommand("""SELECT "array[2]" AS foo FROM testdrive.example""", conn))
+            await using (var reader = cmd.ExecuteReader())
+            {
+                var dataTable = new DataTable();
+                dataTable.Load(reader);
+                Assert.Equal("bar", dataTable.Rows[0]["foo"]);
+            }
+
+            // Run an SQL query indexing into OBJECT types.
+            await using (var cmd = new NpgsqlCommand("""SELECT "object['foo']" AS foo FROM testdrive.example""", conn))
+            await using (var reader = cmd.ExecuteReader())
+            {
+                var dataTable = new DataTable();
+                dataTable.Load(reader);
+                Assert.Equal("bar", dataTable.Rows[0]["foo"]);
+            }
+
+        }
+
+        [Fact]
+        public async Task TestObjectPocoExample()
+        {
+            var conn = fixture.Db;
+
             // Invoke database workload.
-            var task = DatabaseWorkloadsMore.ContainerTypesExample(conn);
-            var dt = await task.WaitAsync(TimeSpan.FromSeconds(0.5));
+            var task = DatabaseWorkloadsMore.ObjectPocoExample(conn);
+            var obj = await task.WaitAsync(TimeSpan.FromSeconds(0.5));
 
-            // Check results.
-            var row = dt.Rows[0];
-            // FIXME: While doing conversations with ARRAY types works natively,
-            //        it doesn't work for OBJECT types.
-            //        Yet, they can be submitted as STRING in JSON format.
-            Assert.Equal(new List<string>{"foo", "bar"}, row["array"]);
-            Assert.Equal("""{"foo":"bar"}""", row["object"]);
+            // Validate the outcome.
+            Assert.Equal(new BasicPoco { name = "Hotzenplotz" }, obj);
 
-            // Run a special query indexing into ARRAY types.
-            await using (var cmd = new NpgsqlCommand("""SELECT "array[2]" AS foo FROM testdrive.container""", conn))
-            await using (var reader = cmd.ExecuteReader())
+        }
+
+        [Fact]
+        public async Task TestArrayPocoExample()
+        {
+            var conn = fixture.Db;
+
+            // Invoke database workload.
+            var task = DatabaseWorkloadsMore.ArrayPocoExample(conn);
+            var obj = await task.WaitAsync(TimeSpan.FromSeconds(0.5));
+
+            // Validate the outcome.
+            var reference = new List<BasicPoco>
             {
-                var dataTable = new DataTable();
-                dataTable.Load(reader);
-                Assert.Equal("bar", dataTable.Rows[0]["foo"]);
-            }
-
-            // Run a special query indexing into OBJECT types.
-            await using (var cmd = new NpgsqlCommand("""SELECT "object['foo']" AS foo FROM testdrive.container""", conn))
-            await using (var reader = cmd.ExecuteReader())
-            {
-                var dataTable = new DataTable();
-                dataTable.Load(reader);
-                Assert.Equal("bar", dataTable.Rows[0]["foo"]);
-            }
+                new BasicPoco { name = "Hotzenplotz" },
+                new BasicPoco { name = "Petrosilius", age = 42 },
+            };
+            Assert.Equal(reference, obj);
 
         }
 

@@ -57,9 +57,9 @@ namespace demo
     public class DatabaseWorkloadsMore
     {
 
-        public static async Task<DataTable> AllTypesExample(NpgsqlConnection conn)
+        public static async Task<DataTable> AllTypesNativeExample(NpgsqlConnection conn)
         {
-            Console.WriteLine("Running AllTypesExample");
+            Console.WriteLine("Running AllTypesNativeExample");
 
             // Submit DDL, create database schema.
             await using (var cmd = new NpgsqlCommand("DROP TABLE IF EXISTS testdrive.example", conn))
@@ -154,11 +154,8 @@ namespace demo
                 cmd.Parameters.AddWithValue("timestamp_tz", "1970-01-02T00:00:00+01:00");
                 cmd.Parameters.AddWithValue("timestamp_notz", "1970-01-02T00:00:00");
                 cmd.Parameters.AddWithValue("ip", "127.0.0.1");
-                cmd.Parameters.AddWithValue("array", new List<string>{"foo", "bar"});
-                // FIXME: System.NotSupportedException: Cannot resolve 'hstore' to a fully qualified datatype name. The datatype was not found in the current database info.
-                // https://github.com/crate/zk/issues/26
-                // cmd.Parameters.AddWithValue("object", new Dictionary<string, string>(){{"foo", "bar"}});
-                cmd.Parameters.AddWithValue("object", """{"foo": "bar"}""");
+                cmd.Parameters.AddWithValue("array", NpgsqlDbType.Json, new List<string>{"foo", "bar"});
+                cmd.Parameters.AddWithValue("object", NpgsqlDbType.Json, new Dictionary<string, string>{{"foo", "bar"}});
                 cmd.Parameters.AddWithValue("geopoint", new List<double>{85.43, 66.23});
                 // TODO: Check if `GEO_SHAPE` types can be represented by real .NET or Npgsql data types.
                 cmd.Parameters.AddWithValue("geoshape", "POLYGON ((5 5, 10 5, 10 10, 5 10, 5 5))");
@@ -185,20 +182,23 @@ namespace demo
 
         }
 
-        public static async Task<DataTable> ContainerTypesExample(NpgsqlConnection conn)
+        public static async Task ProvisionPoco(NpgsqlConnection conn)
         {
-            Console.WriteLine("Running AllTypesExample");
+            /***
+             * Verify Npgsql POCO mapping with CrateDB.
+             * https://www.npgsql.org/doc/types/json.html#poco-mapping
+             */
+            Console.WriteLine("Running ProvisionPoco");
 
             // Submit DDL, create database schema.
-            await using (var cmd = new NpgsqlCommand("DROP TABLE IF EXISTS testdrive.container", conn))
+            await using (var cmd = new NpgsqlCommand("DROP TABLE IF EXISTS testdrive.poco", conn))
             {
                 cmd.ExecuteNonQuery();
             }
 
             await using (var cmd = new NpgsqlCommand("""
-                CREATE TABLE testdrive.container (
-                    -- Container types
-                    "array" ARRAY(STRING),
+                CREATE TABLE testdrive.poco (
+                    "array" ARRAY(OBJECT(DYNAMIC)),
                     "object" OBJECT(DYNAMIC)
                 );
             """, conn))
@@ -208,7 +208,7 @@ namespace demo
 
             // Insert single data point.
             await using (var cmd = new NpgsqlCommand("""
-                INSERT INTO testdrive.container (
+                INSERT INTO testdrive.poco (
                     "array",
                     "object"
                 ) VALUES (
@@ -217,32 +217,58 @@ namespace demo
                 );
             """, conn))
             {
-                Console.WriteLine(cmd);
-                // FIXME: While doing conversations with ARRAY types works natively,
-                //        it doesn't work for OBJECT types.
-                //        Yet, they can be submitted as STRING in JSON format.
-                cmd.Parameters.AddWithValue("array", new List<string>{"foo", "bar"});
-                cmd.Parameters.AddWithValue("object", """{"foo": "bar"}""");
+                cmd.Parameters.AddWithValue("object", NpgsqlDbType.Json, new BasicPoco { name = "Hotzenplotz" });
+                cmd.Parameters.AddWithValue("array", NpgsqlDbType.Json, new List<BasicPoco>
+                {
+                    new BasicPoco { name = "Hotzenplotz" },
+                    new BasicPoco { name = "Petrosilius", age = 42 },
+                });
                 cmd.ExecuteNonQuery();
             }
 
             // Flush data.
-            await using (var cmd = new NpgsqlCommand("REFRESH TABLE testdrive.container", conn))
+            await using (var cmd = new NpgsqlCommand("REFRESH TABLE testdrive.poco", conn))
             {
                 cmd.ExecuteNonQuery();
             }
 
+        }
+
+        public static async Task<BasicPoco> ObjectPocoExample(NpgsqlConnection conn)
+        {
+            Console.WriteLine("Running ObjectPocoExample");
+
+            // Provision data.
+            await ProvisionPoco(conn);
+
             // Query back data.
-            await using (var cmd = new NpgsqlCommand("SELECT * FROM testdrive.container", conn))
+            await using (var cmd = new NpgsqlCommand("SELECT * FROM testdrive.poco", conn))
             await using (var reader = cmd.ExecuteReader())
             {
-                var dataTable = new DataTable();
-                dataTable.Load(reader);
-                var payload = JsonConvert.SerializeObject(dataTable);
-                Console.WriteLine(payload);
-                return (DataTable) dataTable;
+                reader.Read();
+                var obj = reader.GetFieldValue<BasicPoco>("object");
+                Console.WriteLine(obj);
+                return obj;
             }
+        }
 
+        public static async Task<List<BasicPoco>> ArrayPocoExample(NpgsqlConnection conn)
+        {
+            Console.WriteLine("Running ArrayPocoExample");
+
+            // Provision data.
+            await ProvisionPoco(conn);
+
+            // Query back data.
+            await using (var cmd = new NpgsqlCommand("SELECT * FROM testdrive.poco", conn))
+            await using (var reader = cmd.ExecuteReader())
+            {
+                reader.Read();
+                var obj = reader.GetFieldValue<List<BasicPoco>>("array");
+                Console.WriteLine(obj[0]);
+                Console.WriteLine(obj[1]);
+                return obj;
+            }
         }
 
     }
