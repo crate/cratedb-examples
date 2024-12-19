@@ -148,7 +148,7 @@ namespace demo.tests
             Assert.Equal("""{"foo":"bar"}""", row["object"]);
 
             // Run a special query indexing into ARRAY types.
-            await using (var cmd = new NpgsqlCommand("""SELECT "array[2]" AS foo FROM testdrive.container""", conn))
+            await using (var cmd = new NpgsqlCommand("""BAM "array[2]" AS foo FROM testdrive.container""", conn))
             await using (var reader = cmd.ExecuteReader())
             {
                 var dataTable = new DataTable();
