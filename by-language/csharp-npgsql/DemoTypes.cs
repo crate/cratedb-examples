@@ -26,6 +26,7 @@ namespace demo
         public double? Double { get; set; }
         [JsonProperty("decimal")]
         public decimal? Decimal { get; set; }
+        // TODO: Review the handling of the `BIT` type here.
         //[JsonProperty("bit")]
         //public BitArray Bit { get; set; }
         [JsonProperty("bool")]
@@ -66,7 +67,7 @@ namespace demo
                 cmd.ExecuteNonQuery();
             }
 
-            await using (var cmd = new NpgsqlCommand(@"
+            await using (var cmd = new NpgsqlCommand("""
                 CREATE TABLE testdrive.example (
                     -- Numeric types
                     null_integer INT,
@@ -84,21 +85,21 @@ namespace demo
                     timestamp_notz TIMESTAMP WITHOUT TIME ZONE,
                     ip IP,
                     -- Container types
-                    ""array"" ARRAY(STRING),
-                    ""object"" OBJECT(DYNAMIC),
+                    "array" ARRAY(STRING),
+                    "object" OBJECT(DYNAMIC),
                     -- Geospatial types
                     geopoint GEO_POINT,
                     geoshape GEO_SHAPE,
                     -- Vector type
-                    ""float_vector"" FLOAT_VECTOR(3)
+                    float_vector FLOAT_VECTOR(3)
                 );
-            ", conn))
+            """, conn))
             {
                 cmd.ExecuteNonQuery();
             }
 
             // Insert single data point.
-            await using (var cmd = new NpgsqlCommand(@"
+            await using (var cmd = new NpgsqlCommand("""
             INSERT INTO testdrive.example (
                 null_integer,
                 integer,
@@ -113,8 +114,8 @@ namespace demo
                 timestamp_tz,
                 timestamp_notz,
                 ip,
-                ""array"",
-                ""object"",
+                "array",
+                "object",
                 geopoint,
                 geoshape,
                 float_vector
@@ -138,9 +139,8 @@ namespace demo
                 @geoshape,
                 @float_vector
             );
-        ", conn))
+            """, conn))
             {
-                Console.WriteLine(cmd);
                 cmd.Parameters.AddWithValue("null_integer", DBNull.Value);
                 cmd.Parameters.AddWithValue("integer", 42);
                 cmd.Parameters.AddWithValue("bigint", 42);
@@ -158,8 +158,9 @@ namespace demo
                 // FIXME: System.NotSupportedException: Cannot resolve 'hstore' to a fully qualified datatype name. The datatype was not found in the current database info.
                 // https://github.com/crate/zk/issues/26
                 // cmd.Parameters.AddWithValue("object", new Dictionary<string, string>(){{"foo", "bar"}});
-                cmd.Parameters.AddWithValue("object", @"{""foo"": ""bar""}");
+                cmd.Parameters.AddWithValue("object", """{"foo": "bar"}""");
                 cmd.Parameters.AddWithValue("geopoint", new List<double>{85.43, 66.23});
+                // TODO: Check if `GEO_SHAPE` types can be represented by real .NET or Npgsql data types.
                 cmd.Parameters.AddWithValue("geoshape", "POLYGON ((5 5, 10 5, 10 10, 5 10, 5 5))");
                 cmd.Parameters.AddWithValue("float_vector", new List<double> {1.1, 2.2, 3.3});
                 cmd.ExecuteNonQuery();
@@ -194,34 +195,34 @@ namespace demo
                 cmd.ExecuteNonQuery();
             }
 
-            await using (var cmd = new NpgsqlCommand(@"
+            await using (var cmd = new NpgsqlCommand("""
                 CREATE TABLE testdrive.container (
                     -- Container types
-                    ""array"" ARRAY(STRING),
-                    ""object"" OBJECT(DYNAMIC)
+                    "array" ARRAY(STRING),
+                    "object" OBJECT(DYNAMIC)
                 );
-            ", conn))
+            """, conn))
             {
                 cmd.ExecuteNonQuery();
             }
 
             // Insert single data point.
-            await using (var cmd = new NpgsqlCommand(@"
+            await using (var cmd = new NpgsqlCommand("""
                 INSERT INTO testdrive.container (
-                    ""array"",
-                    ""object""
+                    "array",
+                    "object"
                 ) VALUES (
                     @array,
                     @object
                 );
-        ", conn))
+            """, conn))
             {
                 Console.WriteLine(cmd);
                 // FIXME: While doing conversations with ARRAY types works natively,
                 //        it doesn't work for OBJECT types.
                 //        Yet, they can be submitted as STRING in JSON format.
                 cmd.Parameters.AddWithValue("array", new List<string>{"foo", "bar"});
-                cmd.Parameters.AddWithValue("object", @"{""foo"": ""bar""}");
+                cmd.Parameters.AddWithValue("object", """{"foo": "bar"}""");
                 cmd.ExecuteNonQuery();
             }
 
