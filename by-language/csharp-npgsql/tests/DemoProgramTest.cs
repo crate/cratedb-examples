@@ -116,7 +116,7 @@ namespace demo.tests
             //        it doesn't work for OBJECT types.
             //        Yet, they can be submitted as STRING in JSON format.
             Assert.Equal(new List<string>{"foo", "bar"}, row["array"]);
-            Assert.Equal(@"{""foo"":""bar""}", row["object"]);
+            Assert.Equal("""{"foo":"bar"}""", row["object"]);
 
             // Geospatial types
             // TODO: Unlock native data types?
@@ -124,7 +124,7 @@ namespace demo.tests
             //       GEO_POINT is using a tuple format, GEO_SHAPE is using the GeoJSON format.
             // Assert.Equal(new List<double>{85.43, 66.23}, row["geopoint"]);  // TODO
             Assert.Equal("(85.42999997735023,66.22999997343868)", row["geopoint"].ToString());  // FIXME
-            Assert.Equal(@"{""coordinates"":[[[5.0,5.0],[5.0,10.0],[10.0,10.0],[10.0,5.0],[5.0,5.0]]],""type"":""Polygon""}", row["geoshape"]);
+            Assert.Equal("""{"coordinates":[[[5.0,5.0],[5.0,10.0],[10.0,10.0],[10.0,5.0],[5.0,5.0]]],"type":"Polygon"}""", row["geoshape"]);
 
             // Vector type
             Assert.Equal((new List<double>{1.1, 2.2, 3.3}).Select(d => (float) d).ToArray(), row["float_vector"]);
@@ -145,10 +145,10 @@ namespace demo.tests
             //        it doesn't work for OBJECT types.
             //        Yet, they can be submitted as STRING in JSON format.
             Assert.Equal(new List<string>{"foo", "bar"}, row["array"]);
-            Assert.Equal(@"{""foo"":""bar""}", row["object"]);
+            Assert.Equal("""{"foo":"bar"}""", row["object"]);
 
             // Run a special query indexing into ARRAY types.
-            await using (var cmd = new NpgsqlCommand(@"SELECT ""array[2]"" AS foo FROM testdrive.container", conn))
+            await using (var cmd = new NpgsqlCommand("""SELECT "array[2]" AS foo FROM testdrive.container""", conn))
             await using (var reader = cmd.ExecuteReader())
             {
                 var dataTable = new DataTable();
@@ -157,7 +157,7 @@ namespace demo.tests
             }
 
             // Run a special query indexing into OBJECT types.
-            await using (var cmd = new NpgsqlCommand(@"SELECT ""object['foo']"" AS foo FROM testdrive.container", conn))
+            await using (var cmd = new NpgsqlCommand("""SELECT "object['foo']" AS foo FROM testdrive.container""", conn))
             await using (var reader = cmd.ExecuteReader())
             {
                 var dataTable = new DataTable();
