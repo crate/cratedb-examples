@@ -92,7 +92,7 @@ namespace demo.tests
             var conn = fixture.Db;
 
             // Provision data.
-            var task = DatabaseWorkloadsMore.AllTypesNativeExample(conn);
+            var task = new DatabaseWorkloadsTypes(conn).AllTypesNativeExample();
             var dt = await task.WaitAsync(TimeSpan.FromSeconds(0.5));
 
             // Check results.
@@ -146,7 +146,7 @@ namespace demo.tests
             var conn = fixture.Db;
 
             // Provision data.
-            var task = DatabaseWorkloadsMore.AllTypesNativeExample(conn);
+            var task = new DatabaseWorkloadsTypes(conn).AllTypesNativeExample();
             await task.WaitAsync(TimeSpan.FromSeconds(0.5));
 
             // Run an SQL query indexing into ARRAY types.
@@ -175,7 +175,7 @@ namespace demo.tests
             var conn = fixture.Db;
 
             // Invoke database workload.
-            var task = DatabaseWorkloadsMore.ObjectJsonDocumentExample(conn);
+            var task = new DatabaseWorkloadsTypes(conn).ObjectJsonDocumentExample();
             var obj = await task.WaitAsync(TimeSpan.FromSeconds(0.5));
 
             // Validate the outcome.
@@ -188,7 +188,7 @@ namespace demo.tests
             var conn = fixture.Db;
 
             // Invoke database workload.
-            var task = DatabaseWorkloadsMore.ObjectPocoExample(conn);
+            var task = new DatabaseWorkloadsTypes(conn).ObjectPocoExample();
             var obj = await task.WaitAsync(TimeSpan.FromSeconds(0.5));
 
             // Validate the outcome.
@@ -202,7 +202,7 @@ namespace demo.tests
             var conn = fixture.Db;
 
             // Invoke database workload.
-            var task = DatabaseWorkloadsMore.ArrayPocoExample(conn);
+            var task = new DatabaseWorkloadsTypes(conn).ArrayPocoExample();
             var obj = await task.WaitAsync(TimeSpan.FromSeconds(0.5));
 
             // Validate the outcome.

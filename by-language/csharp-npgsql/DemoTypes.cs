@@ -53,12 +53,19 @@ namespace demo
         public IList<string>? FloatVector { get; set; }
     }
 
-    public class DatabaseWorkloadsMore
+    public class DatabaseWorkloadsTypes
     {
 
-        public static async Task ProvisionAllTypes(NpgsqlConnection conn)
+        public DatabaseWorkloadsTypes(NpgsqlConnection conn)
         {
-            Console.WriteLine("Running ProvisionAllTypes");
+            this.conn = conn;
+        }
+        
+        private NpgsqlConnection conn;
+
+        public async Task CreateTable()
+        {
+            Console.WriteLine("Running CreateTable");
 
             // Submit DDL, create database schema.
             await using (var cmd = new NpgsqlCommand("DROP TABLE IF EXISTS testdrive.example", conn))
@@ -86,6 +93,7 @@ namespace demo
                     -- Container types
                     "array" ARRAY(STRING),
                     "object" OBJECT(DYNAMIC),
+                    "array_object" ARRAY(OBJECT(DYNAMIC)),
                     -- Geospatial types
                     geopoint GEO_POINT,
                     geoshape GEO_SHAPE,
@@ -96,6 +104,11 @@ namespace demo
             {
                 cmd.ExecuteNonQuery();
             }
+        }
+
+        public async Task InsertRecord()
+        {
+            Console.WriteLine("Running InsertRecord");
 
             // Insert single data point.
             await using (var cmd = new NpgsqlCommand("""
@@ -162,20 +175,26 @@ namespace demo
                 cmd.ExecuteNonQuery();
             }
 
+            await RefreshTable();
+
+        }
+
+        public async Task RefreshTable()
+        {
             // Flush data.
             await using (var cmd = new NpgsqlCommand("REFRESH TABLE testdrive.example", conn))
             {
                 cmd.ExecuteNonQuery();
             }
-
         }
 
-        public static async Task<DataTable> AllTypesNativeExample(NpgsqlConnection conn)
+        public async Task<DataTable> AllTypesNativeExample()
         {
             Console.WriteLine("Running AllTypesNativeExample");
 
             // Provision data.
-            await ProvisionAllTypes(conn);
+            await CreateTable();
+            await InsertRecord();
 
             // Query back data.
             await using (var cmd = new NpgsqlCommand("SELECT * FROM testdrive.example", conn))
@@ -190,18 +209,12 @@ namespace demo
 
         }
 
-        public static async Task<JsonDocument> ObjectJsonDocumentExample(NpgsqlConnection conn)
+        public async Task<JsonDocument> ObjectJsonDocumentExample()
         {
             Console.WriteLine("Running ObjectJsonDocumentExample");
 
             // Provision data.
-            await ProvisionAllTypes(conn);
-
-            // This test uses the central DDL, but a blank slate to focus on the test case at hand.
-            await using (var cmd = new NpgsqlCommand("DELETE FROM testdrive.example", conn))
-            {
-                cmd.ExecuteNonQuery();
-            }
+            await CreateTable();
 
             await using (var cmd = new NpgsqlCommand("""
             INSERT INTO testdrive.example (
@@ -216,10 +229,7 @@ namespace demo
             }
 
             // Flush data.
-            await using (var cmd = new NpgsqlCommand("REFRESH TABLE testdrive.example", conn))
-            {
-                cmd.ExecuteNonQuery();
-            }
+            await RefreshTable();
 
             // Query back data.
             await using (var cmd = new NpgsqlCommand("SELECT * FROM testdrive.example", conn))
@@ -232,12 +242,13 @@ namespace demo
             }
         }
 
-        public static async Task<List<JsonDocument>> ArrayJsonDocumentExample(NpgsqlConnection conn)
+        public async Task<List<JsonDocument>> ArrayJsonDocumentExample()
         {
             Console.WriteLine("Running ArrayJsonDocumentExample");
 
             // Provision data.
-            await ProvisionAllTypes(conn);
+            await CreateTable();
+            await InsertRecord();
 
             // Query back data.
             await using (var cmd = new NpgsqlCommand("SELECT * FROM testdrive.example", conn))
@@ -253,34 +264,18 @@ namespace demo
             }
         }
 
-        public static async Task ProvisionPoco(NpgsqlConnection conn)
+        public async Task InsertPoco()
         {
             /***
              * Verify Npgsql POCO mapping with CrateDB.
              * https://www.npgsql.org/doc/types/json.html#poco-mapping
              */
-            Console.WriteLine("Running ProvisionPoco");
-
-            // Submit DDL, create database schema.
-            await using (var cmd = new NpgsqlCommand("DROP TABLE IF EXISTS testdrive.poco", conn))
-            {
-                cmd.ExecuteNonQuery();
-            }
-
-            await using (var cmd = new NpgsqlCommand("""
-                CREATE TABLE testdrive.poco (
-                    "array" ARRAY(OBJECT(DYNAMIC)),
-                    "object" OBJECT(DYNAMIC)
-                );
-            """, conn))
-            {
-                cmd.ExecuteNonQuery();
-            }
+            Console.WriteLine("Running InsertPoco");
 
             // Insert single data point.
             await using (var cmd = new NpgsqlCommand("""
-                INSERT INTO testdrive.poco (
-                    "array",
+                INSERT INTO testdrive.example (
+                    "array_object",
                     "object"
                 ) VALUES (
                     @array,
@@ -298,22 +293,20 @@ namespace demo
             }
 
             // Flush data.
-            await using (var cmd = new NpgsqlCommand("REFRESH TABLE testdrive.poco", conn))
-            {
-                cmd.ExecuteNonQuery();
-            }
+            await RefreshTable();
 
         }
 
-        public static async Task<BasicPoco> ObjectPocoExample(NpgsqlConnection conn)
+        public async Task<BasicPoco> ObjectPocoExample()
         {
             Console.WriteLine("Running ObjectPocoExample");
 
             // Provision data.
-            await ProvisionPoco(conn);
+            await CreateTable();
+            await InsertPoco();
 
             // Query back data.
-            await using (var cmd = new NpgsqlCommand("SELECT * FROM testdrive.poco", conn))
+            await using (var cmd = new NpgsqlCommand("SELECT * FROM testdrive.example", conn))
             await using (var reader = cmd.ExecuteReader())
             {
                 reader.Read();
@@ -323,19 +316,20 @@ namespace demo
             }
         }
 
-        public static async Task<List<BasicPoco>> ArrayPocoExample(NpgsqlConnection conn)
+        public async Task<List<BasicPoco>> ArrayPocoExample()
         {
             Console.WriteLine("Running ArrayPocoExample");
 
             // Provision data.
-            await ProvisionPoco(conn);
+            await CreateTable();
+            await InsertPoco();
 
             // Query back data.
-            await using (var cmd = new NpgsqlCommand("SELECT * FROM testdrive.poco", conn))
+            await using (var cmd = new NpgsqlCommand("SELECT * FROM testdrive.example", conn))
             await using (var reader = cmd.ExecuteReader())
             {
                 reader.Read();
-                var obj = reader.GetFieldValue<List<BasicPoco>>("array");
+                var obj = reader.GetFieldValue<List<BasicPoco>>("array_object");
                 Console.WriteLine(obj[0]);
                 Console.WriteLine(obj[1]);
                 return obj;

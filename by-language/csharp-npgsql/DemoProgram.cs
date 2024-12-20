@@ -27,11 +27,13 @@ namespace demo
                     await DatabaseWorkloads.SystemQueryExample(conn);
                     await DatabaseWorkloads.BasicConversationExample(conn);
                     await DatabaseWorkloads.UnnestExample(conn);
-                    await DatabaseWorkloadsMore.AllTypesNativeExample(conn);
-                    await DatabaseWorkloadsMore.ObjectJsonDocumentExample(conn);
-                    // await DatabaseWorkloadsMore.ArrayJsonDocumentExample(conn);
-                    await DatabaseWorkloadsMore.ObjectPocoExample(conn);
-                    await DatabaseWorkloadsMore.ArrayPocoExample(conn);
+
+                    var dwt = new DatabaseWorkloadsTypes(conn);
+                    await dwt.AllTypesNativeExample();
+                    await dwt.ObjectJsonDocumentExample();
+                    // await dwt.ArrayJsonDocumentExample();
+                    await dwt.ObjectPocoExample();
+                    await dwt.ArrayPocoExample();
                     conn.Close();
                 });
 
