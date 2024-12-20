@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Npgsql;
+using NpgsqlTypes;
 using Xunit;
 
 namespace demo.tests
@@ -129,11 +130,11 @@ namespace demo.tests
             // Assert.Equal(new Dictionary<string, string>{{"foo", "bar"}}, row["object"]);
 
             // Geospatial types
-            // TODO: Unlock native data types?
-            //       GEO_POINT and GEO_SHAPE types can be marshalled back and forth using STRING.
-            //       GEO_POINT is using a tuple format, GEO_SHAPE is using the GeoJSON format.
-            // Assert.Equal(new List<double>{85.43, 66.23}, row["geopoint"]);  // TODO
-            Assert.Equal("(85.42999997735023,66.22999997343868)", row["geopoint"].ToString());  // FIXME
+            // While `GEO_POINT` is transparently marshalled as `NpgsqlPoint`,
+            // `GEO_SHAPE` is communicated as scalar `string` type, using the GeoJSON format.
+            // TODO: Possibly support transparently converging `GEO_SHAPE` to one of
+            //       `NpgsqlLSeg`, `NpgsqlBox`, `NpgsqlPath`, `NpgsqlPolygon`, `NpgsqlCircle`.
+            Assert.Equal(new NpgsqlPoint(85.42999997735023, 66.22999997343868), row["geopoint"]);
             Assert.Equal("""{"coordinates":[[[5.0,5.0],[5.0,10.0],[10.0,10.0],[10.0,5.0],[5.0,5.0]]],"type":"Polygon"}""", row["geoshape"]);
 
             // Vector type
