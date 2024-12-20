@@ -166,12 +166,27 @@ namespace demo
                 cmd.Parameters.AddWithValue("timestamp_tz", "1970-01-02T00:00:00+01:00");
                 cmd.Parameters.AddWithValue("timestamp_notz", "1970-01-02T00:00:00");
                 cmd.Parameters.AddWithValue("ip", "127.0.0.1");
+
+                // Container types
                 cmd.Parameters.AddWithValue("array", NpgsqlDbType.Json, new List<string>{"foo", "bar"});
                 cmd.Parameters.AddWithValue("object", NpgsqlDbType.Json, new Dictionary<string, string>{{"foo", "bar"}});
-                cmd.Parameters.AddWithValue("geopoint", new List<double>{85.43, 66.23});
-                // TODO: Check if `GEO_SHAPE` types can be represented by real .NET or Npgsql data types.
+
+                // Geospatial types
+
+                // GEO_POINT
+                // Alternatively to `NpgsqlPoint`, you can also use `List<double>{85.43, 66.23}`.
+                cmd.Parameters.AddWithValue("geopoint", new NpgsqlPoint(85.43, 66.23));
+
+                // GEO_SHAPE
+                // While `GEO_POINT` is transparently marshalled as `NpgsqlPoint`,
+                // `GEO_SHAPE` is communicated as scalar `string` type, using WKT or GeoJSON format.
+                // TODO: Possibly support transparently converging `GEO_SHAPE` to one of
+                //       `NpgsqlLSeg`, `NpgsqlBox`, `NpgsqlPath`, `NpgsqlPolygon`, `NpgsqlCircle`.
                 cmd.Parameters.AddWithValue("geoshape", "POLYGON ((5 5, 10 5, 10 10, 5 10, 5 5))");
+
+                // Vector type
                 cmd.Parameters.AddWithValue("float_vector", new List<double> {1.1, 2.2, 3.3});
+
                 cmd.ExecuteNonQuery();
             }
 
