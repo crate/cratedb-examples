@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Text.Json;
 using System.Threading.Tasks;
+using GeoJSON.Net.Geometry;
 using Newtonsoft.Json;
 using Npgsql;
 using NpgsqlTypes;
@@ -348,6 +349,102 @@ namespace demo
                 Console.WriteLine(obj[0]);
                 Console.WriteLine(obj[1]);
                 return obj;
+            }
+        }
+
+        public async Task InsertGeoJsonTyped()
+        {
+            /***
+             * Verify Npgsql PostGIS/GeoJSON Type Plugin with CrateDB.
+             * https://www.npgsql.org/doc/types/geojson.html
+             *
+             * TODO: Does not work yet, because CrateDB communicates GEO_SHAPE as string?
+             *       The error message is:
+             *
+             *       System.NotSupportedException : The NpgsqlDbType 'Geometry' isn't present in your
+             *       database. You may need to install an extension or upgrade to a newer version.
+             */
+            Console.WriteLine("Running InsertGeo");
+
+            // Insert single data point.
+            await using (var cmd = new NpgsqlCommand("""
+            INSERT INTO testdrive.example (
+                "geoshape"
+            ) VALUES (
+                @geoshape
+            );
+            """, conn))
+            {
+                var point = new Point(new Position(85.43, 66.23));
+                cmd.Parameters.AddWithValue("geoshape", NpgsqlDbType.Geometry, point);
+                cmd.ExecuteNonQuery();
+            }
+
+            // Flush data.
+            await RefreshTable();
+        }
+
+        public async Task InsertGeoJsonString()
+        {
+            /***
+             * Communicate GeoJSON types as strings, marshall from/to GeoJSON types manually.
+             */
+            Console.WriteLine("Running InsertGeoRaw");
+
+            // Insert single data point.
+            await using (var cmd = new NpgsqlCommand("""
+            INSERT INTO testdrive.example (
+                "geoshape"
+            ) VALUES (
+                @geoshape
+            );
+            """, conn))
+            {
+                var point = new Point(new Position(85.43, 66.23));
+                var poly = new Polygon([
+                    new LineString([
+                        new Position(longitude: 5.0, latitude: 5.0),
+                        new Position(longitude: 5.0, latitude: 10.0),
+                        new Position(longitude: 10.0, latitude: 10.0),
+                        new Position(longitude: 10.0, latitude: 5.0),
+                        new Position(longitude: 5.0, latitude: 5.0),
+                    ])
+                ]);
+                // TODO: Can GEO_SHAPE types be directly marshalled to a .NET GeoJSON type?
+                //       Currently, `InsertGeoJsonTyped` does not work yet.
+                cmd.Parameters.AddWithValue("geoshape", NpgsqlDbType.Json, JsonConvert.SerializeObject(point));
+                cmd.ExecuteNonQuery();
+
+                cmd.Parameters.Clear();
+
+                cmd.Parameters.AddWithValue("geoshape", NpgsqlDbType.Json, JsonConvert.SerializeObject(poly));
+                cmd.ExecuteNonQuery();
+            }
+
+            // Flush data.
+            await RefreshTable();
+
+        }
+
+        public async Task<Point> GeoJsonTypesExample()
+        {
+            Console.WriteLine("Running GeoJsonTypesExample");
+
+            // Provision data.
+            await CreateTable();
+            // await InsertGeoJsonTyped();
+            await InsertGeoJsonString();
+
+            // Query back data.
+            await using (var cmd = new NpgsqlCommand("SELECT * FROM testdrive.example", conn))
+            await using (var reader = cmd.ExecuteReader())
+            {
+                reader.Read();
+                // TODO: Can GEO_SHAPE types be directly marshalled to a .NET GeoJSON type?
+                //       Currently, `InsertGeoJsonTyped` does not work yet.
+                var obj = reader.GetFieldValue<JsonDocument>("geoshape");
+                var geoJsonObject = JsonConvert.DeserializeObject<Point>(obj.RootElement.ToString());
+                return (Point) geoJsonObject;
             }
         }
 
