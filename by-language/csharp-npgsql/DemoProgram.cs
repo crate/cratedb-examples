@@ -17,12 +17,8 @@ namespace demo
                 {
                     var connString = $"Host={options.Host};Port={options.Port};SSL Mode={options.SslMode};" +
                                      $"Username={options.Username};Password={options.Password};Database={options.Database}";
-                    Console.WriteLine($"Connecting to {connString}\n");
 
-                    var dataSourceBuilder = new NpgsqlDataSourceBuilder(connString);
-                    dataSourceBuilder.EnableDynamicJson();
-                    await using var dataSource = dataSourceBuilder.Build();
-                    await using var conn = dataSource.OpenConnection();
+                    await using var conn = GetConnection(connString);
 
                     await DatabaseWorkloads.SystemQueryExample(conn);
                     await DatabaseWorkloads.BasicConversationExample(conn);
@@ -34,9 +30,32 @@ namespace demo
                     // await dwt.ArrayJsonDocumentExample();
                     await dwt.ObjectPocoExample();
                     await dwt.ArrayPocoExample();
+                    await dwt.GeoJsonTypesExample();
                     conn.Close();
                 });
 
+        }
+
+        public static NpgsqlConnection GetConnection(string connString)
+        {
+            Console.WriteLine($"Connecting to database: {connString}\n");
+
+            // Enable JSON POCO mapping and PostGIS/GeoJSON Type Plugin.
+            // https://www.npgsql.org/doc/types/json.html
+            // https://www.npgsql.org/doc/types/geojson.html
+            var dataSourceBuilder = new NpgsqlDataSourceBuilder(connString);
+
+            // Enable JSON POCO mapping Plugin.
+            // https://www.npgsql.org/doc/types/json.html
+            dataSourceBuilder.EnableDynamicJson();
+
+            // Enable PostGIS/GeoJSON Type Plugin.
+            // https://www.npgsql.org/doc/types/geojson.html
+            // dataSourceBuilder.UseGeoJson();
+
+            var dataSource = dataSourceBuilder.Build();
+            var conn = dataSource.OpenConnection();
+            return conn;
         }
 
         public class Options

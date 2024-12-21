@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using GeoJSON.Net.Geometry;
 using Npgsql;
 using NpgsqlTypes;
 using Xunit;
@@ -22,12 +23,7 @@ namespace demo.tests
             {
                 CRATEDB_DSN = $"Host=localhost;Port=5432;Username=crate;Password=;Database=testdrive";
             }
-            Console.WriteLine($"Connecting to {CRATEDB_DSN}\n");
-            
-            var dataSourceBuilder = new NpgsqlDataSourceBuilder(CRATEDB_DSN);
-            dataSourceBuilder.EnableDynamicJson();
-            using var dataSource = dataSourceBuilder.Build();
-            Db = dataSource.OpenConnection();
+            Db = DemoProgram.GetConnection(CRATEDB_DSN);
         }
 
         public void Dispose()
@@ -213,6 +209,22 @@ namespace demo.tests
                 new BasicPoco { name = "Petrosilius", age = 42 },
             };
             Assert.Equal(reference, obj);
+
+        }
+
+        [Fact]
+        public async Task TestGeoJsonTypesExample()
+        {
+            var conn = fixture.Db;
+
+            // Provision data.
+            var task = new DatabaseWorkloadsTypes(conn).GeoJsonTypesExample();
+            var point = await task.WaitAsync(TimeSpan.FromSeconds(0.5));
+
+            // Validate the outcome.
+            var coords = new Point(new Position(85.43, 66.23)).Coordinates;
+            Assert.Equal(coords.Latitude, point.Coordinates.Latitude);
+            Assert.Equal(coords.Longitude, point.Coordinates.Longitude);
 
         }
 
