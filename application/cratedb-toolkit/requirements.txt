@@ -1,2 +1,2 @@
 crate>=1.0.0.dev2
-cratedb-toolkit[influxdb,mongodb]>=0.0.29
+cratedb-toolkit[influxdb,mongodb]>=0.0.30

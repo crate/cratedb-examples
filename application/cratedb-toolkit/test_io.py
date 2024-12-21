@@ -86,9 +86,9 @@ def test_ctk_load_table_influxdb_lp(drop_testing_tables):
 
     # Invoke data transfer.
     command = f"""
-influxio copy \
-    {influxdb_lp_url} \
-    "crate://localhost:4200/from-influxdb/air-sensor-data"
+    ctk load table \
+        "{influxdb_lp_url}" \
+        --cratedb-sqlalchemy-url="crate://localhost:4200/from-influxdb/air-sensor-data"
     """
     print(f"Invoking CTK: {command}", file=sys.stderr)
     subprocess.check_call(shlex.split(command))
