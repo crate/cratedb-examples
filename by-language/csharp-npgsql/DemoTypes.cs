@@ -426,7 +426,7 @@ namespace demo
 
         }
 
-        public async Task<Point> GeoJsonTypesExample()
+        public async Task<Point?> GeoJsonTypesExample()
         {
             Console.WriteLine("Running GeoJsonTypesExample");
 
@@ -444,7 +444,7 @@ namespace demo
                 //       Currently, `InsertGeoJsonTyped` does not work yet.
                 var obj = reader.GetFieldValue<JsonDocument>("geoshape");
                 var geoJsonObject = JsonConvert.DeserializeObject<Point>(obj.RootElement.ToString());
-                return (Point) geoJsonObject;
+                return (Point?) geoJsonObject;
             }
         }
 
