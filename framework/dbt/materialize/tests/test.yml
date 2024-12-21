@@ -1,0 +1,25 @@
+models:
+  - name: test
+    columns:
+      - name: id
+        data_tests:
+          - unique
+          - not_null
+      - name: started
+        data_tests:
+          - unique
+          - not_null
+      - name: classification['type']
+        data_tests:
+          - accepted_values:
+              values: ['SELECT', 'INSERT', 'DELETE', 'DDL', 'MANAGEMENT', 'UNDEFINED']
+      - name: started
+        data_tests:
+          - dbt_utils.accepted_range:
+              min_value: 1734815733815
+              max_value: "now()"
+
+      #- name: classification['labels']
+      #  data_tests:
+      #    - accepted_values:
+      #        values: [[], ["Collect"], ["Collect", "Order"], ["Collect", "Union"], ["Collect", "GroupHashAggregate"], ["Collect", "GroupHashAggregate", "Order"], ["InsertFromValues"], ["TableFunction"]]

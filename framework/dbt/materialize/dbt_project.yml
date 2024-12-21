@@ -1,0 +1,12 @@
+# Project name and metadata.
+name: 'testdrive_materialized'
+version: '1.0.0'
+config-version: 2
+
+# Configure connection profile dbt uses for this project.
+profile: 'cratedb_localhost'
+
+# Directories to be removed by `dbt clean`.
+clean-targets:
+  - "target"
+  - "dbt_packages"

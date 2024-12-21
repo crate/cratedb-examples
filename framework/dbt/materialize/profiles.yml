@@ -1,0 +1,12 @@
+cratedb_localhost:
+  outputs:
+    dev:
+      type: cratedb
+      host: localhost
+      user: crate
+      pass: crate
+      port: 5432
+      dbname: crate
+      schema: doc
+  catalog: crate
+  target: dev

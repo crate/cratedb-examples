@@ -112,6 +112,11 @@ updates:
     schedule:
       interval: "daily"
 
+  - directory: "/framework/dbt/materialize"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "daily"
+
   - directory: "/framework/gradio"
     package-ecosystem: "pip"
     schedule:
