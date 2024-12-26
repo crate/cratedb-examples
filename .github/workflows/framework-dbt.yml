@@ -69,3 +69,11 @@ jobs:
           pip install -r requirements.txt
           dbt run --debug
           dbt test --debug
+
+      - name: Validate framework/dbt/materialize
+        run: |
+          cd framework/dbt/materialize
+          pip install -r requirements.txt
+          dbt deps
+          dbt run --debug
+          dbt test --debug

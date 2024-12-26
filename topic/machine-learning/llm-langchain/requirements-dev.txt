@@ -1,11 +1,11 @@
-# Real.
+# Production.
 cratedb-toolkit[io]
 pueblo[notebook,testing]
 
-# Development.
+# Staging.
 # cratedb-toolkit[io] @ git+https://github.com/crate-workbench/cratedb-toolkit.git@main
 # pueblo[notebook,testing] @ git+https://github.com/pyveci/pueblo.git@main
 
-# Workstation.
+# Development.
 #--editable=/Users/amo/dev/crate/ecosystem/cratedb-retentions[io]
 #--editable=/Users/amo/dev/pyveci/sources/pueblo[testing]

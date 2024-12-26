@@ -18,16 +18,23 @@ namespace demo
                     var connString = $"Host={options.Host};Port={options.Port};SSL Mode={options.SslMode};" +
                                      $"Username={options.Username};Password={options.Password};Database={options.Database}";
                     Console.WriteLine($"Connecting to {connString}\n");
-                    using (var conn = new NpgsqlConnection(connString))
-                    {
-                        conn.Open();
-                        var program = new DatabaseWorkloads();
-                        await program.SystemQueryExample(conn);
-                        await program.BasicConversationExample(conn);
-                        await program.AsyncUnnestExample(conn);
-                        conn.Close();
-                    }
 
+                    var dataSourceBuilder = new NpgsqlDataSourceBuilder(connString);
+                    dataSourceBuilder.EnableDynamicJson();
+                    await using var dataSource = dataSourceBuilder.Build();
+                    await using var conn = dataSource.OpenConnection();
+
+                    await DatabaseWorkloads.SystemQueryExample(conn);
+                    await DatabaseWorkloads.BasicConversationExample(conn);
+                    await DatabaseWorkloads.UnnestExample(conn);
+
+                    var dwt = new DatabaseWorkloadsTypes(conn);
+                    await dwt.AllTypesNativeExample();
+                    await dwt.ObjectJsonDocumentExample();
+                    // await dwt.ArrayJsonDocumentExample();
+                    await dwt.ObjectPocoExample();
+                    await dwt.ArrayPocoExample();
+                    conn.Close();
                 });
 
         }
@@ -35,7 +42,7 @@ namespace demo
         public class Options
         {
             [Option('h', "host", Required = false, HelpText = "Host name to connect to", Default = "localhost")]
-            public string Host { get; set; }
+            public string? Host { get; set; }
 
             [Option('p', "port", Required = false, HelpText = "Port number to connect to", Default = 5432)]
             public int Port { get; set; }
@@ -43,64 +50,69 @@ namespace demo
             // Controls whether SSL is used, depending on server support. Can be Require, Disable, or Prefer.
             // https://www.npgsql.org/doc/connection-string-parameters.html#security-and-encryption
             [Option('s', "ssl-mode", Required = false, HelpText = "Which SSL mode to use", Default = "Disable")]
-            public string SslMode { get; set; }
+            public string? SslMode { get; set; }
 
             [Option('u', "username", Required = false, HelpText = "Username to authenticate with", Default = "crate")]
-            public string Username { get; set; }
+            public string? Username { get; set; }
             [Option('w', "password", Required = false, HelpText = "Password to authenticate with", Default = "")]
-            public string Password { get; set; }
+            public string? Password { get; set; }
             [Option('d', "database", Required = false, HelpText = "Database to use", Default = "testdrive")]
-            public string Database { get; set; }
+            public string? Database { get; set; }
         }
         
     }
 
     public class DatabaseWorkloads
     {
-        public async Task<List<string>> SystemQueryExample(NpgsqlConnection conn)
+        public static async Task<List<string>> SystemQueryExample(NpgsqlConnection conn)
         {
             Console.WriteLine("Running SystemQueryExample");
             var mountains = new List<string>();
-            using (var cmd = new NpgsqlCommand("SELECT mountain FROM sys.summits ORDER BY 1 LIMIT 25", conn))
-            using (var reader = cmd.ExecuteReader())
+            const string sql = "SELECT mountain, height, coordinates FROM sys.summits ORDER BY height DESC LIMIT 25";
+            await using (var cmd = new NpgsqlCommand(sql, conn))
+            await using (var reader = cmd.ExecuteReader())
             {
                 while (await reader.ReadAsync())
                 {
-                    mountains.Add(reader.GetString(0));
+                    mountains.Add(
+                        reader["mountain"].ToString() + " - " +
+                        reader["height"].ToString() + " - " +
+                        reader["coordinates"].ToString());
                 }
 
-                Console.WriteLine($"Mountains: {string.Join(",", mountains)}");
+                Console.WriteLine($"Mountains:\n{string.Join("\n", mountains)}");
             }
 
             Console.WriteLine();
             return mountains;
         }
 
-        public async Task<List<int>> BasicConversationExample(NpgsqlConnection conn)
+        public static async Task<List<int>> BasicConversationExample(NpgsqlConnection conn)
         {
             Console.WriteLine("Running BasicConversationExample");
             
             // Submit DDL, create database schema.
-            using (var cmd = new NpgsqlCommand("DROP TABLE IF EXISTS testdrive.basic", conn))
+            await using (var cmd = new NpgsqlCommand("DROP TABLE IF EXISTS testdrive.basic", conn))
             {
                 cmd.ExecuteNonQuery();
             }
-            using (var cmd = new NpgsqlCommand("CREATE TABLE testdrive.basic (x int)", conn))
+
+            await using (var cmd = new NpgsqlCommand("CREATE TABLE testdrive.basic (x int)", conn))
             {
                 cmd.ExecuteNonQuery();
             }
 
             // Insert single data point.
-            using (var cmd = new NpgsqlCommand("INSERT INTO testdrive.basic (x) VALUES (@x)", conn))
+            await using (var cmd = new NpgsqlCommand("INSERT INTO testdrive.basic (x) VALUES (@x)", conn))
             {
                 cmd.Parameters.AddWithValue("x", -999);
                 cmd.ExecuteNonQuery();
             }
 
             // Insert multiple data points.
-            using (var cmd = new NpgsqlCommand("INSERT INTO testdrive.basic (x) VALUES (@x)", conn))
+            await using (var cmd = new NpgsqlCommand("INSERT INTO testdrive.basic (x) VALUES (@x)", conn))
             {
-                using (var transaction = conn.BeginTransaction())
+                await using (var transaction = conn.BeginTransaction())
                 {
                     cmd.Transaction = transaction;
                     cmd.Parameters.Add("@x", NpgsqlDbType.Integer);
@@ -116,15 +128,15 @@ namespace demo
             }
 
             // Flush data.
-            using (var cmd = new NpgsqlCommand("REFRESH TABLE testdrive.basic", conn))
+            await using (var cmd = new NpgsqlCommand("REFRESH TABLE testdrive.basic", conn))
             {
                 cmd.ExecuteNonQuery();
             }
 
             // Query back data.
             var data = new List<int>();
-            using (var cmd = new NpgsqlCommand("SELECT x FROM testdrive.basic ORDER BY 1 ASC LIMIT 10", conn))
-            using (var reader = cmd.ExecuteReader())
+            await using (var cmd = new NpgsqlCommand("SELECT x FROM testdrive.basic ORDER BY 1 ASC LIMIT 10", conn))
+            await using (var reader = cmd.ExecuteReader())
             {
                 while (await reader.ReadAsync())
                 {
@@ -139,20 +151,20 @@ namespace demo
             return data;
         }
 
-        public async Task<int> AsyncUnnestExample(NpgsqlConnection conn)
+        public static async Task<int> UnnestExample(NpgsqlConnection conn)
         {
             Console.WriteLine("Running AsyncUnnestExample");
 
             // Submit DDL, create database schema.
-            using (var cmd = new NpgsqlCommand("DROP TABLE IF EXISTS testdrive.unnest", conn))
+            await using (var cmd = new NpgsqlCommand("DROP TABLE IF EXISTS testdrive.unnest", conn))
             {
                 await cmd.ExecuteNonQueryAsync();
             }
 
-            using (var cmd2 = new NpgsqlCommand(
-                connection: conn,
-                cmdText: "CREATE TABLE IF NOT EXISTS testdrive.unnest (id int, name text)"
-            ))
+            await using (var cmd2 = new NpgsqlCommand(
+                             connection: conn,
+                             cmdText: "CREATE TABLE IF NOT EXISTS testdrive.unnest (id int, name text)"
+                         ))
             {
                 await cmd2.ExecuteNonQueryAsync();
             }
@@ -170,16 +182,16 @@ namespace demo
             await cmd3.ExecuteNonQueryAsync();
 
             // Flush data.
-            using (var cmd = new NpgsqlCommand("REFRESH TABLE testdrive.unnest", conn))
+            await using (var cmd = new NpgsqlCommand("REFRESH TABLE testdrive.unnest", conn))
             {
                 cmd.ExecuteNonQuery();
             }
 
             // Query back data.
             var resultCount = -1;
-            using (var cmd = new NpgsqlCommand("SELECT COUNT(*) FROM testdrive.unnest", conn))
+            await using (var cmd = new NpgsqlCommand("SELECT COUNT(*) FROM testdrive.unnest", conn))
             {
-                using (var reader = cmd.ExecuteReader())
+                await using (var reader = cmd.ExecuteReader())
                 {
                     await reader.ReadAsync();
                     resultCount = reader.GetInt32(0);

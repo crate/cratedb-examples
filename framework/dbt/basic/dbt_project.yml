@@ -2,7 +2,7 @@
 # Name your project! Project names should contain only lowercase characters
 # and underscores. A good package name should reflect your organization's
 # name or the intended use of these models
-name: 'dbt_cratedb_example'
+name: 'testdrive_basic'
 version: '1.0.0'
 config-version: 2
 
@@ -31,7 +31,7 @@ clean-targets:         # directories to be removed by `dbt clean`
 # directory as views. These settings can be overridden in the individual model
 # files using the `{{ config(...) }}` macro.
 models:
-  dbt_cratedb_example:
+  testdrive_basic:
     # Config indicated by + and applies to all files under models/example/
     example:
       +materialized: view

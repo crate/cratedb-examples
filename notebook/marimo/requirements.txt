@@ -1,0 +1,5 @@
+duckdb
+marimo
+pandas<2.3
+polars
+sqlalchemy-cratedb

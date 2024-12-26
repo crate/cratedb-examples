@@ -1,4 +1,7 @@
-# dbt CrateDB Example
+# dbt CrateDB basic example
+
+## What's Inside
+A basic model materialization using the `table` strategy.
 
 ## Setup
 ```shell

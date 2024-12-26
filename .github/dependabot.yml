@@ -100,6 +100,11 @@ updates:
     schedule:
       interval: "daily"
 
+  - directory: "/application/records"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "daily"
+
   # Frameworks.
 
   - directory: "/framework/dbt/basic"
@@ -107,7 +112,17 @@ updates:
     schedule:
       interval: "daily"
 
+  - directory: "/framework/dbt/materialize"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "daily"
+
   - directory: "/framework/gradio"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "daily"
+
+  - directory: "/framework/records"
     package-ecosystem: "pip"
     schedule:
       interval: "daily"
