@@ -1,6 +1,6 @@
 # Azure Function - Event hub triggered
 
-This is a sample Azure Function in Python programming model v2 consuming Event hub batches, enriching them and inserting into CrateDB. The processed data will end up in one or more of the following tables: raw, reading or error. 
+This is a sample Azure Function in Python programming model v2 consuming Event hub batches, enriching them and inserting into CrateDB. The processed data will end up in one of the following tables: reading or error. 
 
 ## Set up the Azure Function example
 
@@ -18,7 +18,6 @@ You have to configure the Environment variables in the Function app to ensure it
 ```json
 {
   "EVENT_HUB_CONNECTION_STRING": "Endpoint=sb://<YourEventHubNamespace>.servicebus.windows.net/;SharedAccessKeyName=<YourPolicyName>;SharedAccessKey=<YourKey>",
-    "RAW_TABLE": "enrichment.raw",
     "READING_TABLE": "enrichment.reading",
     "ERROR_TABLE": "enrichment.error",
     "HOST": "<HOST-URL>:4200",
@@ -30,18 +29,7 @@ You can find the connection string in Event Hub namespace > Shared access polici
 
 ### Create Tables
 You should create the following tables in your CrateDB instance:
-<details>
-  <summary>enrichment.raw</summary>
 
-  ```sql
-  
-CREATE TABLE IF NOT EXISTS "enrichment"."raw" (
-   "insert_ts" TIMESTAMP WITH TIME ZONE,
-   "payload" OBJECT(IGNORED),
-   "trace_id" TEXT
-)
-  ```
-</details>
 <details>
   <summary>enrichment.error</summary>
 
@@ -51,23 +39,21 @@ CREATE TABLE IF NOT EXISTS "enrichment"."error" (
    "error" OBJECT(IGNORED),
    "payload" OBJECT(IGNORED),
    "insert_ts" TIMESTAMP WITH TIME ZONE,
-   "type" TEXT,
-   "trace_id" TEXT
+   "type" TEXT
 )
   ```
 </details>
 <details>
-  <summary>enrichment.ls_reading</summary>
+  <summary>enrichment.reading</summary>
 
   ```sql
   
 CREATE TABLE IF NOT EXISTS "enrichment"."reading" (
-   "country" TEXT,
-   "value" REAL,
-   "insert_ts" TIMESTAMP WITH TIME ZONE,
-   "reading_ts" TIMESTAMP WITH TIME ZONE,
-   "trace_id" TEXT,
-   "id" TEXT
+   "location" TEXT,
+   "sensor_id" TEXT,
+   "reading_ts" TIMESTAMP WITHOUT TIME ZONE,
+   "reading" OBJECT(DYNAMIC),
+   "insert_ts" TIMESTAMP WITHOUT TIME ZONE
 )
   ```
 </details>
@@ -76,34 +62,56 @@ CREATE TABLE IF NOT EXISTS "enrichment"."reading" (
 In the Azure plugin tab in the VS Code, there is an option to deploy the function to your already-created Function App. You can find the details [here](https://learn.microsoft.com/en-us/azure/azure-functions/functions-develop-vs-code?tabs=node-v4%2Cpython-v2%2Cisolated-process%2Cquick-create&pivots=programming-language-python#republish-project-files). This should send your function to your Azure account.
 
 ### Manually trigger event in Event Hub
-The Event hub is not connected to any source, so to test your function after it is configured and deployed, you go to Event Hubs Instance > Data Explorer > Send events. In the payload text box, write the following json:
+The Event hub is not connected to any source, so to test your function after it is configured and deployed, go to Event Hubs Instance > Data Explorer > Send events. In the payload text box, write the following json:
 ```json
-{
-    "country":"PT",
-    "type":"light_sensor",
-    "value":"1",
+[
+  {
     "id":"ABC001",
-    "reading_ts":"1732703748223"
-}
+    "location": "BR",
+    "ts":"1735231892159",
+    "temperature":1.23,
+    "humidity":72.3,
+    "light":"high"
+  }
+]
   ```
-This should result in new records in both `enrichment.raw` and `enrichment.reading` but no errors.
+This should result in a new record in the `enrichment.reading` table but no errors.
 If you want to trigger an error, run the following payload:
 ```json
 [
   {
-    "country":"PT",
-    "type":"light_sensor",
-    "value":"1",
-    "id":"ABC001",
-    "reading_ts":"1732703748223"
-  },
-  {
-    "country":"AU",
-    "type":"light_sensor",
-    "value":"ABC",
-    "id":"ABC001",
-    "reading_ts":"1732703748223"
+    "id":"ABC002",
+    "location": "BR",
+    "ts":"ABC",
+    "temperature":1.27,
+    "humidity":72.7,
+    "light":"high"
   }
 ]
   ```
-The second payload has a string value instead of a numeric one. With that, you should see two new records in `enrichment.raw`, one in `enrichment.reading` and one in `enrichment.error`.
+This second payload has a string value instead of a timestamp. With that, you should see one new record in the `enrichment.error` table. Finally, test with more than one event at the same time.
+
+```json
+[
+  {
+    "id":"ABC552",
+    "location": "US",
+    "ts":"ABC",
+    "temperature":1.27,
+    "humidity":52.7,
+    "light":"high"
+  },
+  {
+    "id":"ABC762",
+    "location": "PT",
+    "ts":"1735232089882",
+    "temperature":15.7,
+    "humidity":82.7,
+    "light":"high"
+  }
+]
+  ```
+The batch above should result in two new records: one in `enrichment.reading` and the other in `enrichment.error`, because of the string value for the timestamp column again.
+
+## Wrap-up
+It is simple to set up an Azure Function to consume the Event Hub events. To achieve that, use the [crate client](https://cratedb.com/docs/python/en/latest/index.html) to connect with your CrateDB cluster as you saw in the `crate_writer.py` script.
