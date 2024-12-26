@@ -1,109 +1,71 @@
-import uuid
 import logging
+import datetime
 import copy
-from schemas import (
-    READING
-)
 
-# TARGET_MAP maps the schema and the type to a target
-TARGET_MAP = {
-    "light_sensor": {
-        "schema": READING,
-        "type": "light_sensor",
-    },
+KEY_MAPPING = TARGET_MAP = {
+    "ts": "reading_ts",
+    "time": "reading_ts",
+    "current_ts": "reading_ts",
+    "timestamp": "reading_ts",
+    "id": "sensor_id",
+    "loc": "location"
 }
 
-def start_enrichment(raw_payload, value_cache):
+def transform(raw_payload, value_cache):
     """
-    This function takes the current batch of events from eventhub
-    and starts the enrichment. The result is saved in the value_cache variable.
+    This function takes a single event and transform it, checking for errors.
+    The result is saved in the value_cache variable.
 
     Args:
-        raw_event: event from an Event Hub
+        raw_payload: event from an Event Hub
         value_cache: ValueCache object to transfer values to the database writer
     """
     if raw_payload is None:
         return
 
-    if isinstance(raw_payload, list):
-        events = raw_payload
-    else:
-        events = [raw_payload]
+    try:
+        event_t = transform_payload(raw_payload)
+        location = event_t.get("location")
+        sensor_id = event_t.get("sensor_id")
+        timestamp = event_t.get("reading_ts")
+        payload = {
+            "temperature": event_t.get("temperature"),
+            "humidity": event_t.get("humidity"),
+            "light": event_t.get("light")
+        }
 
-    for event in events:
-        target = str(event.get("type", "")).lower()
-
-        trace_id = str(uuid.uuid4())
-
-        #if target == "light_sensor":
-        enricher = BaseEnrichment(event, target)
-
-        try:
-            enricher.transform()
-        except (ValueError, KeyError) as e:
-            logging.info(
-                f"enrichment error: {e} -- target: {target} -- "
-                f"enricher: {type(enricher).__name__} -- payload: {enricher.payload}"
-            )
-            enricher.error["message"] = str(e)
-            value_cache.add_error(enricher.payload, enricher.error, trace_id)
-
-        if not enricher.has_error:
-            value_cache.add_reading(
-                enricher.enriched_payload,
-                trace_id,
-                enricher.timestamp
-            )
-        value_cache.add_raw(enricher.payload, trace_id)
+        value_cache.add_reading(payload, location, timestamp, sensor_id)
 
 
-class BaseEnrichment:
-    """
-    The BaseEnrichment class implements the basic enrichment logic. There are three steps performed:
+    except (ValueError, KeyError) as e:
+        logging.info(
+            f"enrichment error: {e}"
+            f"-- payload: {raw_payload}"
+        )
+        value_cache.add_error(raw_payload, str(e), type(e).__name__)
+    
+def transform_payload(event):
+    #remove empty keys
+    event = remove_empty_keys(event)
+    #change column names
+    event = rename_keys(event)
+    #check for sensor_id, timestamp, location keys
+    check_fields(event)
+    return event
 
-    Remove empty keys:
-        payload is searched for empty keys
-    Match schema:
-        the top level keys of the payload are matched against the schema, if a key is not
-        present in the schema it is removed.
-    Get timestamp:
-        timestamp is read from payload.reading_ts
-    """
+def remove_empty_keys(event):
+    if "" in event:
+        value = event.pop("")
+    return event
 
-    def __init__(self, payload, target):
-        self.payload = payload
-        self.enriched_payload = {}
-        self.timestamp = 0
-        self.target = target
-        self.has_error = False
-        self.error = {"type": "", "message": ""}
+def rename_keys(event):
+    for key in list(event.keys()):
+        if key in KEY_MAPPING.keys():
+            event[KEY_MAPPING[key]] = event.pop(key)
+    
+    return event
 
-    def transform(self):
-        self._remove_empty_keys()
-        self._match_schema()
-        self._get_timestamp()
-
-    def _remove_empty_keys(self):
-        if "" in self.payload:
-            value = self.payload.pop("")
-            self.has_error = True
-            self.error["type"] = "Enrichment Error"
-            raise ValueError(f"raw message included empty key with value: {value}")
-
-    def _match_schema(self):
-        if self.target not in TARGET_MAP or self.has_error:
-            return
-        schema = TARGET_MAP[self.target]["schema"]
-        for key, value in self.payload.items():
-            if key in schema:
-                self.enriched_payload[key] = copy.deepcopy(value)
-
-    def _get_timestamp(self):
-        if self.target not in TARGET_MAP:
-            return
-        if "reading_ts" in self.payload:
-            self.timestamp = self.payload["reading_ts"]
-        else:
-            self.has_error = True
-            self.error["type"] = "Enrichment Error"
-            raise KeyError("'reading_ts' property missing in payload")
+def check_fields(event):
+    if not event.keys() >= {"location","sensor_id","reading_ts"}:
+        raise KeyError("missing key in payload")
+    

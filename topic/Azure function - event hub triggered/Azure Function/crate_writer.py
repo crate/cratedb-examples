@@ -18,26 +18,17 @@ class CrateWriter:
         self._host = host
         self._db_user = db_user
         self._db_pass = db_pass
+        self._failed = []
 
     def insert_values(self, value_cache):
-        self._failed = []
         self._connect()
-
-        if len(value_cache.raws) > 0:
-            self._insert_operation(
-                value_cache.raws,
-                self._tables["raws"],
-            )
 
         if len(value_cache.readings) > 0:
             self._insert_operation(
                 value_cache.readings,
                 self._tables["readings"],
             )
-            self._move_reading_to_error(value_cache)
-
-        if len(value_cache.errors_empty) > 0:
-            value_cache.validate_errors_empty()
+            self._move_metric_to_error(value_cache)
 
         if len(value_cache.errors) > 0:
             self._insert_operation(
@@ -63,10 +54,15 @@ class CrateWriter:
     def _insert_operation(self, value_list, table_name):
         if self._cursor is  None:
             return
-        stmt, parameters = self._prepare_insert_stmt(
+        try:
+            stmt, parameters = self._prepare_insert_stmt(
             value_list, table_name, (0, len(value_list))
         )
-        result = self._cursor.executemany(stmt, parameters)
+            result = self._cursor.executemany(stmt, parameters)
+        except (ProgrammingError, IntegrityError) as e:
+            for item in value_list:
+                self._add_item_to_failed(str(e), stmt, parameters, type(e).__name__, table_name, item)
+            return
 
         for i, row in enumerate(result):
             if row["rowcount"] == -2:
@@ -77,53 +73,30 @@ class CrateWriter:
                     self._cursor.executemany(stmt, parameters)
                 # IntegrityError is raised in case of PK violation (e.g. duplicated PK)
                 except (ProgrammingError, IntegrityError) as e:
-                    self._add_item_to_failed(
-                        e,
-                        stmt,
-                        parameters,
-                        value_list[i]["trace_id"],
-                        (
-                            "Integrity Error"
-                            if isinstance(e, IntegrityError)
-                            else "Internal Error"
-                        ),
-                        table_name,
-                    )
+                    self._add_item_to_failed(str(e), stmt, parameters, type(e).__name__, table_name, value_list[i])
 
     def _add_item_to_failed(
-        self, error, stmt, parameters, trace_id, error_type, table_name
+        self, error, stmt, parameters, error_type, table_name, payload
     ):
         logging.warning(
-            f"error: {error} -- stmt: {stmt} -- parameters: {parameters} -- trace_id: {trace_id}"
+            f"error: {error} -- stmt: {stmt} -- parameters: {parameters}"
         )
         self._failed.append(
             {
                 "type": table_name,
-                "trace_id": trace_id,
                 "error": error,
                 "error_type": error_type,
+                "payload": payload
             }
         )
 
-    def _move_reading_to_error(self, value_cache):
+    def _move_metric_to_error(self, value_cache):
         for element in self._failed:
-            if element["type"] == self._tables["readings"]:
-                try:
-                    trace_id = element["trace_id"]
-                    message = element["error"].message
-                    payload = value_cache.get_payload_from_raw(trace_id)
-
-                    value_cache.add_error(
-                        payload,
-                        {"type": element["error_type"], "message": message},
-                        trace_id,
-                    )
-                    value_cache.remove_reading(trace_id)
-                except IndexError:
-                    logging.warning(
-                        "Unable to move reading to error because it has already been moved (insert raw "
-                        "failed)"
-                    )
+            value_cache.add_error(
+                element["payload"],
+                element["error"],
+                element["error_type"]
+            )
 
     def _prepare_insert_stmt(self, value_list, table_name, iteration_range):
         stmt = f"INSERT INTO {table_name} (insert_ts, "

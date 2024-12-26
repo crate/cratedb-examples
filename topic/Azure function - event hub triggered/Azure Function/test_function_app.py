@@ -3,17 +3,18 @@ import os
 import sys
 import logging
 
-from enrichment import start_enrichment
+from enrichment import transform
 from crate_writer import CrateWriter
 from value_cache import ValueCache
 
 
-event = [{"country":"PT","type":"light_sensor","value":"1","id":"ABC001","reading_ts":"1732703748223"}]
+event = [{"id":"ABC002","location": "TH","ts":"ABC", "temperature":1.23,"humidity":72.3,
+    "light":"high","":"empty_key"}]
 
 crate_db = CrateWriter(
     {   
         "raws": os.getenv("RAW_TABLE", "enrichment.raw"),
-        "readings": os.getenv("READING_TABLE","enrichment.ls_reading"),
+        "readings": os.getenv("READING_TABLE","enrichment.reading"),
         "errors": os.getenv("ERROR_TABLE", "enrichment.error"),
     },
     os.getenv("HOST", "localhost:4200"),
@@ -25,7 +26,7 @@ try:
     # enrich all elements in current batch
     for event_ in event:
         raw_event = event_
-        start_enrichment(raw_event, insert_value_cache)
+        transform(raw_event, insert_value_cache)
     # insert raw, reading and error
     crate_db.insert_values(insert_value_cache)
 except Exception as e:

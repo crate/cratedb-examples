@@ -6,7 +6,7 @@ import logging
 
 import azure.functions as func
 
-from enrichment import start_enrichment
+from enrichment import transform
 from crate_writer import CrateWriter
 from value_cache import ValueCache
 
@@ -31,11 +31,12 @@ def enrich_events(event: func.EventHubEvent):
         if event is None:
             return 
         insert_value_cache = ValueCache()
-        # enrich all elements in current batch
-        raw_event = json.loads(event.get_body().decode("utf-8"))
-        #enrich payload
-        start_enrichment(raw_event, insert_value_cache)
-        # insert raw, metric and error
+        raw_events = json.loads(event.get_body().decode("utf-8"))
+
+        for event_ in raw_events:
+            raw_event = event_
+            transform(raw_event, insert_value_cache)
+            
         crate_db.insert_values(insert_value_cache)
     except Exception as e:
         # when any exception occurred, the function must exit unsuccessfully for events to be retried
