@@ -1,6 +1,4 @@
 import logging
-import datetime
-import copy
 
 KEY_MAPPING = TARGET_MAP = {
     "ts": "reading_ts",

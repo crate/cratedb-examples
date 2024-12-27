@@ -4,7 +4,7 @@ from crate import client
 from crate.client.exceptions import ProgrammingError, IntegrityError
 
 
-class CrateWriter:
+class CrateDBWriter:
     """
     The CrateWriter class is used to insert enriched and raw data in to CrateDB
     """
