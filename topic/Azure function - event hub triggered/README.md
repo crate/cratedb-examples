@@ -114,4 +114,4 @@ This second payload has a string value instead of a timestamp. With that, you sh
 The batch above should result in two new records: one in `enrichment.reading` and the other in `enrichment.error`, because of the string value for the timestamp column again.
 
 ## Wrap-up
-It is simple to set up an Azure Function to consume the Event Hub events. To achieve that, use the [crate client](https://cratedb.com/docs/python/en/latest/index.html) to connect with your CrateDB cluster as you saw in the `crate_writer.py` script.
+It is simple to set up an Azure Function to consume the Event Hub events. To achieve that, use the [crate client](https://cratedb.com/docs/python/en/latest/index.html) to connect with your CrateDB cluster as you saw in the `cratedb_writer.py` script.

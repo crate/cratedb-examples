@@ -28,7 +28,7 @@ class CrateDBWriter:
                 value_cache.readings,
                 self._tables["readings"],
             )
-            self._move_metric_to_error(value_cache)
+            self._move_reading_to_error(value_cache)
 
         if len(value_cache.errors) > 0:
             self._insert_operation(
@@ -41,8 +41,12 @@ class CrateDBWriter:
         return int(time.time() * 1000)
 
     def _connect(self):
-        if self._cursor is None or (self._cursor and getattr(self._cursor, "_closed", True)) or \
-       self._conn is None or (self._conn and getattr(self._conn, "_closed", True)):
+        if (
+            self._cursor is None
+            or (self._cursor and getattr(self._cursor, "_closed", True))
+            or self._conn is None
+            or (self._conn and getattr(self._conn, "_closed", True))
+        ):
             self._conn = client.connect(
                 self._host,
                 username=self._db_user,
@@ -52,16 +56,18 @@ class CrateDBWriter:
             self._cursor = self._conn.cursor()
 
     def _insert_operation(self, value_list, table_name):
-        if self._cursor is  None:
+        if self._cursor is None:
             return
         try:
             stmt, parameters = self._prepare_insert_stmt(
-            value_list, table_name, (0, len(value_list))
-        )
+                value_list, table_name, (0, len(value_list))
+            )
             result = self._cursor.executemany(stmt, parameters)
         except (ProgrammingError, IntegrityError) as e:
             for item in value_list:
-                self._add_item_to_failed(str(e), stmt, parameters, type(e).__name__, table_name, item)
+                self._add_item_to_failed(
+                    str(e), stmt, parameters, type(e).__name__, table_name, item
+                )
             return
 
         for i, row in enumerate(result):
@@ -73,29 +79,32 @@ class CrateDBWriter:
                     self._cursor.executemany(stmt, parameters)
                 # IntegrityError is raised in case of PK violation (e.g. duplicated PK)
                 except (ProgrammingError, IntegrityError) as e:
-                    self._add_item_to_failed(str(e), stmt, parameters, type(e).__name__, table_name, value_list[i])
+                    self._add_item_to_failed(
+                        str(e),
+                        stmt,
+                        parameters,
+                        type(e).__name__,
+                        table_name,
+                        value_list[i],
+                    )
 
     def _add_item_to_failed(
         self, error, stmt, parameters, error_type, table_name, payload
     ):
-        logging.warning(
-            f"error: {error} -- stmt: {stmt} -- parameters: {parameters}"
-        )
+        logging.warning(f"error: {error} -- stmt: {stmt} -- parameters: {parameters}")
         self._failed.append(
             {
                 "type": table_name,
                 "error": error,
                 "error_type": error_type,
-                "payload": payload
+                "payload": payload,
             }
         )
 
-    def _move_metric_to_error(self, value_cache):
+    def _move_reading_to_error(self, value_cache):
         for element in self._failed:
             value_cache.add_error(
-                element["payload"],
-                element["error"],
-                element["error_type"]
+                element["payload"], element["error"], element["error_type"]
             )
 
     def _prepare_insert_stmt(self, value_list, table_name, iteration_range):
