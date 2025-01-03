@@ -1,2 +1,3 @@
-gradio==4.*
+gradio<5.4
+python-multipart==0.0.12
 sqlalchemy-cratedb>=0.40.0
