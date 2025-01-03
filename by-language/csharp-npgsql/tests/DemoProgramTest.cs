@@ -4,7 +4,9 @@ using System.Data;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using GeoJSON.Net.Geometry;
 using Npgsql;
+using NpgsqlTypes;
 using Xunit;
 
 namespace demo.tests
@@ -21,12 +23,7 @@ namespace demo.tests
             {
                 CRATEDB_DSN = $"Host=localhost;Port=5432;Username=crate;Password=;Database=testdrive";
             }
-            Console.WriteLine($"Connecting to {CRATEDB_DSN}\n");
-            
-            var dataSourceBuilder = new NpgsqlDataSourceBuilder(CRATEDB_DSN);
-            dataSourceBuilder.EnableDynamicJson();
-            using var dataSource = dataSourceBuilder.Build();
-            Db = dataSource.OpenConnection();
+            Db = DemoProgram.GetConnection(CRATEDB_DSN);
         }
 
         public void Dispose()
@@ -129,11 +126,11 @@ namespace demo.tests
             // Assert.Equal(new Dictionary<string, string>{{"foo", "bar"}}, row["object"]);
 
             // Geospatial types
-            // TODO: Unlock native data types?
-            //       GEO_POINT and GEO_SHAPE types can be marshalled back and forth using STRING.
-            //       GEO_POINT is using a tuple format, GEO_SHAPE is using the GeoJSON format.
-            // Assert.Equal(new List<double>{85.43, 66.23}, row["geopoint"]);  // TODO
-            Assert.Equal("(85.42999997735023,66.22999997343868)", row["geopoint"].ToString());  // FIXME
+            // While `GEO_POINT` is transparently marshalled as `NpgsqlPoint`,
+            // `GEO_SHAPE` is communicated as scalar `string` type, using the GeoJSON format.
+            // TODO: Possibly support transparently converging `GEO_SHAPE` to one of
+            //       `NpgsqlLSeg`, `NpgsqlBox`, `NpgsqlPath`, `NpgsqlPolygon`, `NpgsqlCircle`.
+            Assert.Equal(new NpgsqlPoint(85.42999997735023, 66.22999997343868), row["geopoint"]);
             Assert.Equal("""{"coordinates":[[[5.0,5.0],[5.0,10.0],[10.0,10.0],[10.0,5.0],[5.0,5.0]]],"type":"Polygon"}""", row["geoshape"]);
 
             // Vector type
@@ -212,6 +209,22 @@ namespace demo.tests
                 new BasicPoco { name = "Petrosilius", age = 42 },
             };
             Assert.Equal(reference, obj);
+
+        }
+
+        [Fact]
+        public async Task TestGeoJsonTypesExample()
+        {
+            var conn = fixture.Db;
+
+            // Provision data.
+            var task = new DatabaseWorkloadsTypes(conn).GeoJsonTypesExample();
+            var point = await task.WaitAsync(TimeSpan.FromSeconds(0.5));
+
+            // Validate the outcome.
+            var coords = new Point(new Position(85.43, 66.23)).Coordinates;
+            Assert.Equal(coords.Latitude, point?.Coordinates.Latitude);
+            Assert.Equal(coords.Longitude, point?.Coordinates.Longitude);
 
         }
 
