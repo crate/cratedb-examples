@@ -1,6 +1,6 @@
 crash
 google-cloud-aiplatform<2
-langchain-cratedb<0.0.1
+langchain-cratedb<0.1.1
 langchain-google-vertexai<3
 langchain-openai<0.3
 langchain-text-splitters<0.4
