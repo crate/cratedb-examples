@@ -53,7 +53,7 @@ def churn_dataset(cratedb):
     Provide test case with a provisioned dataset.
     """
     cratedb.import_csv_pandas(
-        filepath="https://github.com/crate/cratedb-datasets/raw/main/machine-learning/automl/churn-dataset.csv",
+        filepath="https://cdn.crate.io/downloads/datasets/cratedb-datasets/machine-learning/automl/churn-dataset.csv",
         tablename="pycaret_churn",
     )
     cratedb.run_sql("REFRESH TABLE pycaret_churn;")
