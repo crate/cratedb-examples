@@ -28,9 +28,9 @@ CREATE TABLE IF NOT EXISTS devices_info (
 );
 
 COPY "devices_readings"
-  FROM 'https://github.com/crate/cratedb-datasets/raw/main/cloud-tutorials/devices_readings.json.gz'
+  FROM 'https://cdn.crate.io/downloads/datasets/cratedb-datasets/cloud-tutorials/devices_readings.json.gz'
   WITH (compression = 'gzip');
 
 COPY "devices_info"
-  FROM 'https://github.com/crate/cratedb-datasets/raw/main/cloud-tutorials/devices_info.json.gz'
+  FROM 'https://cdn.crate.io/downloads/datasets/cratedb-datasets/cloud-tutorials/devices_info.json.gz'
   WITH (compression = 'gzip');
