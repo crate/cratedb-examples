@@ -1,0 +1,226 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = [
+  "setuptools>=42", # At least v42 of setuptools required.
+  "versioningit",
+]
+
+[project]
+name = "cratedb-jupyter-examples"
+description = "CrateDB Jupyter Examples"
+readme = "README.md"
+keywords = [
+  "cratedb",
+  "data-processing",
+  "jupyter",
+]
+license = { text = "Apache 2.0" }
+authors = [
+  { name = "CrateDB Developers" },
+]
+requires-python = ">=3.8"
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Environment :: Console",
+  "Intended Audience :: Customer Service",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Education",
+  "Intended Audience :: End Users/Desktop",
+  "Intended Audience :: Information Technology",
+  "Intended Audience :: Manufacturing",
+  "Intended Audience :: Science/Research",
+  "Intended Audience :: System Administrators",
+  "Intended Audience :: Telecommunications Industry",
+  "License :: OSI Approved :: Apache Software License",
+  "Operating System :: MacOS :: MacOS X",
+  "Operating System :: Microsoft :: Windows",
+  "Operating System :: POSIX :: Linux",
+  "Operating System :: Unix",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Adaptive Technologies",
+  "Topic :: Communications",
+  "Topic :: Database",
+  "Topic :: Documentation",
+  "Topic :: Education",
+  "Topic :: Internet",
+  "Topic :: Internet :: WWW/HTTP",
+  "Topic :: Office/Business",
+  "Topic :: Scientific/Engineering",
+  "Topic :: Software Development :: Embedded Systems",
+  "Topic :: Software Development :: Libraries",
+  "Topic :: Software Development :: Object Brokering",
+  "Topic :: Software Development :: Pre-processors",
+  "Topic :: Software Development :: Quality Assurance",
+  "Topic :: Software Development :: Testing",
+  "Topic :: Software Development :: Version Control",
+  "Topic :: System :: Archiving",
+  "Topic :: System :: Benchmark",
+  "Topic :: System :: Clustering",
+  "Topic :: System :: Distributed Computing",
+  "Topic :: System :: Hardware",
+  "Topic :: System :: Logging",
+  "Topic :: System :: Monitoring",
+  "Topic :: System :: Networking",
+  "Topic :: System :: Systems Administration",
+  "Topic :: Text Processing",
+  "Topic :: Utilities",
+]
+dynamic = [
+  "version",
+]
+dependencies = [
+  "csvkit<3",
+  "jupysql<0.11",
+  "matplotlib<4",
+  "pandas<3",
+  "polars<2",
+  "sqlalchemy-cratedb>=0.40,<1",
+  "toml<0.11",
+]
+optional-dependencies.all = [
+  "cratedb-jupyter-examples[docs,develop,test]",
+]
+optional-dependencies.develop = [
+  "poethepoet<0.33",
+  "pyproject-fmt<2.6",
+  "ruff<0.9",
+  "validate-pyproject<0.24",
+]
+optional-dependencies.docs = [
+  "furo",
+  "myst-nb<1.2",
+  "sphinx-autobuild==2021.3.14", # Newer versions stopped "watching" appropriately?
+  "sphinx-copybutton",
+  "sphinx-design-elements<1",
+]
+optional-dependencies.test = [
+  "pueblo[notebook,testing]",
+]
+
+urls.Homepage = "https://github.com/crate/cratedb-examples/tree/main/notebook/jupyter"
+urls.Issues = "https://github.com/crate/cratedb-examples/issues"
+urls.Repository = "https://github.com/crate/cratedb-examples"
+
+[tool.setuptools.packages.find]
+namespaces = false
+
+# ===================
+# Tasks configuration
+# ===================
+
+[tool.ruff]
+line-length = 100
+
+lint.select = [
+  # Builtins
+  "A",
+  # Bugbear
+  "B",
+  # comprehensions
+  "C4",
+  # Pycodestyle
+  "E",
+  # eradicate
+  "ERA",
+  # Pyflakes
+  "F",
+  # isort
+  "I",
+  # pandas-vet
+  "PD",
+  # return
+  "RET",
+  # Bandit
+  "S",
+  # print
+  "T20",
+  "W",
+  # flake8-2020
+  "YTT",
+]
+
+lint.extend-ignore = [
+  # zip() without an explicit strict= parameter
+  "B905",
+  # df is a bad variable name. Be kinder to your future self.
+  "PD901",
+  # Unnecessary variable assignment before `return` statement
+  "RET504",
+  # Unnecessary `elif` after `return` statement
+  "RET505",
+  # Probable insecure usage of temporary file or directory
+  "S108",
+]
+
+lint.per-file-ignores."docs/conf.py" = [ "A001", "ERA001" ]
+
+[tool.pytest.ini_options]
+minversion = "2.0"
+addopts = """
+  -rfEX -p pytester --strict-markers --verbosity=3
+  --cov --cov-report=term-missing
+  --capture=no
+  """
+env = [
+  "CRATEDB_CONNECTION_STRING=crate://crate@localhost/?schema=notebook",
+]
+log_level = "DEBUG"
+log_cli_level = "DEBUG"
+testpaths = [ "*.py" ]
+xfail_strict = true
+markers = [
+]
+
+[tool.coverage.run]
+branch = false
+omit = [
+  "test*",
+]
+
+[tool.coverage.report]
+fail_under = 0
+show_missing = true
+
+[tool.versioningit.vcs]
+method = "git"
+default-tag = "0.0.0"
+
+[tool.poe.tasks]
+
+check = [
+  "lint",
+  "test",
+]
+
+docs-html = [
+  { cmd = "sphinx-build -W --keep-going -b html ./docs ./_build/html" },
+]
+docs-linkcheck = [
+  { cmd = "sphinx-build -W --keep-going -b linkcheck ./docs ./_build/html" },
+]
+
+format = [
+  # Format project metadata.
+  { cmd = "pyproject-fmt --keep-full-version pyproject.toml" },
+
+  # Format code.
+  # Configure Ruff not to auto-fix a few items that are useful in workbench mode.
+  # e.g.: unused imports (F401), unused variables (F841), `print` statements (T201), commented-out code (ERA001)
+  { cmd = "ruff format" },
+  { cmd = "ruff check --fix --ignore=ERA --ignore=F401 --ignore=F841 --ignore=T20 --ignore=ERA001" },
+]
+
+lint = [
+  { cmd = "ruff format --check" },
+  { cmd = "ruff check" },
+  { cmd = "validate-pyproject pyproject.toml" },
+]
+
+test = { cmd = "pytest" }
