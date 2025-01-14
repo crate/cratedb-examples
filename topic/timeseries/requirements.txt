@@ -1,5 +1,5 @@
 crate>=1.0.0.dev2
-cratedb-toolkit[datasets]>=0.0.29
+cratedb-toolkit[datasets]>=0.0.30
 refinitiv-data<1.7
 pandas==2.0.*
 pycaret==3.3.2
