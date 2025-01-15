@@ -20,7 +20,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.postgresql:postgresql:42.7.4'
+    implementation 'org.postgresql:postgresql:42.7.5'
     implementation 'io.crate:crate-jdbc:2.7.0'
     implementation 'org.slf4j:slf4j-api:2.0.16'
     implementation 'org.slf4j:slf4j-simple:2.0.16'
