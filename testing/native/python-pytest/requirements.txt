@@ -1,4 +1,4 @@
 crash>=0.31.5
-crate>=1.0.0.dev2
+crate>=2.0.0.dev5
 pytest<9
 pytest-cratedb>=0.4.0
