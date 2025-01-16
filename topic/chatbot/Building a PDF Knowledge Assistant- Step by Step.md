@@ -18,11 +18,12 @@ This guide provides a basic example to help you get started with building a PDF 
 Important Note: This script uses OpenAI’s API for image descriptions and embedding generation. As such, the content of your PDFs (including text and images) may be sent to OpenAI’s servers for processing. Do not use this script for confidential or sensitive PDFs unless you are certain it complies with your data privacy and security requirements.
 
 For processing sensitive data, consider using local or self-hosted Large Language Models (LLMs) such as:
-	•	OpenLLM: A framework for running open-source LLMs locally.
-	•	Hugging Face Transformers: Offers pre-trained models like BERT, GPT-2, and more.
-	•	LLaMA (Large Language Model Meta AI): An efficient model designed for local use, available via Meta’s research initiative.
-	•	Falcon: A highly performant open-source LLM optimized for inference and fine-tuning.
-	•	Rasa: Focused on building local conversational AI.
+
+- OpenLLM: A framework for running open-source LLMs locally.
+- Hugging Face Transformers: Offers pre-trained models like BERT, GPT-2, and more.
+- LLaMA (Large Language Model Meta AI): An efficient model designed for local use, available via Meta’s research initiative.
+- Falcon: A highly performant open-source LLM optimized for inference and fine-tuning.
+- Rasa: Focused on building local conversational AI.
 
 By using local models, you can retain complete control over your data while still leveraging advanced capabilities for text and image processing.
 
@@ -41,7 +42,7 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 
-Your terminal prompt should now start with (venv), indicating you’re inside the virtual environment.
+Your terminal prompt should now start with (`venv`), indicating you’re inside the virtual environment.
 
 ### Step 2: Install Dependencies
 
@@ -56,7 +57,7 @@ python -m spacy download en_core_web_sm
 ```
 
 #### Optional 
-•	Streamlit (for a web-based UI):
+Streamlit (for a web-based UI):
 
 ``` bash 
 pip install streamlit
@@ -73,19 +74,20 @@ pip install streamlit
 | **spacy**                 | Handles natural language tasks like keyword extraction.                                 |
 | **streamlit**             | Quickly builds simple web-based UIs.                                                   |
 
-•	openai: Enables embeddings and chat completions with OpenAI’s LLMs.
-•	python-dotenv: Loads environment variables from a .env file.
-•	requests: Sends HTTP requests (e.g., for CrateDB or external services).
-•	PyMuPDF: Extracts text and images from PDFs.
-•	spacy: Handles natural language tasks like keyword extraction.
-•	streamlit: Quickly builds simple web-based UIs.
+- openai: Enables embeddings and chat completions with OpenAI’s LLMs.
+- python-dotenv: Loads environment variables from a .env file.
+- requests: Sends HTTP requests (e.g., for CrateDB or external services).
+- PyMuPDF: Extracts text and images from PDFs.
+- spacy: Handles natural language tasks like keyword extraction.
+- streamlit: Quickly builds simple web-based UIs.
 
 ### Step 4: Obtain API Keys
 
 You’ll need:
-	1.	OpenAI API key – [Developper quickstart](https://platform.openai.com/docs/quickstart)
-	2.	CrateDB credentials – For embedding storage in [CrateDB Cloud](https://cratedb.com/docs/cloud/en/latest/tutorials/quick-start.html). 
-	3.	Other service-specific keys – Based on additional integrations.
+
+1.	OpenAI API key – [Developer quickstart](https://platform.openai.com/docs/quickstart)
+2.	CrateDB credentials – For embedding storage in [CrateDB Cloud](https://cratedb.com/docs/cloud/en/latest/tutorials/quick-start.html). 
+3.	Other service-specific keys – Based on additional integrations.
 
 Store keys in a `.env` file:
 
@@ -181,10 +183,10 @@ client = OpenAI(api_key=OPENAI_API_KEY)
 
 Environment Variables Required:
 
-	•	CRATEDB_URL: 
-	•	CRATEDB_USERNAME / CRATEDB_PASSWORD: Credentials for CrateDB.
-	•	OPENAI_API_KEY: OpenAI API key.
-	•	PDF_DIR: Directory containing the PDFs to process.
+- CRATEDB_URL: URL formatted connection string for CrateDB.
+- CRATEDB_USERNAME / CRATEDB_PASSWORD: Credentials for CrateDB.
+- OPENAI_API_KEY: OpenAI API key.
+- PDF_DIR: Directory containing the PDFs to process.
 
 
 #### CrateDB Helpers
@@ -207,7 +209,7 @@ def execute_cratedb_query(query, args=None):
 ```
 
 ##### Create the database table
-Define a function to create the database table for storing the if it doesn’t exist:
+Define a function to create the database table for storing the data if it doesn’t exist:
 
 ``` python
 def create_table():
@@ -556,10 +558,10 @@ def generate_image_embedding(image_bytes, surrounding_text, document_name, page_
 
 #### Process PDFs (with Text and Images)
 
-The process_pdf function handles:
-	•	Text extraction, cleaning, and embedding generation.
-	•	Image extraction, description generation, and storage of embeddings.
-	•	Combining image descriptions with nearby text for richer context.
+The `process_pdf` function handles:
+- Text extraction, cleaning, and embedding generation.
+- Image extraction, description generation, and storage of embeddings.
+- Combining image descriptions with nearby text for richer context.
 
 ``` python
 def process_pdf(pdf_path):
@@ -607,9 +609,10 @@ def process_pdf(pdf_path):
 
 #### Tying everything together in main
 
-The main function ties everything together by:
-	1.	Ensuring the database table is ready (create_table).
-	2.	Iterating over all PDFs in the directory to process them (process_local_pdfs).
+The `main` function ties everything together by:
+
+1. Ensuring the database table is ready (create_table).
+2. Iterating over all PDFs in the directory to process them (process_local_pdfs).
 
 ``` python
 def process_local_pdfs():
@@ -828,7 +831,7 @@ if __name__ == "__main__":
 
 ### Step 6 Start extracting PDFs
 
-Place a pdf in the directory `pdf-knowledge-assistant/pdf-pdf_files` for example [How-to-Build-AI-driven-Knowledge-Assistants.pdf](https://cratedb.com/resources/white-papers/lp-wp-ai-driven-knowledge-assistants)
+Place a PDF in the directory `pdf-knowledge-assistant/pdf-pdf_files` for example [How-to-Build-AI-driven-Knowledge-Assistants.pdf](https://cratedb.com/resources/white-papers/lp-wp-ai-driven-knowledge-assistants).
 
 Execute the just created `extract_data.py` script. Check your database for the creation of the **pdf_data** table and the ingestion of the rows. 
 
@@ -847,11 +850,12 @@ This guide walks you through creating a chatbot capable of querying a CrateDB da
 ##### Workflow
 
 Chatbot Workflow:
-	1.	Load Configurations: Load environment variables and setup.
-	2.	Keyword Extraction: Extract meaningful keywords from the user query using spaCy.
-	3.	Hybrid Search: Perform KNN and BM25 searches on CrateDB.
-	4.	Answer Generation: Use OpenAI’s GPT models to generate concise answers from retrieved context.
-	5.	Interactive Interface: Provide a user-friendly interface for asking questions.
+
+1. Load Configurations: Load environment variables and setup.
+2. Keyword Extraction: Extract meaningful keywords from the user query using spaCy.
+3. Hybrid Search: Perform KNN and BM25 searches on CrateDB.
+4. Answer Generation: Use OpenAI’s GPT models to generate concise answers from retrieved context.
+5. Interactive Interface: Provide a user-friendly interface for asking questions.
 
 #### Import Libraries and Load Environment Variables
 
@@ -1674,7 +1678,7 @@ Local URL: http://localhost:8501
 Network URL: http://192.168.1.17:8501
 ```
 
-If you are running this locally, then this will open the page in a browser automatically. Otherwise, open a browser tab and navigate to:
+If you are running this locally, then this will open the page in a browser automatically. Otherwise, open a browser tab and navigate to the URL shown in:
 `Network URL: `
 
 ## Recap
