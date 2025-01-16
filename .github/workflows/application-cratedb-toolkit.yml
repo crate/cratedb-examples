@@ -51,6 +51,9 @@ jobs:
         env:
           CRATE_HEAP_SIZE: 4g
 
+    env:
+      PIP_PRE: true
+
     steps:
 
       - name: Acquire sources
