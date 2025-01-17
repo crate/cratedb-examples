@@ -1,12 +1,11 @@
 # Real.
-crate>=2.0.0.dev5
 mlflow-cratedb==2.14.1
 plotly<5.25
 pycaret[models,parallel,test]==3.3.2
 pydantic<3
 python-dotenv<2
 sqlalchemy==2.*
-sqlalchemy-cratedb>=0.41.0.dev1
+sqlalchemy-cratedb>=0.41.0.dev2
 
 # Development.
 # mlflow-cratedb @ git+https://github.com/crate-workbench/mlflow-cratedb.git@main

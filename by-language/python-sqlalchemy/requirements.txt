@@ -1,6 +1,6 @@
 click<9
 colorlog<7
-crate>=2.0.0.dev5
+crate>=2.0.0.dev6
 pueblo>=0.0.7
 sqlalchemy>=2,<2.1
 sqlalchemy-cratedb[all] @ git+https://github.com/crate-workbench/sqlalchemy-cratedb@amo/postgresql-async
