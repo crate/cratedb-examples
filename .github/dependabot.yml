@@ -33,6 +33,11 @@ updates:
     schedule:
       interval: "daily"
 
+  - directory: "/by-dataframe/sqlframe"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "daily"
+
   - directory: "/by-language/csharp-npgsql"
     package-ecosystem: "nuget"
     schedule:
