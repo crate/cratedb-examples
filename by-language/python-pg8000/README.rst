@@ -28,7 +28,7 @@ Navigate to the example program directory, and install prerequisites::
     cd cratedb-examples
     python3 -m venv .venv
     source .venv/bin/activate
-	pip install pg8000
+    pip install pg8000
 
 
 ********
