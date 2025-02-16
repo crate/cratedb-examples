@@ -1,0 +1,24 @@
+auth.host_based.enabled: true
+auth:
+  host_based:
+      config:
+        1:
+          user: crate
+          method: trust
+
+        99:
+          method: password
+
+ssl.http.enabled: true
+ssl.psql.enabled: true
+ssl.keystore_filepath: /crate/config/keystore
+ssl.keystore_password: crate.io
+ssl.keystore_key_password: crate.io
+ssl.truststore_filepath: /crate/config/truststore
+ssl.truststore_password: crate.io
+
+path:
+  logs: /var/log/crate
+  data: /data/crate
+
+network.bind_host: 0.0.0.0
