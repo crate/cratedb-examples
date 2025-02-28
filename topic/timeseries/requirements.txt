@@ -1,7 +1,9 @@
 cratedb-toolkit[datasets]>=0.0.30
 refinitiv-data<1.7
-pandas==2.0.*
-pycaret==3.3.2
+pandas>=2,<2.3
+#pycaret==3.3.2
+#pycaret @ git+https://github.com/sktime/pycaret@python313
+pycaret @ git+https://github.com/celestinoxp/pycaret@fix-tests-2
 pydantic<3
 sqlalchemy==2.0.*
 sqlalchemy-cratedb>=0.41.0.dev2
