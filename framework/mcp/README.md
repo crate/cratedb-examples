@@ -74,7 +74,7 @@ Acquire sources, set up sandbox, and install packages.
 ```bash
 git clone https://github.com/crate/cratedb-examples
 cd cratedb-examples/framework/mcp
-uv pip install -r requirements.txt
+uv pip install -r requirements.txt -r requirements-test.txt
 ```
 
 ## Synopsis
@@ -87,6 +87,13 @@ uv run example_dbhub.py
 ```
 ```shell
 uv run example_jdbc.py
+```
+
+## Tests
+
+Run integration tests.
+```bash
+pytest
 ```
 
 ## Development

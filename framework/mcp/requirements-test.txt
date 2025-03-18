@@ -1,0 +1,2 @@
+cratedb-toolkit
+pytest<9
