@@ -1,0 +1,32 @@
+# MCP CrateDB backlog
+
+## Iteration +1
+- Builtin: Submit a CrateDB adapter, getting rid of the
+  `Could not roll back transaction: error`
+- JDBC: Tool `list_tables` currently blocks.
+- DBHub: Reading resource `tables` does not work,
+  because `WHERE table_schema = 'public'`
+
+## Iteration +2
+- General: Evaluate all connectors per `stdio` and `sse`, where possible
+- General: Evaluate available prompts, there are no test cases yet
+- General: Improve test cases to not just look at stdout/stderr streams,
+  do regular method-based testing instead
+
+## Iteration +3
+- Provide a premium connector, like available for other databases.
+  Examples:
+  - Tinybird MCP server
+    https://github.com/tinybirdco/mcp-tinybird
+  - MongoDB Lens
+    https://github.com/modelcontextprotocol/servers/pull/892
+    https://github.com/furey/mongodb-lens
+- Provide database specifics per "resources", like [SQLite Explorer] and
+  DBHub are doing it.
+
+## Done
+- DBHub: https://github.com/bytebase/dbhub/issues/5
+  Resolved: https://github.com/bytebase/dbhub/pull/6
+
+
+[SQLite Explorer]: https://github.com/modelcontextprotocol/python-sdk?tab=readme-ov-file#sqlite-explorer
