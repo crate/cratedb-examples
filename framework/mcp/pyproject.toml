@@ -1,3 +1,11 @@
+[project]
+name = "cratedb-mcp-examples"
+version = "0.0.0"
+requires-python = ">=3.9"
+
+[tool.setuptools.packages.find]
+where = ["."]
+
 [tool.pytest.ini_options]
 minversion = "2.0"
 addopts = """
