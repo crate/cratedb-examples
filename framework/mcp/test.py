@@ -44,8 +44,11 @@ def test_builtin():
     assert b"Could not roll back transaction: error: line 1:1: mismatched input 'ROLLBACK' expecting" in p.stderr
 
     # Validate output specific to CrateDB.
-    assert b"Calling tool: read_query" in p.stdout
-    assert b'"mountain": "Mont Blanc"' in p.stdout
+    assert b"Calling tool: query" in p.stdout
+    assert b"mountain: Mont Blanc" in p.stdout
+    assert b"Reading resource: postgres://crate@localhost:5432/testdrive/schema" in p.stdout
+    assert b"column_name: id" in p.stdout
+    assert b"data_type: integer" in p.stdout
 
 
 def test_jdbc():
@@ -63,15 +66,18 @@ def test_jdbc():
 
     # Validate output specific to CrateDB.
     assert b"Calling tool: database_info" in p.stdout
-    assert b'{"database_product_name":"PostgreSQL","driver_name":"PostgreSQL JDBC Driver"' in p.stdout
+    assert b"database_product_name: PostgreSQL" in p.stdout
+    assert b"driver_name: PostgreSQL JDBC Driver" in p.stdout
     assert b"Calling tool: describe_table" in p.stdout
+    # FIXME: Problem with `SELECT current_database()`.
+    #        https://github.com/crate/crate/issues/17393
     assert b"Failed to describe table: The column name current_database was not found in this ResultSet." in p.stdout
     assert b"Calling tool: read_query" in p.stdout
-    assert b'"mountain":"Mont Blanc"' in p.stdout
+    assert b'mountain: Mont Blanc' in p.stdout
 
     # Validate database content.
     db = DatabaseAdapter("crate://crate@localhost:4200/")
-    records = db.refresh_table("doc.testdrive")
+    db.refresh_table("doc.testdrive")
     records = db.run_sql("SELECT * FROM doc.testdrive", records=True)
     assert len(records) >= 1
     assert records[0] == {"id": 42, "data": "foobar"}
@@ -97,7 +103,14 @@ def test_dbhub():
 
     # Validate output specific to CrateDB.
     assert b"Calling tool: run_query" in p.stdout
-    assert b'"mountain": "Mont Blanc"' in p.stdout
+    assert b"mountain: Mont Blanc" in p.stdout
 
     assert b"Calling tool: list_connectors" in p.stdout
-    assert b' "dsn": "postgres://' in p.stdout
+    assert b"dsn: postgres://postgres" in p.stdout
+
+    assert b"Reading resource: db://tables" in p.stdout
+    assert b"- testdrive" in p.stdout
+
+    assert b"Getting prompt: explain_db" in p.stdout
+    assert b"Table: testdrive" in p.stdout
+    assert b"Structure:\\n- id (integer)\\n- data (text)" in p.stdout
