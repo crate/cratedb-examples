@@ -93,7 +93,12 @@ uv run example_jdbc.py
 
 Run integration tests.
 ```bash
-pytest
+uv run pytest
+```
+
+Run tests selectively.
+```bash
+uv run pytest -k dbhub
 ```
 
 ## Development

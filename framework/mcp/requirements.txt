@@ -1,1 +1,2 @@
+cratedb-toolkit
 mcp<1.5
