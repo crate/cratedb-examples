@@ -1,0 +1,81 @@
+name: C# EF Core
+
+on:
+  pull_request:
+    paths:
+    - '.github/workflows/lang-csharp-efcore.yml'
+    - 'by-language/csharp-efcore/**'
+    - '/requirements.txt'
+  push:
+    branches: [ main ]
+    paths:
+    - '.github/workflows/lang-csharp-efcore.yml'
+    - 'by-language/csharp-efcore/**'
+    - '/requirements.txt'
+
+  # Allow job to be triggered manually.
+  workflow_dispatch:
+
+  # Run job each night after CrateDB nightly has been published.
+  schedule:
+    - cron: '0 3 * * *'
+
+# Cancel in-progress jobs when pushing to the same branch.
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  test:
+    name: "
+     .NET: ${{ matrix.dotnet-version }}
+     CrateDB: ${{ matrix.cratedb-version }}
+     on ${{ matrix.os }}"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ 'ubuntu-22.04' ]
+        dotnet-version: [ '9.0.x' ]
+        cratedb-version: [ 'nightly' ]
+
+    # https://docs.github.com/en/free-pro-team@latest/actions/guides/about-service-containers
+    services:
+      cratedb:
+        image: crate/crate:${{ matrix.cratedb-version }}
+        ports:
+          - 4200:4200
+          - 5432:5432
+        env:
+          CRATE_HEAP_SIZE: 4g
+
+    steps:
+
+      - name: Acquire sources
+        uses: actions/checkout@v4
+
+      - name: Set up .NET ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          architecture: x64
+          cache: 'pip'
+          cache-dependency-path: |
+            requirements.txt
+
+      - name: Install utilities
+        run: |
+          pip install -r requirements.txt
+
+      - name: Validate by-language/csharp-efcore
+        run: |
+          ngr test by-language/csharp-efcore --dotnet-version=${{ matrix.dotnet-version }}
