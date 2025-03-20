@@ -2,15 +2,14 @@ name: C# Npgsql
 
 on:
   pull_request:
-    branches: ~
     paths:
-    - '.github/workflows/lang-npgsql.yml'
+    - '.github/workflows/lang-csharp-npgsql.yml'
     - 'by-language/csharp-npgsql/**'
     - '/requirements.txt'
   push:
     branches: [ main ]
     paths:
-    - '.github/workflows/lang-npgsql.yml'
+    - '.github/workflows/lang-csharp-npgsql.yml'
     - 'by-language/csharp-npgsql/**'
     - '/requirements.txt'
 
