@@ -1,0 +1,8 @@
+[package]
+name = "cratedb-rust-tests"
+version = "0.0.0"
+authors = ["The CrateDB Developers"]
+edition = "2021"
+
+[dependencies]
+postgres = "0.19.7"
