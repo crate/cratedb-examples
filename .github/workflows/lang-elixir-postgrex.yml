@@ -1,0 +1,71 @@
+name: Elixir Postgrex
+
+on:
+  pull_request:
+    branches: ~
+    paths:
+    - '.github/workflows/lang-elixir-postgrex.yml'
+    - 'by-language/elixir-postgrex/**'
+    - '/requirements.txt'
+  push:
+    branches: [ main ]
+    paths:
+    - '.github/workflows/lang-elixir-postgrex.yml'
+    - 'by-language/elixir-postgrex/**'
+    - '/requirements.txt'
+
+  # Allow job to be triggered manually.
+  workflow_dispatch:
+
+  # Run job each night after CrateDB nightly has been published.
+  schedule:
+    - cron: '0 3 * * *'
+
+# Cancel in-progress jobs when pushing to the same branch.
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  test:
+    name: "
+     Erlang: ${{ matrix.otp-version }}
+     Elixir: ${{ matrix.elixir-version }}
+     CrateDB: ${{ matrix.cratedb-version }}
+     on ${{ matrix.os }}"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ 'ubuntu-latest' ]
+        cratedb-version: [ 'nightly' ]
+        otp-version: ['26', '27']
+        elixir-version: ['1.17', '1.18']
+
+    services:
+      cratedb:
+        image: crate/crate:${{ matrix.cratedb-version }}
+        ports:
+          - 4200:4200
+          - 5432:5432
+        env:
+          CRATE_HEAP_SIZE: 4g
+
+    steps:
+
+      - name: Acquire sources
+        uses: actions/checkout@v4
+
+      - name: Install Elixir
+        uses: erlef/setup-beam@v1
+        with:
+          otp-version: ${{matrix.otp-version}}
+          elixir-version: ${{matrix.elixir-version}}
+
+      - name: Install utilities
+        run: |
+          pip install -r requirements.txt
+
+      - name: Validate by-language/elixir-postgrex
+        run: |
+          ngr test by-language/elixir-postgrex
