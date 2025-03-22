@@ -18,12 +18,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class TestSqlInitialization {
 
     /**
-     * Launch container with CrateDB 5.2, using `TC_INITSCRIPT` to address a file in Java's CLASSPATH.
+     * Launch container with CrateDB, using `TC_INITSCRIPT` to address a file in Java's CLASSPATH.
      * <a href="https://www.testcontainers.org/modules/databases/jdbc/#using-a-classpath-init-script"/>
      */
     @Test
     public void testTcInitClasspathFile() throws SQLException, IOException {
-        String connectionUrl = "jdbc:tc:cratedb:5.2://localhost/doc?user=crate&TC_REUSABLE=true&TC_INITSCRIPT=init.sql";
+        String connectionUrl = "jdbc:tc:cratedb:5.10://localhost/doc?user=crate&TC_REUSABLE=true&TC_INITSCRIPT=init.sql";
         System.out.printf("Connecting to %s%n", connectionUrl);
 
         // Invoke `SHOW CREATE TABLE ...` query.
@@ -34,12 +34,12 @@ public class TestSqlInitialization {
     }
 
     /**
-     * Launch container with CrateDB 5.2, using `TC_INITSCRIPT` to address an arbitrary file on the filesystem.
+     * Launch container with CrateDB, using `TC_INITSCRIPT` to address an arbitrary file on the filesystem.
      * <a href="https://www.testcontainers.org/modules/databases/jdbc/#using-an-init-script-from-a-file"/>
      */
     @Test
     public void testTcInitArbitraryFile() throws SQLException, IOException {
-        String connectionUrl = "jdbc:tc:cratedb:5.2://localhost/doc?user=crate&TC_REUSABLE=true&TC_INITSCRIPT=file:src/test/resources/init.sql";
+        String connectionUrl = "jdbc:tc:cratedb:5.10://localhost/doc?user=crate&TC_REUSABLE=true&TC_INITSCRIPT=file:src/test/resources/init.sql";
         System.out.printf("Connecting to %s%n", connectionUrl);
 
         // Invoke `SHOW CREATE TABLE ...` query.
@@ -50,12 +50,12 @@ public class TestSqlInitialization {
     }
 
     /**
-     * Launch container with CrateDB 5.2, using an init function.
+     * Launch container with CrateDB, using an init function.
      * <a href="https://www.testcontainers.org/modules/databases/jdbc/#using-an-init-script-from-a-file"/>
      */
     @Test
     public void testTcInitFunction() throws SQLException, IOException {
-        String connectionUrl = "jdbc:tc:cratedb:5.2://localhost/doc?user=crate&TC_INITFUNCTION=io.crate.example.testing.utils.TestingHelpers::sqlInitFunction";
+        String connectionUrl = "jdbc:tc:cratedb:5.10://localhost/doc?user=crate&TC_INITFUNCTION=io.crate.example.testing.utils.TestingHelpers::sqlInitFunction";
         System.out.printf("Connecting to %s%n", connectionUrl);
 
         // Invoke `SHOW CREATE TABLE ...` query.
