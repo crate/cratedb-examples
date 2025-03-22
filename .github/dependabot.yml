@@ -43,6 +43,11 @@ updates:
     schedule:
       interval: "daily"
 
+  - directory: "/by-language/elixir-postgrex"
+    package-ecosystem: "mix"
+    schedule:
+      interval: "daily"
+
   - directory: "/by-language/java-jdbc"
     package-ecosystem: "maven"
     schedule:
