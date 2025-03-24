@@ -132,6 +132,11 @@ updates:
     schedule:
       interval: "daily"
 
+  - directory: "/framework/flink/kafka-jdbcsink-java"
+    package-ecosystem: "docker-compose"
+    schedule:
+      interval: "daily"
+
   - directory: "/framework/gradio"
     package-ecosystem: "pip"
     schedule:
