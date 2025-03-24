@@ -88,7 +88,7 @@ updates:
     schedule:
       interval: "daily"
 
-  - directory: "/by-language/rust"
+  - directory: "/by-language/rust-postgres"
     package-ecosystem: "cargo"
     schedule:
       interval: "daily"
@@ -111,7 +111,7 @@ updates:
       interval: "daily"
 
   - directory: "/application/metabase"
-    package-ecosystem: "docker"
+    package-ecosystem: "docker-compose"
     schedule:
       interval: "daily"
 
