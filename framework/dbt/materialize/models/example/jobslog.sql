@@ -1,3 +1,9 @@
 {{ config(materialized='ephemeral') }}
 
-select * from sys.jobs_log
+SELECT id
+	,started
+	,stmt
+	,error
+	,username
+FROM sys.jobs_log
+
