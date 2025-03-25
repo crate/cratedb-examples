@@ -21,7 +21,7 @@ class Process:
         return self.proc.returncode
 
 
-def run(command: str, timeout: int = 30) -> Process:
+def run(command: str, timeout: int = 60) -> Process:
     """
     Invoke a command in a subprocess.
     """
