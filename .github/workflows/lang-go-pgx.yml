@@ -1,0 +1,70 @@
+name: Go pgx
+
+on:
+  pull_request:
+    paths:
+    - '.github/workflows/lang-go-pgx.yml'
+    - 'by-language/go-pgx/**'
+    - '/requirements.txt'
+  push:
+    branches: [ main ]
+    paths:
+    - '.github/workflows/lang-go-pgx.yml'
+    - 'by-language/go-pgx/**'
+    - '/requirements.txt'
+
+  # Allow job to be triggered manually.
+  workflow_dispatch:
+
+  # Run job each night after CrateDB nightly has been published.
+  schedule:
+    - cron: '0 3 * * *'
+
+# Cancel in-progress jobs when pushing to the same branch.
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  test:
+    name: "
+     Go: ${{ matrix.go-version }}
+     CrateDB: ${{ matrix.cratedb-version }}
+     on ${{ matrix.os }}"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ 'ubuntu-latest' ]
+        cratedb-version: [ 'nightly' ]
+        go-version: [
+          '1.23.x',
+          '1.24.x',
+        ]
+
+    services:
+      cratedb:
+        image: crate/crate:${{ matrix.cratedb-version }}
+        ports:
+          - 4200:4200
+          - 5432:5432
+        env:
+          CRATE_HEAP_SIZE: 4g
+
+    steps:
+
+      - name: Acquire sources
+        uses: actions/checkout@v4
+
+      - name: Install Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ matrix.go-version }}
+
+      - name: Install utilities
+        run: |
+          pip install -r requirements.txt
+
+      - name: Validate by-language/go-pgx
+        run: |
+          ngr test by-language/go-pgx
