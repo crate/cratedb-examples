@@ -14,7 +14,7 @@ server_params = StdioServerParameters(
     command="npx",
     args=[
         "-y",
-        "@modelcontextprotocol/server-postgres",
+        "@modelcontextprotocol/server-postgres@0.6",
         "postgresql://crate@localhost:5432/doc",
     ],
     env=None,
