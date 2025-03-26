@@ -1,0 +1,4 @@
+.venv*
+*.wireproto
+*.py
+influxdb-write-to-postgresql
