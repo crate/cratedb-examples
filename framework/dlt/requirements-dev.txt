@@ -1,0 +1,3 @@
+cratedb-toolkit>=0.0.33
+pueblo[sfa]
+pytest<9

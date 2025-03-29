@@ -1,0 +1,12 @@
+# Put your main configuration values here.
+#add_dlt_id = false
+#add_dlt_load_id = false
+
+[runtime]
+
+# The system log level of dlt.
+log_level="DEBUG"
+
+# Use the `dlthub_telemetry` setting to enable/disable anonymous
+# usage data reporting, see https://dlthub.com/docs/reference/telemetry.
+dlthub_telemetry = false

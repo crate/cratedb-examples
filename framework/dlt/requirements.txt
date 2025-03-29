@@ -1,0 +1,9 @@
+# Development
+dlt[cratedb,parquet] @ git+https://github.com/crate-workbench/dlt@cratedb
+
+# Production
+# TODO: switch to official dlt[cratedb]>=1.12.0 once it’s published with CrateDB support.
+# dlt[cratedb,parquet]>=1.12.0
+
+pandas>=2,<2.4
+pymysql>=1,<1.2
