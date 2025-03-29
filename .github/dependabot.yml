@@ -147,6 +147,11 @@ updates:
     schedule:
       interval: "daily"
 
+  - directory: "/framework/dlt"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "daily"
+
   - directory: "/framework/flink/kafka-jdbcsink-java"
     package-ecosystem: "docker-compose"
     schedule:
