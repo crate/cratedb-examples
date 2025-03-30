@@ -14,7 +14,7 @@ server_params_npx = StdioServerParameters(
     command="npx",
     args=[
         "-y",
-        "@bytebase/dbhub@0.1",
+        "@bytebase/dbhub@0.2.3",
         "--transport=stdio",
         #"--transport=sse",
         #"--port=8080",
@@ -43,18 +43,21 @@ async def run():
 
             # Validate database content.
             db = DatabaseAdapter("crate://crate@localhost:4200/")
-            db.run_sql("CREATE TABLE IF NOT EXISTS public.testdrive (id INT, data TEXT)")
-            db.run_sql("INSERT INTO public.testdrive (id, data) VALUES (42, 'Hotzenplotz')")
+            db.run_sql("CREATE TABLE IF NOT EXISTS testdrive.dbhub (id INT, data TEXT)")
+            db.run_sql("INSERT INTO testdrive.dbhub (id, data) VALUES (42, 'Hotzenplotz')")
             db.refresh_table("public.testdrive")
 
-            # Read a few resources.
-            # FIXME: Only works on schema=public, because the PostgreSQL adapter hard-codes `WHERE table_schema = 'public'`.
-            # https://github.com/bytebase/dbhub/blob/09424c8513c8c7bef7f66377b46a2b93a69a57d2/src/connectors/postgres/index.ts#L89-L107
-            await client.read_resource("db://tables")
+            # Read available resources.
+            await client.read_resource("db://schemas")
 
-            # Get a few prompts.
-            await client.get_prompt("generate_sql", arguments={"description": "Please enumerate the highest five mountains.", "dialect": "postgres"})
-            await client.get_prompt("explain_db", arguments={"target": "testdrive"})
+            # Invoke available prompts.
+            await client.get_prompt("generate_sql", arguments={
+                "description": "Please enumerate the highest five mountains.",
+                "dialect": "postgres",
+                "schema": "sys",
+            })
+            await client.get_prompt("explain_db", arguments={"schema": "testdrive"})
+            await client.get_prompt("explain_db", arguments={"schema": "testdrive", "table": "dbhub"})
 
 
 if __name__ == "__main__":

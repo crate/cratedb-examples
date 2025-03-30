@@ -108,9 +108,11 @@ def test_dbhub():
     assert b"Calling tool: list_connectors" in p.stdout
     assert b"dsn: postgres://postgres" in p.stdout
 
-    assert b"Reading resource: db://tables" in p.stdout
+    assert b"Reading resource: db://schemas" in p.stdout
+    assert b"- doc" in p.stdout
+    assert b"- sys" in p.stdout
     assert b"- testdrive" in p.stdout
 
     assert b"Getting prompt: explain_db" in p.stdout
-    assert b"Table: testdrive" in p.stdout
+    assert b"Table: dbhub in schema 'testdrive'" in p.stdout
     assert b"Structure:\\n- id (integer)\\n- data (text)" in p.stdout
