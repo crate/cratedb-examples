@@ -147,6 +147,11 @@ updates:
     schedule:
       interval: "daily"
 
+  - directory: "/framework/mcp"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "daily"
+
   - directory: "/framework/records"
     package-ecosystem: "pip"
     schedule:
