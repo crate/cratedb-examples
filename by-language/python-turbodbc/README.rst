@@ -2,22 +2,12 @@
 Using CrateDB with turbodbc
 ###########################
 
+This document and its accompanying code example describes how to connect
+to `CrateDB`_ using `turbodbc`_.
 
-*****
-About
-*****
-
-This section of the documentation describes how to connect to `CrateDB`_
-with `turbodbc`_, by providing a few example programs.
-
-The examples use the `unixODBC`_ implementation of `ODBC`_, and the `PostgreSQL
+The example uses the `unixODBC`_ implementation of `ODBC`_, and the `PostgreSQL
 ODBC driver`_, for connecting to the `PostgreSQL wire protocol`_ interface of
 `CrateDB`_.
-
-This folder also contains ``Dockerfile`` files providing environments to
-exercise the examples on different operating systems, like Arch Linux,
-Red Hat (CentOS), Debian, and SUSE Linux.
-
 
 ************
 Introduction
@@ -77,35 +67,28 @@ Setup
 Install prerequisites
 =====================
 
-Arch Linux::
-
-    # See `dockerfiles/archlinux.Dockerfile`.
-
-CentOS Stream::
-
-    dnf install --enablerepo=crb -y boost-devel g++ postgresql-odbc python3 python3-devel python3-pip unixODBC-devel
-
-Debian::
-
-    apt-get install --yes build-essential libboost-dev odbc-postgresql unixodbc-dev
-
 macOS/Homebrew::
 
-    brew install psqlodbc unixodbc
+    brew install psqlodbc pybind11 simdutf unixodbc
 
-SUSE Linux Enterprise Server::
+If you can't install the required software components on your machine,
+head over to the `README-OCI`_ document.
 
-    # See `dockerfiles/sles.Dockerfile`.
+This folder also contains ``Dockerfile`` files providing environments to
+exercise the code example on different operating systems, like Arch Linux,
+Red Hat (CentOS), Debian, and SUSE Linux.
 
 Install Python sandbox
 ======================
-::
+Create Python virtualenv and install dependency packages::
 
-    # Create Python virtualenv and install dependency packages.
-    python3 -m venv .venv
+    uv venv --python 3.12 --seed
     source .venv/bin/activate
-    pip install --upgrade --requirement=requirements-prereq.txt
-    pip install --upgrade --requirement=requirements.txt --verbose
+    uv pip install --upgrade --verbose \
+        --requirement=requirements-prereq.txt
+    uv pip install --upgrade --verbose \
+        --requirement=requirements-dev.txt \
+        --requirement=requirements.txt
 
 .. note::
 
@@ -125,21 +108,11 @@ Usage
 Run CrateDB::
 
     docker run --rm -it --publish=4200:4200 --publish=5432:5432 crate \
-        -Cdiscovery.type=single-node -Ccluster.routing.allocation.disk.threshold_enabled=false
+        -Cdiscovery.type=single-node
 
-Invoke demo program on workstation::
+Invoke demo program::
 
-	python demo.py
-
-Exercise demo program using Docker, on different operating systems::
-
-    docker build --progress=plain --tag local/python-turbodbc-demo --file=dockerfiles/archlinux.Dockerfile .
-    docker build --progress=plain --tag local/python-turbodbc-demo --file=dockerfiles/centos.Dockerfile .
-    docker build --progress=plain --tag local/python-turbodbc-demo --file=dockerfiles/debian.Dockerfile .
-    docker build --progress=plain --tag local/python-turbodbc-demo --file=dockerfiles/sles.Dockerfile .
-
-    docker run --rm -it --volume=$(pwd):/src --network=host local/python-turbodbc-demo python3 /src/demo.py
-
+    python demo.py
 
 *******
 Backlog
@@ -152,10 +125,11 @@ examples to be exercised are tracked within the `backlog`_.
 
 .. _Apache Arrow: https://en.wikipedia.org/wiki/Apache_Arrow
 .. _Apache Arrow support: https://turbodbc.readthedocs.io/en/latest/pages/advanced_usage.html#advanced-usage-arrow
-.. _backlog: https://github.com/crate/cratedb-examples/blob/main/python-turbodbc/backlog.rst
-.. _CrateDB: https://github.com/crate/crate
+.. _backlog: https://github.com/crate/cratedb-examples/blob/main/by-language/python-turbodbc/backlog.rst
+.. _CrateDB: https://cratedb.com/database
 .. _NumPy: https://en.wikipedia.org/wiki/NumPy
 .. _NumPy support: https://turbodbc.readthedocs.io/en/latest/pages/advanced_usage.html#advanced-usage-numpy
+.. _README-OCI: ./README-OCI.md
 .. _ODBC: https://en.wikipedia.org/wiki/Open_Database_Connectivity
 .. _Open Database Connectivity (ODBC): https://en.wikipedia.org/wiki/Open_Database_Connectivity
 .. _PostgreSQL ODBC driver: https://odbc.postgresql.org/
