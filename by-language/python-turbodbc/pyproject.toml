@@ -1,7 +1,15 @@
-[tool.black]
-line-length = 120
+[tool.pytest.ini_options]
+minversion = "2.0"
+addopts = """
+  -rfEX -p pytester --strict-markers --verbosity=3
+  --capture=no
+  """
+log_level = "DEBUG"
+log_cli_level = "DEBUG"
+testpaths = ["*.py"]
+xfail_strict = true
+markers = [
+]
 
-[tool.isort]
-profile = "black"
-skip_glob = "**/site-packages/**"
-skip_gitignore = false
+[tool.ruff]
+line-length = 100

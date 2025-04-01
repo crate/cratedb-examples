@@ -33,6 +33,9 @@ RUN apt-get install --yes \
     libarrow-flight-sql-dev libgandiva-dev libparquet-dev
 
 # Install ultra-fast Unicode routines.
+# TODO: The version number here would need to be bumped, in order to validate
+#       against new upstream releases. The Debian OCI image (this one) has been
+#       selected to run on CI/GHA.
 RUN true \
     && git clone https://github.com/simdutf/simdutf --branch=v6.4.0 \
     && cd simdutf \
