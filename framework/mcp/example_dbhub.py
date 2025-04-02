@@ -43,9 +43,9 @@ async def run():
 
             # Validate database content.
             db = DatabaseAdapter("crate://crate@localhost:4200/")
-            db.run_sql("CREATE TABLE IF NOT EXISTS testdrive.dbhub (id INT, data TEXT)")
-            db.run_sql("INSERT INTO testdrive.dbhub (id, data) VALUES (42, 'Hotzenplotz')")
-            db.refresh_table("public.testdrive")
+            db.run_sql("CREATE TABLE IF NOT EXISTS testdrive.mcp_dbhub (id INT, data TEXT)")
+            db.run_sql("INSERT INTO testdrive.mcp_dbhub (id, data) VALUES (42, 'Hotzenplotz')")
+            db.refresh_table("testdrive.mcp_dbhub")
 
             # Read available resources.
             await client.read_resource("db://schemas")
@@ -57,7 +57,7 @@ async def run():
                 "schema": "sys",
             })
             await client.get_prompt("explain_db", arguments={"schema": "testdrive"})
-            await client.get_prompt("explain_db", arguments={"schema": "testdrive", "table": "dbhub"})
+            await client.get_prompt("explain_db", arguments={"schema": "testdrive", "table": "mcp_dbhub"})
 
 
 if __name__ == "__main__":
