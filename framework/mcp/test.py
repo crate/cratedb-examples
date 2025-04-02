@@ -46,7 +46,7 @@ def test_builtin():
     # Validate output specific to CrateDB.
     assert b"Calling tool: query" in p.stdout
     assert b"mountain: Mont Blanc" in p.stdout
-    assert b"Reading resource: postgres://crate@localhost:5432/testdrive/schema" in p.stdout
+    assert b"Reading resource: postgres://crate@localhost:5432/mcp_builtin/schema" in p.stdout
     assert b"column_name: id" in p.stdout
     assert b"data_type: integer" in p.stdout
 
@@ -77,8 +77,8 @@ def test_jdbc():
 
     # Validate database content.
     db = DatabaseAdapter("crate://crate@localhost:4200/")
-    db.refresh_table("doc.testdrive")
-    records = db.run_sql("SELECT * FROM doc.testdrive", records=True)
+    db.refresh_table("testdrive.mcp_jdbc")
+    records = db.run_sql("SELECT * FROM testdrive.mcp_jdbc", records=True)
     assert len(records) >= 1
     assert records[0] == {"id": 42, "data": "foobar"}
 
@@ -114,5 +114,5 @@ def test_dbhub():
     assert b"- testdrive" in p.stdout
 
     assert b"Getting prompt: explain_db" in p.stdout
-    assert b"Table: dbhub in schema 'testdrive'" in p.stdout
+    assert b"Table: mcp_dbhub in schema 'testdrive'" in p.stdout
     assert b"Structure:\\n- id (integer)\\n- data (text)" in p.stdout
