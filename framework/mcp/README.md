@@ -36,6 +36,10 @@ program.
   Server for JDBC] from the [quarkus-mcp-servers] package, providing a range
   of tools. It is written in Java, to be invoked with [JBang].
 
+- `example_mcp_alchemy.py`: Exercise communication using the [MCP Alchemy] MCP
+  server package, providing a range of tools. It is written in Python, and uses
+  [SQLAlchemy] and the [CrateDB SQLAlchemy dialect].
+
 ## Resources
 
 - Read a [brief introduction to MCP] by ByteByteGo.
@@ -124,10 +128,12 @@ unlocking more details and features.
 [Claude Desktop configuration]: https://github.com/modelcontextprotocol/servers?tab=readme-ov-file#using-an-mcp-client
 [connecting to an already running MCP server]: https://github.com/modelcontextprotocol/python-sdk/issues/145
 [CrateDB]: https://cratedb.com/database
+[CrateDB SQLAlchemy dialect]: https://cratedb.com/docs/sqlalchemy-cratedb/
 [DBHub]: https://github.com/bytebase/dbhub
 [Introduction to MCP]: https://modelcontextprotocol.io/introduction
 [JBang]: https://www.jbang.dev/
 [MCP]: https://modelcontextprotocol.io/
+[MCP Alchemy]: https://github.com/runekaagaard/mcp-alchemy
 [MCP Python SDK]: https://github.com/modelcontextprotocol/python-sdk
 [MCP SSE]: https://github.com/sidharthrajaram/mcp-sse
 [Model Context Protocol (MCP) @ CrateDB]: https://github.com/crate/crate-clients-tools/discussions/234
@@ -137,5 +143,6 @@ unlocking more details and features.
 [npx]: https://docs.npmjs.com/cli/v11/commands/npx
 [oterm configuration]: https://ggozad.github.io/oterm/tools/mcp/
 [quarkus-mcp-servers]: https://github.com/quarkiverse/quarkus-mcp-servers
+[SQLAlchemy]: https://sqlalchemy.org/
 [uv]: https://docs.astral.sh/uv/
 [Writing MCP Clients]: https://github.com/modelcontextprotocol/python-sdk?tab=readme-ov-file#writing-mcp-clients
