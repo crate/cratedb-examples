@@ -4,6 +4,7 @@ import shlex
 import subprocess
 import sys
 
+import pytest
 from cratedb_toolkit.util import DatabaseAdapter
 
 
@@ -116,3 +117,36 @@ def test_dbhub():
     assert b"Getting prompt: explain_db" in p.stdout
     assert b"Table: mcp_dbhub in schema 'testdrive'" in p.stdout
     assert b"Structure:\\n- id (integer)\\n- data (text)" in p.stdout
+
+
+@pytest.mark.skipif(sys.version_info < (3, 12), reason="requires Python 3.12+")
+def test_mcp_alchemy():
+    """
+    Validate the MCP Alchemy server works well.
+
+    MCP Alchemy connects Claude Desktop directly to your databases.
+    MCP Alchemy is a MCP (model context protocol) server that gives the LLM access
+    to and knowledge about relational databases like SQLite, Postgresql, MySQL &
+    MariaDB, Oracle, MS-SQL, and CrateDB.
+
+    It is written in Python and uses SQLAlchemy.
+    https://github.com/runekaagaard/mcp-alchemy
+    """
+    p = run(f"{sys.executable} example_mcp_alchemy.py")
+    assert p.returncode == 0
+
+    # Validate output specific to the MCP server.
+
+    # Validate output specific to CrateDB.
+    assert b"Calling tool: execute_query" in p.stdout
+    assert b"mountain: Mont Blanc" in p.stdout
+
+    assert b"Calling tool: all_table_names" in p.stdout
+    assert b"mcp_alchemy" in p.stdout
+
+    assert b"Calling tool: filter_table_names" in p.stdout
+    assert b"mcp_alchemy" in p.stdout
+
+    assert b"Calling tool: schema_definitions" in p.stdout
+    assert b"id: INTEGER, nullable" in p.stdout
+    assert b"data: VARCHAR, nullable" in p.stdout
