@@ -78,6 +78,11 @@ updates:
     schedule:
       interval: "daily"
 
+  - directory: "/by-language/python-connectorx"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "daily"
+
   - directory: "/by-language/python-dbapi"
     package-ecosystem: "pip"
     schedule:
