@@ -9,6 +9,8 @@
   https://github.com/crate/crate/issues/17393
 - DBHub: Reading resource `tables` does not work,
   because `WHERE table_schema = 'public'`
+- PG-MCP: Improve installation after packaging has been improved.
+  https://github.com/stuzero/pg-mcp/issues/10
 
 ## Iteration +2
 - General: Evaluate all connectors per `stdio` and `sse`, where possible
