@@ -9,6 +9,13 @@
   https://github.com/crate/crate/issues/17393
 - DBHub: Reading resource `tables` does not work,
   because `WHERE table_schema = 'public'`
+- PG-MCP: Improve installation after packaging has been improved.
+  https://github.com/stuzero/pg-mcp-server/issues/10
+- PG-MCP: Resource `pgmcp://{conn_id}/` makes `asyncpg` invoke
+  `WITH RECURSIVE typeinfo_tree`, which fails on CrateDB.
+  - https://github.com/crate/crate/issues/11757
+  - https://github.com/crate/crate/issues/12544
+- PG-MCP: Fix `/rowcount endpoint`
 
 ## Iteration +2
 - General: Evaluate all connectors per `stdio` and `sse`, where possible

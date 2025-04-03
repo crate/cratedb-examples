@@ -83,6 +83,11 @@ jobs:
 
       - name: Install utilities
         run: |
+
+          # Install sponge.
+          sudo apt-get install moreutils
+
+          # Install pueblo.
           uv pip install -r requirements.txt
 
       - name: Validate framework/mcp

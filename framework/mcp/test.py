@@ -150,3 +150,43 @@ def test_mcp_alchemy():
     assert b"Calling tool: schema_definitions" in p.stdout
     assert b"id: INTEGER, nullable" in p.stdout
     assert b"data: VARCHAR, nullable" in p.stdout
+
+
+@pytest.mark.skipif(sys.version_info < (3, 13), reason="requires Python 3.13+")
+def test_pg_mcp():
+    """
+    Validate the PG-MCP server works well.
+
+    It is written in Python and uses pgasync.
+    https://github.com/crate-workbench/pg-mcp
+    """
+
+    # FIXME: Manually invoke pre-installation step.
+    p = run(f"sh example_pg_mcp_install.sh")
+    assert p.returncode == 0, p.stderr
+
+    p = run(f"{sys.executable} example_pg_mcp.py")
+    assert p.returncode == 0
+
+    # Validate output specific to the MCP server.
+    assert b"Processing request of type" in p.stderr
+    assert b"PromptListRequest" in p.stderr
+    assert b"ListResourcesRequest" in p.stderr
+    assert b"ListToolsRequest" in p.stderr
+    assert b"CallToolRequest" in p.stderr
+
+    # Validate output specific to CrateDB.
+    assert b"Calling tool: pg_query" in p.stdout
+    assert b"mountain: Mont Blanc" in p.stdout
+
+    assert b"Calling tool: pg_explain" in p.stdout
+
+    assert b"Reading resource: pgmcp://" in p.stdout
+    assert b"schema_name: blob" in p.stdout
+    assert b"schema_name: doc" in p.stdout
+    assert b"schema_name: sys" in p.stdout
+    assert b"table_name: jobs" in p.stdout
+    assert b"table_name: shards" in p.stdout
+
+    assert b"Getting prompt: nl_to_sql_prompt" in p.stdout
+    assert b"You are an expert PostgreSQL database query assistant" in p.stdout

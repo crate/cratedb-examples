@@ -40,6 +40,12 @@ program.
   server package, providing a range of tools. It is written in Python, and uses
   [SQLAlchemy] and the [CrateDB SQLAlchemy dialect].
 
+- `example_pg_mcp.py`:
+  The [PG-MCP] server is specialised to talk to PostgreSQL servers. With a few adjustments,
+  the adapter can also talk to CrateDB. The project offers rich MCP server capabilities,
+  and includes advanced client programs for Claude and Gemini that work out of the box.
+  It is written in Python, optionally to be invoked with `uv` or `uvx`.
+
 ## Resources
 
 - Read a [brief introduction to MCP] by ByteByteGo.
@@ -142,6 +148,7 @@ unlocking more details and features.
 [@modelcontextprotocol/server-postgres]: https://www.npmjs.com/package/@modelcontextprotocol/server-postgres
 [npx]: https://docs.npmjs.com/cli/v11/commands/npx
 [oterm configuration]: https://ggozad.github.io/oterm/tools/mcp/
+[PG-MCP]: https://github.com/stuzero/pg-mcp-server
 [quarkus-mcp-servers]: https://github.com/quarkiverse/quarkus-mcp-servers
 [SQLAlchemy]: https://sqlalchemy.org/
 [uv]: https://docs.astral.sh/uv/
