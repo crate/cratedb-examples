@@ -40,6 +40,9 @@ program.
   server package, providing a range of tools. It is written in Python, and uses
   [SQLAlchemy] and the [CrateDB SQLAlchemy dialect].
 
+- `example_cratedb_mcp.py`: Exercise communication using the [CrateDB MCP Server]
+  package, specialising on advanced CrateDB SQL operations.
+
 ## Resources
 
 - Read a [brief introduction to MCP] by ByteByteGo.
@@ -128,6 +131,7 @@ unlocking more details and features.
 [Claude Desktop configuration]: https://github.com/modelcontextprotocol/servers?tab=readme-ov-file#using-an-mcp-client
 [connecting to an already running MCP server]: https://github.com/modelcontextprotocol/python-sdk/issues/145
 [CrateDB]: https://cratedb.com/database
+[CrateDB MCP Server]: https://github.com/crate/cratedb-mcp
 [CrateDB SQLAlchemy dialect]: https://cratedb.com/docs/sqlalchemy-cratedb/
 [DBHub]: https://github.com/bytebase/dbhub
 [Introduction to MCP]: https://modelcontextprotocol.io/introduction

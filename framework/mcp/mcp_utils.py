@@ -63,20 +63,20 @@ class McpDatabaseConversation:
 
         # List available prompts
         print("## Prompts")
-        self.dump_info(self.entity_info(self.session.list_prompts, "prompts"))
+        self.dump_info(await self.entity_info(self.session.list_prompts, "prompts"))
 
         # List available resources and resource templates
         print("## Resources")
-        self.dump_info(self.entity_info(self.session.list_resources, "resources"))
+        self.dump_info(await self.entity_info(self.session.list_resources, "resources"))
         print()
 
         print("## Resource templates")
-        self.dump_info(self.entity_info(self.session.list_resource_templates, "resourceTemplates"))
+        self.dump_info(await self.entity_info(self.session.list_resource_templates, "resourceTemplates"))
         print()
 
         # List available tools
         print("## Tools")
-        self.dump_info(self.entity_info(self.session.list_tools, "tools"))
+        self.dump_info(await self.entity_info(self.session.list_tools, "tools"))
         print()
 
     async def call_tool(
