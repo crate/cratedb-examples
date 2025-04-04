@@ -16,6 +16,7 @@
   - https://github.com/crate/crate/issues/11757
   - https://github.com/crate/crate/issues/12544
 - PG-MCP: Fix `/rowcount endpoint`
+  https://github.com/stuzero/pg-mcp-server/issues/10
 
 ## Iteration +2
 - General: Evaluate all connectors per `stdio` and `sse`, where possible

@@ -1,5 +1,6 @@
+cratedb-mcp @ git+https://github.com/crate/cratedb-mcp@packaging-adjustments
 cratedb-toolkit
-mcp<1.6
+mcp<1.7
 mcp-alchemy @ git+https://github.com/runekaagaard/mcp-alchemy.git@b85aae6; python_version>='3.12'
 sqlalchemy-cratedb>=0.42.0.dev1
 where

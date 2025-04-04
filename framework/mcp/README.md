@@ -46,6 +46,11 @@ program.
   and includes advanced client programs for Claude and Gemini that work out of the box.
   It is written in Python, optionally to be invoked with `uv` or `uvx`.
 
+- `example_cratedb_mcp.py`:
+  The [CrateDB MCP Server] specialises on advanced CrateDB SQL operations by blending in
+  knowledge base resources from CrateDB's documentation about query optimizations.
+  It is written in Python, optionally to be invoked with `uv` or `uvx`.
+
 ## Resources
 
 - Read a [brief introduction to MCP] by ByteByteGo.
@@ -134,6 +139,7 @@ unlocking more details and features.
 [Claude Desktop configuration]: https://github.com/modelcontextprotocol/servers?tab=readme-ov-file#using-an-mcp-client
 [connecting to an already running MCP server]: https://github.com/modelcontextprotocol/python-sdk/issues/145
 [CrateDB]: https://cratedb.com/database
+[CrateDB MCP Server]: https://github.com/crate/cratedb-mcp
 [CrateDB SQLAlchemy dialect]: https://cratedb.com/docs/sqlalchemy-cratedb/
 [DBHub]: https://github.com/bytebase/dbhub
 [Introduction to MCP]: https://modelcontextprotocol.io/introduction
