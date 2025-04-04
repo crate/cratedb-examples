@@ -1,0 +1,63 @@
+name: Python turbodbc
+
+on:
+  pull_request:
+    branches: ~
+    paths:
+    - '.github/workflows/lang-python-turbodbc.yml'
+    - 'by-language/python-turbodbc/**'
+    - '/requirements.txt'
+  push:
+    branches: [ main ]
+    paths:
+    - '.github/workflows/lang-python-turbodbc.yml'
+    - 'by-language/python-turbodbc/**'
+    - '/requirements.txt'
+
+  # Allow job to be triggered manually.
+  workflow_dispatch:
+
+  # Run job each night after CrateDB nightly has been published.
+  schedule:
+    - cron: '0 3 * * *'
+
+# Cancel in-progress jobs when pushing to the same branch.
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  test:
+    name: "
+     CrateDB: ${{ matrix.cratedb-version }}
+     on ${{ matrix.os }}"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ 'ubuntu-22.04' ]
+        cratedb-version: [ 'nightly' ]
+
+    services:
+      cratedb:
+        image: crate/crate:${{ matrix.cratedb-version }}
+        ports:
+          - 4200:4200
+          - 5432:5432
+        env:
+          CRATE_HEAP_SIZE: 4g
+
+    steps:
+
+      - name: Acquire sources
+        uses: actions/checkout@v4
+
+      - name: Install prerequisites
+        run: |
+          cd by-language/python-turbodbc
+          docker build --tag local/turbodbc-ci --file=dockerfiles/debian.Dockerfile .
+
+      - name: Validate by-language/python-turbodbc
+        run: |
+          cd by-language/python-turbodbc
+          docker run --rm --volume=$(pwd):/src --network=host local/turbodbc-ci python3 /src/demo.py
