@@ -13,9 +13,18 @@ from mcp_utils import McpDatabaseConversation
 
 async def run():
     # Create server parameters for stdio connection.
+
+    # Incantation assuming software is installed.
     server_params = StdioServerParameters(
         command=where.first("mcp-alchemy"),
         args=[],
+        env={"DB_URL": "crate://crate@localhost:4200/?schema=testdrive"},
+    )
+
+    # Incantation using `uvx`.
+    server_params_uvx = StdioServerParameters(
+        command="uvx",
+        args=["--with", "sqlalchemy-cratedb>=0.42.0.dev2", "mcp-alchemy"],
         env={"DB_URL": "crate://crate@localhost:4200/?schema=testdrive"},
     )
 
