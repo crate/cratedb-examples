@@ -2,5 +2,5 @@ cratedb-mcp @ git+https://github.com/crate/cratedb-mcp@packaging-adjustments
 cratedb-toolkit
 mcp<1.7
 mcp-alchemy~=2025.4
-sqlalchemy-cratedb>=0.42.0.dev1
+sqlalchemy-cratedb>=0.42.0.dev2
 where
