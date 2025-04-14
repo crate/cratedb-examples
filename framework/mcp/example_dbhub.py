@@ -14,7 +14,7 @@ server_params_npx = StdioServerParameters(
     command="npx",
     args=[
         "-y",
-        "@bytebase/dbhub@0.2.3",
+        "@bytebase/dbhub@0.3.1",
         "--transport=stdio",
         #"--transport=sse",
         #"--port=8080",
