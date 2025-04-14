@@ -28,6 +28,11 @@ program.
   database schemas and execute read-only queries. It is written in TypeScript,
   to be invoked with [npx].
 
+- `example_cratedb_mcp.py`:
+  The [CrateDB MCP Server] specialises on advanced CrateDB SQL operations by blending in
+  knowledge base resources from CrateDB's documentation about query optimizations.
+  It is written in Python, optionally to be invoked with `uv` or `uvx`.
+
 - `example_dbhub.py`: Exercise communication using [DBHub], a universal database
   gateway implementing the Model Context Protocol (MCP) server interface. This
   gateway allows MCP-compatible clients to connect to and explore different databases.
@@ -44,11 +49,6 @@ program.
   The [PG-MCP] server is specialised to talk to PostgreSQL servers. With a few adjustments,
   the adapter can also talk to CrateDB. The project offers rich MCP server capabilities,
   and includes advanced client programs for Claude and Gemini that work out of the box.
-  It is written in Python, optionally to be invoked with `uv` or `uvx`.
-
-- `example_cratedb_mcp.py`:
-  The [CrateDB MCP Server] specialises on advanced CrateDB SQL operations by blending in
-  knowledge base resources from CrateDB's documentation about query optimizations.
   It is written in Python, optionally to be invoked with `uv` or `uvx`.
 
 ## Resources
