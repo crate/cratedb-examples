@@ -1,6 +1,6 @@
-# Purpose:
-# Start CrateDB with custom parameters and wait for the service being available,
-# even when invoked through `docker compose up --detach`.
+# CrateDB single-node configuration with SSL (self-signed certificates).
+
+name: cratedb-with-ssl
 
 services:
 
@@ -9,6 +9,7 @@ services:
     command: ["crate", "-Cstats.enabled=true"]
     ports:
       - 4200:4200
+      - 5432:5432
     volumes:
       - ./crate.yml:/crate/config/crate.yml
       - ./keystore:/crate/config/keystore
@@ -16,12 +17,14 @@ services:
     healthcheck:
       test: ["CMD", "curl", "--fail", "--insecure", "https://localhost:4200"]
       start_period: 3s
-      interval: 0.5s
+      interval: 1.5s
       retries: 30
       timeout: 30s
 
+  # Wait for the service being available, even when
+  # invoked through `docker compose up --detach`.
   # https://marcopeg.com/2019/docker-compose-healthcheck/
-  start_dependencies:
+  wait-for-cratedb:
     image: dadarek/wait-for-dependencies
     depends_on:
       cratedb:
