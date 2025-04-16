@@ -172,6 +172,13 @@ updates:
     schedule:
       interval: "daily"
 
+  # Operation.
+
+  - directory: "/operation/compose/ssl"
+    package-ecosystem: "docker-compose"
+    schedule:
+      interval: "daily"
+
   # Topics.
 
   - directory: "/topic/machine-learning/automl"

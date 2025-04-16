@@ -1,0 +1,68 @@
+name: "Compose: CrateDB with SSL"
+
+on:
+  pull_request:
+    paths:
+    - '.github/workflows/operation-compose-ssl.yml'
+    - 'operation/compose/ssl/**'
+    - '/requirements.txt'
+  push:
+    branches: [ main ]
+    paths:
+    - '.github/workflows/operation-compose-ssl.yml'
+    - 'operation/compose/ssl/**'
+    - '/requirements.txt'
+
+  # Allow job to be triggered manually.
+  workflow_dispatch:
+
+  # Run job each night after CrateDB nightly has been published.
+  schedule:
+    - cron: '0 3 * * *'
+
+# Cancel in-progress jobs when pushing to the same branch.
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  test:
+    name: "
+     Python ${{ matrix.python-version }}
+     on ${{ matrix.os }}"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ 'ubuntu-latest' ]
+        python-version: [ '3.13' ]
+
+    env:
+      UV_SYSTEM_PYTHON: true
+
+    steps:
+
+      - name: Acquire sources
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          cache-dependency-glob: |
+            requirements.txt
+          enable-cache: true
+          version: "latest"
+
+      - name: Install utilities
+        run: |
+          uv pip install -r requirements.txt
+
+      - name: Validate operation/compose/ssl
+        run: |
+          cd operation/compose/ssl
+          make test
