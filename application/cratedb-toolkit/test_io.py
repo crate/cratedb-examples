@@ -6,7 +6,7 @@ import pytest
 import typing as t
 import logging
 import platformdirs
-from cratedb_toolkit.util import DatabaseAdapter
+from cratedb_toolkit.util.database import DatabaseAdapter
 from git import Repo, RemoteProgress
 import subprocess
 

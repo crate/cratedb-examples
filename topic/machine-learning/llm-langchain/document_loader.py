@@ -28,7 +28,7 @@ import os
 
 import requests
 import sqlalchemy as sa
-from cratedb_toolkit.util import DatabaseAdapter
+from cratedb_toolkit.util.database import DatabaseAdapter
 from langchain_community.utilities.sql_database import SQLDatabase
 from langchain_cratedb.loaders import CrateDBLoader
 from pprint import pprint
