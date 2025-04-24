@@ -3,7 +3,7 @@
 #
 # Derived from:
 # https://github.com/modelcontextprotocol/python-sdk?tab=readme-ov-file#writing-mcp-clients
-from cratedb_toolkit.util import DatabaseAdapter
+from cratedb_toolkit.util.database import DatabaseAdapter
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 

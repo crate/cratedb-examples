@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from cratedb_toolkit.util import DatabaseAdapter
+from cratedb_toolkit.util.database import DatabaseAdapter
 from pueblo.testing.folder import str_list, list_python_files
 from pueblo.testing.notebook import generate_tests
 from pueblo.testing.snippet import pytest_module_function
