@@ -1,0 +1,19 @@
+[tool.pytest.ini_options]
+minversion = "2.0"
+addopts = """
+  -rfEX -p pytester --strict-markers --verbosity=3 --capture=no
+  """
+env = [
+    "CRATEDB_CONNECTION_STRING=crate://crate@localhost/?schema=notebook",
+    "PYDEVD_DISABLE_FILE_VALIDATION=1",
+]
+
+log_level = "DEBUG"
+log_cli_level = "DEBUG"
+
+testpaths = [
+    "*.py",
+]
+xfail_strict = true
+markers = [
+]
