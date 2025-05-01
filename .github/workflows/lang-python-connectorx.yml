@@ -68,7 +68,7 @@ jobs:
             by-language/python-connectorx/requirements*.txt
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v5
+        uses: astral-sh/setup-uv@v6
 
       - name: Install utilities
         run: |
