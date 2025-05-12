@@ -1,5 +1,5 @@
 # Production.
-cratedb-toolkit[io]
+cratedb-toolkit[io]>=0.0.33
 pueblo[notebook,testing]
 
 # Staging.

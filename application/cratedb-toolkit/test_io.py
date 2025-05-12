@@ -88,7 +88,7 @@ def test_ctk_load_table_influxdb_lp(drop_testing_tables):
     command = f"""
     ctk load table \
         "{influxdb_lp_url}" \
-        --cratedb-sqlalchemy-url="crate://localhost:4200/from-influxdb/air-sensor-data"
+        --cluster-url="crate://localhost:4200/from-influxdb/air-sensor-data"
     """
     print(f"Invoking CTK: {command}", file=sys.stderr)
     subprocess.check_call(shlex.split(command))
@@ -144,7 +144,7 @@ def test_ctk_load_table_mongodb_json(drop_testing_tables):
     command = f"""
 ctk load table \
     "file+bson://{datasets_path}/*.json?batch-size=2500" \
-    --cratedb-sqlalchemy-url="crate://localhost:4200/from-mongodb" \
+    --cluster-url="crate://localhost:4200/from-mongodb" \
     --transformation=zyp-mongodb-json-files.yaml
 """
     print(f"Invoking CTK: {command}", file=sys.stderr)

@@ -123,7 +123,7 @@ which is applicable for all sorts of driver, adapter, and connector explorations
 After providing authentication information, just use uv's `uvx` launcher to invoke
 CrateDB Toolkit's tail command without installation.
 ```shell
-export CRATEDB_SQLALCHEMY_URL=crate://crate@localhost:4200/
+export CRATEDB_CLUSTER_URL=crate://crate@localhost:4200/
 ```
 ```shell
 uvx --from=cratedb-toolkit ctk tail -n 3 --follow --format=log-pretty sys.jobs_log
