@@ -1,4 +1,4 @@
-cratedb-mcp @ git+https://github.com/crate/cratedb-mcp@main
+cratedb-mcp
 cratedb-toolkit>=0.0.33
 mcp<1.7
 mcp-alchemy~=2025.4
