@@ -12,9 +12,9 @@ from mcp_utils import McpDatabaseConversation
 # Create server parameters for stdio connection.
 server_params = StdioServerParameters(
     command="cratedb-mcp",
-    args=[],
+    args=["serve"],
     env={
-        "CRATEDB_MCP_HTTP_URL": "http://localhost:4200",
+        "CRATEDB_CLUSTER_URL": "http://localhost:4200",
         "CRATEDB_MCP_TRANSPORT": "stdio",
     },
 )
