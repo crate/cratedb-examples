@@ -40,7 +40,7 @@ from pprint import pprint
 import records
 
 # Define database connection URL, suitable for CrateDB on localhost.
-# For CrateDB Cloud, use `crate://<username>:<password>@<host>`.
+# For CrateDB Cloud, use `crate://<username>:<password>@<host>:4200?ssl=true`.
 db = records.Database("crate://")
 
 # Invoke query.
