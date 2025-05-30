@@ -2,6 +2,6 @@ langchain-openai<0.4
 llama-index-embeddings-langchain<0.4
 llama-index-embeddings-openai<0.4
 llama-index-llms-azure-openai<0.4
-llama-index-llms-openai<0.4
+llama-index-llms-openai<0.5
 python-dotenv
 sqlalchemy-cratedb
