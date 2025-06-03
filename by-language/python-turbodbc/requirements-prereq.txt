@@ -1,4 +1,4 @@
 # Turbodbc wants NumPy and PyArrow to be installed upfront.
 numpy>=2
-pyarrow<20
+pyarrow<21
 wheel
