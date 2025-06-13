@@ -69,10 +69,10 @@ def test_jdbc():
     assert b"Calling tool: database_info" in p.stdout
     assert b"database_product_name: PostgreSQL" in p.stdout
     assert b"driver_name: PostgreSQL JDBC Driver" in p.stdout
+    assert b"Calling tool: list_tables" in p.stdout
+    assert b'TABLE_NAME: jobs_log' in p.stdout
     assert b"Calling tool: describe_table" in p.stdout
-    # FIXME: Problem with `SELECT current_database()`.
-    #        https://github.com/crate/crate/issues/17393
-    assert b"Failed to describe table: The column name current_database was not found in this ResultSet." in p.stdout
+    assert b'coordinates' in p.stdout
     assert b"Calling tool: read_query" in p.stdout
     assert b'mountain: Mont Blanc' in p.stdout
 
