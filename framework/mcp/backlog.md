@@ -3,10 +3,6 @@
 ## Iteration +1
 - Builtin: Submit a CrateDB adapter, getting rid of the
   `Could not roll back transaction: error`
-- JDBC: Tool `list_tables` currently blocks.
-- JDBC: Tool `describe_table` does not work.
-  Problem with `SELECT current_database()`.
-  https://github.com/crate/crate/issues/17393
 - DBHub: Reading resource `tables` does not work,
   because `WHERE table_schema = 'public'`
 - PG-MCP: Improve installation after packaging has been improved.

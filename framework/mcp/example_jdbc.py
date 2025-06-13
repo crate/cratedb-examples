@@ -38,8 +38,7 @@ async def run():
 
             # Call a few tools.
             await client.call_tool("database_info")
-            # FIXME: This operation currently blocks.
-            # await client.call_tool("list_tables", arguments={})
+            await client.call_tool("list_tables")
             await client.call_tool("describe_table", arguments={"schema": "sys", "table": "summits"})
             await client.call_tool("read_query", arguments={"query": "SELECT * FROM sys.summits ORDER BY height DESC LIMIT 3"})
             await client.call_tool("create_table", arguments={"query": "CREATE TABLE IF NOT EXISTS testdrive.mcp_jdbc (id INT, data TEXT)"})
