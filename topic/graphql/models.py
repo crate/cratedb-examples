@@ -1,4 +1,4 @@
-from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, func
+from sqlalchemy import Column, DateTime, ForeignKey, BigInteger, String, func
 from sqlalchemy.orm import backref, relationship
 from sqlalchemy_cratedb.support import patch_autoincrement_timestamp
 

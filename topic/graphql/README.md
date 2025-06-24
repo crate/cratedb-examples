@@ -14,7 +14,16 @@ The project contains two models, one named `Department` and another named
 
 ## Getting started
 
-First you'll need to get the source of the project. Do this by cloning the whole
+First, it is good idea (but not required) to create a virtual environment for
+this project. We'll do this using
+[venv](https://docs.python.org/3/library/venv.html) to keep things simple:
+
+```bash
+python -m venv ./graphql-demo
+source ./graphql-demo/bin/activate
+```
+
+Now we will need to get the source of the project. Do this by cloning the whole
 cratedb-examples repository:
 
 ```bash
@@ -23,19 +32,10 @@ git clone https://github.com/crate/cratedb-examples.git
 cd cratedb-examples/topic/graphql
 ```
 
-It is good idea (but not required) to create a virtual environment for this
-project. We'll do this using [venv](https://docs.python.org/3/library/venv.html)
-to keep things simple:
-
-```bash
-python -m venv ./graphql-demo
-source ./graphql-demo/bin/activate
-```
-
 Now we can install our dependencies:
 
 ```bash
-pip install -r requirements.txt
+pip install sqlalchemy-cratedb graphene_sqlalchemy Flask Flask-GraphQL
 ```
 
 Now the following command will setup the database, and start the server:
