@@ -1,4 +1,4 @@
-from sqlalchemy import Column, DateTime, ForeignKey, BigInteger, Integer, String, func
+from sqlalchemy import Column, DateTime, ForeignKey, BigInteger, String, func
 from sqlalchemy.orm import backref, relationship
 from sqlalchemy_cratedb.support import patch_autoincrement_timestamp
 
@@ -15,7 +15,7 @@ class Department(Base):
 
 class Role(Base):
     __tablename__ = "roles"
-    role_id = Column(Integer, primary_key=True)
+    role_id = Column(BigInteger, primary_key=True, autoincrement=True)
     name = Column(String)
 
 
