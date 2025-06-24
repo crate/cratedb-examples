@@ -3,9 +3,9 @@
 This example project derived from the
 [graphene-sqlalchemy flask_sqlalchemy example](https://github.com/graphql-python/graphene-sqlalchemy/tree/master/examples/flask_sqlalchemy)
 demos how GraphQL queries can be run against data stored in CrateDB using
-Graphene-SQLAlchemy. This way the data is accessible both via SQL and GraphQL.
+Graphene-SQLAlchemy. This way, the data is accessible both via SQL and GraphQL.
 
-To run this example you will need an instance of CrateDB. You can get an
+To run this example, you will need an instance of CrateDB. You can get an
 instance of
 [CrateDB running locally with docker](https://cratedb.com/docs/guide/install/container/index.html#install-container)
 
@@ -14,7 +14,7 @@ The project contains two models, one named `Department` and another named
 
 ## Getting started
 
-First, it is good idea (but not required) to create a virtual environment for
+First, it is a good idea (but not required) to create a virtual environment for
 this project. We'll do this using
 [venv](https://docs.python.org/3/library/venv.html) to keep things simple:
 
@@ -38,7 +38,7 @@ Now we can install our dependencies:
 pip install sqlalchemy-cratedb graphene_sqlalchemy Flask Flask-GraphQL
 ```
 
-Now the following command will setup the database, and start the server:
+Now the following command will set up the database, and start the server:
 
 ```bash
 python ./app.py

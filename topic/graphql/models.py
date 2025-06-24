@@ -15,7 +15,7 @@ class Department(Base):
 
 class Role(Base):
     __tablename__ = "roles"
-    role_id = Column(BigInteger, primary_key=True, autoincrement=True)
+    id = Column(BigInteger, primary_key=True, autoincrement=True)
     name = Column(String)
 
 
@@ -28,7 +28,7 @@ class Employee(Base):
     # Employee record was created
     hired_on = Column(DateTime, default=func.now())
     department_id = Column(BigInteger, ForeignKey("department.id"))
-    role_id = Column(BigInteger, ForeignKey("roles.role_id"))
+    role_id = Column(BigInteger, ForeignKey("roles.id"))
     # Use cascade='delete,all' to propagate the deletion of a Department onto its Employees
     department = relationship(
         Department, backref=backref("employees", uselist=True, cascade="delete,all")
