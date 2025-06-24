@@ -41,7 +41,7 @@ pip install sqlalchemy-cratedb graphene_sqlalchemy Flask Flask-GraphQL
 Now the following command will setup the database, and start the server:
 
 ```bash
-./app.py
+python ./app.py
 
 ```
 
