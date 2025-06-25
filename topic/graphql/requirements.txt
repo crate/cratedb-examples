@@ -1,4 +1,4 @@
 sqlalchemy-cratedb
-graphene_sqlalchemy
+graphene-sqlalchemy
 Flask
 Flask-GraphQL
