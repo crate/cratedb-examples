@@ -35,7 +35,7 @@ cd cratedb-examples/topic/graphql
 Now we can install our dependencies:
 
 ```bash
-pip install sqlalchemy-cratedb graphene_sqlalchemy Flask Flask-GraphQL
+pip install -r requirements.txt
 ```
 
 Now the following command will set up the database, and start the server:
