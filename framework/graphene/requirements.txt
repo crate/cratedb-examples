@@ -1,0 +1,4 @@
+sqlalchemy-cratedb
+graphene-sqlalchemy
+Flask
+Flask-GraphQL
