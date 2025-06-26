@@ -5,6 +5,7 @@ import pandas as pd
 import sqlalchemy as sa
 
 import dlt
+import dlt_cratedb
 from dlt.sources.helpers import requests
 
 

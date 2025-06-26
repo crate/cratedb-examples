@@ -36,6 +36,7 @@ For more detailed info, see https://dlthub.com/docs/intro
 
 def main():
     import dlt
+    import dlt_cratedb
     from dlt.sources.helpers import requests
 
     dlt.run(
