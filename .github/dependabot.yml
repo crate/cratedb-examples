@@ -120,6 +120,16 @@ updates:
     schedule:
       interval: "daily"
 
+  - directory: "/application/ingestr"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "daily"
+
+  - directory: "/application/ingestr"
+    package-ecosystem: "docker-compose"
+    schedule:
+      interval: "daily"
+
   - directory: "/application/metabase"
     package-ecosystem: "pip"
     schedule:
