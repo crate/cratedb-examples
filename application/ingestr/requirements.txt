@@ -1,1 +1,1 @@
-ingestr @ git+https://github.com/crate-workbench/ingestr.git@next
+ingestr @ git+https://github.com/crate-workbench/ingestr.git@kafka-decoder

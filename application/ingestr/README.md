@@ -9,6 +9,11 @@ This folder includes runnable examples that use ingestr with CrateDB.
 They are also used as integration tests to ensure software components
 fit together well.
 
+## Prerequisites
+
+For executing the commands in this walkthrough, you need a working
+installation of Docker and Python.
+
 ## Usage
 
 To start cycling without tearing down the backend stack each time,
