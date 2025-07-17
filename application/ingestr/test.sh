@@ -11,11 +11,14 @@ function setup() {
   if ! command -v uv >/dev/null 2>&1; then
     pip install uv
   fi
+  if ! command -v xonsh >/dev/null 2>&1; then
+    uv tool install xonsh
+  fi
 }
 
 # Invoke Kafka tests.
 function test_kafka() {
-  bash kafka-cmd.sh
+  xonsh kafka-demo.xsh
 }
 
 setup
