@@ -125,7 +125,7 @@ services:
   create-table:
     image: westonsteimel/httpie
     networks: [ingestr-demo]
-    command: http "${CRATEDB_HTTP_URL}/_sql?pretty" stmt='CREATE TABLE "kafka_demo" ("payload" OBJECT(DYNAMIC))' --ignore-stdin
+    command: http "${CRATEDB_HTTP_URL_DOCKER}/_sql?pretty" stmt='CREATE TABLE "kafka_demo" ("payload" OBJECT(DYNAMIC))' --ignore-stdin
     deploy:
       replicas: 0
 
@@ -133,7 +133,7 @@ services:
   drop-table:
     image: westonsteimel/httpie
     networks: [ingestr-demo]
-    command: http "${CRATEDB_HTTP_URL}/_sql?pretty" stmt='DROP TABLE IF EXISTS "kafka_demo"' --ignore-stdin
+    command: http "${CRATEDB_HTTP_URL_DOCKER}/_sql?pretty" stmt='DROP TABLE IF EXISTS "kafka_demo"' --ignore-stdin
     deploy:
       replicas: 0
 
