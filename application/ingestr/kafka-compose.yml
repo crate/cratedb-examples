@@ -1,3 +1,6 @@
+# Demo for loading data from Kafka topic to CrateDB table.
+# Accompanies `kafka-demo.xsh` and `.env` files.
+---
 networks:
   ingestr-demo:
     name: ingestr-demo
@@ -5,43 +8,25 @@ networks:
 
 services:
 
-  # ---------------
-  # Confluent Kafka
-  # ---------------
-  # https://docs.confluent.io/platform/current/installation/docker/config-reference.html
-  # https://gist.github.com/everpeace/7a317860cab6c7fb39d5b0c13ec2543e
-  # https://github.com/framiere/a-kafka-story/blob/master/step14/docker-compose.yml
-  kafka-zookeeper:
-    image: confluentinc/cp-zookeeper:${CONFLUENT_VERSION}
-    environment:
-      ZOOKEEPER_CLIENT_PORT: ${PORT_KAFKA_ZOOKEEPER}
-      KAFKA_OPTS: -Dzookeeper.4lw.commands.whitelist=ruok
-    networks:
-      - ingestr-demo
-
-    # Define health check for Zookeeper.
-    healthcheck:
-      # https://github.com/confluentinc/cp-docker-images/issues/827
-      test: ["CMD", "bash", "-c", "echo ruok | nc localhost ${PORT_KAFKA_ZOOKEEPER} | grep imok"]
-      start_period: 3s
-      interval: 2s
-      timeout: 30s
-      retries: 60
-
-  kafka-broker:
-    image: confluentinc/cp-kafka:${CONFLUENT_VERSION}
+  # ------------
+  # Apache Kafka
+  # ------------
+  kafka:
+    image: ${KAFKA_IMAGE}
     ports:
       - "${PORT_KAFKA_BROKER_INTERNAL}:${PORT_KAFKA_BROKER_INTERNAL}"
       - "${PORT_KAFKA_BROKER_EXTERNAL}:${PORT_KAFKA_BROKER_EXTERNAL}"
     environment:
-      KAFKA_ZOOKEEPER_CONNECT: kafka-zookeeper:${PORT_KAFKA_ZOOKEEPER}
-      KAFKA_LISTENERS: INTERNAL://0.0.0.0:${PORT_KAFKA_BROKER_INTERNAL},EXTERNAL://0.0.0.0:${PORT_KAFKA_BROKER_EXTERNAL}
-      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-broker:${PORT_KAFKA_BROKER_INTERNAL},EXTERNAL://localhost:${PORT_KAFKA_BROKER_EXTERNAL}
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_NODE_ID: 1
+      KAFKA_BROKER_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: INTERNAL://:${PORT_KAFKA_BROKER_INTERNAL},EXTERNAL://:${PORT_KAFKA_BROKER_EXTERNAL},CONTROLLER://:9093
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:${PORT_KAFKA_BROKER_INTERNAL},EXTERNAL://localhost:${PORT_KAFKA_BROKER_EXTERNAL}
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@localhost:9093
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-    depends_on:
-      - kafka-zookeeper
     networks:
       - ingestr-demo
 
@@ -64,11 +49,11 @@ services:
       - "${CRATEDB_POSTGRESQL_PORT}:${CRATEDB_POSTGRESQL_PORT}"
     environment:
       CRATE_HEAP_SIZE: 4g
-
-    command: ["crate",
-              "-Cdiscovery.type=single-node",
-              "-Ccluster.routing.allocation.disk.threshold_enabled=false",
-             ]
+    command: [
+      "crate",
+      "-Cdiscovery.type=single-node",
+      "-Ccluster.routing.allocation.disk.threshold_enabled=false",
+    ]
     networks:
       - ingestr-demo
 
@@ -90,37 +75,57 @@ services:
   start-dependencies:
     image: dadarek/wait-for-dependencies
     depends_on:
-      kafka-broker:
+      kafka:
         condition: service_healthy
       cratedb:
         condition: service_healthy
 
 
-  # -----
-  # Tasks
-  # -----
+  # ---------------
+  # Tasks for Kafka
+  # ---------------
+
+  # Create Kafka topic.
+  create-topic:
+    image: ${KAFKA_IMAGE}
+    networks: [ingestr-demo]
+    command: /opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka:${PORT_KAFKA_BROKER_INTERNAL} --create --if-not-exists --replication-factor 1 --partitions 1 --topic demo
+    deploy:
+      replicas: 0
+
+  # Delete Kafka topic.
+  delete-topic:
+    image: ${KAFKA_IMAGE}
+    networks: [ingestr-demo]
+    command: /opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka:${PORT_KAFKA_BROKER_INTERNAL} --delete --if-exists --topic demo
+    deploy:
+      replicas: 0
+
+  # Publish data to Kafka topic.
+  publish-topic:
+    image: ${KAFKA_IMAGE}
+    networks: [ingestr-demo]
+    command: /opt/kafka/bin/kafka-console-producer.sh --bootstrap-server kafka:${PORT_KAFKA_BROKER_INTERNAL} --topic demo
+    deploy:
+      replicas: 0
+
+  # Subscribe to Kafka topic.
+  subscribe-topic:
+    image: edenhill/kcat:${KCAT_VERSION}
+    networks: [ingestr-demo]
+    command: kcat -b kafka -C -t demo  # -o end
+    deploy:
+      replicas: 0
+
+  # -----------------
+  # Tasks for CrateDB
+  # -----------------
 
   # Create database table in CrateDB.
   create-table:
     image: westonsteimel/httpie
     networks: [ingestr-demo]
     command: http "${CRATEDB_HTTP_URL}/_sql?pretty" stmt='CREATE TABLE "kafka_demo" ("payload" OBJECT(DYNAMIC))' --ignore-stdin
-    deploy:
-      replicas: 0
-
-  # Create Kafka topic.
-  create-topic:
-    image: confluentinc/cp-kafka:${CONFLUENT_VERSION}
-    networks: [ingestr-demo]
-    command: kafka-topics --bootstrap-server kafka-broker:${PORT_KAFKA_BROKER_INTERNAL} --create --if-not-exists --replication-factor 1 --partitions 1 --topic demo
-    deploy:
-      replicas: 0
-
-  # Delete Kafka topic.
-  delete-topic:
-    image: confluentinc/cp-kafka:${CONFLUENT_VERSION}
-    networks: [ingestr-demo]
-    command: kafka-topics --bootstrap-server kafka-broker:${PORT_KAFKA_BROKER_INTERNAL} --delete --if-exists --topic demo
     deploy:
       replicas: 0
 
@@ -136,21 +141,5 @@ services:
   httpie:
     image: westonsteimel/httpie
     networks: [ingestr-demo]
-    deploy:
-      replicas: 0
-
-  # Publish data to Kafka topic.
-  publish-data:
-    image: confluentinc/cp-kafka:${CONFLUENT_VERSION}
-    networks: [ingestr-demo]
-    command: kafka-console-producer --bootstrap-server kafka-broker:${PORT_KAFKA_BROKER_INTERNAL} --topic demo
-    deploy:
-      replicas: 0
-
-  # Subscribe to Kafka topic.
-  subscribe-topic:
-    image: edenhill/kcat:${KCAT_VERSION}
-    networks: [ingestr-demo]
-    command: kcat -b kafka-broker -C -t demo  # -o end
     deploy:
       replicas: 0
