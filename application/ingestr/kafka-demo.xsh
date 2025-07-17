@@ -121,28 +121,20 @@ class Datawrapper:
         return self
 
     def display(self):
+        from pprint import pprint
 
         title "Displaying data in CrateDB"
 
-        docker compose --file $COMPOSE_FILE run --rm httpie \
-            http "$CRATEDB_HTTP_URL/_sql?pretty" 'stmt=REFRESH TABLE "kafka_demo";' --ignore-stdin > /dev/null
-
-        docker compose --file $COMPOSE_FILE run --rm httpie \
-            http "$CRATEDB_HTTP_URL/_sql?pretty" 'stmt=SELECT * FROM "kafka_demo" LIMIT 5;' --ignore-stdin
-
-        docker compose --file $COMPOSE_FILE run --rm httpie \
-            http "$CRATEDB_HTTP_URL/_sql?pretty" 'stmt=SELECT COUNT(*) FROM "kafka_demo";' --ignore-stdin
+        query_cratedb('REFRESH TABLE "kafka_demo";')
+        pprint(query_cratedb('SELECT * FROM "kafka_demo" LIMIT 5;')["rows"])
+        pprint(query_cratedb('SELECT COUNT(*) FROM "kafka_demo";')["rows"])
 
         return self
 
     def verify(self):
         title "Verifying data in CrateDB"
         $size_reference=5000
-        $size_actual=$(
-            docker compose --file $COMPOSE_FILE run --rm httpie \
-                http "$CRATEDB_HTTP_URL/_sql?pretty" 'stmt=SELECT COUNT(*) FROM "kafka_demo";' --ignore-stdin \
-                | jq .rows[0][0]
-        )
+        $size_actual=query_cratedb('SELECT COUNT(*) FROM "kafka_demo";')["rows"][0][0]
         if int($size_actual) >= $size_reference:
             print_color("{BOLD_GREEN}")
             echo "SUCCESS: Database table contains expected number of at least $size_reference records."
@@ -168,6 +160,31 @@ def title(args):
     print(guard)
 
 
+def query_cratedb(sql, url=None):
+    """Submit a query to CrateDB using its HTTP interface and return results."""
+    import base64
+    import json
+    import urllib.parse
+    import urllib.request
+
+    url = url or __xonsh__.env.get("CRATEDB_HTTP_URL_NOAUTH")
+    url += "/_sql?pretty"
+
+    username = __xonsh__.env.get("CRATEDB_USERNAME")
+    password = __xonsh__.env.get("CRATEDB_PASSWORD")
+
+    request = urllib.request.Request(
+        url,
+        data=json.dumps({"stmt": sql}).encode("utf8"),
+        headers={"Content-Type": "application/json"},
+        method="POST",
+    )
+    b64auth = base64.standard_b64encode(("%s:%s" % (username, password)).encode()).decode()
+    request.add_header("Authorization", "Basic %s" % b64auth)
+    with urllib.request.urlopen(request) as response:
+        return json.loads(response.read())
+
+
 def main():
     infra = Infrastructure()
     data = Datawrapper()
@@ -176,8 +193,9 @@ def main():
     infra.start().setup()
     data.acquire().publish().load().display().verify()
 
-    # Fast path.
+    # Fast paths.
     # data.display().verify()
+    # data.verify()
 
     if not __xonsh__.env.get("KEEPALIVE"):
         infra.stop()
