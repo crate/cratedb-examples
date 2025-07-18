@@ -12,7 +12,7 @@ services:
   # Apache Kafka
   # ------------
   kafka:
-    image: ${KAFKA_IMAGE}
+    image: docker.io/apache/kafka:4.0.0
     ports:
       - "${PORT_KAFKA_BROKER_INTERNAL}:${PORT_KAFKA_BROKER_INTERNAL}"
       - "${PORT_KAFKA_BROKER_EXTERNAL}:${PORT_KAFKA_BROKER_EXTERNAL}"
@@ -43,7 +43,7 @@ services:
   # CrateDB
   # -------
   cratedb:
-    image: crate:${CRATEDB_VERSION}
+    image: docker.io/crate:5.10.11
     ports:
       - "${CRATEDB_HTTP_PORT}:${CRATEDB_HTTP_PORT}"
       - "${CRATEDB_POSTGRESQL_PORT}:${CRATEDB_POSTGRESQL_PORT}"
@@ -73,7 +73,7 @@ services:
   # status, even when using `docker compose up --detach`.
   # https://marcopeg.com/2019/docker-compose-healthcheck/
   start-dependencies:
-    image: dadarek/wait-for-dependencies
+    image: docker.io/dadarek/wait-for-dependencies
     depends_on:
       kafka:
         condition: service_healthy
@@ -87,7 +87,7 @@ services:
 
   # Create Kafka topic.
   create-topic:
-    image: ${KAFKA_IMAGE}
+    image: docker.io/apache/kafka:4.0.0
     networks: [ingestr-demo]
     command: /opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka:${PORT_KAFKA_BROKER_INTERNAL} --create --if-not-exists --replication-factor 1 --partitions 1 --topic demo
     deploy:
@@ -95,7 +95,7 @@ services:
 
   # Delete Kafka topic.
   delete-topic:
-    image: ${KAFKA_IMAGE}
+    image: docker.io/apache/kafka:4.0.0
     networks: [ingestr-demo]
     command: /opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka:${PORT_KAFKA_BROKER_INTERNAL} --delete --if-exists --topic demo
     deploy:
@@ -103,7 +103,7 @@ services:
 
   # Publish data to Kafka topic.
   publish-topic:
-    image: ${KAFKA_IMAGE}
+    image: docker.io/apache/kafka:4.0.0
     networks: [ingestr-demo]
     command: /opt/kafka/bin/kafka-console-producer.sh --bootstrap-server kafka:${PORT_KAFKA_BROKER_INTERNAL} --topic demo
     deploy:
@@ -111,7 +111,7 @@ services:
 
   # Subscribe to Kafka topic.
   subscribe-topic:
-    image: edenhill/kcat:${KCAT_VERSION}
+    image: docker.io/edenhill/kcat:1.7.1
     networks: [ingestr-demo]
     command: kcat -b kafka -C -t demo  # -o end
     deploy:
@@ -123,7 +123,7 @@ services:
 
   # Create database table in CrateDB.
   create-table:
-    image: westonsteimel/httpie
+    image: docker.io/westonsteimel/httpie
     networks: [ingestr-demo]
     command: http "${CRATEDB_HTTP_URL_DOCKER}/_sql?pretty" stmt='CREATE TABLE "kafka_demo" ("payload" OBJECT(DYNAMIC))' --ignore-stdin
     deploy:
@@ -131,7 +131,7 @@ services:
 
   # Drop database table in CrateDB.
   drop-table:
-    image: westonsteimel/httpie
+    image: docker.io/westonsteimel/httpie
     networks: [ingestr-demo]
     command: http "${CRATEDB_HTTP_URL_DOCKER}/_sql?pretty" stmt='DROP TABLE IF EXISTS "kafka_demo"' --ignore-stdin
     deploy:
@@ -139,7 +139,7 @@ services:
 
   # Invoke HTTPie via Docker.
   httpie:
-    image: westonsteimel/httpie
+    image: docker.io/westonsteimel/httpie
     networks: [ingestr-demo]
     deploy:
       replicas: 0
