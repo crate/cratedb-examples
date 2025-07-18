@@ -81,6 +81,7 @@ class Datawrapper:
     """
 
     def acquire(self):
+        """Acquire raw data from the Internet"""
 
         if p"nyc-yellow-taxi-2017-subset.ndjson".exists():
             return self
@@ -103,6 +104,7 @@ class Datawrapper:
         return self
 
     def publish(self):
+        """Publish data to Kafka topic"""
 
         # Publish data to the Kafka topic.
         title "Publishing NDJSON data to Kafka topic"
@@ -118,6 +120,7 @@ class Datawrapper:
         return self
 
     def load(self):
+        """Load data into CrateDB"""
 
         # Invoke ingestr job.
         title "Invoking ingestr job"
@@ -137,6 +140,7 @@ class Datawrapper:
         return self
 
     def display(self):
+        """Display fragments of data that arrived in CrateDB"""
         from pprint import pprint
 
         title "Displaying data in CrateDB"
@@ -148,6 +152,7 @@ class Datawrapper:
         return self
 
     def verify(self):
+        """Verify fragments of data that arrived in CrateDB"""
         title "Verifying data in CrateDB"
         $size_reference=5000
         $size_actual=query_cratedb('SELECT COUNT(*) FROM "kafka_demo";')["rows"][0][0]
