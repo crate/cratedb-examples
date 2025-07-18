@@ -33,7 +33,10 @@ class Infrastructure:
 
     def start(self):
         title "Starting services"
-        $[ docker compose --file $COMPOSE_FILE up --detach ]
+        result = ![ docker compose --file $COMPOSE_FILE up --detach ]
+        if result.returncode != 0:
+            echo "ERROR: Failed to start services"
+            exit 1
         echo "Done."
         return self
 
@@ -53,7 +56,10 @@ class Infrastructure:
 
     def kafka_create_topic(self):
         title "Creating Kafka topic"
-        docker compose --file $COMPOSE_FILE run --rm --no-TTY create-topic
+        result = ![ docker compose --file $COMPOSE_FILE run --rm --no-TTY create-topic ]
+        if result.returncode != 0:
+            echo "ERROR: Failed to create Kafka topic"
+            exit 1
         echo "Done."
         return self
 
@@ -85,7 +91,10 @@ class Datawrapper:
         wget --no-clobber --continue "https://gist.githubusercontent.com/kovrus/328ba1b041dfbd89e55967291ba6e074/raw/7818724cb64a5d283db7f815737c9e198a22bee4/nyc-yellow-taxi-2017.tar.gz"
 
         # Extract archive.
-        tar -xvf nyc-yellow-taxi-2017.tar.gz
+        result = ![ tar -xvf nyc-yellow-taxi-2017.tar.gz ]
+        if result.returncode != 0:
+            echo "ERROR: Failed to extract archive"
+            exit 1
 
         # Create a subset of the data (5000 records) for concluding the first steps.
         cat nyc-yellow-taxi-2017.json | head -n 5000 > nyc-yellow-taxi-2017-subset.ndjson
@@ -97,7 +106,10 @@ class Datawrapper:
 
         # Publish data to the Kafka topic.
         title "Publishing NDJSON data to Kafka topic"
-        cat nyc-yellow-taxi-2017-subset.ndjson | docker compose --file $COMPOSE_FILE run --rm --no-TTY publish-topic
+        result = ![ cat nyc-yellow-taxi-2017-subset.ndjson | docker compose --file $COMPOSE_FILE run --rm --no-TTY publish-topic ]
+        if result.returncode != 0:
+            echo "ERROR: Failed to publish data to Kafka topic"
+            exit 1
         echo "Done."
 
         # Wait a bit for the data to transfer and converge successfully.
@@ -110,13 +122,17 @@ class Datawrapper:
         # Invoke ingestr job.
         title "Invoking ingestr job"
 
-        uvx --python=3.12 --prerelease=allow --with-requirements=requirements.txt \
-            ingestr ingest --yes \
-            --source-uri "kafka://?bootstrap_servers=localhost:9092&group_id=test_group&value_type=json&select=value" \
-            --source-table "demo" \
-            --dest-uri "cratedb://crate:crate@localhost:5432/?sslmode=disable" \
-            --dest-table "doc.kafka_demo"
-
+        result = ![
+            uvx --python=3.12 --prerelease=allow --with-requirements=requirements.txt \
+                ingestr ingest --yes \
+                --source-uri "kafka://?bootstrap_servers=localhost:9092&group_id=test_group&value_type=json&select=value" \
+                --source-table "demo" \
+                --dest-uri "cratedb://crate:crate@localhost:5432/?sslmode=disable" \
+                --dest-table "doc.kafka_demo"
+        ]
+        if result.returncode != 0:
+            echo "ERROR: Failed to ingest data using ingestr"
+            exit 1
         echo "Done."
         return self
 
