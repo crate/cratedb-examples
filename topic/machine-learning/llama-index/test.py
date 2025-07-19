@@ -38,3 +38,21 @@ def test_nlsql(cratedb, capsys):
     # Verify the outcome.
     out = capsys.readouterr().out
     assert "Answer was: The average value for sensor 1 is approximately 17.03." in out
+
+
+def test_mcp(cratedb, capsys):
+    """
+    Execute `demo_mcp.py` and verify outcome.
+    """
+
+    # Load the standalone configuration also for software testing.
+    # On CI, `OPENAI_API_KEY` will need to be supplied externally.
+    load_dotenv("env.standalone")
+
+    # Invoke the workload, in-process.
+    from demo_mcp import main
+    main()
+
+    # Verify the outcome.
+    out = capsys.readouterr().out
+    assert "Answer was: The average value for sensor 1 is approximately 17.03." in out
