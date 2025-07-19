@@ -1,5 +1,5 @@
 """
-Use an LLM to query a database in human language.
+Use an LLM to query a database in human language via NLSQLTableQueryEngine.
 Example code using LlamaIndex with vanilla Open AI and Azure Open AI.
 """
 

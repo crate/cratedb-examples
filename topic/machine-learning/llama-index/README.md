@@ -1,12 +1,15 @@
-# Connecting CrateDB Data to an LLM with LlamaIndex and Azure OpenAI
+# NL2SQL with LlamaIndex: Querying CrateDB using natural language
 
-This folder contains the codebase for [this tutorial](https://community.cratedb.com/t/how-to-connect-your-cratedb-data-to-llm-with-llamaindex-and-azure-openai/1612) on the CrateDB community forum.  You should read the tutorial for instructions on how to set up the components that you need on Azure, and use this README for setting up CrateDB and the Python code.
+Connecting CrateDB to an LLM with LlamaIndex and Azure OpenAI,
+optionally using MCP. See also the [LlamaIndex Text-to-SQL Guide].
 
-This has been tested using:
+This folder contains the codebase for the tutorial 
+[How to connect your CrateDB data to LLM with LlamaIndex and Azure OpenAI]
+on the CrateDB community forum.
 
-* Python 3.12
-* macOS
-* CrateDB 5.8 and higher
+You should read the tutorial for instructions on how to set up the components
+that you need on Azure, and use this README for setting up CrateDB and the
+Python code.
 
 ## Database Setup
 
@@ -57,7 +60,7 @@ VALUES
 
 Create and activate a virtual environment:
 
-```
+```shell
 python3 -m venv .venv
 source .venv/bin/activate
 ```
@@ -81,7 +84,7 @@ OPENAI_AZURE_ENDPOINT=https://<Your endpoint from Azure e.g. myendpoint.openai.a
 OPENAI_AZURE_API_VERSION=2024-08-01-preview
 LLM_INSTANCE=<The name of your Chat GPT 3.5 turbo instance from Azure>
 EMBEDDING_MODEL_INSTANCE=<The name of your Text Embedding Ada 2.0 instance from Azure>
-CRATEDB_SQLALCHEMY_URL="crate://<Database user name>:<Database password>@<Database host>:4200/?ssl=true"
+CRATEDB_SQLALCHEMY_URL=crate://<Database user name>:<Database password>@<Database host>:4200/?ssl=true
 CRATEDB_TABLE_NAME=time_series_data
 ```
 
@@ -89,15 +92,17 @@ Save your changes.
 
 ## Run the Code
 
-Run the code like so:
+### NLSQL
 
+[LlamaIndex's NLSQLTableQueryEngine] is a natural language SQL table query engine.
+
+Run the code like so:
 ```bash
 python demo_nlsql.py
 ```
 
 Here's the expected output:
-
-```
+```text
 Creating SQLAlchemy engine...
 Connecting to CrateDB...
 Creating SQLDatabase instance...
@@ -125,3 +130,31 @@ Answer was: The average value for sensor 1 is 17.033333333333335.
     ]
 }
 ```
+
+### MCP
+
+Spin up the [CrateDB MCP server], connecting it to CrateDB on localhost.
+```bash
+export CRATEDB_CLUSTER_URL=http://crate:crate@localhost:4200/
+export CRATEDB_MCP_TRANSPORT=streamable-http
+uvx cratedb-mcp serve
+```
+
+Run the code using OpenAI API:
+```bash
+export OPENAI_API_KEY=<YOUR_OPENAI_API_KEY>
+python demo_mcp.py
+```
+Expected output:
+```text
+Running query
+Inquiring MCP server
+Query was: What is the average value for sensor 1?
+Answer was: The average value for sensor 1 is approximately 17.03.
+```
+
+
+[CrateDB MCP server]: https://cratedb.com/docs/guide/integrate/mcp/cratedb-mcp.html
+[How to connect your CrateDB data to LLM with LlamaIndex and Azure OpenAI]: https://community.cratedb.com/t/how-to-connect-your-cratedb-data-to-llm-with-llamaindex-and-azure-openai/1612
+[LlamaIndex's NLSQLTableQueryEngine]: https://docs.llamaindex.ai/en/stable/api_reference/query_engine/NL_SQL_table/
+[LlamaIndex Text-to-SQL Guide]: https://docs.llamaindex.ai/en/stable/examples/index_structs/struct_indices/SQLIndexDemo/
