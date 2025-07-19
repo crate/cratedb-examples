@@ -22,9 +22,9 @@ def init_database(cratedb):
     cratedb.run_sql((HERE / "init.sql").read_text())
 
 
-def test_main(cratedb, capsys):
+def test_nlsql(cratedb, capsys):
     """
-    Execute `main.py` and verify outcome.
+    Execute `demo_nlsql.py` and verify outcome.
     """
 
     # Load the standalone configuration also for software testing.
@@ -32,7 +32,7 @@ def test_main(cratedb, capsys):
     load_dotenv("env.standalone")
 
     # Invoke the workload, in-process.
-    from main import main
+    from demo_nlsql import main
     main()
 
     # Verify the outcome.

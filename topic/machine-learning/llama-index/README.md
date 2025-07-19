@@ -92,7 +92,7 @@ Save your changes.
 Run the code like so:
 
 ```bash
-python main.py
+python demo_nlsql.py
 ```
 
 Here's the expected output:
