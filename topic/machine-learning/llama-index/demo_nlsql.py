@@ -9,7 +9,6 @@ import sqlalchemy as sa
 from dotenv import load_dotenv
 from llama_index.core.utilities.sql_wrapper import SQLDatabase
 from llama_index.core.query_engine import NLSQLTableQueryEngine
-from llama_index.core import Settings
 
 from boot import configure_llm
 
@@ -21,7 +20,7 @@ def main():
 
     # Configure application.
     load_dotenv()
-    configure_llm()
+    llm, embed_model = configure_llm()
 
     # Configure database connection and query engine.
     print("Connecting to CrateDB")
@@ -33,7 +32,8 @@ def main():
     query_engine = NLSQLTableQueryEngine(
         sql_database=sql_database,
         tables=[os.getenv("CRATEDB_TABLE_NAME")],
-        llm=Settings.llm
+        llm=llm,
+        embed_model=embed_model,
     )
 
     # Invoke an inquiry.

@@ -24,13 +24,16 @@ from cratedb_about.instruction import Instructions
 
 from dotenv import load_dotenv
 from llama_index.core.agent.workflow import FunctionAgent
-from llama_index.llms.openai import OpenAI
+from llama_index.core.llms import LLM
 from llama_index.tools.mcp import BasicMCPClient, McpToolSpec
 
 from boot import configure_llm
 
 
 class Agent:
+
+    def __init__(self, llm: LLM):
+        self.llm = llm
 
     async def get_tools(self):
         # Connect to the CrateDB MCP server using `streamable-http` transport.
@@ -49,7 +52,7 @@ class Agent:
         return FunctionAgent(
             name="Agent",
             description="CrateDB text-to-SQL agent",
-            llm=OpenAI(model="gpt-4o"),
+            llm=self.llm,
             tools=await self.get_tools(),
             system_prompt=Instructions.full(),
         )
@@ -69,10 +72,10 @@ def main():
 
     # Configure application.
     load_dotenv()
-    configure_llm()
+    llm, embed_model = configure_llm()
 
     # Use an agent that uses the CrateDB MCP server.
-    agent = Agent()
+    agent = Agent(llm)
 
     # Invoke an inquiry.
     print("Running query")
