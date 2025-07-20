@@ -29,6 +29,14 @@ def reset_database(cratedb):
     time.sleep(0.01)
 
 
+@pytest.fixture(scope="function", autouse=True)
+def init_database(cratedb):
+    """
+    Initialize database.
+    """
+    cratedb.run_sql((HERE / "init.sql").read_text())
+
+
 def pytest_generate_tests(metafunc):
     """
     Generate pytest test case per Jupyter Notebook.
