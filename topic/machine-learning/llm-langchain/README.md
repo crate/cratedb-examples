@@ -7,13 +7,18 @@
 by language models. It provides a complete set of powerful and flexible
 components for building context-aware, reasoning applications.
 
-Please refer to the [LangChain documentation] for further information.
+[LangGraph] is a low-level orchestration framework for building, managing,
+and deploying long-running, stateful agents.
+
+Please refer to the [LangChain documentation] and the [Building Ambient
+Agents with LangGraph] academy material for further information.
 
 Common end-to-end use cases are:
 
 - Analyzing structured data
 - Chatbots and friends
 - Document question answering
+- Text-to-SQL (talk to your data)
 
 LangChain provides standard, extendable interfaces and external integrations
 for the following modules, listed from least to most complex:
@@ -79,17 +84,21 @@ and [CrateDB].
   augmented generation (RAG) pipeline. To implement RAG we use the Python client driver for 
   CrateDB and vector store support in LangChain.
 
-  - `cratedb_rag_customer_support_vertexai.ipynb` [![Open on GitHub](https://img.shields.io/badge/Open%20on-GitHub-lightgray?logo=GitHub)](cratedb_rag_customer_support_vertexai.ipynb)[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/crate/cratedb-examples/blob/main/topic/machine-learning/llm-langchain/cratedb_rag_customer_support_vertexai.ipynb)
+- `cratedb_rag_customer_support_vertexai.ipynb` [![Open on GitHub](https://img.shields.io/badge/Open%20on-GitHub-lightgray?logo=GitHub)](cratedb_rag_customer_support_vertexai.ipynb)[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/crate/cratedb-examples/blob/main/topic/machine-learning/llm-langchain/cratedb_rag_customer_support_vertexai.ipynb)
     
   This example illustrates the RAG implementation of a customer support scenario. 
   It is based on the previous notebook, and it illustrates how to use Vertex AI platform
   on Google Cloud for RAG pipeline.
-  
 
+- `agent_with_mcp.py`
+
+  This example illustrates how to use LangGraph and the `langchain-mcp-adapters`
+  package to implement an LLM agent that is connecting to the CrateDB MCP server.
+  The demo program performs Text-to-SQL on timeseries data stored in a CrateDB table.
 
 ## Install
 
-In order to properly set up a sandbox environment to explore the example notebooks
+To properly set up a sandbox environment to explore the example notebooks
 and programs, it is advised to create a Python virtualenv, and install the
 dependencies into it. In this way, it is easy to wipe your virtualenv and start
 from scratch anytime.
@@ -126,6 +135,26 @@ a cloud-based development environment is up and running. As soon as your project
 easily move to a different cluster tier or scale horizontally.
 
 
+### MCP
+
+Spin up the [CrateDB MCP server], connecting it to CrateDB on localhost.
+```bash
+export CRATEDB_CLUSTER_URL=http://crate:crate@localhost:4200/
+export CRATEDB_MCP_TRANSPORT=streamable-http
+uvx cratedb-mcp serve
+```
+
+Run the code using OpenAI API:
+```bash
+export OPENAI_API_KEY=<YOUR_OPENAI_API_KEY>
+python agent_with_mcp.py
+```
+Expected output:
+```text
+Query was: What is the average value for sensor 1?
+Answer was: The average value for sensor 1 is approximately 17.03. If you need more details or a different calculation, let me know!
+```
+
 ## Testing
 
 Run all tests.
@@ -139,7 +168,7 @@ pytest -k document_loader
 pytest -k "notebook and loader"
 ```
 
-In order to force a regeneration of the Jupyter Notebook, use the
+To force a regeneration of the Jupyter Notebook, use the
 `--nb-force-regen` option.
 ```shell
 pytest -k document_loader --nb-force-regen
@@ -147,14 +176,17 @@ pytest -k document_loader --nb-force-regen
 
 
 [Agents]: https://python.langchain.com/docs/modules/agents/
+[Building Ambient Agents with LangGraph]: https://academy.langchain.com/courses/ambient-agents/
 [Callbacks]: https://python.langchain.com/docs/modules/callbacks/
 [Chains]: https://python.langchain.com/docs/modules/chains/
 [CrateDB]: https://github.com/crate/crate
 [CrateDB Cloud]: https://console.cratedb.cloud
+[CrateDB MCP server]: https://cratedb.com/docs/guide/integrate/mcp/cratedb-mcp.html
 [`FLOAT_VECTOR`]: https://crate.io/docs/crate/reference/en/master/general/ddl/data-types.html#float-vector
 [`KNN_MATCH`]: https://crate.io/docs/crate/reference/en/master/general/builtins/scalar-functions.html#scalar-knn-match
 [LangChain]: https://www.langchain.com/
 [LangChain documentation]: https://python.langchain.com/
+[LangGraph]: https://langchain-ai.github.io/langgraph/
 [Memory]: https://python.langchain.com/docs/modules/memory/
 [Model I/O]: https://python.langchain.com/docs/modules/model_io/
 [Retrieval]: https://python.langchain.com/docs/modules/data_connection/

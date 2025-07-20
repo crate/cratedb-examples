@@ -38,7 +38,12 @@ jobs:
       matrix:
         os: [ 'ubuntu-latest' ]
         python-version: [ '3.10', '3.11', '3.12', '3.13' ]
-        cratedb-version: [ 'nightly' ]
+        cratedb-version: [
+          'nightly',
+        ]
+        cratedb-mcp-version: [
+          'pr-50',
+        ]
 
     services:
       cratedb:
@@ -48,6 +53,15 @@ jobs:
           - 5432:5432
         env:
           CRATE_HEAP_SIZE: 4g
+      cratedb-mcp:
+        image: ghcr.io/crate/cratedb-mcp:${{ matrix.cratedb-mcp-version }}
+        ports:
+          - 8000:8000
+        env:
+          CRATEDB_MCP_TRANSPORT: streamable-http
+          CRATEDB_MCP_HOST: 0.0.0.0
+          CRATEDB_MCP_PORT: 8000
+          CRATEDB_CLUSTER_URL: http://crate:crate@cratedb:4200/
 
     env:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
