@@ -25,6 +25,7 @@ python agent_with_mcp.py
 """
 import asyncio
 
+from cratedb_about.instruction import GeneralInstructions
 from langchain_mcp_adapters.client import MultiServerMCPClient
 from langgraph.prebuilt import create_react_agent
 
@@ -39,7 +40,11 @@ async def amain():
         }
     )
     tools = await client.get_tools()
-    agent = create_react_agent("openai:gpt-4.1", tools)
+    agent = create_react_agent(
+        model="openai:gpt-4.1",
+        tools=tools,
+        prompt=GeneralInstructions().render(),
+    )
 
     QUERY_STR = "What is the average value for sensor 1?"
     response = await agent.ainvoke({"messages": QUERY_STR})
