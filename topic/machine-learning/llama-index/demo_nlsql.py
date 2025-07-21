@@ -38,7 +38,7 @@ def main():
 
     # Invoke an inquiry.
     print("Running query")
-    QUERY_STR = "What is the average value for sensor 1?"
+    QUERY_STR = os.getenv("DEMO_QUERY", "What is the average value for sensor 1?")
     answer = query_engine.query(QUERY_STR)
     print(answer.get_formatted_sources())
     print("Query was:", QUERY_STR)
