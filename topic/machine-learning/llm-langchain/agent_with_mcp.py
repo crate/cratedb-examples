@@ -24,6 +24,7 @@ export OPENAI_API_KEY=<your_openai_api_key>
 python agent_with_mcp.py
 """
 import asyncio
+import os
 
 from cratedb_about.instruction import GeneralInstructions
 from langchain_mcp_adapters.client import MultiServerMCPClient
@@ -46,7 +47,7 @@ async def amain():
         prompt=GeneralInstructions().render(),
     )
 
-    QUERY_STR = "What is the average value for sensor 1?"
+    QUERY_STR = os.getenv("DEMO_QUERY", "What is the average value for sensor 1?")
     response = await agent.ainvoke({"messages": QUERY_STR})
     answer = response["messages"][-1].content
 

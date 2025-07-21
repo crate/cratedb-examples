@@ -90,7 +90,7 @@ and [CrateDB].
   It is based on the previous notebook, and it illustrates how to use Vertex AI platform
   on Google Cloud for RAG pipeline.
 
-- `agent_with_mcp.py`
+- `agent_with_mcp.py` [![Open on GitHub](https://img.shields.io/badge/Open%20on-GitHub-lightgray?logo=GitHub)](agent_with_mcp.py)
 
   This example illustrates how to use LangGraph and the `langchain-mcp-adapters`
   package to implement an LLM agent that is connecting to the CrateDB MCP server.
@@ -173,7 +173,7 @@ pytest -k document_loader
 pytest -k "notebook and loader"
 ```
 
-To force a regeneration of the Jupyter Notebook, use the
+To force regeneration of Jupyter notebooks, use the
 `--nb-force-regen` option.
 ```shell
 pytest -k document_loader --nb-force-regen
