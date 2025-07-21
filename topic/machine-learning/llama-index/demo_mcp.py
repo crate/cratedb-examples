@@ -79,7 +79,7 @@ def main():
 
     # Invoke an inquiry.
     print("Running query")
-    QUERY_STR = "What is the average value for sensor 1?"
+    QUERY_STR = os.getenv("DEMO_QUERY", "What is the average value for sensor 1?")
     answer = agent.query(QUERY_STR)
     print("Query was:", QUERY_STR)
     print("Answer was:", answer)
