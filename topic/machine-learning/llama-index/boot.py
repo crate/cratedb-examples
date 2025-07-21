@@ -2,6 +2,7 @@ import os
 from typing import Tuple
 
 import openai
+import llama_index.core
 from langchain_openai import AzureOpenAIEmbeddings
 from langchain_openai import OpenAIEmbeddings
 from llama_index.core.base.embeddings.base import BaseEmbedding
@@ -14,7 +15,7 @@ from llama_index.embeddings.langchain import LangchainEmbedding
 MODEL_NAME = "gpt-4o"
 
 
-def configure_llm() -> Tuple[LLM, BaseEmbedding]:
+def configure_llm(debug: bool = False) -> Tuple[LLM, BaseEmbedding]:
     """
     Configure LLM. Use either vanilla Open AI, or Azure Open AI.
     """
@@ -23,6 +24,10 @@ def configure_llm() -> Tuple[LLM, BaseEmbedding]:
     openai.azure_endpoint = os.getenv("OPENAI_AZURE_ENDPOINT")
     openai.api_version = os.getenv("OPENAI_AZURE_API_VERSION")
     openai.api_key = os.getenv("OPENAI_API_KEY")
+
+    # https://docs.llamaindex.ai/en/stable/understanding/tracing_and_debugging/tracing_and_debugging/
+    if debug:
+        llama_index.core.set_global_handler("simple")
 
     if openai.api_type == "openai":
         llm = OpenAI(
