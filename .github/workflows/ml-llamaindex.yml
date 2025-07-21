@@ -47,7 +47,7 @@ jobs:
           'nightly',
         ]
         cratedb-mcp-version: [
-          'pr-50',
+          'main',
         ]
 
     services:
