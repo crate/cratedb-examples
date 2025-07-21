@@ -137,6 +137,11 @@ easily move to a different cluster tier or scale horizontally.
 
 ### MCP
 
+# Provision database.
+```bash
+crash < init.sql
+```
+
 Spin up the [CrateDB MCP server], connecting it to CrateDB on localhost.
 ```bash
 export CRATEDB_CLUSTER_URL=http://crate:crate@localhost:4200/
