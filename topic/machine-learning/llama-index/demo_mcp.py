@@ -7,7 +7,7 @@ https://github.com/run-llama/llama_index/tree/main/llama-index-integrations/tool
 ## Start CrateDB MCP Server
 ```
 export CRATEDB_CLUSTER_URL="http://localhost:4200/"
-cratedb-mcp serve --transport=streamable-http
+cratedb-mcp serve --transport=http
 ```
 
 ## Usage
@@ -20,7 +20,7 @@ python demo_mcp.py
 import asyncio
 import os
 
-from cratedb_about.instruction import Instructions
+from cratedb_about.instruction import GeneralInstructions
 
 from dotenv import load_dotenv
 from llama_index.core.agent.workflow import FunctionAgent
@@ -36,7 +36,7 @@ class Agent:
         self.llm = llm
 
     async def get_tools(self):
-        # Connect to the CrateDB MCP server using `streamable-http` transport.
+        # Connect to the CrateDB MCP server using the `http` transport.
         mcp_url = os.getenv("CRATEDB_MCP_URL", "http://127.0.0.1:8000/mcp/")
         mcp_client = BasicMCPClient(mcp_url)
         mcp_tool_spec = McpToolSpec(
@@ -50,11 +50,11 @@ class Agent:
 
     async def get_agent(self):
         return FunctionAgent(
-            name="Agent",
+            name="DemoAgent",
             description="CrateDB text-to-SQL agent",
             llm=self.llm,
             tools=await self.get_tools(),
-            system_prompt=Instructions.full(),
+            system_prompt=GeneralInstructions().render(),
         )
 
     async def aquery(self, query):
