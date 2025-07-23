@@ -1,5 +1,5 @@
 crash
-cratedb-about==0.0.6
+cratedb-about==0.0.7
 google-cloud-aiplatform<2
 langchain-cratedb<0.1.2
 langchain-mcp-adapters<0.2
