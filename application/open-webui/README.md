@@ -5,6 +5,9 @@
 A complete end-to-end rig including CrateDB, CrateDB MCPO, and Open WebUI,
 including a touch of integration tests on CI/GHA.
 
+It is mostly about demonstration purposes, and does not include any measures
+of security concerns. In this spirit, it is not suitable for production use.
+
 ## Introduction
 
 [Open WebUI] is an extensible, feature-rich, and user-friendly self-hosted AI
@@ -86,7 +89,11 @@ Tear down services.
 ```shell
 docker compose down
 ```
-Delete volumes.
+Delete all volumes.
+```shell
+docker compose down --volumes
+```
+Delete individual volumes.
 ```shell
 docker volume rm open-webui_open-webui
 ```

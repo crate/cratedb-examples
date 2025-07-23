@@ -1,13 +1,13 @@
 DROP TABLE IF EXISTS time_series_data;
 
 CREATE TABLE IF NOT EXISTS time_series_data (
-    timestamp TIMESTAMP,
+    "timestamp" TIMESTAMP,
     value DOUBLE,
     location STRING,
     sensor_id INT
 );
 
-INSERT INTO time_series_data (timestamp, value, location, sensor_id)
+INSERT INTO time_series_data ("timestamp", value, location, sensor_id)
 VALUES
     ('2023-09-14T00:00:00', 10.5, 'Sensor A', 1),
     ('2023-09-14T01:00:00', 15.2, 'Sensor A', 1),
