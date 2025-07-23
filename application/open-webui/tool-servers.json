@@ -1,0 +1,18 @@
+{
+  "TOOL_SERVER_CONNECTIONS": [
+    {
+      "url": "http://cratedb-mcpo:8000",
+      "path": "openapi.json",
+      "auth_type": "bearer",
+      "key": "",
+      "config": {
+        "enable": true,
+        "access_control": null
+      },
+      "info": {
+        "name": "CrateDB",
+        "description": "CrateDB Text-to-SQL and documentation inquiry."
+      }
+    }
+  ]
+}
