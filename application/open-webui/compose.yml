@@ -1,0 +1,124 @@
+# Use CrateDB with Open WebUI
+#
+# https://cratedb.com/docs/
+# https://docs.openwebui.com/getting-started/quick-start
+---
+networks:
+  llm-demo:
+    name: llm-demo
+    driver: bridge
+
+volumes:
+  cratedb:
+  open-webui:
+
+services:
+
+  # -------
+  # CrateDB
+  # -------
+  cratedb:
+    image: docker.io/crate/crate:6.0.0
+    environment:
+      CRATE_HEAP_SIZE: 2g
+    ports:
+      - "4200:4200"
+      - "5432:5432"
+    command: [
+      "crate",
+      "-Cdiscovery.type=single-node",
+      "-Ccluster.routing.allocation.disk.threshold_enabled=false",
+    ]
+    networks:
+      - llm-demo
+    volumes:
+      - cratedb:/data
+    healthcheck:
+      test: [ "CMD", "curl", "--fail", "http://localhost:4200" ]
+      start_period: 3s
+      interval: 10s
+
+  # ------------
+  # CrateDB MCPO
+  # ------------
+  cratedb-mcpo:
+    image: ghcr.io/crate/cratedb-mcpo:0.0.5
+    environment:
+      CRATEDB_CLUSTER_URL: http://crate:crate@cratedb:4200/
+    ports:
+      - "5200:8000"
+    networks:
+      - llm-demo
+    #healthcheck:
+    #  test: [ "CMD", "curl", "--fail", "http://localhost:8000/docs" ]
+    #  start_period: 3s
+    #  interval: 10s
+
+  # ----------
+  # Open WebUI
+  # ----------
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:0.6.18
+    # https://docs.openwebui.com/getting-started/env-configuration
+    # https://docs.openwebui.com/getting-started/api-endpoints/#swagger-documentation-links
+    environment:
+      # From `.env` file.
+      OPENAI_API_KEY:
+      # Defined here.
+      ENABLE_SIGNUP: False
+      ENABLE_LOGIN_FORM: False
+      WEBUI_AUTH: False
+      DEFAULT_MODELS: "gpt-4.1"
+      DEFAULT_USER_ROLE: "admin"
+      ENABLE_CHANNELS: True
+      RESPONSE_WATERMARK: "This text is AI generated"
+      WEBUI_NAME: "CrateDB LLM Cockpit"
+      BYPASS_MODEL_ACCESS_CONTROL: True
+      ENABLE_OLLAMA_API: False
+      ENABLE_OPENAI_API: True
+      ENABLE_DIRECT_CONNECTIONS: True
+      ENV: "dev"
+    ports:
+      - "6200:8080"
+    networks:
+      - llm-demo
+    volumes:
+      - open-webui:/app/backend/data
+    healthcheck:
+      test: [ "CMD", "curl", "--fail", "http://localhost:8080" ]
+      start_period: 3s
+      interval: 10s
+      timeout: 90s
+      retries: 60
+
+  # -----
+  # Setup
+  # -----
+  setup:
+    build:
+      context: .
+      dockerfile: setup.Dockerfile
+    command: bash /app/setup.sh
+    networks:
+      - llm-demo
+    depends_on:
+      open-webui:
+        condition: service_healthy
+
+  # -------
+  # Bundler
+  # -------
+  # Wait for all defined services to be fully available by probing their health
+  # status, even when using `docker compose up --detach`.
+  # https://marcopeg.com/2019/docker-compose-healthcheck/
+  start-dependencies:
+    image: docker.io/dadarek/wait-for-dependencies
+    depends_on:
+      cratedb:
+        condition: service_healthy
+      #cratedb-mcpo:
+      #  condition: service_healthy
+      open-webui:
+        condition: service_healthy
+      setup:
+        condition: service_completed_successfully
