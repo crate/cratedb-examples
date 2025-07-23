@@ -3,15 +3,20 @@
 # Configure Open WebUI via HTTP API.
 
 # Runtime options.
-set -e
-set -x
+set -euo pipefail
+
+# Uncomment for local debugging, but **never** in automated runs.
+# set -x
 
 # Load variables.
 source .env
 
 # Sign in to receive JWT token.
-token=$( http --ignore-stdin POST ${OPEN_WEBUI_URL}/api/v1/auths/signin email= password= | jq -r .token )
-echo "JWT token: ${token}"
+token=$( http --ignore-stdin POST ${OPEN_WEBUI_URL}/api/v1/auths/signin email= password= | jq -r .token // empty )
+if [[ -z "${token}" ]]; then
+  echo "FATAL: Could not obtain JWT token from Open WebUI" >&2
+  exit 1
+fi
 
 # Inquire health.
 http --ignore-stdin ${OPEN_WEBUI_URL}/health
