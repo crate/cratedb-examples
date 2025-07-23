@@ -53,6 +53,9 @@ services:
     #  test: [ "CMD", "curl", "--fail", "http://localhost:8000/docs" ]
     #  start_period: 3s
     #  interval: 10s
+    depends_on:
+      cratedb:
+        condition: service_healthy
 
   # ----------
   # Open WebUI
@@ -99,14 +102,15 @@ services:
   # -----
   setup:
     build:
-      context: .
-      dockerfile: setup.Dockerfile
+      context: init
     command: bash /app/setup.sh
     networks:
       - llm-demo
     depends_on:
       cratedb:
         condition: service_healthy
+      #cratedb-mcpo:
+      #  condition: service_healthy
       open-webui:
         condition: service_healthy
 
