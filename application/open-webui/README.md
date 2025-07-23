@@ -105,6 +105,14 @@ docker volume rm open-webui_open-webui
 docker volume rm open-webui_cratedb
 ```
 
+### Jobs
+Invoke individual jobs defined in the Compose file.
+```shell
+export BUILDKIT_PROGRESS=plain
+docker compose run --rm setup
+docker compose run --rm test
+```
+
 ## What's inside
 
 - `.env`: The dotenv file defines `OPENAI_API_KEY` for `compose.yml`.
