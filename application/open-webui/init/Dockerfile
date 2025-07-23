@@ -31,4 +31,4 @@ RUN uv pip install crash cratedb-mcp httpie
 
 RUN mkdir /app
 WORKDIR /app
-COPY .env setup.sh *.json *.sql /app/
+COPY .env *.sh *.json *.sql /app/

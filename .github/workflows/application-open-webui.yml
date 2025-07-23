@@ -1,0 +1,56 @@
+name: "Open WebUI"
+
+on:
+  pull_request:
+    paths:
+    - '.github/workflows/application-open-webui.yml'
+    - 'application/open-webui/**'
+  push:
+    branches: [ main ]
+    paths:
+    - '.github/workflows/application-open-webui.yml'
+    - 'application/open-webui/**'
+
+  # Allow job to be triggered manually.
+  workflow_dispatch:
+
+  # Run job each night after CrateDB nightly has been published.
+  #schedule:
+  #  - cron: '0 3 * * *'
+
+# Cancel in-progress jobs when pushing to the same branch.
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+
+  test:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ "ubuntu-latest" ]
+
+    name: OS ${{ matrix.os }}
+
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
+    steps:
+
+      - name: Acquire sources
+        uses: actions/checkout@v4
+
+      - name: Validate application/open-webui
+        run: |
+          # TODO: Generalize invocation into `ngr` test runner.
+
+          # Invoke software stack.
+          cd application/open-webui
+          docker compose up --detach
+
+          # Invoke validation payload.
+          # TODO: Currently does not work on GHA.
+          # docker compose run --rm test
