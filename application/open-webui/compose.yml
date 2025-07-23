@@ -91,8 +91,8 @@ services:
       test: [ "CMD", "curl", "--fail", "http://localhost:8080" ]
       start_period: 3s
       interval: 10s
-      timeout: 90s
       retries: 60
+      timeout: 90s
     #depends_on:
     #  cratedb-mcpo:
     #    condition: service_healthy
@@ -114,6 +114,21 @@ services:
       open-webui:
         condition: service_healthy
 
+  # ----
+  # Test
+  # ----
+  test:
+    build:
+      context: init
+    command: bash /app/test.sh
+    networks:
+      - llm-demo
+    depends_on:
+      setup:
+        condition: service_completed_successfully
+    deploy:
+      replicas: 0
+
   # -------
   # Bundler
   # -------
@@ -123,11 +138,5 @@ services:
   start-dependencies:
     image: docker.io/dadarek/wait-for-dependencies
     depends_on:
-      cratedb:
-        condition: service_healthy
-      #cratedb-mcpo:
-      #  condition: service_healthy
-      open-webui:
-        condition: service_healthy
       setup:
         condition: service_completed_successfully
