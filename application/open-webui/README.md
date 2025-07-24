@@ -5,8 +5,8 @@
 A complete end-to-end rig including CrateDB, CrateDB MCPO, and Open WebUI,
 including a touch of integration tests on CI/GHA.
 
-It is mostly about demonstration purposes, and does not include any measures
-of security concerns. In this spirit, it is not suitable for production use.
+This stack is intended solely for demonstration purposes and does **not**
+implement any security hardening. Do **not** deploy it to production.
 
 ## Introduction
 
@@ -33,11 +33,15 @@ cd cratedb-examples/application/open-webui
 
 ### Start services
 
-Configure the API key for OpenAI as environment variable, or otherwise define
-it within the `.env` file to make it persistent for unattended service
-operations.
+Configure the API key for OpenAI within the `.env` file next to `compose.yml`
+to make it persistent for unattended service operations.
+```dotenv
+# .env
+OPENAI_API_KEY=your_openai_api_key_here
+```
+Or export it for a one-off run:
 ```shell
-export OPENAI_API_KEY=<your_openai_api_key>
+export OPENAI_API_KEY=your_openai_api_key_here
 ```
 
 Spin up the software stack. On the first occasion, it will take a while to
