@@ -42,17 +42,17 @@ services:
   # CrateDB MCPO
   # ------------
   cratedb-mcpo:
-    image: ghcr.io/crate/cratedb-mcpo:0.0.5
+    image: ghcr.io/crate/cratedb-mcpo:0.0.6
     environment:
       CRATEDB_CLUSTER_URL: http://crate:crate@cratedb:4200/
     ports:
       - "5200:8000"
     networks:
       - llm-demo
-    #healthcheck:
-    #  test: [ "CMD", "curl", "--fail", "http://localhost:8000/docs" ]
-    #  start_period: 3s
-    #  interval: 10s
+    healthcheck:
+      test: [ "CMD", "curl", "--fail", "http://localhost:8000/docs" ]
+      start_period: 3s
+      interval: 10s
     depends_on:
       cratedb:
         condition: service_healthy
@@ -93,9 +93,9 @@ services:
       interval: 10s
       retries: 60
       timeout: 90s
-    #depends_on:
-    #  cratedb-mcpo:
-    #    condition: service_healthy
+    depends_on:
+      cratedb-mcpo:
+        condition: service_healthy
 
   # -----
   # Setup
@@ -109,8 +109,8 @@ services:
     depends_on:
       cratedb:
         condition: service_healthy
-      #cratedb-mcpo:
-      #  condition: service_healthy
+      cratedb-mcpo:
+        condition: service_healthy
       open-webui:
         condition: service_healthy
 
