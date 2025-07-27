@@ -11,6 +11,7 @@ networks:
 volumes:
   cratedb:
   open-webui:
+  jupyter:
 
 services:
 
@@ -81,6 +82,18 @@ services:
       ENABLE_OPENAI_API: True
       ENABLE_DIRECT_CONNECTIONS: True
       ENV: "dev"
+      # Jupyter code execution and interpreter.
+      ENABLE_CODE_INTERPRETER: True
+      CODE_EXECUTION_ENGINE: "jupyter"
+      CODE_EXECUTION_JUPYTER_URL: "http://jupyter:8888"
+      CODE_EXECUTION_JUPYTER_AUTH: "token"
+      CODE_EXECUTION_JUPYTER_AUTH_TOKEN: "123456"
+      CODE_EXECUTION_JUPYTER_TIMEOUT: 60
+      CODE_INTERPRETER_ENGINE: "jupyter"
+      CODE_INTERPRETER_JUPYTER_URL: "http://jupyter:8888"
+      CODE_INTERPRETER_JUPYTER_AUTH: "token"
+      CODE_INTERPRETER_JUPYTER_AUTH_TOKEN: "123456"
+      CODE_INTERPRETER_JUPYTER_TIMEOUT: 60
     ports:
       - "6200:8080"
     networks:
@@ -96,6 +109,30 @@ services:
     depends_on:
       cratedb-mcpo:
         condition: service_healthy
+      jupyter:
+        condition: service_healthy
+
+  # -------
+  # Jupyter
+  # -------
+  jupyter:
+    image: quay.io/jupyter/minimal-notebook:notebook-7.4.4
+    # https://docs.openwebui.com/tutorials/jupyter/
+    environment:
+      JUPYTER_ENABLE_LAB: "yes"
+      JUPYTER_TOKEN: "123456"
+    ports:
+      - "7200:8888"
+    networks:
+      - llm-demo
+    volumes:
+      - jupyter:/home/jovyan/work
+    healthcheck:
+      test: [ "CMD", "curl", "--fail", "http://localhost:8888" ]
+      start_period: 3s
+      interval: 10s
+      retries: 60
+      timeout: 90s
 
   # -----
   # Setup
