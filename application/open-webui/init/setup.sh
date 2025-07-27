@@ -37,7 +37,10 @@ http --ignore-stdin ${OPEN_WEBUI_URL}/api/v1/tools/ Authorization:"Bearer $token
 
 # Configure system prompt.
 http --ignore-stdin ${OPEN_WEBUI_URL}/api/v1/users/user/settings/update Authorization:"Bearer $token" \
-    ui[system]="$( cratedb-mcp show-prompt )" ui[notificationEnabled]="true"
+    ui[system]="$( cratedb-mcp show-prompt )" \
+    ui[params][function_calling]="native" \
+    ui[params][temperature]=0 \
+    ui[notificationEnabled]="true"
 
 # Configure CrateDB MCPO server.
 http --ignore-stdin ${OPEN_WEBUI_URL}/api/v1/configs/tool_servers Authorization:"Bearer $token" \
