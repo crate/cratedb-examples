@@ -66,6 +66,8 @@ Explore the APIs here.
 - Open WebUI: 
   - Swagger: http://localhost:6200/docs
   - OpenAPI: http://localhost:6200/openapi.json
+- Jupyter:
+  - http://localhost:7200/
 
 ### Configure
 
@@ -116,8 +118,8 @@ docker compose run --rm test
 ## What's inside
 
 - `.env`: The dotenv file defines `OPENAI_API_KEY` for `compose.yml`.
-- `compose.yml`: The service composition file defines three services:
-  CrateDB, CrateDB MCPO, and Open WebUI. Helper jobs (setup, test, ...)
+- `compose.yml`: The service composition file defines four main services:
+  CrateDB, CrateDB MCPO, Open WebUI, and Jupyter. Helper jobs (setup, test, ...)
   excluded for brevity. Use it with Docker or Podman.
 - `init/`: Runtime configuration snippets.
 
