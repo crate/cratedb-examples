@@ -43,7 +43,7 @@ services:
   # CrateDB MCPO
   # ------------
   cratedb-mcpo:
-    image: ghcr.io/crate/cratedb-mcpo:0.0.6
+    image: ghcr.io/crate/cratedb-mcpo:0.0.7
     environment:
       CRATEDB_CLUSTER_URL: http://crate:crate@cratedb:4200/
     ports:
