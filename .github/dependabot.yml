@@ -211,12 +211,12 @@ updates:
 
   # Topics.
 
-  - directory: "/topic/machine-learning/automl"
+  - directory: "/topic/machine-learning/pycaret"
     package-ecosystem: "pip"
     schedule:
       interval: "daily"
 
-  - directory: "/topic/machine-learning/llm-langchain"
+  - directory: "/topic/machine-learning/langchain"
     package-ecosystem: "pip"
     schedule:
       interval: "daily"
@@ -226,7 +226,7 @@ updates:
     schedule:
       interval: "daily"
 
-  - directory: "/topic/machine-learning/mlops-mlflow"
+  - directory: "/topic/machine-learning/mlflow"
     package-ecosystem: "pip"
     schedule:
       interval: "daily"

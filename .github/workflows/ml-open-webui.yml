@@ -3,13 +3,13 @@ name: "Open WebUI"
 on:
   pull_request:
     paths:
-    - '.github/workflows/application-open-webui.yml'
-    - 'application/open-webui/**'
+    - '.github/workflows/ml-open-webui.yml'
+    - 'topic/machine-learning/open-webui/**'
   push:
     branches: [ main ]
     paths:
-    - '.github/workflows/application-open-webui.yml'
-    - 'application/open-webui/**'
+    - '.github/workflows/ml-open-webui.yml'
+    - 'topic/machine-learning/open-webui/**'
 
   # Allow job to be triggered manually.
   workflow_dispatch:
@@ -43,12 +43,12 @@ jobs:
       - name: Acquire sources
         uses: actions/checkout@v4
 
-      - name: Validate application/open-webui
+      - name: Validate topic/machine-learning/open-webui
         run: |
           # TODO: Generalize invocation into `ngr` test runner.
 
           # Invoke software stack.
-          cd application/open-webui
+          cd topic/machine-learning/open-webui
           docker compose up --detach
 
           # Invoke validation payload.

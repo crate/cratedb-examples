@@ -1,17 +1,17 @@
-name: AutoML
+name: PyCaret
 
 on:
   pull_request:
     branches: ~
     paths:
-    - '.github/workflows/ml-automl.yml'
-    - 'topic/machine-learning/automl/**'
+    - '.github/workflows/ml-pycaret.yml'
+    - 'topic/machine-learning/pycaret/**'
     - '/requirements.txt'
   push:
     branches: [ main ]
     paths:
-    - '.github/workflows/ml-automl.yml'
-    - 'topic/machine-learning/automl/**'
+    - '.github/workflows/ml-pycaret.yml'
+    - 'topic/machine-learning/pycaret/**'
     - '/requirements.txt'
 
   # Allow job to be triggered manually.
@@ -72,6 +72,6 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Validate topic/machine-learning/automl
+      - name: Validate topic/machine-learning/pycaret
         run: |
-          ngr test --accept-no-venv topic/machine-learning/automl
+          ngr test --accept-no-venv topic/machine-learning/pycaret

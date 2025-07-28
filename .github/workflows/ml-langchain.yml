@@ -4,13 +4,13 @@ on:
   pull_request:
     paths:
     - '.github/workflows/ml-langchain.yml'
-    - 'topic/machine-learning/llm-langchain/**'
+    - 'topic/machine-learning/langchain/**'
     - '/requirements.txt'
   push:
     branches: [ main ]
     paths:
     - '.github/workflows/ml-langchain.yml'
-    - 'topic/machine-learning/llm-langchain/**'
+    - 'topic/machine-learning/langchain/**'
     - '/requirements.txt'
 
   # Allow job to be triggered manually.
@@ -78,13 +78,13 @@ jobs:
           cache: 'pip'
           cache-dependency-path: |
             requirements.txt
-            topic/machine-learning/llm-langchain/requirements.txt
-            topic/machine-learning/llm-langchain/requirements-dev.txt
+            topic/machine-learning/langchain/requirements.txt
+            topic/machine-learning/langchain/requirements-dev.txt
 
       - name: Install utilities
         run: |
           pip install -r requirements.txt
 
-      - name: Validate topic/machine-learning/llm-langchain
+      - name: Validate topic/machine-learning/langchain
         run: |
-          ngr test --accept-no-venv topic/machine-learning/llm-langchain
+          ngr test --accept-no-venv topic/machine-learning/langchain
