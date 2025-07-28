@@ -135,6 +135,11 @@ updates:
     schedule:
       interval: "daily"
 
+  - directory: "/application/llm"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "daily"
+
   - directory: "/application/metabase"
     package-ecosystem: "docker-compose"
     schedule:
