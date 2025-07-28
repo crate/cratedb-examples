@@ -55,4 +55,4 @@ def test_mcp(cratedb, capsys):
 
     # Verify the outcome.
     out = capsys.readouterr().out
-    assert "Answer was: The average value for sensor 1 is approximately 17.03." in out
+    assert "Answer was: The average value for sensor 1 is 17.03." in out
