@@ -31,7 +31,7 @@ def main():
     sql_database = SQLDatabase(engine_crate, include_tables=[os.getenv("CRATEDB_TABLE_NAME")])
     query_engine = NLSQLTableQueryEngine(
         sql_database=sql_database,
-        tables=[os.getenv("CRATEDB_TABLE_NAME")],
+        # tables=[os.getenv("CRATEDB_TABLE_NAME")],
         llm=llm,
         embed_model=embed_model,
     )
