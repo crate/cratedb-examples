@@ -12,7 +12,7 @@ from llama_index.llms.openai import OpenAI
 from llama_index.embeddings.langchain import LangchainEmbedding
 
 
-MODEL_NAME = "gpt-4o"
+MODEL_NAME = "gpt-4.1"
 
 
 def configure_llm(debug: bool = False) -> Tuple[LLM, BaseEmbedding]:
