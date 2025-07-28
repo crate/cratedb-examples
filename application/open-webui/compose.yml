@@ -69,21 +69,21 @@ services:
       # From caller's environment or `.env` file.
       OPENAI_API_KEY: ${OPENAI_API_KEY}
       # Currently defined here.
-      ENABLE_SIGNUP: False
-      ENABLE_LOGIN_FORM: False
-      WEBUI_AUTH: False
+      ENABLE_SIGNUP: "false"
+      ENABLE_LOGIN_FORM: "false"
+      WEBUI_AUTH: "false"
       DEFAULT_MODELS: "gpt-4.1"
       DEFAULT_USER_ROLE: "admin"
-      ENABLE_CHANNELS: True
+      ENABLE_CHANNELS: "true"
       RESPONSE_WATERMARK: "This text is AI generated"
       WEBUI_NAME: "CrateDB LLM Cockpit"
-      BYPASS_MODEL_ACCESS_CONTROL: True
-      ENABLE_OLLAMA_API: False
-      ENABLE_OPENAI_API: True
-      ENABLE_DIRECT_CONNECTIONS: True
+      BYPASS_MODEL_ACCESS_CONTROL: "true"
+      ENABLE_OLLAMA_API: "false"
+      ENABLE_OPENAI_API: "true"
+      ENABLE_DIRECT_CONNECTIONS: "true"
       ENV: "dev"
       # Jupyter code execution and interpreter.
-      ENABLE_CODE_INTERPRETER: True
+      ENABLE_CODE_INTERPRETER: "true"
       CODE_EXECUTION_ENGINE: "jupyter"
       CODE_EXECUTION_JUPYTER_URL: "http://jupyter:8888"
       CODE_EXECUTION_JUPYTER_AUTH: "token"
