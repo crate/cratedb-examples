@@ -26,7 +26,7 @@ python agent_with_mcp.py
 import asyncio
 import os
 
-from cratedb_about.instruction import GeneralInstructions
+from cratedb_about.prompt import GeneralInstructions
 from langchain_mcp_adapters.client import MultiServerMCPClient
 from langgraph.prebuilt import create_react_agent
 
