@@ -5,13 +5,13 @@ on:
     branches: ~
     paths:
     - '.github/workflows/ml-mlflow.yml'
-    - 'topic/machine-learning/mlops-mlflow/**'
+    - 'topic/machine-learning/mlflow/**'
     - '/requirements.txt'
   push:
     branches: [ main ]
     paths:
     - '.github/workflows/ml-mlflow.yml'
-    - 'topic/machine-learning/mlops-mlflow/**'
+    - 'topic/machine-learning/mlflow/**'
     - '/requirements.txt'
 
   # Allow job to be triggered manually.
@@ -62,13 +62,13 @@ jobs:
           cache: 'pip'
           cache-dependency-path: |
             requirements.txt
-            topic/machine-learning/mlops-mlflow/requirements.txt
-            topic/machine-learning/mlops-mlflow/requirements-dev.txt
+            topic/machine-learning/mlflow/requirements.txt
+            topic/machine-learning/mlflow/requirements-dev.txt
 
       - name: Install utilities
         run: |
           pip install -r requirements.txt
 
-      - name: Validate topic/machine-learning/mlops-mlflow
+      - name: Validate topic/machine-learning/mlflow
         run: |
-          ngr test --accept-no-venv topic/machine-learning/mlops-mlflow
+          ngr test --accept-no-venv topic/machine-learning/mlflow
