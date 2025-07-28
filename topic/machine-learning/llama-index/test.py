@@ -24,7 +24,7 @@ def init_database(cratedb):
 
 def test_nlsql(cratedb, capsys):
     """
-    Execute `demo_nlsql.py` and verify outcome.
+    Execute `demo_nlsql.py` and verify the outcome.
     """
 
     # Load the standalone configuration also for software testing.
@@ -42,7 +42,7 @@ def test_nlsql(cratedb, capsys):
 
 def test_mcp(cratedb, capsys):
     """
-    Execute `demo_mcp.py` and verify outcome.
+    Execute `demo_mcp.py` and verify the outcome.
     """
 
     # Load the standalone configuration also for software testing.
