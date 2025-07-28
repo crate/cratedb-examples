@@ -20,7 +20,7 @@ python demo_mcp.py
 import asyncio
 import os
 
-from cratedb_about.instruction import GeneralInstructions
+from cratedb_about.prompt import GeneralInstructions
 
 from dotenv import load_dotenv
 from llama_index.core.agent.workflow import FunctionAgent
