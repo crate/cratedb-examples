@@ -96,6 +96,22 @@ Save your changes.
 
 [LlamaIndex's NLSQLTableQueryEngine] is a natural language SQL table query engine.
 
+Configure either OpenAI GPT,
+```bash
+export OPENAI_API_KEY=<YOUR_OPENAI_API_KEY>
+export LLM_MODEL=gpt-4.1
+```
+... or Ollama, either on runpod,
+```bash
+export LLM_BACKEND=ollama
+export OLLAMA_BASE_URL=https://l59hg3k5z1bxtw-11434.proxy.runpod.net/
+export LLM_MODEL=gemma3:1b
+```
+or somewhere else.
+```bash
+export OLLAMA_BASE_URL=http://100.127.86.113:11434/
+```
+
 Run the code like so:
 ```bash
 python demo_nlsql.py
