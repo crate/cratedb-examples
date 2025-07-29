@@ -1,0 +1,2 @@
+Given an input question, synthesize a response from the query results.
+Query:
