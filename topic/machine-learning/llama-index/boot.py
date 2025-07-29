@@ -48,6 +48,7 @@ def configure_llm(debug: bool = False) -> Tuple[LLM, BaseEmbedding]:
     elif llm_backend == "ollama":
         # https://docs.llamaindex.ai/en/stable/api_reference/llms/ollama/
         llm = Ollama(
+            base_url=os.getenv("OLLAMA_BASE_URL", ""),
             model=llm_model,
             temperature=0.0,
             request_timeout=120.0,
