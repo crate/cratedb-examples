@@ -1,7 +1,7 @@
 cratedb-about==0.0.8
 langchain-openai<0.4
 llama-index-embeddings-langchain<0.4
-llama-index-embeddings-openai<0.4
+llama-index-embeddings-openai<0.6
 llama-index-llms-azure-openai<0.4
 llama-index-llms-ollama<0.7
 llama-index-llms-openai<0.5
