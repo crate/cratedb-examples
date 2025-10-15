@@ -26,9 +26,9 @@ dependencies {
     implementation 'org.slf4j:slf4j-simple:2.0.17'
     testImplementation 'junit:junit:4.13.2'
     testImplementation "org.assertj:assertj-core:3.27.4"
-    testImplementation 'org.testcontainers:testcontainers:1.21.3'
-    testImplementation 'org.testcontainers:cratedb:1.21.3'
-    testImplementation 'org.testcontainers:postgresql:1.21.3'
+    testImplementation 'org.testcontainers:testcontainers:2.0.0'
+    testImplementation 'org.testcontainers:cratedb:2.0.0'
+    testImplementation 'org.testcontainers:postgresql:2.0.0'
 }
 
 java {
