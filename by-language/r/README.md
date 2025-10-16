@@ -2,9 +2,10 @@
 
 ## About
 
-The file `basic.r` includes a basic example program that uses the R
-[RPostgreSQL] package, the canonical database interface and 'PostgreSQL'
-driver for 'R', to connect to CrateDB.
+The files `basic_rpostgres.r` and `basic_rpostgresql.r` include basic
+example programs that use the R packages [RPostgres] resp. [RPostgreSQL],
+the canonical database interfaces and 'PostgreSQL' drivers for 'R',
+to connect to CrateDB.
 
 ## Usage
 
@@ -13,9 +14,10 @@ Start a CrateDB instance for evaluation purposes.
 docker run -it --rm --publish=4200:4200 --publish=5432:5432 crate:latest
 ```
 
-Invoke example program.
+Invoke example programs.
 ```shell
-Rscript basic.r
+Rscript basic_rpostgres.r
+Rscript basic_rpostgresql.r
 ```
 
 Invoke software tests.
@@ -24,4 +26,5 @@ make test
 ```
 
 
+[RPostgres]: https://cran.r-project.org/web/packages/RPostgres/
 [RPostgreSQL]: https://cran.r-project.org/web/packages/RPostgreSQL/
