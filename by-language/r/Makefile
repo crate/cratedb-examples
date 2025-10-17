@@ -1,4 +1,5 @@
 install:
 
 test:
-	Rscript basic.r
+	Rscript basic_rpostgres.r
+	Rscript basic_rpostgresql.r
