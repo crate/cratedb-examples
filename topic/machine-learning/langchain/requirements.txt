@@ -3,7 +3,7 @@ cratedb-about==0.0.8
 google-cloud-aiplatform<2
 langchain-cratedb<0.1.2
 langchain-mcp-adapters<0.2
-langchain-google-vertexai<3
+langchain-google-vertexai<4
 langchain-openai<0.4
 langchain-text-splitters<0.4
 langgraph<0.7
