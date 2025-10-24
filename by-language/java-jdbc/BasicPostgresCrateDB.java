@@ -1,12 +1,10 @@
-import java.sql.ResultSet;
 import java.sql.Connection;
-import java.sql.Statement;
 import java.sql.DriverManager;
-import java.sql.ResultSetMetaData;
-import java.util.Locale;
+import java.sql.PreparedStatement;
 import java.util.Properties;
-import com.beust.jcommander.Parameter;
+
 import com.beust.jcommander.JCommander;
+import com.beust.jcommander.Parameter;
 
 public class BasicPostgresCrateDB {
 
@@ -50,7 +48,6 @@ public class BasicPostgresCrateDB {
         Properties connectionProps = new Properties();
         connectionProps.put("user", user);
         connectionProps.put("password", password);
-        //connectionProps.put("ssl", "true");
         connectionProps.put("recvBufferSize", SO_RCVBUF);
         connectionProps.put("defaultRowFetchSize", MAX_BATCH_SIZE);
         connectionProps.put("loginTimeout", 5); // seconds, fail fast-ish
@@ -58,33 +55,11 @@ public class BasicPostgresCrateDB {
         connectionProps.put("tcpKeepAlive", true);
 
         try (Connection sqlConnection = DriverManager.getConnection(connectionUrl, connectionProps)) {
-            sqlConnection.setAutoCommit(true);
-            if (sqlConnection.isClosed()) {
-                System.out.println("ERROR: Unable to open connection to database");
-                return 1;
-            }
-            try (Statement stmt = sqlConnection.createStatement()) {
-                boolean checkResults = stmt.execute("SELECT * FROM sys.summits LIMIT 3;");
-                if (checkResults) {
-                    ResultSet rs = stmt.getResultSet();
-                    while (rs.next()) {
-                        System.out.printf(Locale.ENGLISH, "> row %d\n", rs.getRow());
-                        ResultSetMetaData metaData = rs.getMetaData();
-                        int columnCount = metaData.getColumnCount();
-                        for (int i = 1; i <= columnCount; i++) {
-                            System.out.printf(
-                                    Locale.ENGLISH,
-                                    ">> col %d: %s: %s\n",
-                                    i,
-                                    metaData.getColumnName(i),
-                                    rs.getObject(i));
-                        }
-                    }
-                } else {
-                    System.out.println("WARNING: Result is empty");
-                    return 1;
-                }
-            }
+            PreparedStatement st = sqlConnection.prepareStatement("INSERT INTO postgres.ti1 VALUES (?)");
+            st.setString(1, "{\"a\" 1}");
+            st.executeUpdate();
+            st.close();
+
             sqlConnection.close();
         } catch (Exception ex) {
             System.out.println("ERROR: " + ex);
