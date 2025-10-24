@@ -55,7 +55,10 @@ public class BasicPostgresCrateDB {
         connectionProps.put("tcpKeepAlive", true);
 
         try (Connection sqlConnection = DriverManager.getConnection(connectionUrl, connectionProps)) {
-            PreparedStatement st = sqlConnection.prepareStatement("INSERT INTO postgres.ti1 VALUES (?)");
+            /*
+             * CREATE TABLE "doc"."ti1" ("a" OBJECT(DYNAMIC));
+             */
+            PreparedStatement st = sqlConnection.prepareStatement("INSERT INTO doc.ti1 VALUES (?)");
             st.setString(1, "{\"a\" 1}");
             st.executeUpdate();
             st.close();
