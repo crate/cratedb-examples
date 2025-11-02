@@ -40,7 +40,13 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-22.04 ]
-        superset-version: [ "3.*", "4.*" ]
+        superset-version: [
+          # Deactivate testing 3.x until that patch landed.
+          # https://github.com/apache/superset/issues/33162
+          # https://github.com/apache/superset/pull/33216
+          # "3.*",
+          "4.*",
+        ]
         python-version: [ "3.9", "3.11" ]
         cratedb-version: [ 'nightly' ]
 
