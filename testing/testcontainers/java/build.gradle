@@ -63,5 +63,4 @@ ext.javaMainClass = "io.crate.example.testing.Application"
 
 
 idea.module.inheritOutputDirs = true
-processResources.destinationDir = compileJava.destinationDir
 compileJava.dependsOn processResources
