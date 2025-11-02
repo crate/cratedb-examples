@@ -34,7 +34,7 @@ def drop_testing_tables():
     db = DatabaseAdapter("crate://localhost:4200/")
 
     table_names = [
-        "from-influxdb.air-sensor-data",
+        "from-influxdb.airSensors",
         "from-mongodb.books",
         "from-mongodb.city_inspections",
         "from-mongodb.companies",
@@ -74,7 +74,7 @@ def test_ctk_load_table_influxdb_lp(drop_testing_tables):
 
     # Define table cardinalities used in validation step.
     table_cardinalities = {
-        "air-sensor-data": 5288,
+        "from-influxdb.airSensors": 5288,
     }
 
     # Define path to source data.
@@ -88,7 +88,7 @@ def test_ctk_load_table_influxdb_lp(drop_testing_tables):
     command = f"""
     ctk load table \
         "{influxdb_lp_url}" \
-        --cluster-url="crate://localhost:4200/from-influxdb/air-sensor-data"
+        --cluster-url="crate://localhost:4200/from-influxdb/dummy"
     """
     print(f"Invoking CTK: {command}", file=sys.stderr)
     subprocess.check_call(shlex.split(command))
