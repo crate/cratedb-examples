@@ -8,12 +8,12 @@ def run(command: str):
 
 
 def test_insert_efficient_multirow():
-    cmd = "time python insert_efficient.py cratedb multirow"
+    cmd = "time python insert_efficient.py cratedb multirow 25000"
     run(cmd)
 
 
 def test_insert_efficient_batched():
-    cmd = "time python insert_efficient.py cratedb batched"
+    cmd = "time python insert_efficient.py cratedb batched 50000"
     run(cmd)
 
 

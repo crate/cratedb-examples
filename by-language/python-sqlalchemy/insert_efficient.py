@@ -53,9 +53,6 @@ import sys
 
 import sqlalchemy as sa
 
-# INSERT_RECORDS = 1275
-INSERT_RECORDS = 50_000
-# INSERT_RECORDS = 2_750_000
 
 BATCHED_PAGE_SIZE = 20_000
 
@@ -88,7 +85,7 @@ def insert_batched(engine, table, records):
         conn.execute(insertable, parameters=records)
 
 
-def run_example(dburi: str, variant: str):
+def run_example(dburi: str, variant: str, record_count: int):
     metadata = sa.MetaData()
     table = sa.Table(
         "testdrive",
@@ -98,7 +95,7 @@ def run_example(dburi: str, variant: str):
     )
 
     # Create 275 test records.
-    records = [{"id": i, "name": f"foo_{i}"} for i in range(1, INSERT_RECORDS + 1)]
+    records = [{"id": i, "name": f"foo_{i}"} for i in range(1, record_count + 1)]
 
     # Run multi-row insert, with a specified batch-/page-size.
     engine = sa.create_engine(dburi, insertmanyvalues_page_size=BATCHED_PAGE_SIZE, echo=True)
@@ -119,7 +116,7 @@ def run_example(dburi: str, variant: str):
         print("Number of records:", result.scalar_one())
 
 
-def run_database(database: str, variant: str):
+def run_database(database: str, variant: str, record_count: int):
     if database == "sqlite":
         dburi = "sqlite:///:memory:"
     elif database == "postgresql":
@@ -129,10 +126,14 @@ def run_database(database: str, variant: str):
     else:
         raise ValueError(f"Unknown database: {database}")
 
-    run_example(dburi, variant)
+    run_example(dburi, variant, record_count)
 
 
 if __name__ == "__main__":
     database = sys.argv[1]
     variant = sys.argv[2]
-    run_database(database, variant)
+    try:
+        record_count = int(sys.argv[3])
+    except:
+        record_count = 1_000
+    run_database(database, variant, record_count)
