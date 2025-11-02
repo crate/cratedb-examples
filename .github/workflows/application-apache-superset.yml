@@ -40,9 +40,12 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-22.04 ]
-        superset-version: [ "3.*", "4.*" ]
+        superset-version: [ "==3.*", "==4.*", "==5.*" ]
         python-version: [ "3.9", "3.11" ]
         cratedb-version: [ 'nightly' ]
+        exclude:
+          - superset-version: "==5.*"
+            python-version: "3.9"
 
     services:
       cratedb:
@@ -75,7 +78,7 @@ jobs:
 
       - name: Install Apache Superset ${{ matrix.superset-version }}
         run: |
-          pip install 'apache-superset==${{ matrix.superset-version }}'
+          pip install --pre 'apache-superset${{ matrix.superset-version }}'
 
       - name: Validate application/apache-superset
         run: |
