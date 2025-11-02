@@ -4,9 +4,11 @@ __pycache__
 _build
 .coverage*
 .env
+.gradle
 .DS_Store
 .meltano
 .pytest_cache
+build
 coverage.xml
 mlruns/
 archive/

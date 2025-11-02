@@ -1,0 +1,16 @@
+// https://medium.com/@santoshkotagiri/setting-up-flink-projects-with-gradle-a-step-by-step-guide-4d1ef85f017
+apply plugin : 'application'
+repositories.mavenCentral()
+dependencies {
+    implementation 'org.apache.flink:flink-clients:1.20.3'
+    implementation 'org.apache.flink:flink-connector-jdbc:3.2.0-1.19'
+    implementation 'org.apache.flink:flink-table-planner_2.12:1.20.3'
+    implementation 'org.apache.flink:flink-table-runtime:1.20.3'
+    implementation 'org.slf4j:slf4j-simple:1.7.36'
+    runtimeOnly    'io.crate:crate-jdbc:2.7.0'
+    runtimeOnly    'org.postgresql:postgresql:42.7.8'
+}
+java.toolchain.languageVersion = JavaLanguageVersion.of(11)
+sourceSets.main.java.srcDirs = ['.']
+tasks.register('read') { application.mainClass = 'read' }
+tasks.register('write') { application.mainClass = 'write' }
