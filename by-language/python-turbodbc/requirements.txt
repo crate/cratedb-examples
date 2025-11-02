@@ -1,1 +1,1 @@
-turbodbc>=5.1.1,<6
+turbodbc @ git+https://github.com/blue-yonder/turbodbc.git
