@@ -7,6 +7,8 @@ _build
 .DS_Store
 .meltano
 .pytest_cache
+.zig-cache
+build
 coverage.xml
 mlruns/
 archive/
@@ -16,3 +18,4 @@ logs.log
 *.swp
 *.bak
 *.egg-info
+*.lock
