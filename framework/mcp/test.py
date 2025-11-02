@@ -116,7 +116,7 @@ def test_dbhub():
 
     assert b"Getting prompt: explain_db" in p.stdout
     assert b"Table: mcp_dbhub in schema 'testdrive'" in p.stdout
-    assert b"Structure:\\n- id (integer)\\n- data (text)" in p.stdout
+    assert b"Structure:\\n- id (integer), nullable\\n- data\\\n      \\ (text), nullable" in p.stdout
 
 
 @pytest.mark.skipif(sys.version_info < (3, 12), reason="requires Python 3.12+")
