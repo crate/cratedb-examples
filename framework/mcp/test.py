@@ -103,11 +103,8 @@ def test_dbhub():
     assert b"Universal Database MCP Server" in p.stderr
 
     # Validate output specific to CrateDB.
-    assert b"Calling tool: run_query" in p.stdout
+    assert b"Calling tool: execute_sql" in p.stdout
     assert b"mountain: Mont Blanc" in p.stdout
-
-    assert b"Calling tool: list_connectors" in p.stdout
-    assert b"dsn: postgres://postgres" in p.stdout
 
     assert b"Reading resource: db://schemas" in p.stdout
     assert b"- doc" in p.stdout
