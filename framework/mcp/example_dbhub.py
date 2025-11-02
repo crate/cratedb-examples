@@ -38,8 +38,7 @@ async def run():
             print()
 
             # Call a few tools.
-            await client.call_tool("run_query", arguments={"query": "SELECT * FROM sys.summits ORDER BY height DESC LIMIT 3"})
-            await client.call_tool("list_connectors", arguments={})
+            await client.call_tool("execute_sql", arguments={"sql": "SELECT * FROM sys.summits ORDER BY height DESC LIMIT 3"})
 
             # Validate database content.
             db = DatabaseAdapter("crate://crate@localhost:4200/")
