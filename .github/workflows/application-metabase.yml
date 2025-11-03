@@ -53,9 +53,10 @@ jobs:
           architecture: x64
           cache: "pip"
           cache-dependency-path: |
-            pyproject.toml
             requirements.txt
-            requirements-test.txt
+            application/metabase/pyproject.toml
+            application/metabase/requirements.txt
+            application/metabase/requirements-test.txt
 
       - name: Install uv
         uses: astral-sh/setup-uv@v7

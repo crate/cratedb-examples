@@ -52,15 +52,6 @@ jobs:
 
       - name: Set up uv
         uses: astral-sh/setup-uv@v7
-        with:
-          cache-dependency-glob: |
-            requirements.txt
-          enable-cache: true
-          version: "latest"
-
-      - name: Install utilities
-        run: |
-          uv pip install -r requirements.txt
 
       - name: Validate operation/compose/ssl
         run: |
