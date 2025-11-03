@@ -56,16 +56,15 @@ jobs:
       - name: Acquire sources
         uses: actions/checkout@v4
 
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v7
+
       - name: Install Elixir
         uses: erlef/setup-beam@v1
         with:
           otp-version: ${{matrix.otp-version}}
           elixir-version: ${{matrix.elixir-version}}
 
-      - name: Install utilities
-        run: |
-          pip install -r requirements.txt
-
       - name: Validate by-language/elixir-postgrex
         run: |
-          ngr test by-language/elixir-postgrex
+          uv run --with=pueblo ngr test by-language/elixir-postgrex

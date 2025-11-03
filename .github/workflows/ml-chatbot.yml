@@ -70,10 +70,9 @@ jobs:
             topic/chatbot/table-augmented-generation/app/requirements.txt
             topic/chatbot/table-augmented-generation/workshop/requirements-dev.txt
 
-      - name: Install utilities
-        run: |
-          pip install -r requirements.txt
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v7
 
       - name: Validate topic/chatbot/table-augmented-generation/workshop
         run: |
-          ngr test --accept-no-venv topic/chatbot/table-augmented-generation/workshop
+          uv run --with=pueblo ngr test --accept-no-venv topic/chatbot/table-augmented-generation/workshop
