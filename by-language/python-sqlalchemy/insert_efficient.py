@@ -130,10 +130,13 @@ def run_database(database: str, variant: str, record_count: int):
 
 
 if __name__ == "__main__":
+    """
+    Invocation examples:
+
+    python insert_efficient.py cratedb multirow 25000
+    python insert_efficient.py cratedb batched 50000
+    """
     database = sys.argv[1]
     variant = sys.argv[2]
-    try:
-        record_count = int(sys.argv[3])
-    except:
-        record_count = 1_000
+    record_count = int(sys.argv[3])
     run_database(database, variant, record_count)

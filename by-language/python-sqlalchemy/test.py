@@ -8,17 +8,19 @@ def run(command: str):
 
 
 def test_insert_efficient_multirow():
-    cmd = "time python insert_efficient.py cratedb multirow 25000"
+    insert_records = 25_000
+    cmd = f"time python insert_efficient.py cratedb multirow {insert_records}"
     run(cmd)
 
 
 def test_insert_efficient_batched():
-    cmd = "time python insert_efficient.py cratedb batched 50000"
+    insert_records = 50_000
+    cmd = f"time python insert_efficient.py cratedb batched {insert_records}"
     run(cmd)
 
 
 def test_insert_efficient_unknown(capfd):
-    cmd = "time python insert_efficient.py cratedb unknown"
+    cmd = "time python insert_efficient.py cratedb unknown 1000"
     with pytest.raises(subprocess.CalledProcessError):
         run(cmd)
     out, err = capfd.readouterr()
