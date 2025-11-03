@@ -54,18 +54,8 @@ jobs:
       - name: Acquire sources
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: "3.11"
-          architecture: x64
-          cache: 'pip'
-          cache-dependency-path: |
-            requirements.txt
-
-      - name: Install utilities
-        run: |
-          pip install -r requirements.txt
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v7
 
       # https://github.com/marketplace/actions/setup-php-action
       - name: Set up PHP
@@ -76,4 +66,4 @@ jobs:
 
       - name: Validate by-language/php-amphp
         run: |
-          ngr test by-language/php-amphp
+          uv run --with=pueblo ngr test by-language/php-amphp

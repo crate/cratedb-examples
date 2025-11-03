@@ -56,15 +56,14 @@ jobs:
       - name: Acquire sources
         uses: actions/checkout@v4
 
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v7
+
       - name: Install Go
         uses: actions/setup-go@v6
         with:
           go-version: ${{ matrix.go-version }}
 
-      - name: Install utilities
-        run: |
-          pip install -r requirements.txt
-
       - name: Validate by-language/go-pgx
         run: |
-          ngr test by-language/go-pgx
+          uv run --with=pueblo ngr test by-language/go-pgx
