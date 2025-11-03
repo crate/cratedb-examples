@@ -33,6 +33,11 @@ updates:
     schedule:
       interval: "daily"
 
+  - directory: "/by-dataframe/polars"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "daily"
+
   - directory: "/by-language/csharp-efcore"
     package-ecosystem: "nuget"
     schedule:
