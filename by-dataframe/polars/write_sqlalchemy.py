@@ -1,5 +1,17 @@
 """
-Import a Parquet file into CrateDB using Polars and SQLAlchemy.
+Efficient data imports using CrateDB, Polars, and SQLAlchemy.
+
+The `insert_bulk` utility provides efficient bulk data transfers
+when using dataframe libraries like pandas, Dask, and Polars.
+
+You will observe that the optimal chunk size highly depends on the
+shape of your data, specifically the width of each record, i.e. the
+number of columns and their individual sizes, which will in the end
+determine the total size of each batch/chunk.
+
+https://cratedb.com/docs/sqlalchemy-cratedb/support.html#bulk-support-for-pandas-and-dask
+https://cratedb.com/docs/sqlalchemy-cratedb/dataframe.html#efficient-insert-operations-with-pandas
+https://cratedb.com/docs/crate/reference/en/latest/interfaces/http.html#bulk-operations
 
 Install dependencies:
 
@@ -8,6 +20,7 @@ Install dependencies:
 
 import polars as pl
 import sqlalchemy as sa
+from sqlalchemy_cratedb import insert_bulk
 
 CRATEDB_URI = "crate://crate:crate@localhost:4200"
 TABLE_NAME = "testdrive_polars"
@@ -22,6 +35,10 @@ def main():
         connection=engine,
         table_name=TABLE_NAME,
         if_table_exists="replace",
+        engine_options={
+            "method": insert_bulk,
+            "chunksize": 20_000,
+        },
     )
     print(f"Records written to database table: {TABLE_NAME}")
 
