@@ -1,4 +1,4 @@
-name: pandas
+name: Jupyter
 
 on:
   pull_request:
