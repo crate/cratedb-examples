@@ -39,7 +39,7 @@ jobs:
         os: [ 'ubuntu-latest' ]
         java-version: [
           '21',
-          '24',
+          '25',
         ]
         cratedb-version: [ 'nightly' ]
 
