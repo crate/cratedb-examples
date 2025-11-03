@@ -1,14 +1,21 @@
 """
-Install the dependencies with:
+Read from CrateDB using Polars and ConnectorX.
 
-```
-$ pip install polars connectorx
-```
+Install dependencies:
+
+  pip install polars connectorx
 """
 
 import polars as pl
 
-CRATE_URI = 'postgresql://crate@localhost:5432'
-QUERY = 'SELECT * FROM ny_taxi'
+CRATEDB_URI = "postgresql://crate:crate@localhost:5432/?sslmode=disable"
+SQL_QUERY = "SELECT mountain, height, latitude(coordinates), longitude(coordinates) FROM sys.summits ORDER BY height DESC LIMIT 3"
 
-df = pl.read_database_uri(QUERY, CRATE_URI, protocol='cursor')
+
+def main():
+    df = pl.read_database_uri(query=SQL_QUERY, uri=CRATEDB_URI, protocol="cursor")
+    print(df)
+
+
+if __name__ == "__main__":
+    main()

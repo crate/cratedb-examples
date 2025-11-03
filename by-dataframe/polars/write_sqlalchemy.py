@@ -1,17 +1,30 @@
 """
-Import a parquet file into CrateDB using polars + sqlalchemy
+Import a Parquet file into CrateDB using Polars and SQLAlchemy.
 
-Install the dependencies to run this program::
+Install dependencies:
 
-    pip install --upgrade pandas polars pyarrow sqlalchemy-cratedb
+  pip install --upgrade pandas polars pyarrow sqlalchemy-cratedb
 """
 
-import polars
+import polars as pl
+import sqlalchemy as sa
 
-CRATE_URI = 'crate://localhost:4200'
-FILE_PATH = '/home/taxi_data.parquet'
+CRATEDB_URI = "crate://crate:crate@localhost:4200"
+TABLE_NAME = "testdrive_polars"
+FILE_URI = "https://cdn.crate.io/downloads/datasets/cratedb-datasets/timeseries/yc.2019.07-tiny.parquet"
 
-df = polars.read_parquet(FILE_PATH)
-df.write_database(table='ny_taxi',
-                  connection=CRATE_URI,
-                  if_table_exists='append')
+
+def main():
+    df = pl.read_parquet(FILE_URI, use_pyarrow=True)
+    engine = sa.create_engine(CRATEDB_URI)
+    df.write_database(
+        engine="sqlalchemy",
+        connection=engine,
+        table_name=TABLE_NAME,
+        if_table_exists="replace",
+    )
+    print(f"Records written to database table: {TABLE_NAME}")
+
+
+if __name__ == "__main__":
+    main()
