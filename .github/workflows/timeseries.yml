@@ -61,17 +61,14 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
-          architecture: x64
-          cache: 'pip'
-          cache-dependency-path: |
-            requirements.txt
-            topic/timeseries/requirements.txt
-            topic/timeseries/requirements-dev.txt
 
-      - name: Install utilities
-        run: |
-          pip install -r requirements.txt
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v7
+        cache-dependency-glob: |
+          requirements.txt
+          topic/timeseries/requirements.txt
+          topic/timeseries/requirements-dev.txt
 
       - name: Validate topic/timeseries
         run: |
-          ngr test --accept-no-venv topic/timeseries
+          uv run --with=pueblo ngr test --accept-no-venv topic/timeseries
