@@ -1,4 +1,4 @@
-name: "Topic: Time series"
+name: "Time series"
 
 on:
   pull_request:
