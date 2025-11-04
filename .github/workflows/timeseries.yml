@@ -2,7 +2,6 @@ name: "Topic: Time series"
 
 on:
   pull_request:
-    branches: ~
     paths:
     - '.github/workflows/timeseries.yml'
     - 'topic/timeseries/**'
@@ -64,10 +63,11 @@ jobs:
 
       - name: Set up uv
         uses: astral-sh/setup-uv@v7
-        cache-dependency-glob: |
-          requirements.txt
-          topic/timeseries/requirements.txt
-          topic/timeseries/requirements-dev.txt
+        with:
+          cache-dependency-glob: |
+            requirements.txt
+            topic/timeseries/requirements.txt
+            topic/timeseries/requirements-dev.txt
 
       - name: Validate topic/timeseries
         run: |
