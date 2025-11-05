@@ -41,11 +41,18 @@ jobs:
       matrix:
         os: [ ubuntu-22.04 ]
         superset-version: [
+
           # Deactivate testing 3.x until that patch landed.
           # https://github.com/apache/superset/issues/33162
           # https://github.com/apache/superset/pull/33216
           # "3.*",
+
+          # Superset 4.x has been fixed.
           "4.*",
+
+          # Don't test 5.x until there will be a patch release 5.0.1.
+          # https://github.com/apache/superset/issues/35942
+          # "5.*",
         ]
         python-version: [ "3.9", "3.11" ]
         cratedb-version: [ 'nightly' ]
