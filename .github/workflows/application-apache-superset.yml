@@ -53,9 +53,18 @@ jobs:
           # Don't test 5.x until there will be a patch release 5.0.1.
           # https://github.com/apache/superset/issues/35942
           # "5.*",
+
+          # Superset 6.x will work without much ado.
+          "6.0.0rc2",
         ]
         python-version: [ "3.9", "3.11" ]
         cratedb-version: [ 'nightly' ]
+
+        exclude:
+          # Apache Superset 6.x no longer supports Python 3.9.
+          - superset-version: "6.0.0rc2"
+            python-version: "3.9"
+
 
     services:
       cratedb:
