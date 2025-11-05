@@ -39,7 +39,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-22.04 ]
+        os: [ 'ubuntu-latest' ]
         superset-version: [
 
           # Deactivate testing 3.x until that patch landed.
@@ -71,7 +71,7 @@ jobs:
 
         include:
           # Apache Superset 6.x supports Python 3.12.
-          - os: "ubuntu-22.04"
+          - os: "ubuntu-latest"
             cratedb-version: "nightly"
             superset-version: "6.0.0rc2"
             python-version: "3.12"
