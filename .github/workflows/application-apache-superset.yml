@@ -57,13 +57,24 @@ jobs:
           # Superset 6.x will work without much ado.
           "6.0.0rc2",
         ]
-        python-version: [ "3.9", "3.11" ]
+        python-version: [
+          "3.9",
+          "3.10",
+          "3.11",
+        ]
         cratedb-version: [ 'nightly' ]
 
         exclude:
           # Apache Superset 6.x no longer supports Python 3.9.
           - superset-version: "6.0.0rc2"
             python-version: "3.9"
+
+        include:
+          # Apache Superset 6.x supports Python 3.12.
+          - os: "ubuntu-22.04"
+            cratedb-version: "nightly"
+            superset-version: "6.0.0rc2"
+            python-version: "3.12"
 
 
     services:
