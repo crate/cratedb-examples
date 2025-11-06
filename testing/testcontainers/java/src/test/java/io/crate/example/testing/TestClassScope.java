@@ -1,8 +1,7 @@
 package io.crate.example.testing;
 
 import io.crate.example.testing.utils.TestingHelpers;
-import org.junit.ClassRule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.testcontainers.cratedb.CrateDBContainer;
 
 import java.io.IOException;
@@ -25,7 +24,6 @@ import static io.crate.example.testing.utils.TestingHelpers.assertResults;
  */
 public class TestClassScope {
 
-    @ClassRule
     public static CrateDBContainer cratedb = new CrateDBContainer(TestingHelpers.nameFromLabel("5.10"));
 
     @Test
