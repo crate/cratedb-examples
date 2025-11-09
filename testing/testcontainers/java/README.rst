@@ -33,9 +33,9 @@ of examples you can explore here:
 - ``TestFunctionScope``: Function-scoped testcontainer instance with automatic setup/teardown, see `Restarted containers`_.
 - ``TestJdbcUrlScheme``: Database containers launched via Testcontainers "TC" JDBC URL scheme.
 - ``TestManual``: Function-scoped testcontainer instance with manual setup/teardown.
-- ``TestManualWithLegacyCrateJdbcDriver``:
+- ``TestManualWithCrateDBJdbcDriver``:
   Function-scoped testcontainer instance with manual setup/teardown, using a custom
-  ``CrateDBContainer``, which uses the `legacy CrateDB JDBC driver`_.
+  ``CrateDBContainer``, which uses the `CrateDB JDBC driver`_.
 - ``TestSharedSingleton``:
   Testcontainer instance shared across multiple test classes, implemented using the Singleton pattern, see `Singleton containers`_.
 - ``TestSharedSingletonEnvironmentVersion``:
@@ -45,6 +45,8 @@ of examples you can explore here:
 - ``TestSqlInitialization``: Demonstrate different ways how Testcontainers can run an init script after
   the database container is started, but before your code initiates a connection to it.
 
+Unless otherwise noted, all examples use the `PostgreSQL JDBC driver`_ for
+connecting to CrateDB.
 
 *****
 Usage
@@ -74,15 +76,16 @@ Usage
     docker run -it --rm --publish=4200:4200 --publish=5432:5432 \
       crate:latest -Cdiscovery.type=single-node
 
-    # Run example program, using both the CrateDB legacy
-    # JDBC driver, and the vanilla PostgreSQL JDBC driver.
+    # Run example program, using both the CrateDB JDBC driver,
+    # and the vanilla PostgreSQL JDBC driver.
     ./gradlew run --args="jdbc:crate://localhost:5432/"
     ./gradlew run --args="jdbc:postgresql://localhost:5432/"
 
 
 .. _CrateDB: https://github.com/crate/crate
+.. _CrateDB JDBC driver: https://cratedb.com/docs/guide/connect/java/cratedb-jdbc.html
 .. _CrateDB OCI image: https://hub.docker.com/_/crate
-.. _legacy CrateDB JDBC driver: https://crate.io/docs/jdbc/
+.. _PostgreSQL JDBC driver: https://cratedb.com/docs/guide/connect/java/postgresql-jdbc.html
 .. _Restarted containers: https://java.testcontainers.org/test_framework_integration/junit_5/#restarted-containers
 .. _Shared containers: https://java.testcontainers.org/test_framework_integration/junit_5/#shared-containers
 .. _Singleton containers: https://java.testcontainers.org/test_framework_integration/manual_lifecycle_control/#singleton-containers
