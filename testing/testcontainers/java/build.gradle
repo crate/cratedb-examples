@@ -30,6 +30,7 @@ dependencies {
     testImplementation 'org.testcontainers:testcontainers:2.0.1'
     testImplementation 'org.testcontainers:testcontainers-cratedb:2.0.1'
     testImplementation 'org.testcontainers:testcontainers-postgresql:2.0.1'
+    testImplementation 'org.testcontainers:testcontainers-junit-jupiter:2.0.1'
 }
 
 java {
