@@ -14,16 +14,16 @@ import static io.crate.example.testing.utils.TestingHelpers.assertResults;
 
 /**
  * Function-scoped testcontainer instance with manual setup/teardown, using a custom CrateDBContainer which uses
- * the <a href="https://crate.io/docs/jdbc/en/latest/index.html">legacy CrateDB JDBC driver</a>.
+ * the <a href="https://cratedb.com/docs/guide/connect/java/cratedb-jdbc.html">CrateDB JDBC driver</a>.
  * <a href="https://www.testcontainers.org/test_framework_integration/junit_4/#manually-controlling-container-lifecycle" />
  */
-public class TestManualWithLegacyCrateJdbcDriver {
+public class TestManualWithCrateDBJdbcDriver {
 
     @Test
     public void testReadSummits() throws SQLException, IOException {
         // Run CrateDB nightly.
         DockerImageName image = TestingHelpers.nameFromLabel("nightly");
-        try (CrateDBContainerLegacyJdbcDriver cratedb = new CrateDBContainerLegacyJdbcDriver(image)) {
+        try (CrateDBContainerJdbcDriver cratedb = new CrateDBContainerJdbcDriver(image)) {
             cratedb.start();
 
             // Get JDBC URL to CrateDB instance.
@@ -40,7 +40,7 @@ public class TestManualWithLegacyCrateJdbcDriver {
         }
     }
 
-    static class CrateDBContainerLegacyJdbcDriver extends JdbcDatabaseContainer<CrateDBContainerLegacyJdbcDriver> {
+    static class CrateDBContainerJdbcDriver extends JdbcDatabaseContainer<CrateDBContainerJdbcDriver> {
 
         public static final String IMAGE = "crate";
 
@@ -52,7 +52,7 @@ public class TestManualWithLegacyCrateJdbcDriver {
 
         private String password = "crate";
 
-        public CrateDBContainerLegacyJdbcDriver(final DockerImageName dockerImageName) {
+        public CrateDBContainerJdbcDriver(final DockerImageName dockerImageName) {
             super(dockerImageName);
             dockerImageName.assertCompatibleWith(DEFAULT_IMAGE_NAME);
 
@@ -100,19 +100,19 @@ public class TestManualWithLegacyCrateJdbcDriver {
         }
 
         @Override
-        public CrateDBContainerLegacyJdbcDriver withDatabaseName(final String databaseName) {
+        public CrateDBContainerJdbcDriver withDatabaseName(final String databaseName) {
             this.databaseName = databaseName;
             return self();
         }
 
         @Override
-        public CrateDBContainerLegacyJdbcDriver withUsername(final String username) {
+        public CrateDBContainerJdbcDriver withUsername(final String username) {
             this.username = username;
             return self();
         }
 
         @Override
-        public CrateDBContainerLegacyJdbcDriver withPassword(final String password) {
+        public CrateDBContainerJdbcDriver withPassword(final String password) {
             this.password = password;
             return self();
         }
