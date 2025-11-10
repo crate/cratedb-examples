@@ -1,4 +1,4 @@
 crash>=0.31.5
 crate>=2.0.0.dev6
 cratedb-toolkit[testing]>=0.0.33
-pytest<9
+pytest<10
