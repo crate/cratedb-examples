@@ -20,9 +20,7 @@ plugins:
   extractors:
 
   - name: tap-github
-    variant: cratedb
-    namespace: cratedb
-    pip_url: git+https://github.com/crate-workbench/tap-github.git@cratedb
+    variant: meltanolabs
     # Note: Configure your GitHub repository here.
     config:
       start_date: '2023-12-01'
