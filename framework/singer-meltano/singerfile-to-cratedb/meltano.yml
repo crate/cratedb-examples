@@ -21,7 +21,7 @@ plugins:
 
   - name: tap-singer-jsonl
     variant: kgpayne
-    pip_url: git+https://github.com/crate-workbench/tap-singer-jsonl@fix-paths
+    pip_url: git+https://github.com/crate-workbench/tap-singer-jsonl@preview
     config:
       source: local
       add_record_metadata: false
