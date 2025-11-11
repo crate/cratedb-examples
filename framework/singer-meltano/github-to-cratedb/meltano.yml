@@ -41,9 +41,9 @@ plugins:
     namespace: cratedb
     variant: cratedb
     # Acquire from PyPI.
-    pip_url: meltano-target-cratedb
+    # pip_url: meltano-target-cratedb
     # Acquire from GitHub.
-    # pip_url: git+https://github.com/crate-workbench/meltano-target-cratedb.git
+    pip_url: git+https://github.com/crate-workbench/meltano-target-cratedb.git@preview
 
     # Note: Configure your database server and credentials here.
     config:
