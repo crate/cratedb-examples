@@ -62,9 +62,19 @@ jobs:
         uses: astral-sh/setup-uv@v7
 
       - name: Set up .NET ${{ matrix.dotnet-version }}
+        id: dotnet
         uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
+
+      # Note: Unless a concrete version is specified in the `global.json` file,
+      # the latest .NET version installed on the runner (including preinstalled
+      # versions) will be used by default. To control this behavior, you may want
+      # to use temporary `global.json` files.
+      # https://github.com/actions/setup-dotnet/blob/main/README.md#matrix-testing
+      - name: Create `global.json`
+        run: |
+          echo '{"sdk":{"version": "${{ steps.dotnet.outputs.dotnet-version }}"}}' > ./global.json
 
       - name: Validate by-language/csharp-efcore
         run: |
