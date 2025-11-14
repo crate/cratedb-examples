@@ -40,8 +40,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ 'ubuntu-22.04' ]
-        dotnet-version: [ '9.0.x' ]
+        os: [ 'ubuntu-latest' ]
+        dotnet-version: [
+          '8.x',
+          '9.x',
+        ]
         npgsql-version: [ '8.0.7', '9.0.3' ]
         cratedb-version: [ 'nightly' ]
 

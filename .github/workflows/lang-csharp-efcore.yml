@@ -39,8 +39,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ 'ubuntu-22.04' ]
-        dotnet-version: [ '9.0.x' ]
+        os: [ 'ubuntu-latest' ]
+        dotnet-version: [
+          '8.x',
+          '9.x',
+        ]
         cratedb-version: [ 'nightly' ]
 
     # https://docs.github.com/en/free-pro-team@latest/actions/guides/about-service-containers
