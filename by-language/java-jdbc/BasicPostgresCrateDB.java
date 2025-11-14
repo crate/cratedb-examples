@@ -1,6 +1,7 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+import java.sql.Statement;
+import java.sql.ResultSet;
 import java.util.Properties;
 
 import com.beust.jcommander.JCommander;
@@ -19,7 +20,7 @@ public class BasicPostgresCrateDB {
     private boolean help;
 
     public static final int SO_RCVBUF = 1024 * 1024; // 1 MB
-    public static final int MAX_BATCH_SIZE = 10000;
+    public static final int MAX_BATCH_SIZE = 1000;
     public static final int QUERY_EXECUTION_TIMEOUT_SECS = 60;
 
     public static void main(String ... argv) throws Exception {
@@ -52,15 +53,25 @@ public class BasicPostgresCrateDB {
         connectionProps.put("defaultRowFetchSize", MAX_BATCH_SIZE);
         connectionProps.put("loginTimeout", 5); // seconds, fail fast-ish
         connectionProps.put("socketTimeout", QUERY_EXECUTION_TIMEOUT_SECS);
-        connectionProps.put("tcpKeepAlive", true);
+        connectionProps.put("tcpKeepAlive", false);
 
         try (Connection sqlConnection = DriverManager.getConnection(connectionUrl, connectionProps)) {
-            /*
-             * CREATE TABLE "doc"."ti1" ("a" OBJECT(DYNAMIC));
-             */
-            PreparedStatement st = sqlConnection.prepareStatement("INSERT INTO doc.ti1 VALUES (?)");
-            st.setString(1, "{\"a\" 1}");
-            st.executeUpdate();
+            Statement st = sqlConnection.createStatement();
+            System.out.println("Starting query");
+            // Use a table here that is large enough for the query to take some time,
+            // so you can CTRL + C it while executeQuery runs.
+            //
+            // Adding a -- debug comment to uniquely identify the query in sys.jobs.
+            ResultSet rs = st.executeQuery("SELECT * FROM nyc_taxi.trips -- debug;");
+
+            int i = 0;
+            while (rs.next()) {
+                i++;
+                if (i % 10000 == 0) {
+                    System.out.println(i);
+                }
+            }
+            rs.close();
             st.close();
 
             sqlConnection.close();
