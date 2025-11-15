@@ -33,6 +33,7 @@ jobs:
   test:
     name: "
      .NET: ${{ matrix.dotnet-version }}
+     Npgsql EF: ${{ matrix.npgsql-version }}
      CrateDB: ${{ matrix.cratedb-version }}
      on ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
@@ -43,6 +44,14 @@ jobs:
         dotnet-version: [
           '8.x',
           '9.x',
+        ]
+        npgsql-version: [
+          '8.*',
+          '9.*',
+          # error: NU1202: Package Npgsql.EntityFrameworkCore.PostgreSQL 10.0.0-rc.2
+          # is not compatible with net9.0 (.NETCoreApp,Version=v9.0).
+          # Package Npgsql.EntityFrameworkCore.PostgreSQL 10.0.0-rc.2 supports: net10.0
+          # 'prerelease',
         ]
         cratedb-version: [ 'nightly' ]
 
@@ -61,9 +70,6 @@ jobs:
       - name: Acquire sources
         uses: actions/checkout@v5
 
-      - name: Set up uv
-        uses: astral-sh/setup-uv@v7
-
       - name: Set up .NET ${{ matrix.dotnet-version }}
         id: dotnet
         uses: actions/setup-dotnet@v5
@@ -79,6 +85,19 @@ jobs:
         run: |
           echo '{"sdk":{"version": "${{ steps.dotnet.outputs.dotnet-version }}"}}' > ./global.json
 
-      - name: Validate by-language/csharp-efcore
+      # Propagate the Npgsql version from the test matrix slot value,
+      # display the current list of packages with versions,
+      # and invoke the test suite.
+      - name: "Validate by-language/csharp-efcore, Npgsql ${{ matrix.npgsql-version }}"
         run: |
-          uv run --with=pueblo ngr test by-language/csharp-efcore --dotnet-version=${{ matrix.dotnet-version }}
+          set -e
+          cd by-language/csharp-efcore
+          if [[ "${{ matrix.npgsql-version }}" = "prerelease" ]]; then
+            dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL --prerelease
+          elif [[ "${{ matrix.npgsql-version }}" = "latest" ]]; then
+            dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL --version=*
+          else
+            dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL --version=${{ matrix.npgsql-version }}
+          fi
+          dotnet list package
+          dotnet run test
