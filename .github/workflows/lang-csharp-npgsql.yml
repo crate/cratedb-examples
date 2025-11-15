@@ -45,7 +45,12 @@ jobs:
           '8.x',
           '9.x',
         ]
-        npgsql-version: [ '8.0.7', '9.0.3' ]
+        # https://github.com/npgsql/npgsql/releases
+        npgsql-version: [
+          '8.0.8',
+          '9.0.4',
+          '10.0.0-rc.1',
+        ]
         cratedb-version: [ 'nightly' ]
 
     # https://docs.github.com/en/free-pro-team@latest/actions/guides/about-service-containers
