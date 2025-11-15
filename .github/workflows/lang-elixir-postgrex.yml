@@ -47,9 +47,6 @@ jobs:
           '1.18',
           '1.19',
         ]
-        exclude:
-          - otp-version: '28'
-            elixir-version: '1.17'
 
     services:
       cratedb:
