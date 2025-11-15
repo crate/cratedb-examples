@@ -45,7 +45,11 @@ jobs:
           '8.x',
           '9.x',
         ]
-        npgsql-version: [ '8.0.7', '9.0.3' ]
+        npgsql-version: [
+          '8.*',
+          '9.*',
+          'prerelease',
+        ]
         cratedb-version: [ 'nightly' ]
 
     # https://docs.github.com/en/free-pro-team@latest/actions/guides/about-service-containers
@@ -63,9 +67,6 @@ jobs:
       - name: Acquire sources
         uses: actions/checkout@v5
 
-      - name: Set up uv
-        uses: astral-sh/setup-uv@v7
-
       - name: Set up .NET ${{ matrix.dotnet-version }}
         id: dotnet
         uses: actions/setup-dotnet@v5
@@ -81,6 +82,19 @@ jobs:
         run: |
           echo '{"sdk":{"version": "${{ steps.dotnet.outputs.dotnet-version }}"}}' > ./global.json
 
-      - name: Validate by-language/csharp-npgsql, Npgsql ${{ matrix.npgsql-version }}
+      # Propagate the Npgsql version from the test matrix slot value,
+      # display the current list of packages with versions,
+      # and invoke the test suite.
+      - name: "Validate by-language/csharp-npgsql, Npgsql ${{ matrix.npgsql-version }}"
         run: |
-          uv run --with=pueblo ngr test by-language/csharp-npgsql --dotnet-version=${{ matrix.dotnet-version }} --npgsql-version=${{ matrix.npgsql-version }}
+          set -e
+          cd by-language/csharp-npgsql
+          if [[ "${{ matrix.npgsql-version }}" = "prerelease" ]]; then
+            dotnet add package Npgsql --prerelease
+          elif [[ "${{ matrix.npgsql-version }}" = "latest" ]]; then
+            dotnet add package Npgsql --version=*
+          else
+            dotnet add package Npgsql --version=${{ matrix.npgsql-version }}
+          fi
+          dotnet list package
+          dotnet run test
