@@ -90,9 +90,10 @@ defmodule CrateDBTest do
         SELECT id
         FROM testdrive.elixir
         WHERE knn_match(data, ?, 2)
-        ORDER BY id;
-        ", [[0.1, 0.2, 0.3]])
-    assert [~c"*", ~c"+", ~c",", ~c"-"] == result.rows
+        ORDER BY VECTOR_SIMILARITY(data, ?) DESC
+        LIMIT 3;
+        ", [[0.1, 0.2, 0.3], [0.1, 0.2, 0.3]])
+    assert [[42], [44], [45]] == result.rows
 
   end
 
