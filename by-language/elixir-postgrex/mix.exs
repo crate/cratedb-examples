@@ -17,7 +17,7 @@ defmodule CrateDBExample.MixProject do
   defp deps() do
     [
       {:jason, "~> 1.4"},
-      {:postgrex, "~> 0.21.0"},
+      {:postgrex, "~> 0.21"},
     ]
   end
 
