@@ -39,8 +39,16 @@ jobs:
       matrix:
         os: [ 'ubuntu-latest' ]
         cratedb-version: [ 'nightly' ]
-        otp-version: ['26', '27']
-        elixir-version: ['1.17', '1.18']
+        otp-version: [
+          '26',
+          '27',
+          '28',
+        ]
+        elixir-version: [
+          '1.17',
+          '1.18',
+          '1.19',
+        ]
 
     services:
       cratedb:
