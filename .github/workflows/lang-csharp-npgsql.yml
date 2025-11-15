@@ -81,6 +81,7 @@ jobs:
       - name: Create `global.json`
         run: |
           echo '{"sdk":{"version": "${{ steps.dotnet.outputs.dotnet-version }}"}}' > ./global.json
+          cat ./global.json
 
       - name: Validate by-language/csharp-npgsql, Npgsql ${{ matrix.npgsql-version }}
         run: |
