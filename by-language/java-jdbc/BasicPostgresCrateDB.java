@@ -54,6 +54,8 @@ public class BasicPostgresCrateDB {
         connectionProps.put("loginTimeout", 5); // seconds, fail fast-ish
         connectionProps.put("socketTimeout", QUERY_EXECUTION_TIMEOUT_SECS);
         connectionProps.put("tcpKeepAlive", false);
+        // Optionally add the statement_timeout
+        connectionProps.put("options", "-c statement_timeout=1m");
 
         try (Connection sqlConnection = DriverManager.getConnection(connectionUrl, connectionProps)) {
             Statement st = sqlConnection.createStatement();
