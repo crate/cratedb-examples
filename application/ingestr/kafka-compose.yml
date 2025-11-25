@@ -43,7 +43,7 @@ services:
   # CrateDB
   # -------
   cratedb:
-    image: docker.io/crate:6.0.3
+    image: docker.io/crate:6.1.1
     ports:
       - "${CRATEDB_HTTP_PORT}:${CRATEDB_HTTP_PORT}"
       - "${CRATEDB_POSTGRESQL_PORT}:${CRATEDB_POSTGRESQL_PORT}"
