@@ -49,10 +49,8 @@ jobs:
         npgsql-version: [
           '8.*',
           '9.*',
-          # error: NU1202: Package Npgsql.EntityFrameworkCore.PostgreSQL 10.0.0-rc.2
-          # is not compatible with net9.0 (.NETCoreApp,Version=v9.0).
-          # Package Npgsql.EntityFrameworkCore.PostgreSQL 10.0.0-rc.2 supports: net10.0
-          # 'prerelease',
+          '10.*',
+          'prerelease',
         ]
         cratedb-version: [ 'nightly' ]
 

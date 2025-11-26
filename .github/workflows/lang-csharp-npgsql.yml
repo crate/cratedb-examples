@@ -49,6 +49,7 @@ jobs:
         npgsql-version: [
           '8.*',
           '9.*',
+          '10.*',
           'prerelease',
         ]
         cratedb-version: [ 'nightly' ]
