@@ -76,6 +76,7 @@ namespace demo
 
             await using (var cmd = new NpgsqlCommand("""
                 CREATE TABLE testdrive.example (
+                    id STRING,
                     -- Numeric types
                     null_integer INT,
                     integer INT,
@@ -389,13 +390,15 @@ namespace demo
             /***
              * Communicate GeoJSON types as strings, marshall from/to GeoJSON types manually.
              */
-            Console.WriteLine("Running InsertGeoRaw");
+            Console.WriteLine("Running InsertGeoJsonString");
 
             // Insert single data point.
             await using (var cmd = new NpgsqlCommand("""
             INSERT INTO testdrive.example (
+                "id",
                 "geoshape"
             ) VALUES (
+                @id,
                 @geoshape
             );
             """, conn))
@@ -412,11 +415,13 @@ namespace demo
                 ]);
                 // TODO: Can GEO_SHAPE types be directly marshalled to a .NET GeoJSON type?
                 //       Currently, `InsertGeoJsonTyped` does not work yet.
+                cmd.Parameters.AddWithValue("id", "point");
                 cmd.Parameters.AddWithValue("geoshape", NpgsqlDbType.Json, JsonConvert.SerializeObject(point));
                 cmd.ExecuteNonQuery();
 
                 cmd.Parameters.Clear();
 
+                cmd.Parameters.AddWithValue("id", "polygon");
                 cmd.Parameters.AddWithValue("geoshape", NpgsqlDbType.Json, JsonConvert.SerializeObject(poly));
                 cmd.ExecuteNonQuery();
             }
@@ -436,14 +441,15 @@ namespace demo
             await InsertGeoJsonString();
 
             // Query back data.
-            await using (var cmd = new NpgsqlCommand("SELECT * FROM testdrive.example", conn))
+            await using (var cmd = new NpgsqlCommand("SELECT * FROM testdrive.example WHERE id='point'", conn))
             await using (var reader = cmd.ExecuteReader())
             {
                 reader.Read();
                 // TODO: Can GEO_SHAPE types be directly marshalled to a .NET GeoJSON type?
                 //       Currently, `InsertGeoJsonTyped` does not work yet.
                 var obj = reader.GetFieldValue<JsonDocument>("geoshape");
-                var geoJsonObject = JsonConvert.DeserializeObject<Point>(obj.RootElement.ToString());
+                var payload = obj.RootElement.ToString();
+                var geoJsonObject = JsonConvert.DeserializeObject<Point>(payload);
                 return (Point?) geoJsonObject;
             }
         }
