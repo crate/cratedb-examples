@@ -14,6 +14,7 @@ namespace demo.tests
 
     public class DatabaseFixture : IDisposable
     {
+        public NpgsqlDataSource Source { get; private set; }
         public NpgsqlConnection Db { get; private set; }
 
         public DatabaseFixture()
@@ -23,12 +24,14 @@ namespace demo.tests
             {
                 CRATEDB_DSN = $"Host=localhost;Port=5432;Username=crate;Password=;Database=testdrive";
             }
-            Db = DemoProgram.GetConnection(CRATEDB_DSN);
+            Source = DemoProgram.GetDataSource(CRATEDB_DSN);
+            Db = Source.OpenConnection();
         }
 
         public void Dispose()
         {
             Db.Close();
+            Source.Dispose();
         }
 
     }
