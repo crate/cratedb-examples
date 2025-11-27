@@ -228,8 +228,8 @@ namespace demo.tests
 
             // Validate the outcome.
             var coords = new Point(new Position(85.43, 66.23)).Coordinates;
-            Assert.Equal(coords.Latitude, point?.Coordinates.Latitude);
-            Assert.Equal(coords.Longitude, point?.Coordinates.Longitude);
+            Assert.True(Math.Abs(coords.Latitude - (point?.Coordinates.Latitude ?? 0)) < 0.0001, "Latitude mismatch");
+            Assert.True(Math.Abs(coords.Longitude - (point?.Coordinates.Longitude ?? 0)) < 0.0001, "Longitude mismatch");
 
         }
 

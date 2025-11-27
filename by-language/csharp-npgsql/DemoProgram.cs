@@ -33,7 +33,6 @@ namespace demo
                     await dwt.ArrayPocoExample();
                     await dwt.GeoJsonTypesExample();
                     conn.Close();
-                    dataSource.Dispose();
                 });
 
         }
