@@ -18,7 +18,8 @@ namespace demo
                     var connString = $"Host={options.Host};Port={options.Port};SSL Mode={options.SslMode};" +
                                      $"Username={options.Username};Password={options.Password};Database={options.Database}";
 
-                    await using var conn = GetConnection(connString);
+                    await using var dataSource = GetDataSource(connString);
+                    var conn = dataSource.OpenConnection();
 
                     await DatabaseWorkloads.SystemQueryExample(conn);
                     await DatabaseWorkloads.BasicConversationExample(conn);
@@ -32,12 +33,14 @@ namespace demo
                     await dwt.ArrayPocoExample();
                     await dwt.GeoJsonTypesExample();
                     conn.Close();
+                    dataSource.Dispose();
                 });
 
         }
 
-        public static NpgsqlConnection GetConnection(string connString)
+        public static NpgsqlDataSource GetDataSource(string connString)
         {
+            // It's just a testing rig. Do NOT log database credentials in production.
             Console.WriteLine($"Connecting to database: {connString}\n");
 
             // Enable JSON POCO mapping and PostGIS/GeoJSON Type Plugin.
@@ -55,9 +58,7 @@ namespace demo
             // see also https://github.com/npgsql/npgsql/issues/2411.
             // dataSourceBuilder.UseGeoJson();
 
-            var dataSource = dataSourceBuilder.Build();
-            var conn = dataSource.OpenConnection();
-            return conn;
+            return dataSourceBuilder.Build();
         }
 
         public class Options
