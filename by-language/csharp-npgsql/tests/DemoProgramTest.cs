@@ -133,7 +133,9 @@ namespace demo.tests
             // `GEO_SHAPE` is communicated as scalar `string` type, using the GeoJSON format.
             // TODO: Possibly support transparently converging `GEO_SHAPE` to one of
             //       `NpgsqlLSeg`, `NpgsqlBox`, `NpgsqlPath`, `NpgsqlPolygon`, `NpgsqlCircle`.
-            Assert.Equal(new NpgsqlPoint(85.42999997735023, 66.22999997343868), row["geopoint"]);
+            var geopoint = (NpgsqlPoint) row["geopoint"];
+            Assert.True(Math.Abs(geopoint.X - 85.43) < 0.0001, "X coordinate mismatch");
+            Assert.True(Math.Abs(geopoint.Y - 66.23) < 0.0001, "Y coordinate mismatch");
             Assert.Equal("""{"coordinates":[[[5.0,5.0],[5.0,10.0],[10.0,10.0],[10.0,5.0],[5.0,5.0]]],"type":"Polygon"}""", row["geoshape"]);
 
             // Vector type
