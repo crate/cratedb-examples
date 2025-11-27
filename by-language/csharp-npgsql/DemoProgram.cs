@@ -51,6 +51,8 @@ namespace demo
 
             // Enable PostGIS/GeoJSON Type Plugin.
             // https://www.npgsql.org/doc/types/geojson.html
+            // `NpgsqlDbType.Geometry` can not be used with CrateDB,
+            // see also https://github.com/npgsql/npgsql/issues/2411.
             // dataSourceBuilder.UseGeoJson();
 
             var dataSource = dataSourceBuilder.Build();

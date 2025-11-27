@@ -364,8 +364,9 @@ namespace demo
              *
              *       System.NotSupportedException : The NpgsqlDbType 'Geometry' isn't present in your
              *       database. You may need to install an extension or upgrade to a newer version.
+             *       See also https://github.com/npgsql/npgsql/issues/2411.
              */
-            Console.WriteLine("Running InsertGeo");
+            Console.WriteLine("Running InsertGeoJsonTyped");
 
             // Insert single data point.
             await using (var cmd = new NpgsqlCommand("""
