@@ -1,2 +1,2 @@
 pytest<10
-pytest-cov<7
+pytest-cov<8
