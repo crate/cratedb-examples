@@ -25,6 +25,7 @@ Run the following command to submit the SQL DDL to the database. This will creat
 database tables for the `User` and `Post` entities that are defined in
 [`prisma/schema.prisma`](./prisma/schema.prisma).
 ```shell
+npm install
 npx prisma migrate dev --name init
 ```
 
