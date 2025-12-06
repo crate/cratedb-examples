@@ -1,0 +1,63 @@
+name: "TinyETL"
+
+on:
+  pull_request:
+    paths:
+    - '.github/workflows/application-tinyetl.yml'
+    - 'application/tinyetl/**'
+  push:
+    branches: [ main ]
+    paths:
+    - '.github/workflows/application-tinyetl.yml'
+    - 'application/tinyetl/**'
+
+  # Allow job to be triggered manually.
+  workflow_dispatch:
+
+  # Run job each night after CrateDB nightly has been published.
+  schedule:
+    - cron: '5 3 * * *'
+
+# Cancel in-progress jobs when pushing to the same branch.
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+
+  test:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ 'ubuntu-latest' ]
+        cratedb-version: [ 'nightly' ]
+
+    services:
+      cratedb:
+        image: crate/crate:${{ matrix.cratedb-version }}
+        ports:
+          - 4200:4200
+          - 5432:5432
+        env:
+          CRATE_HEAP_SIZE: 4g
+
+    name: OS ${{ matrix.os }}
+    steps:
+
+      - name: Acquire sources
+        uses: actions/checkout@v6
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v7
+
+      - name: Install prerequisites
+        run: |
+          sudo apt install --yes unixodbc-dev wget
+
+      - name: Validate application/tinyetl
+        run: |
+          # TODO: Generalize invocation into `ngr` test runner.
+          cd application/tinyetl
+          sh test.sh
