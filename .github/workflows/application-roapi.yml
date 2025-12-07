@@ -1,0 +1,46 @@
+name: "ROAPI"
+
+on:
+  pull_request:
+    paths:
+    - '.github/workflows/application-roapi.yml'
+    - 'application/roapi/**'
+  push:
+    branches: [ main ]
+    paths:
+    - '.github/workflows/application-roapi.yml'
+    - 'application/roapi/**'
+
+  # Allow job to be triggered manually.
+  workflow_dispatch:
+
+  # Run job each night after CrateDB nightly has been published.
+  schedule:
+    - cron: '0 3 * * *'
+
+# Cancel in-progress jobs when pushing to the same branch.
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+
+  test:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ 'ubuntu-latest' ]
+
+    name: OS ${{ matrix.os }}
+    steps:
+
+      - name: Acquire sources
+        uses: actions/checkout@v6
+
+      - name: Validate application/roapi
+        run: |
+          # TODO: Generalize invocation into `ngr` test runner.
+          cd application/roapi
+          sh test.sh

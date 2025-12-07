@@ -1,0 +1,137 @@
+# Using ROAPI with CrateDB.
+# https://github.com/roapi/roapi
+# https://github.com/crate/crate
+
+name: cratedb-with-roapi
+
+services:
+
+  # ---------------
+  # Daemon services
+  # ---------------
+  cratedb:
+    image: docker.io/crate/crate:nightly
+    command: >
+      crate \
+        '-Cdiscovery.type=single-node' \
+        '-Cstats.enabled=true'
+    ports:
+      - 4200:4200
+      - 5432:5432
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--insecure", "http://localhost:4200"]
+      start_period: 3s
+      interval: 1.5s
+      retries: 30
+      timeout: 30s
+
+  roapi:
+    image: ghcr.io/roapi/roapi:latest
+    # Start ROAPI service for on-demand data registration.
+    # The `--table` parameter is currently obligatory and cannot be ignored for now.
+    command: |
+      --addr-http 0.0.0.0:8080 --addr-postgres 0.0.0.0:5432 --addr-flight-sql 0.0.0.0:32010
+      --table "uk_cities=/test_data/uk_cities_with_headers.csv"
+      --disable-read-only
+    ports:
+      - 8080:8080
+      - 5434:5432
+      - 32010:32010
+
+  # ----------------
+  # Utility programs
+  # ----------------
+  crash:
+    image: docker.io/crate/crate:nightly
+    command: |
+      crash --hosts "http://cratedb:4200"
+    deploy:
+      replicas: 0
+
+  # -----------------
+  # Operational tasks
+  # -----------------
+  roapi-register-data:
+    image: docker.io/westonsteimel/httpie:latest
+    entrypoint: /bin/sh -c
+    command:
+      - |
+        echo '[{"tableName": "uk_cities", "uri": "/test_data/uk_cities_with_headers.csv"}]' | \
+            http POST http://roapi:8080/api/table
+        
+        echo '[{"tableName": "spacex_launches", "uri": "/test_data/spacex_launches.json"}]' | \
+            http POST http://roapi:8080/api/table
+        
+        echo '[{"tableName": "blogs", "uri": "/test_data/blogs.parquet"}]' | \
+            http POST http://roapi:8080/api/table
+    depends_on:
+      roapi:
+        condition: service_started
+    deploy:
+      replicas: 0
+
+  roapi-query-data:
+    image: jbergknoff/postgresql-client:latest
+    entrypoint: /bin/sh -c
+    command:
+      - |
+        psql -P pager=off "postgresql://roapi:5432?sslmode=disable" <<SQL
+        SELECT * FROM uk_cities LIMIT 10;
+        SELECT * FROM spacex_launches LIMIT 1;
+        SELECT * FROM blogs LIMIT 1;
+        SQL
+    depends_on:
+      roapi:
+        condition: service_started
+    deploy:
+      replicas: 0
+
+  cratedb-register-data:
+    image: docker.io/crate/crate:nightly
+    entrypoint: /bin/bash -c
+    command:
+      - |
+        crash --hosts http://cratedb:4200 <<SQL
+
+          CREATE SERVER IF NOT EXISTS roapi
+          FOREIGN DATA WRAPPER jdbc
+          OPTIONS (url 'jdbc:postgresql://roapi:5432/');
+
+          CREATE FOREIGN TABLE IF NOT EXISTS
+          doc.uk_cities (city text, lat float, lng float)
+          SERVER roapi OPTIONS (schema_name 'public', table_name 'uk_cities');
+
+        SQL
+    depends_on:
+      roapi-register-data:
+        condition: service_completed_successfully
+    deploy:
+      replicas: 0
+
+  cratedb-query-data:
+    image: docker.io/crate/crate:nightly
+    entrypoint: /bin/bash -c
+    command:
+      - |
+        crash --hosts "http://cratedb:4200" <<SQL
+        SELECT * FROM doc.uk_cities;
+        SQL
+    deploy:
+      replicas: 0
+    depends_on:
+      cratedb-register-data:
+        condition: service_completed_successfully
+
+  # -------
+  # Bundler
+  # -------
+  # Wait for all defined services to be fully available by probing their health
+  # status, even when using `docker compose up --detach`.
+  # https://marcopeg.com/2019/docker-compose-healthcheck/
+  start-dependencies:
+    image: docker.io/dadarek/wait-for-dependencies
+    depends_on:
+      cratedb:
+        condition: service_healthy
+      roapi:
+        condition: service_started
