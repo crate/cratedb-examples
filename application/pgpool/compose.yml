@@ -1,0 +1,135 @@
+# Using Pgpool-II with CrateDB.
+
+# The miniature stack defines {Docker,Podman} services and tasks to spin
+# up CrateDB and Pgpool-II, and to query a CrateDB system table through
+# Pgpool's in-memory cache.
+
+# https://github.com/pgpool/pgpool2
+# https://github.com/crate/crate
+# https://github.com/crate/cratedb-examples/tree/main/application/pgpool
+
+---
+name: cratedb-with-pgpool
+
+services:
+
+  # ---------------
+  # Daemon services
+  # ---------------
+  cratedb:
+    image: docker.io/crate/crate:nightly
+    command: >
+      crate \
+        '-Cdiscovery.type=single-node' \
+        '-Cstats.enabled=true'
+    ports:
+      - 4200:4200
+      - 5432:5432
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--insecure", "http://localhost:4200"]
+      start_period: 3s
+      interval: 1.5s
+      retries: 30
+      timeout: 30s
+
+  pgpool:
+    image: docker.io/atscaleinc/pgpool:2025.9.2
+    ports:
+      - 5433:5432
+    volumes:
+      - ./pgpool.conf:/etc/pgpool2/pgpool.conf
+    environment:
+      PGPOOL_BACKEND_NODES: "0:cratedb:5432"
+      PGPOOL_ADMIN_USERNAME: "crate"
+      PGPOOL_ADMIN_PASSWORD: "crate"
+      PGPOOL_SR_CHECK_USER: "crate"
+      PGPOOL_SR_CHECK_PASSWORD: "crate"
+      PGPOOL_POSTGRES_USERNAME: "crate"
+      PGPOOL_POSTGRES_PASSWORD: "crate"
+    healthcheck:
+      test: ["CMD", "psql", "postgresql://crate:crate@localhost:5432", "-c", "SELECT 42"]
+      start_period: 3s
+      interval: 1.5s
+      retries: 30
+      timeout: 30s
+
+  # ----------------
+  # Utility programs
+  # ----------------
+  crash:
+    image: docker.io/crate/crate:nightly
+    command: |
+      crash --hosts "http://cratedb:4200"
+    deploy:
+      replicas: 0
+
+  # -----------------
+  # Operational tasks
+  # -----------------
+
+  # CrateDB lacks two functions which can easily be substituted using UDFs.
+  provision-functions:
+    image: docker.io/crate/crate:nightly
+    entrypoint: /bin/bash -c
+    command:
+      - |
+        crash --hosts "http://cratedb:4200" <<SQL
+
+        CREATE OR REPLACE FUNCTION pg_catalog.has_function_privilege(string, string, string)
+        RETURNS BOOLEAN
+        LANGUAGE JAVASCRIPT
+        AS 'function has_function_privilege(foo, bar, baz) { return true; }';
+
+        CREATE OR REPLACE FUNCTION pg_catalog.pg_is_in_recovery()
+        RETURNS BOOLEAN
+        LANGUAGE JAVASCRIPT
+        AS 'function pg_is_in_recovery() { return false; }';
+
+        SQL
+    deploy:
+      replicas: 0
+    depends_on:
+      cratedb:
+        condition: service_healthy
+
+  cratedb-query-data:
+    image: docker.io/materialize/psql
+    entrypoint: /bin/sh -c
+    command:
+      - |
+        psql "postgresql://crate:crate@cratedb:5432" <<SQL
+        SELECT region, mountain, height, coordinates FROM sys.summits ORDER BY height DESC LIMIT 10;
+        SQL
+    deploy:
+      replicas: 0
+    depends_on:
+      cratedb:
+        condition: service_healthy
+
+  pgpool-query-data:
+    image: docker.io/materialize/psql
+    entrypoint: /bin/sh -c
+    command:
+      - |
+        psql "postgresql://crate:crate@pgpool:5432" <<SQL
+        SELECT region, mountain, height, coordinates FROM sys.summits ORDER BY height DESC LIMIT 10;
+        SQL
+    deploy:
+      replicas: 0
+    depends_on:
+      pgpool:
+        condition: service_healthy
+
+  # -------
+  # Bundler
+  # -------
+  # Wait for all defined services to be fully available by probing their health
+  # status, even when using `docker compose up --detach`.
+  # https://marcopeg.com/2019/docker-compose-healthcheck/
+  start-dependencies:
+    image: docker.io/dadarek/wait-for-dependencies
+    depends_on:
+      cratedb:
+        condition: service_healthy
+      pgpool:
+        condition: service_healthy
