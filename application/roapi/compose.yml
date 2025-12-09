@@ -26,7 +26,12 @@ services:
       timeout: 30s
 
   roapi:
-    image: ghcr.io/roapi/roapi:latest
+
+    # Either use standard build, or run a custom build.
+    # image: ghcr.io/roapi/roapi:latest
+    build:
+      dockerfile: roapi.Dockerfile
+
     # Start ROAPI service for on-demand data registration.
     # The `--table` parameter is currently obligatory and cannot be ignored for now.
     command: |
