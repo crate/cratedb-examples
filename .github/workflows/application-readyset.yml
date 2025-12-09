@@ -1,0 +1,46 @@
+name: "Readyset"
+
+on:
+  pull_request:
+    paths:
+    - '.github/workflows/application-readyset.yml'
+    - 'application/readyset/**'
+  push:
+    branches: [ main ]
+    paths:
+    - '.github/workflows/application-readyset.yml'
+    - 'application/readyset/**'
+
+  # Allow job to be triggered manually.
+  workflow_dispatch:
+
+  # Run job each night after CrateDB nightly has been published.
+  schedule:
+    - cron: '0 3 * * *'
+
+# Cancel in-progress jobs when pushing to the same branch.
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+
+  test:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ 'ubuntu-latest' ]
+
+    name: OS ${{ matrix.os }}
+    steps:
+
+      - name: Acquire sources
+        uses: actions/checkout@v6
+
+      - name: Validate application/readyset
+        run: |
+          # TODO: Generalize invocation into `ngr` test runner.
+          cd application/readyset
+          sh test.sh

@@ -1,0 +1,106 @@
+# Using Readyset with CrateDB.
+# https://github.com/readysettech/readyset
+# https://github.com/crate/crate
+
+name: cratedb-with-readyset
+
+volumes:
+  readyset_cache:
+
+services:
+
+  # ---------------
+  # Daemon services
+  # ---------------
+  cratedb:
+    image: docker.io/crate/crate:nightly
+    command: >
+      crate \
+        '-Cdiscovery.type=single-node' \
+        '-Cstats.enabled=true'
+    ports:
+      - 4200:4200
+      - 5432:5432
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--insecure", "http://localhost:4200"]
+      start_period: 3s
+      interval: 1.5s
+      retries: 30
+      timeout: 30s
+
+  readyset:
+    image: docker.io/readysettech/readyset:latest
+    command: --verify-skip
+    ports:
+      - 5433:5432
+    environment:
+      UPSTREAM_DB_URL: "postgres://crate:crate@cratedb:5432/doc"
+      LISTEN_ADDRESS: "0.0.0.0:5432"
+      STORAGE_DIR: "/data/cache"
+    volumes:
+      - readyset_cache:/data/cache
+    healthcheck:
+      test: ["CMD", "psql", "postgresql://crate:crate@localhost:5432", "-c", "SELECT 42"]
+      start_period: 3s
+      interval: 1.5s
+      retries: 30
+      timeout: 30s
+    depends_on:
+      cratedb:
+        condition: service_healthy
+
+  # ----------------
+  # Utility programs
+  # ----------------
+  crash:
+    image: docker.io/crate/crate:nightly
+    command: |
+      crash --hosts "http://cratedb:4200"
+    deploy:
+      replicas: 0
+
+  # -----------------
+  # Operational tasks
+  # -----------------
+
+  cratedb-query-data:
+    image: docker.io/materialize/psql
+    entrypoint: /bin/sh -c
+    command:
+      - |
+        psql "postgresql://crate:crate@cratedb:5432" <<SQL
+        SELECT region, mountain, height, coordinates FROM sys.summits ORDER BY height DESC LIMIT 10;
+        SQL
+    deploy:
+      replicas: 0
+    depends_on:
+      cratedb:
+        condition: service_healthy
+
+  readyset-query-data:
+    image: docker.io/materialize/psql
+    entrypoint: /bin/sh -c
+    command:
+      - |
+        psql "postgresql://crate:crate@readyset:5432" <<SQL
+        SELECT region, mountain, height, coordinates FROM sys.summits ORDER BY height DESC LIMIT 10;
+        SQL
+    deploy:
+      replicas: 0
+    depends_on:
+      readyset:
+        condition: service_healthy
+
+  # -------
+  # Bundler
+  # -------
+  # Wait for all defined services to be fully available by probing their health
+  # status, even when using `docker compose up --detach`.
+  # https://marcopeg.com/2019/docker-compose-healthcheck/
+  start-dependencies:
+    image: docker.io/dadarek/wait-for-dependencies
+    depends_on:
+      cratedb:
+        condition: service_healthy
+      readyset:
+        condition: service_healthy
