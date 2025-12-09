@@ -7,7 +7,7 @@ services:
   # Metabase
   # https://www.metabase.com/docs/latest/installation-and-operation/running-metabase-on-docker#example-docker-compose-yaml-file
   metabase:
-    image: metabase/metabase:v0.48.3
+    image: metabase/metabase:v0.57.5.7
     container_name: metabase
     hostname: metabase
     volumes:
