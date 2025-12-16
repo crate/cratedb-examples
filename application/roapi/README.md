@@ -30,6 +30,6 @@ disposal, but currently the prominent goal is just a humble exit code 0.
 
 ## See also
 
-- https://cratedb.com/docs/guide/feature/fdw/
-- https://cratedb.com/docs/crate/reference/en/latest/admin/fdw.html
-- https://cratedb.com/blog/integrate-postgresql-with-cratedb-using-foreign-data-wrappers
+- [CrateDB Guide: Foreign Data Wrappers](https://cratedb.com/docs/guide/feature/fdw/)
+- [CrateDB Admin Documentation: FDW](https://cratedb.com/docs/crate/reference/en/latest/admin/fdw.html)
+- [Blog: Integrate PostgreSQL with CrateDB using Foreign Data Wrappers](https://cratedb.com/blog/integrate-postgresql-with-cratedb-using-foreign-data-wrappers)
