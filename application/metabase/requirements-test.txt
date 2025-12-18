@@ -1,2 +1,2 @@
 pytest<10
-pytest-docker-compose-v2<0.2
+pytest-docker-compose-v2<0.3
