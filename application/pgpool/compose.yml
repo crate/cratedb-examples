@@ -33,7 +33,7 @@ services:
       timeout: 30s
 
   pgpool:
-    image: docker.io/atscaleinc/pgpool:2025.9.2
+    image: docker.io/atscaleinc/pgpool:2025.10.0
     ports:
       - 5433:5432
     volumes:
