@@ -11,7 +11,7 @@
 # https://github.com/crate/cratedb-examples/tree/main/application/pgpool
 
 # Start services: CrateDB and Pgpool-II.
-docker compose up --detach
+docker compose up --detach --wait
 
 # Polyfill a missing function in CrateDB.
 # BACKEND Error: "Unknown function: pg_catalog.has_function_privilege('crate', 'pgpool_regclass(cstring)', 'execute')"
