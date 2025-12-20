@@ -160,6 +160,11 @@ updates:
     schedule:
       interval: "daily"
 
+  - directory: "/application/pgpool"
+    package-ecosystem: "docker-compose"
+    schedule:
+      interval: "daily"
+
   - directory: "/application/records"
     package-ecosystem: "pip"
     schedule:
