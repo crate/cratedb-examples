@@ -38,3 +38,17 @@ services:
       test: curl --max-time 25 http://localhost:4200 || exit 1
       interval: 30s
       timeout: 30s
+
+  # Wait for all defined services to be fully available by probing their health
+  # status, even when using `docker compose up --detach`.
+  # https://marcopeg.com/2019/docker-compose-healthcheck/
+  # This is needed because `pytest-docker-compose-v2` does not support
+  # `docker compose up --detach` yet.
+  # https://github.com/radusuciu/pytest-docker-compose-v2/issues/6
+  wait:
+    image: dadarek/wait-for-dependencies
+    depends_on:
+      metabase:
+        condition: service_healthy
+      cratedb:
+        condition: service_healthy
