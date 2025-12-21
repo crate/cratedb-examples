@@ -128,23 +128,6 @@ services:
       retries: 60
 
 
-  # -------
-  # Bundler
-  # -------
-  # Wait for all defined services to be fully available by probing their health
-  # status, even when using `docker compose up --detach`.
-  # https://marcopeg.com/2019/docker-compose-healthcheck/
-  start-dependencies:
-    image: dadarek/wait-for-dependencies
-    depends_on:
-      kafka-broker:
-        condition: service_healthy
-      flink-jobmanager:
-        condition: service_healthy
-      cratedb:
-        condition: service_healthy
-
-
   # -----
   # Tasks
   # -----

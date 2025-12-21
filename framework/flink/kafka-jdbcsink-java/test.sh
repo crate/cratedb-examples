@@ -23,7 +23,7 @@ set -e
 
 function start-services() {
   title "Starting services"
-  docker compose up --detach
+  docker compose up --detach --wait
 }
 
 function stop-services() {

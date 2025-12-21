@@ -126,17 +126,3 @@ services:
     depends_on:
       cratedb-register-data:
         condition: service_completed_successfully
-
-  # -------
-  # Bundler
-  # -------
-  # Wait for all defined services to be fully available by probing their health
-  # status, even when using `docker compose up --detach`.
-  # https://marcopeg.com/2019/docker-compose-healthcheck/
-  start-dependencies:
-    image: docker.io/dadarek/wait-for-dependencies
-    depends_on:
-      cratedb:
-        condition: service_healthy
-      roapi:
-        condition: service_started

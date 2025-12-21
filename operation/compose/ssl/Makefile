@@ -3,7 +3,7 @@
 .PHONY: test
 test: ## Run the integration tests.
 	@\
-	docker compose up --detach
+	docker compose up --detach --wait
 	sh client_crash.sh
 	sh client_pgsql.sh
 	uv run client_dbapi.py
