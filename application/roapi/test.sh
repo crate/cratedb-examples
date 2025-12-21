@@ -9,7 +9,7 @@
 # JDBC foreign data wrapper, then queries them.
 
 # Start services: CrateDB and ROAPI.
-docker compose up --build --detach
+docker compose up --build --detach --wait
 
 # Register data files with ROAPI.
 docker compose run --rm roapi-register-data

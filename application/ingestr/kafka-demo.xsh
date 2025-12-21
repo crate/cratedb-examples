@@ -33,7 +33,7 @@ class Infrastructure:
 
     def start(self):
         title "Starting services"
-        result = ![ docker compose --file $COMPOSE_FILE up --detach ]
+        result = ![ docker compose --file $COMPOSE_FILE up --detach --wait ]
         if result.returncode != 0:
             echo "ERROR: Failed to start services"
             exit 1

@@ -20,12 +20,3 @@ services:
       interval: 1.5s
       retries: 30
       timeout: 30s
-
-  # Wait for the service being available, even when
-  # invoked through `docker compose up --detach`.
-  # https://marcopeg.com/2019/docker-compose-healthcheck/
-  wait-for-cratedb:
-    image: dadarek/wait-for-dependencies
-    depends_on:
-      cratedb:
-        condition: service_healthy
