@@ -99,6 +99,12 @@ services:
         taskmanager.numberOfTaskSlots: 2
     networks:
       - scada-demo
+    healthcheck:
+      test: ["CMD-SHELL", "ps -ef | grep org.apache.flink.runtime.taskexecutor.TaskManagerRunner | grep -q -v grep || exit 1"]
+      start_period: 3s
+      interval: 1s
+      timeout: 10s
+      retries: 60
 
 
   # -------
