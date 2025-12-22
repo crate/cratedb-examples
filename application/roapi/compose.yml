@@ -42,6 +42,12 @@ services:
       - 8080:8080
       - 5434:5432
       - 32010:32010
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
+      start_period: 3s
+      interval: 1.5s
+      retries: 30
+      timeout: 30s
 
   # ----------------
   # Utility programs

@@ -28,7 +28,7 @@ FROM debian:bookworm-slim
 LABEL org.opencontainers.image.source=https://github.com/roapi/roapi
 
 RUN apt-get update \
-    && apt-get install -y libssl-dev ca-certificates \
+    && apt-get install -y libssl-dev ca-certificates curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Use `roapi` program from custom build.
