@@ -19,7 +19,6 @@ conn <- dbConnect(drv,
                   sslmode = "disable",
                   user = "crate",
                   password = "crate",
-                  dbname = "doc",
                   )
 on.exit(DBI::dbDisconnect(conn), add = TRUE)
 
