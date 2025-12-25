@@ -18,7 +18,6 @@ conn <- dbConnect(drv,
                  port = 5432,
                  user = "crate",
                  password = "crate",
-                 dbname = "doc",
                  )
 on.exit(DBI::dbDisconnect(conn), add = TRUE)
 
