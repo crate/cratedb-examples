@@ -1,5 +1,5 @@
 # Demo for loading data from Elasticsearch to CrateDB.
-# Accompanies `elasticsearch-demo.xsh` and `.env` files.
+# Invoked from the `elasticsearch-demo.sh` file.
 
 services:
 
@@ -7,7 +7,7 @@ services:
   # Elasticsearch
   # -------------
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.19.2
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.19.8
     ports:
       - "9200:9200"
     environment:
@@ -16,7 +16,7 @@ services:
       discovery.type: single-node
       xpack.security.enabled: false
     healthcheck:
-      test: ["CMD-SHELL", "curl", "--fail", "http://localhost:9200"]
+      test: ["CMD-SHELL", "curl --fail http://localhost:9200"]
       start_period: 3s
       interval: 0.5s
       timeout: 30s
@@ -37,7 +37,7 @@ services:
       "-Cdiscovery.type=single-node",
     ]
     healthcheck:
-      test: [ "CMD-SHELL", "curl", "--fail", "http://localhost:${CRATEDB_HTTP_PORT}" ]
+      test: [ "CMD-SHELL", "curl --fail http://localhost:${CRATEDB_HTTP_PORT}" ]
       start_period: 3s
       interval: 0.5s
       timeout: 30s
@@ -57,7 +57,7 @@ services:
 
   # Import data from CSV into Elasticsearch.
   es-import:
-    image: ghcr.io/bruin-data/ingestr:v0.14.115
+    image: ghcr.io/bruin-data/ingestr:v0.14.116
     entrypoint: ""
     command: >
       sh -c '
@@ -75,7 +75,7 @@ services:
 
   # Import data from Elasticsearch into CrateDB.
   cratedb-import:
-    image: ghcr.io/bruin-data/ingestr:v0.14.115
+    image: ghcr.io/bruin-data/ingestr:v0.14.116
     entrypoint: ""
     command: >
       sh -c '
