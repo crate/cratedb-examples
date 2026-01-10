@@ -21,5 +21,11 @@ function test_kafka() {
   xonsh kafka-demo.xsh
 }
 
+# Invoke Elasticsearch tests.
+function test_elasticsearch() {
+  sh elasticsearch-demo.sh
+}
+
 setup
 test_kafka
+test_elasticsearch

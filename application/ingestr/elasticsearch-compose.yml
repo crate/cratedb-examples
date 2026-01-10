@@ -1,0 +1,98 @@
+# Demo for loading data from Elasticsearch to CrateDB.
+# Accompanies `elasticsearch-demo.xsh` and `.env` files.
+
+services:
+
+  # -------------
+  # Elasticsearch
+  # -------------
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.19.2
+    ports:
+      - "9200:9200"
+    environment:
+      node.name: es01
+      cluster.name: example
+      discovery.type: single-node
+      xpack.security.enabled: false
+    healthcheck:
+      test: ["CMD-SHELL", "curl", "--fail", "http://localhost:9200"]
+      start_period: 3s
+      interval: 0.5s
+      timeout: 30s
+      retries: 60
+
+  # -------
+  # CrateDB
+  # -------
+  cratedb:
+    image: docker.io/crate:6.1.2
+    ports:
+      - "${CRATEDB_HTTP_PORT}:${CRATEDB_HTTP_PORT}"
+      - "${CRATEDB_POSTGRESQL_PORT}:${CRATEDB_POSTGRESQL_PORT}"
+    environment:
+      CRATE_HEAP_SIZE: 4g
+    command: [
+      "crate",
+      "-Cdiscovery.type=single-node",
+    ]
+    healthcheck:
+      test: [ "CMD-SHELL", "curl", "--fail", "http://localhost:${CRATEDB_HTTP_PORT}" ]
+      start_period: 3s
+      interval: 0.5s
+      timeout: 30s
+      retries: 60
+
+
+  # -----
+  # Tasks
+  # -----
+
+  # Create Elasticsearch index.
+  es-create-index:
+    image: docker.io/alpine/httpie
+    command: PUT http://elasticsearch:9200/example
+    deploy:
+      replicas: 0
+
+  # Import data from CSV into Elasticsearch.
+  es-import:
+    image: ghcr.io/bruin-data/ingestr:v0.14.115
+    entrypoint: ""
+    command: >
+      sh -c '
+        echo Downloading CSV &&
+        curl --silent -O https://cdn.crate.io/downloads/datasets/cratedb-datasets/academy/chicago-data/taxi_details.csv &&
+        echo Importing CSV &&
+        ingestr ingest --yes \
+          --source-uri "csv://taxi_details.csv" \
+          --source-table "data" \
+          --dest-uri "elasticsearch://elasticsearch:9200?secure=false" \
+          --dest-table "example"
+      '
+    deploy:
+      replicas: 0
+
+  # Import data from Elasticsearch into CrateDB.
+  cratedb-import:
+    image: ghcr.io/bruin-data/ingestr:v0.14.115
+    entrypoint: ""
+    command: >
+      sh -c '
+        ingestr ingest --yes \
+          --source-uri "elasticsearch://elasticsearch:9200?secure=false" \
+          --source-table "example" \
+          --dest-uri "cratedb://crate:crate@cratedb:5432" \
+          --dest-table "doc.example"
+      '
+    deploy:
+      replicas: 0
+
+  # Query data in CrateDB.
+  cratedb-query:
+    image: docker.io/crate:6.1.2
+    entrypoint: ""
+    command: >
+      crash --hosts cratedb -c "SELECT * FROM doc.example LIMIT 10"
+    deploy:
+      replicas: 0
