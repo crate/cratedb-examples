@@ -34,15 +34,6 @@ jobs:
         os: [ 'ubuntu-latest' ]
         cratedb-version: [ 'nightly' ]
 
-    services:
-      cratedb:
-        image: crate/crate:${{ matrix.cratedb-version }}
-        ports:
-          - 4200:4200
-          - 5432:5432
-        env:
-          CRATE_HEAP_SIZE: 4g
-
     name: OS ${{ matrix.os }}
     steps:
 

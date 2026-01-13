@@ -1,7 +1,5 @@
-#!/bin/sh
-set -e
+#!/usr/bin/env sh
 
-sh install.sh
-sh import.sh
-sh query.sh
-sh verify.sh
+set -eu
+
+sh files-test.sh
