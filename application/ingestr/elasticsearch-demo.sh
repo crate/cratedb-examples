@@ -19,6 +19,9 @@ docker compose --file elasticsearch-compose.yml run cratedb-import
 echo "Querying imported data in CrateDB"
 docker compose --file elasticsearch-compose.yml run cratedb-query
 
+echo "Verify amount of imported data in CrateDB"
+docker compose --file elasticsearch-compose.yml run cratedb-verify
+
 echo "Shutting down services"
 docker compose --file elasticsearch-compose.yml down
 

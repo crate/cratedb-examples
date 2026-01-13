@@ -96,3 +96,18 @@ services:
       crash --hosts cratedb -c "SELECT * FROM doc.example LIMIT 10"
     deploy:
       replicas: 0
+
+  # Verify data in CrateDB.
+  cratedb-verify:
+    build:
+      context: .
+      dockerfile_inline: |
+        FROM python:3.14-slim-trixie
+        RUN apt-get update && apt-get install --yes jq && pip install crash
+    entrypoint: ["/bin/sh", "-c"]
+    command: >
+      """
+      test $(crash --hosts cratedb -c 'SELECT count(*) FROM doc.example' --format=json | jq '.[0].count') -eq 2655
+      """
+    deploy:
+      replicas: 0
