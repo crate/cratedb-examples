@@ -1,0 +1,142 @@
+# Demo for loading files into CrateDB using TinyETL.
+# Invoked from the `test.sh` file.
+
+services:
+
+  # -------
+  # CrateDB
+  # -------
+  cratedb:
+    image: docker.io/crate/crate:nightly
+    ports:
+      - "4200:4200"
+      - "5432:5432"
+    environment:
+      CRATE_HEAP_SIZE: 4g
+    command: [
+      "crate",
+      "-Cdiscovery.type=single-node",
+    ]
+    healthcheck:
+      test: [ "CMD-SHELL", "curl --fail http://localhost:4200" ]
+      start_period: 3s
+      interval: 0.5s
+      timeout: 30s
+      retries: 60
+
+  # -----
+  # Tasks
+  # -----
+
+  # Import files into CrateDB using TinyETL.
+  cratedb-import:
+    build:
+      context: .
+      dockerfile_inline: |
+        FROM docker.io/rust:slim-trixie
+        RUN apt-get update && apt-get install --yes jq g++ libssl-dev pkg-config unixodbc-dev wget
+        RUN cargo install --git https://github.com/alrpal/TinyETL.git --branch master -j default
+    entrypoint: ["/bin/sh", "-c"]
+    command: >
+      """
+      set -e
+      
+      tinyetl \\
+        "https://github.com/alrpal/TinyETL/raw/refs/heads/master/examples/10_csv_to_avro/output.avro" \\
+        "postgresql://crate:crate@cratedb/testdrive#avro" &&
+
+      tinyetl \\
+        "https://cdn.crate.io/downloads/datasets/cratedb-datasets/timeseries/nab-machine-failure.csv" \\
+        "postgresql://crate:crate@cratedb/testdrive#nab-machine-failure" &&
+
+      tinyetl \\
+        "https://cdn.crate.io/downloads/datasets/cratedb-datasets/machine-learning/fulltext/twitter_support_microsoft.csv" \\
+        "postgresql://crate:crate@cratedb/testdrive#tweets" &&
+
+      wget "https://github.com/alrpal/TinyETL/raw/refs/heads/master/examples/15_csv_to_duckdb/products.duckdb" &&
+      tinyetl \\
+        "products.duckdb#products" \\
+        "postgresql://crate:crate@cratedb/testdrive#duckdb" &&
+
+      tinyetl \\
+        "https://cdn.crate.io/downloads/datasets/cratedb-datasets/misc/cities.parquet" \\
+        "postgresql://crate:crate@cratedb/testdrive#cities" &&
+
+      tinyetl \\
+        "https://cdn.crate.io/downloads/datasets/cratedb-datasets/timeseries/yc.2019.07-tiny.parquet" \\
+        "postgresql://crate:crate@cratedb/testdrive#yellowcab"
+
+      """
+    deploy:
+      replicas: 0
+
+  # Export data from CrateDB using TinyETL.
+  cratedb-export:
+    build:
+      context: .
+      dockerfile_inline: |
+        FROM docker.io/rust:slim-trixie
+        RUN apt-get update && apt-get install --yes jq g++ libssl-dev pkg-config unixodbc-dev wget
+        RUN cargo install --git https://github.com/alrpal/TinyETL.git --branch master -j default
+    entrypoint: ["/bin/sh", "-c"]
+    command: >
+      """
+      set -e
+
+      tinyetl --truncate "postgresql://crate:crate@cratedb/testdrive#avro" avro.duckdb
+
+      """
+    deploy:
+      replicas: 0
+
+  # Reset data in CrateDB.
+  cratedb-reset:
+    image: docker.io/crate:6.1.2
+    entrypoint: ["/bin/sh", "-c"]
+    command: >
+      """
+      crash --hosts cratedb -c 'DROP TABLE IF EXISTS testdrive.avro' &&
+      crash --hosts cratedb -c 'DROP TABLE IF EXISTS testdrive.cities' &&
+      crash --hosts cratedb -c 'DROP TABLE IF EXISTS testdrive.duckdb' &&
+      crash --hosts cratedb -c 'DROP TABLE IF EXISTS testdrive.\"nab-machine-failure\"' &&
+      crash --hosts cratedb -c 'DROP TABLE IF EXISTS testdrive.tweets' &&
+      crash --hosts cratedb -c 'DROP TABLE IF EXISTS testdrive.yellowcab'
+      """
+    deploy:
+      replicas: 0
+
+  # Query data in CrateDB.
+  cratedb-query:
+    image: docker.io/crate:6.1.2
+    entrypoint: ["/bin/sh", "-c"]
+    command: >
+      """
+      crash --hosts cratedb -c 'SELECT * FROM testdrive.avro LIMIT 5' &&
+      crash --hosts cratedb -c 'SELECT * FROM testdrive.cities LIMIT 5' &&
+      crash --hosts cratedb -c 'SELECT * FROM testdrive.duckdb LIMIT 5' &&
+      crash --hosts cratedb -c 'SELECT * FROM testdrive.\"nab-machine-failure\" LIMIT 5' &&
+      crash --hosts cratedb -c 'SELECT * FROM testdrive.tweets LIMIT 5' &&
+      crash --hosts cratedb -c 'SELECT * FROM testdrive.yellowcab LIMIT 5'
+      """
+    deploy:
+      replicas: 0
+
+  # Verify data in CrateDB.
+  cratedb-verify:
+    build:
+      context: .
+      dockerfile_inline: |
+        FROM python:3.14-slim-trixie
+        RUN apt-get update && apt-get install --yes jq && pip install crash
+    entrypoint: ["/bin/sh", "-c"]
+    command: >
+      """
+      test $(crash --hosts cratedb -c 'SELECT count(*) FROM testdrive.avro' --format=json | jq '.[0].count') -eq 5 &&
+      test $(crash --hosts cratedb -c 'SELECT count(*) FROM testdrive.cities' --format=json | jq '.[0].count') -eq 3 &&
+      test $(crash --hosts cratedb -c 'SELECT count(*) FROM testdrive.duckdb' --format=json | jq '.[0].count') -eq 6 &&
+      test $(crash --hosts cratedb -c 'SELECT count(*) FROM testdrive.\"nab-machine-failure\"' --format=json | jq '.[0].count') -eq 22695 &&
+      test $(crash --hosts cratedb -c 'SELECT count(*) FROM testdrive.tweets' --format=json | jq '.[0].count') -eq 142 &&
+      test $(crash --hosts cratedb -c 'SELECT count(*) FROM testdrive.yellowcab' --format=json | jq '.[0].count') -eq 20
+      """
+    deploy:
+      replicas: 0
