@@ -25,7 +25,7 @@ plugins:
     config:
       start_date: '2023-12-01'
       repositories:
-      - crate-workbench/cratedb-toolkit
+      - crate/cratedb-toolkit
 
   # Configure data sinks.
   # In Singer jargon, it is a "loader", wrapped into a "target".
@@ -39,9 +39,9 @@ plugins:
     namespace: cratedb
     variant: cratedb
     # Acquire from PyPI.
-    # pip_url: meltano-target-cratedb
+    pip_url: meltano-target-cratedb
     # Acquire from GitHub.
-    pip_url: git+https://github.com/crate-workbench/meltano-target-cratedb.git@preview
+    # pip_url: git+https://github.com/crate/meltano-target-cratedb.git@preview
 
     # Note: Configure your database server and credentials here.
     config:
