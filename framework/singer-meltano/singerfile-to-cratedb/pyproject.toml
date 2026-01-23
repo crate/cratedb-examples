@@ -17,4 +17,8 @@ test = [
   # Invoke pipeline, loading data into database, for real.
   { cmd = "meltano run tap-singer-jsonl target-cratedb" },
 
+  # Verify number of imported records.
+  { shell = "test $(crash -c 'SELECT count(*) FROM melty.continents' --format=json | jq '.[0].count') -eq 7" },
+  { shell = "test $(crash -c 'SELECT count(*) FROM melty.countries' --format=json | jq '.[0].count') -eq 250" },
+
 ]
