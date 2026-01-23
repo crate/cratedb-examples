@@ -57,7 +57,7 @@ Enjoy the release notes.
 SELECT repo, tag_name, body FROM melty.releases ORDER BY tag_name DESC;
 ```
 
-![image](https://github.com/crate-workbench/cratedb-toolkit/assets/453543/ac37c9cc-8e42-4c7c-84aa-64498bf48f4d)
+![image](https://github.com/crate/cratedb-toolkit/assets/453543/ac37c9cc-8e42-4c7c-84aa-64498bf48f4d)
 
 ## Troubleshooting
 
@@ -77,6 +77,6 @@ pip_url: --editable=/path/to/sources/meltano-target-cratedb
 
 [GitHub Developer Settings » Tokens]: https://github.com/settings/tokens
 [Meltano Getting Started Tutorial]: https://docs.meltano.com/getting-started/part1
-[meltano-target-cratedb]: https://github.com/crate-workbench/meltano-target-cratedb
+[meltano-target-cratedb]: https://github.com/crate/meltano-target-cratedb
 [tap-github]: https://hub.meltano.com/extractors/tap-github/
 [target-jsonl]: https://hub.meltano.com/loaders/target-jsonl/

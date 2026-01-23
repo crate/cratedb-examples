@@ -42,4 +42,4 @@ poe check
 
 [CrateDB]: https://cratedb.com/product
 [Meltano]: https://meltano.com/
-[meltano-target-cratedb]: https://github.com/crate-workbench/meltano-target-cratedb
+[meltano-target-cratedb]: https://github.com/crate/meltano-target-cratedb

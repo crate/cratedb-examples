@@ -48,7 +48,7 @@ Enjoy the list of countries.
 crash --command 'SELECT "code", "name", "capital", "emoji", "languages[1]" FROM "melty"."countries" ORDER BY "name" LIMIT 42;'
 ```
 
-![image](https://github.com/crate-workbench/meltano-target-cratedb/assets/453543/fa7076cc-267e-446c-a4f3-aa1283778ace)
+![image](https://github.com/crate/meltano-target-cratedb/assets/453543/fa7076cc-267e-446c-a4f3-aa1283778ace)
 
 
 ## Development
@@ -59,5 +59,5 @@ pip_url: --editable=/path/to/sources/meltano-target-cratedb
 ```
 
 
-[meltano-target-cratedb]: https://github.com/crate-workbench/meltano-target-cratedb
+[meltano-target-cratedb]: https://github.com/crate/meltano-target-cratedb
 [tap-singer-jsonl]: https://github.com/kgpayne/tap-singer-jsonl
