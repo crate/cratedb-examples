@@ -60,4 +60,4 @@ pip_url: --editable=/path/to/sources/meltano-target-cratedb
 
 
 [meltano-target-cratedb]: https://github.com/crate/meltano-target-cratedb
-[tap-singer-jsonl]: https://github.com/kgpayne/tap-singer-jsonl
+[tap-singer-jsonl]: https://github.com/singer-contrib/tap-singer-jsonl

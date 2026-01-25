@@ -44,10 +44,15 @@ jobs:
 
     services:
       cratedb:
-        image: crate/crate:nightly
+        image: crate/crate:${{ matrix.cratedb-version }}
         ports:
           - 4200:4200
           - 5432:5432
+        options: >-
+          --health-cmd "curl -f http://localhost:4200/ || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
 
     steps:
 

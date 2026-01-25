@@ -214,7 +214,7 @@ format = [
   # Configure Ruff not to auto-fix a few items that are useful in workbench mode.
   # e.g.: unused imports (F401), unused variables (F841), `print` statements (T201), commented-out code (ERA001)
   { cmd = "ruff format" },
-  { cmd = "ruff check --fix --ignore=ERA --ignore=F401 --ignore=F841 --ignore=T20 --ignore=ERA001" },
+  { cmd = "ruff check --fix --ignore=ERA --ignore=F401 --ignore=F841 --ignore=T20" },
 ]
 
 lint = [
