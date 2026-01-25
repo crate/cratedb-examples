@@ -14,7 +14,7 @@ for reading and writing data from/to CrateDB.
 
 ## Prerequisites
 
-Before running an examples within the subdirectories, make sure to install
+Before running the examples within the subdirectories, make sure to install
 Meltano and its dependencies.
 
 ```shell

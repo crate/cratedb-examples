@@ -2,8 +2,9 @@
 
 ## About
 
-Acquire repository metadata from GitHub API, and insert into CrateDB database
-tables, using [meltano-target-cratedb].
+Acquire repository metadata from GitHub API using [tap-github],
+and store into JSONL files using [target-jsonl] and CrateDB data
+warehouses using [meltano-target-cratedb].
 
 It follows the canonical example demonstrated at the [Meltano Getting Started Tutorial].
 
@@ -19,7 +20,7 @@ environment variable, either interactively, or by creating a dotenv
 configuration file `.env`.
 
 ```shell
-TAP_GITHUB_AUTH_TOKEN='ghp_hmQR3XTFWkfIcuyjRTBuVrRt6mnL1j2mMPT8'
+TAP_GITHUB_AUTH_TOKEN='ghp_testdrivekfIcuyjRTBuVrRt6mntestdrive'
 ```
 
 Then, in `meltano.yml`, identify the `tap-github` section in `plugins.extractors`,
