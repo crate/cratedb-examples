@@ -6,11 +6,8 @@ for reading and writing data from/to CrateDB.
 
 ## What's inside
 
-- `singerfile-to-cratedb`: Acquire data from Singer File, and load it into
+- `file-to-cratedb`: Acquire data from Singer File, and load it into
   CrateDB database table.
-
-- `github-to-cratedb`: Acquire repository metadata from GitHub API, and load
-  it separated per entity into 32 CrateDB database tables.
 
 ## Prerequisites
 
@@ -29,8 +26,8 @@ Then, explore the individual Meltano projects, either invoke them from within
 their directories, or by using the `--cwd` option from the root folder.
 
 ```shell
-meltano --cwd github-to-cratedb install
-meltano --cwd github-to-cratedb run tap-github target-cratedb
+meltano --cwd file-to-cratedb install
+meltano --cwd file-to-cratedb run tap-singer-jsonl target-cratedb
 ```
 
 ## Software Tests
