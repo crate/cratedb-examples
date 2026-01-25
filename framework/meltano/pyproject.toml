@@ -22,5 +22,5 @@ lint = [
 
 test = [
   { cmd = "poe --root github-to-cratedb test" },
-  { cmd = "poe --root singerfile-to-cratedb test" },
+  { cmd = "poe --root file-to-cratedb test" },
 ]
