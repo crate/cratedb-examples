@@ -70,4 +70,4 @@ jobs:
 
       - name: Validate framework/meltano
         run: |
-          uv run --with='poethepoet<0.38' --with=pueblo ngr test framework/meltano
+          uv run --with=pueblo ngr test framework/meltano
