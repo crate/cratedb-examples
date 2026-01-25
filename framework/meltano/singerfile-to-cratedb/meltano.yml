@@ -15,8 +15,7 @@ environments:
 
 plugins:
 
-  # Configure data source.
-  # In Singer jargon, it is an "extractor", wrapped into a "tap".
+  # Configure data source (Singer Tap / Meltano Extractor).
   extractors:
 
   - name: tap-singer-jsonl
@@ -30,8 +29,7 @@ plugins:
         paths:
           - "tap_countries.singer"
 
-  # Configure data sinks.
-  # In Singer jargon, it is a "loader", wrapped into a "target".
+  # Configure data sinks (Singer Target / Meltano Loader).
   loaders:
 
   - name: target-jsonl
