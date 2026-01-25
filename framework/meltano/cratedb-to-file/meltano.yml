@@ -1,0 +1,115 @@
+# A Meltano project is just a directory on your filesystem containing text-based files.
+# At a minimum, a Meltano project must contain a project file named `meltano.yml`,
+# which contains your project configuration, and tells Meltano that a particular
+# directory is a Meltano project.
+#
+# A Meltano project defines the elements of a data processing pipeline, and can
+# include both configuration and code. A pipeline is a classic construct to
+# describe a data mangling process from A (source) to B (sink). In Singer/Meltano
+# jargon, those elements are named differently, but you will get over it ;].
+#
+# Legend:
+# - Data Source: Singer Tap, Meltano Extractor
+# - Data Sink:   Singer Target, Meltano Loader
+---
+version: 1
+default_environment: dev
+send_anonymous_usage_stats: false
+project_id: da405837-da1d-48c8-b7b1-4fb2e5e60f80
+
+environments:
+- name: dev
+- name: staging
+- name: prod
+
+plugins:
+
+  # Configure data sources (Singer Tap / Meltano Extractor).
+  extractors:
+
+  - name: tap-cratedb
+    namespace: cratedb
+    variant: cratedb
+
+    # Acquire package from PyPI.
+    pip_url: meltano-tap-cratedb
+
+    # Acquire package from GitHub.
+    # pip_url: git+https://github.com/crate/meltano-tap-cratedb.git@make-it-work
+
+    # Until the tap is published on Meltano Hub, this needs to be defined here.
+    # Otherwise, automatic reflection will not work, and the `select` attribute
+    # is not honoured. See also `meltano select tap-cratedb --list`.
+    # Selecting streams within the Meltano project definition is a feature implemented
+    # on behalf of the Meltano package, within `meltano.core.select_service`. It does
+    # not exist in the Singer SDK.
+    capabilities:
+    - state
+    - catalog
+    - discover
+
+    # Configure database server and credentials.
+    config:
+      sqlalchemy_url: crate://crate@localhost/
+
+    # Configure selected streams / database tables.
+    select:
+
+      # Use all columns from `sys.summits`.
+      - "sys-summits.*"
+
+      # Omit `sys.summits.coordinates`, because the
+      # geospatial data type is not supported yet.
+      # TODO: Update software components and validate again.
+      - "!sys-summits.coordinates"
+
+      # Evaluate selecting other streams.
+      #- "*"
+      #- "sys-jobs.*"
+      #- "!sys-jobs.node"
+      #- "!sys-operations.node"
+
+  # Configure data sinks (Singer Target / Meltano Loader).
+  loaders:
+
+  # https://github.com/MeltanoLabs/target-csv
+  - name: target-csv
+    variant: meltanolabs
+    config:
+      output_path_prefix: ./output/csv/
+
+  # Receive Singer messages and write to JSONL formatted files.
+  # https://hub.meltano.com/loaders/target-jsonl
+  - name: target-jsonl
+    variant: andyh1203
+    pip_url: target-jsonl
+    config:
+      destination_path: ./output/jsonl-txt
+
+  # Receive Singer messages and write to JSONL formatted and g-zipped files.
+  # https://hub.meltano.com/loaders/target-singer-jsonl
+  #
+  # Supports local filesystem and S3 destinations.
+  # The schema is to use folder/key per stream using the stream name and a
+  # timestamp for each file.
+  # local: <folder>/<stream name>/<stream name>-<timestamp>.singer.gz
+  # s3:    s3://<bucket>/<prefix>/<stream name>/<stream name>-<timestamp>.singer.gz
+  - name: target-singer-jsonl
+    variant: kgpayne
+    pip_url: git+https://github.com/kgpayne/target-singer-jsonl
+    config:
+      add_record_metadata: false
+      local:
+        folder: ./output/jsonl-gz
+
+  # Receive Singer messages and write to JSONL formatted files.
+  # https://github.com/MeltanoLabs/target-jsonl-blob
+  #
+  # Supports local filesystem, S3, Azure, and GCS.
+  # It is implemented in Go, and needs a customized installation.
+  - name: target-jsonl-blob
+    variant: meltanolabs
+    namespace: target_jsonl_blob
+    executable: ./target-jsonl-blob
+    config:
+      bucket: file://./output/my-bucket
