@@ -1,4 +1,4 @@
-# Meltano Singer File -> CrateDB example
+# Use Meltano to import files into CrateDB
 
 ## About
 

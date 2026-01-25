@@ -1,2 +1,5 @@
 .meltano
+*.json
+*.singer
 output
+plugins

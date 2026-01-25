@@ -1,6 +1,14 @@
 [tool.poe.tasks]
 
 test = [
+  # Invoke Meltano ETL pipeline.
+  "meltano-pipeline",
+
+  # Verify imported data.
+  "verify-export",
+]
+
+meltano-pipeline = [
 
   # Acquire Singer file in JSONL format.
   { cmd = "wget --no-clobber https://github.com/MeltanoLabs/target-postgres/raw/v0.0.9/target_postgres/tests/data_files/tap_countries.singer" },
@@ -16,6 +24,10 @@ test = [
 
   # Invoke pipeline, loading data into database, for real.
   { cmd = "meltano run tap-singer-jsonl target-cratedb" },
+
+]
+
+verify-export = [
 
   # Verify number of imported records.
   { shell = "test $(uvx crash -c 'SELECT count(*) FROM melty.continents' --format=json | jq '.[0].count') -eq 7" },
