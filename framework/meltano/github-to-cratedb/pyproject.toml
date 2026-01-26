@@ -1,0 +1,12 @@
+[tool.poe.tasks]
+
+test = [
+
+  # Install recipe.
+  { cmd = "meltano lock --update --all" },
+  { cmd = "meltano install" },
+
+  # We can't do anything else here, because the GitHub
+  # data source needs authentication via access token.
+
+]
