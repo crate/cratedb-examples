@@ -1,0 +1,47 @@
+[tool.poe.tasks]
+
+test = [
+  # Invoke Meltano ETL pipeline.
+  "meltano-pipeline",
+
+  # Verify exported results.
+  "verify-export",
+]
+
+meltano-pipeline = [
+
+  # Install recipe.
+  { cmd = "meltano lock --update --all" },
+  { cmd = "meltano install" },
+
+  # Singer tap schema discovery, for generating catalogs.
+  { shell = "meltano invoke tap-cratedb --discover > catalog.json" },
+
+  # Display Meltano extractor selection patterns.
+  { cmd = "meltano select tap-cratedb --list" },
+
+  # Run plugin standalone.
+  { cmd = "meltano invoke tap-cratedb" },
+
+  # Invoke pipeline, exporting data from the database, for real.
+  { shell = "mkdir -p output/{csv,jsonl-gz,jsonl-txt}" },
+  { cmd = "meltano el tap-cratedb target-csv" },
+  { cmd = "meltano el tap-cratedb target-jsonl" },
+  { cmd = "meltano el tap-cratedb target-singer-jsonl" },
+
+]
+
+# TODO: In a future iteration, I would like to see validators of better quality here,
+#       that provide concise output to the user instead of just an exitcode != 0.
+verify-export = [
+
+  # Verify existence of output files.
+  { cmd = "test -e output/csv/sys-summits.csv" },
+  { cmd = "test -e output/jsonl-txt/sys-summits.jsonl" },
+  { shell = 'test ! -z "$(ls output/jsonl-gz/sys-summits/sys-summits-*.singer.gz)"' },
+
+  # Verify number of exported records.
+  { shell = "test $(cat output/csv/sys-summits.csv | wc -l | tr -d ' ') -ge 1605" },
+  { shell = "test $(cat output/jsonl-txt/sys-summits.jsonl | wc -l | tr -d ' ') -ge 1605" },
+
+]
