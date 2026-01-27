@@ -1,1 +1,1 @@
-meltano<4
+meltano<5
