@@ -1,13 +1,16 @@
 # Meltano Examples
 
 Concise examples about working with [CrateDB] and [Meltano], for conceiving and
-running flexible ELT tasks. All the recipes are using [meltano-target-cratedb]
-for reading and writing data from/to CrateDB.
+running flexible ELT tasks. All the recipes are using [meltano-tap-cratedb] or
+[meltano-target-cratedb] for reading and writing data from/to CrateDB.
 
 ## What's inside
 
 - `file-to-cratedb`: Acquire data from Singer File, and load it into
   CrateDB database table.
+
+- `cratedb-to-file`: Export data from a CrateDB database table into
+  different kinds of files.
 
 ## Prerequisites
 
@@ -39,4 +42,5 @@ poe check
 
 [CrateDB]: https://cratedb.com/product
 [Meltano]: https://meltano.com/
+[meltano-tap-cratedb]: https://github.com/crate/meltano-tap-cratedb
 [meltano-target-cratedb]: https://github.com/crate/meltano-target-cratedb
