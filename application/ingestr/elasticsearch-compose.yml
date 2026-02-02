@@ -57,7 +57,7 @@ services:
 
   # Import data from CSV into Elasticsearch.
   es-import:
-    image: ghcr.io/bruin-data/ingestr:v0.14.125
+    image: ghcr.io/bruin-data/ingestr:v0.14.126
     entrypoint: ""
     command: >
       sh -c '
@@ -75,7 +75,7 @@ services:
 
   # Import data from Elasticsearch into CrateDB.
   cratedb-import:
-    image: ghcr.io/bruin-data/ingestr:v0.14.125
+    image: ghcr.io/bruin-data/ingestr:v0.14.126
     entrypoint: ""
     command: >
       sh -c '
