@@ -1,4 +1,4 @@
-name: Singer/Meltano
+name: Meltano
 
 on:
   pull_request:
