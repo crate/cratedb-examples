@@ -38,9 +38,7 @@ jobs:
         os: [ 'ubuntu-latest' ]
         python-version: [
           '3.10',
-          # TODO: Update to more recent versions after updating software components.
-          # https://github.com/crate-workbench/meltano-tap-cratedb/issues/13
-          '3.12',
+          '3.14',
         ]
         cratedb-version: [ 'nightly' ]
 
