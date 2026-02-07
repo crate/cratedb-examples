@@ -11,7 +11,7 @@ test = [
 meltano-pipeline = [
 
   # Install recipe.
-  { cmd = "meltano lock --update --all" },
+  { cmd = "meltano lock --update" },
   { cmd = "meltano install" },
 
   # Singer tap schema discovery, for generating catalogs.
