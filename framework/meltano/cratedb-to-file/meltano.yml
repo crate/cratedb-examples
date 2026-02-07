@@ -32,10 +32,10 @@ plugins:
     variant: cratedb
 
     # Acquire package from PyPI.
-    pip_url: meltano-tap-cratedb
+    # pip_url: meltano-tap-cratedb
 
     # Acquire package from GitHub.
-    # pip_url: git+https://github.com/crate/meltano-tap-cratedb.git@make-it-work
+    pip_url: git+https://github.com/crate/meltano-tap-cratedb.git@main
 
     # Until the tap is published on Meltano Hub, this needs to be defined here.
     # Otherwise, automatic reflection will not work, and the `select` attribute
