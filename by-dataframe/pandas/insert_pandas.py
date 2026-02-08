@@ -78,7 +78,7 @@ class DatabaseWorkload:
         logger.info(f"Creating DataFrame with {num_records} records")
 
         # Create a DataFrame to feed into the database.
-        df = makeTimeDataFrame(nper=num_records, freq="S")
+        df = makeTimeDataFrame(nper=num_records, freq="s")
         print(df)
 
         logger.info(f"Connecting to {self.dburi}")
