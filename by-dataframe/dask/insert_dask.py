@@ -37,7 +37,7 @@ def db_workload(dburi: str, mode: str, num_records: int, bulk_size: int):
     pbar.register()
 
     # Create example Dask DataFrame for testing purposes.
-    df = makeTimeDataFrame(nper=num_records, freq="S")
+    df = makeTimeDataFrame(nper=num_records, freq="s")
     ddf = dd.from_pandas(df, npartitions=4)
 
     # Save DataFrame into CrateDB efficiently.
