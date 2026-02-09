@@ -1,1 +1,1 @@
-metabase-api<3.5
+metabase-api<3.7
