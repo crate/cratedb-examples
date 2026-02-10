@@ -26,7 +26,7 @@ services:
   # CrateDB
   # -------
   cratedb:
-    image: docker.io/crate:6.1.2
+    image: docker.io/crate:6.2.1
     ports:
       - "${CRATEDB_HTTP_PORT}:${CRATEDB_HTTP_PORT}"
       - "${CRATEDB_POSTGRESQL_PORT}:${CRATEDB_POSTGRESQL_PORT}"
@@ -90,7 +90,7 @@ services:
 
   # Query data in CrateDB.
   cratedb-query:
-    image: docker.io/crate:6.1.2
+    image: docker.io/crate:6.2.1
     entrypoint: ""
     command: >
       crash --hosts cratedb -c "SELECT * FROM doc.example LIMIT 10"
