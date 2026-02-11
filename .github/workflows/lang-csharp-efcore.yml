@@ -45,6 +45,7 @@ jobs:
           '8.x',
           '9.x',
           '10.x',
+          '11.x',
         ]
         npgsql-version: [
           '8.*',
@@ -54,8 +55,9 @@ jobs:
         ]
         cratedb-version: [ 'nightly' ]
 
-        # Npgsql.EntityFrameworkCore.PostgreSQL 10.0.0 and higher needs .NET10.
         exclude:
+
+          # Npgsql.EntityFrameworkCore.PostgreSQL 10.0.0 and higher needs .NET10.
           - dotnet-version: '8.x'
             npgsql-version: '10.*'
           - dotnet-version: '8.x'
@@ -64,6 +66,14 @@ jobs:
             npgsql-version: '10.*'
           - dotnet-version: '9.x'
             npgsql-version: 'prerelease'
+
+          # Npgsql.EntityFrameworkCore.PostgreSQL 11.0.0 is not compatible with .NET10.
+          - dotnet-version: '10.x'
+            npgsql-version: 'prerelease'
+
+          # Npgsql.EntityFrameworkCore.PostgreSQL 10.0.0 is not compatible with .NET11.
+          - dotnet-version: '11.x'
+            npgsql-version: '10.*'
 
     # https://docs.github.com/en/free-pro-team@latest/actions/guides/about-service-containers
     services:
