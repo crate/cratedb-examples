@@ -17,7 +17,7 @@ services:
   # Daemon services
   # ---------------
   cratedb:
-    image: docker.io/crate/crate:6.2.1
+    image: docker.io/crate/crate:nightly
     command: >
       crate \
         '-Cdiscovery.type=single-node' \
@@ -57,7 +57,7 @@ services:
   # Utility programs
   # ----------------
   crash:
-    image: docker.io/crate/crate:6.2.1
+    image: docker.io/crate/crate:nightly
     command: |
       crash --hosts "http://cratedb:4200"
     deploy:
@@ -69,7 +69,7 @@ services:
 
   # CrateDB lacks two functions which can easily be substituted using UDFs.
   provision-functions:
-    image: docker.io/crate/crate:6.2.1
+    image: docker.io/crate/crate:nightly
     entrypoint: /bin/bash -c
     command:
       - |
