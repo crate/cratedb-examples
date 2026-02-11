@@ -45,6 +45,7 @@ jobs:
           '8.x',
           '9.x',
           '10.x',
+          '11.x',
         ]
         npgsql-version: [
           '8.*',
@@ -53,6 +54,14 @@ jobs:
           'prerelease',
         ]
         cratedb-version: [ 'nightly' ]
+
+        exclude:
+
+          # .NET11 needs Npgsql.PostgreSQL 10.0.0 and higher.
+          - dotnet-version: '11.x'
+            npgsql-version: '8.*'
+          - dotnet-version: '11.x'
+            npgsql-version: '9.*'
 
     # https://docs.github.com/en/free-pro-team@latest/actions/guides/about-service-containers
     services:
