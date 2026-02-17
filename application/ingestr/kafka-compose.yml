@@ -12,7 +12,7 @@ services:
   # Apache Kafka
   # ------------
   kafka:
-    image: docker.io/apache/kafka:4.0.0
+    image: docker.io/apache/kafka:4.2.0
     ports:
       - "${PORT_KAFKA_BROKER_INTERNAL}:${PORT_KAFKA_BROKER_INTERNAL}"
       - "${PORT_KAFKA_BROKER_EXTERNAL}:${PORT_KAFKA_BROKER_EXTERNAL}"
@@ -72,7 +72,7 @@ services:
 
   # Create Kafka topic.
   create-topic:
-    image: docker.io/apache/kafka:4.0.0
+    image: docker.io/apache/kafka:4.2.0
     networks: [ingestr-demo]
     command: /opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka:${PORT_KAFKA_BROKER_INTERNAL} --create --if-not-exists --replication-factor 1 --partitions 1 --topic demo
     deploy:
@@ -80,7 +80,7 @@ services:
 
   # Delete Kafka topic.
   delete-topic:
-    image: docker.io/apache/kafka:4.0.0
+    image: docker.io/apache/kafka:4.2.0
     networks: [ingestr-demo]
     command: /opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka:${PORT_KAFKA_BROKER_INTERNAL} --delete --if-exists --topic demo
     deploy:
@@ -88,7 +88,7 @@ services:
 
   # Publish data to Kafka topic.
   publish-topic:
-    image: docker.io/apache/kafka:4.0.0
+    image: docker.io/apache/kafka:4.2.0
     networks: [ingestr-demo]
     command: /opt/kafka/bin/kafka-console-producer.sh --bootstrap-server kafka:${PORT_KAFKA_BROKER_INTERNAL} --topic demo
     deploy:
