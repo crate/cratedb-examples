@@ -156,16 +156,16 @@
         },
         {
             "name": "amphp/postgres",
-            "version": "v2.2.0",
+            "version": "v2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/amphp/postgres.git",
-                "reference": "fd7c2661966aeb3a9cc067a7ba507f22c370e1ce"
+                "reference": "b68c4d5929d0ec1701781dbbb0bb81dd8d0a42d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/amphp/postgres/zipball/fd7c2661966aeb3a9cc067a7ba507f22c370e1ce",
-                "reference": "fd7c2661966aeb3a9cc067a7ba507f22c370e1ce",
+                "url": "https://api.github.com/repos/amphp/postgres/zipball/b68c4d5929d0ec1701781dbbb0bb81dd8d0a42d7",
+                "reference": "b68c4d5929d0ec1701781dbbb0bb81dd8d0a42d7",
                 "shasum": ""
             },
             "require": {
@@ -216,7 +216,7 @@
             ],
             "support": {
                 "issues": "https://github.com/amphp/postgres/issues",
-                "source": "https://github.com/amphp/postgres/tree/v2.2.0"
+                "source": "https://github.com/amphp/postgres/tree/v2.2.1"
             },
             "funding": [
                 {
@@ -224,20 +224,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-02-22T18:50:10+00:00"
+            "time": "2026-02-25T04:47:18+00:00"
         },
         {
             "name": "amphp/sql",
-            "version": "v2.1.0",
+            "version": "v2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/amphp/sql.git",
-                "reference": "e7ab2f47ba930b7a5ff99d04e67750f1513f1622"
+                "reference": "258bafe5ecf8a0491d86681f2a2af1dee2933a69"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/amphp/sql/zipball/e7ab2f47ba930b7a5ff99d04e67750f1513f1622",
-                "reference": "e7ab2f47ba930b7a5ff99d04e67750f1513f1622",
+                "url": "https://api.github.com/repos/amphp/sql/zipball/258bafe5ecf8a0491d86681f2a2af1dee2933a69",
+                "reference": "258bafe5ecf8a0491d86681f2a2af1dee2933a69",
                 "shasum": ""
             },
             "require": {
@@ -270,7 +270,7 @@
             ],
             "support": {
                 "issues": "https://github.com/amphp/sql/issues",
-                "source": "https://github.com/amphp/sql/tree/v2.1.0"
+                "source": "https://github.com/amphp/sql/tree/v2.1.1"
             },
             "funding": [
                 {
@@ -278,7 +278,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-02-22T17:29:27+00:00"
+            "time": "2026-02-25T04:44:15+00:00"
         },
         {
             "name": "amphp/sql-common",
