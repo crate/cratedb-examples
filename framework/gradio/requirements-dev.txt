@@ -1,2 +1,2 @@
-gradio-client<2.2
+gradio-client<2.3
 pytest<10
