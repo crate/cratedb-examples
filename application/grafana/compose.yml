@@ -43,7 +43,7 @@ services:
         ADD example-weather.py /
         COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
         ENV UV_SYSTEM_PYTHON=true
-        RUN uv pip install --prerelease=allow --requirement requirements.txt
+        RUN uv pip install --requirement requirements.txt
     command: python example-weather.py
     depends_on:
       cratedb:
