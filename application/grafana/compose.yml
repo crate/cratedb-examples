@@ -1,0 +1,54 @@
+services:
+
+  cratedb:
+    image: docker.io/crate/crate:${CRATEDB_VERSION:-latest}
+    command: >
+      crate \
+        '-Cdiscovery.type=single-node' \
+        '-Cstats.enabled=true'
+    ports:
+      - 4200:4200
+      - 5432:5432
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:4200"]
+      start_period: 3s
+      interval: 1.5s
+      retries: 30
+      timeout: 30s
+
+  grafana:
+    image: docker.io/grafana/grafana:${GRAFANA_VERSION:-latest}
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_DISABLE_LOGIN_FORM=true
+    ports:
+      - "3000:3000"
+    depends_on:
+      - cratedb
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:3000"]
+      start_period: 3s
+      interval: 1.5s
+      retries: 30
+      timeout: 30s
+
+  example-weather:
+    build:
+      context: .
+      dockerfile_inline: |
+        FROM docker.io/python:3.14-slim-trixie
+        RUN apt-get update && apt-get install --yes git
+        ADD requirements.txt /
+        ADD example-weather.py /
+        COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
+        ENV UV_SYSTEM_PYTHON=true
+        RUN uv pip install --prerelease=allow --requirement requirements.txt
+    command: python example-weather.py
+    depends_on:
+      cratedb:
+        condition: service_healthy
+      grafana:
+        condition: service_healthy
+    profiles:
+      - tasks
