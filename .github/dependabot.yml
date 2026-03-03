@@ -140,6 +140,11 @@ updates:
     schedule:
       interval: "daily"
 
+  - directory: "/application/grafana"
+    package-ecosystem: "docker-compose"
+    schedule:
+      interval: "daily"
+
   - directory: "/application/ingestr"
     package-ecosystem: "pip"
     schedule:

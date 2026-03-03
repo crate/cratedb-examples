@@ -61,8 +61,8 @@ def provision(grafana: GrafanaApi):
         grafana.datasource.get_datasource_by_uid(DATASOURCE_UID)
         grafana.datasource.delete_datasource_by_uid(DATASOURCE_UID)
     except GrafanaClientError as ex:
-        if ex.status_code == 404:
-            pass
+        if ex.status_code != 404:
+            raise
     grafana.datasource.create_datasource(
         {
             "uid": DATASOURCE_UID,
@@ -153,17 +153,17 @@ def validate_dashboard(grafana: GrafanaApi):
     """
     logger.info("Validating dashboard")
     dashboard = grafana.dashboard.get_dashboard(DASHBOARD_UID)
-    panel = dashboard["dashboard"]["panels"][0]
-    for target in panel["targets"]:
-        logger.info("Validating SQL target:\n%s", target["rawSql"])
+    for panel in dashboard["dashboard"].get("panels", []):
+        for target in panel.get("targets", []):
+            logger.info("Validating SQL target:\n%s", target["rawSql"])
 
-        response = grafana.datasource.smartquery(DatasourceIdentifier(uid=DATASOURCE_UID), target["rawSql"])
-        status = response["results"]["test"]["status"]
-        queries = [frame["schema"]["meta"]["executedQueryString"] for frame in response["results"]["test"]["frames"]]
-        logger.info("Status: %s", status)
-        logger.info("Executed queries:\n%s", "\n".join(queries))
+            response = grafana.datasource.smartquery(DatasourceIdentifier(uid=DATASOURCE_UID), target["rawSql"])
+            status = response["results"]["test"]["status"]
+            queries = [frame["schema"]["meta"]["executedQueryString"] for frame in response["results"]["test"]["frames"]]
+            logger.info("Status: %s", status)
+            logger.info("Executed queries:\n%s", "\n".join(queries))
 
-        assert status == 200, "Dashboard query status is not 200"
+            assert status == 200, "Dashboard query status is not 200"
 
 
 if __name__ == "__main__":
