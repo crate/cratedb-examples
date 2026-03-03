@@ -1,7 +1,3 @@
-# TODO: Use regular package after issue has been resolved.
-# https://github.com/jawah/urllib3.future/issues/318
-# https://github.com/crate/crate-python/pull/784
-crate @ git+https://github.com/crate/crate-python@urllib3-future
 cratedb-toolkit
 grafana-client<6
 grafanalib<0.8
