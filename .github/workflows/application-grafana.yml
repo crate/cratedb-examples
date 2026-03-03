@@ -1,0 +1,63 @@
+name: "Grafana"
+
+on:
+  pull_request:
+    paths:
+    - '.github/workflows/application-grafana.yml'
+    - 'application/grafana/**'
+  push:
+    branches: [ main ]
+    paths:
+    - '.github/workflows/application-grafana.yml'
+    - 'application/grafana/**'
+
+  # Allow job to be triggered manually.
+  workflow_dispatch:
+
+  # Run job each night after CrateDB nightly has been published.
+  schedule:
+    - cron: '0 4 * * *'
+
+# Cancel in-progress jobs when pushing to the same branch.
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+
+  test:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - "ubuntu-latest"
+        cratedb-version:
+          - "nightly"
+        grafana-version:
+          - "9.5.21"
+          - "10.4.19"
+          - "11.6"
+          - "12.3.4"
+          - "12.4"
+          - "nightly"
+
+    env:
+      OS_TYPE: ${{ matrix.os }}
+      GRAFANA_VERSION: ${{ matrix.grafana-version }}
+
+    name: "
+    Grafana ${{ matrix.grafana-version }},
+    CrateDB ${{ matrix.cratedb-version }}
+    "
+    steps:
+
+      - name: Acquire sources
+        uses: actions/checkout@v6
+
+      - name: Validate application/grafana
+        run: |
+          # TODO: Generalize invocation into `ngr` test runner.
+          cd application/grafana
+          bash test.sh
