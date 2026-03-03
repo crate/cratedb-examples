@@ -45,6 +45,7 @@ jobs:
 
     env:
       OS_TYPE: ${{ matrix.os }}
+      CRATEDB_VERSION: ${{ matrix.cratedb-version }}
       GRAFANA_VERSION: ${{ matrix.grafana-version }}
 
     name: "
