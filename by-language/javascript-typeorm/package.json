@@ -4,19 +4,24 @@
    "description": "Awesome project developed with TypeORM.",
    "type": "commonjs",
    "devDependencies": {
-      "ts-node": "10.7.0",
       "@types/node": "^16.11.10",
+      "ts-node": "10.7.0",
+      "tslib": "^2.5.0",
       "typescript": "4.5.2"
    },
    "dependencies": {
-      "typeorm": "0.3.17",
-      "reflect-metadata": "^0.1.13",
-      "pg": "^8.4.0",
+      "body-parser": "^1.19.1",
       "express": "^4.17.2",
-      "body-parser": "^1.19.1"
+      "pg": "^8.4.0",
+      "reflect-metadata": "^0.1.13",
+      "typeorm": "https://github.com/hlcianfagna/typeorm#cratedb"
    },
    "scripts": {
       "start": "ts-node src/index.ts",
-      "typeorm": "typeorm-ts-node-commonjs"
+      "insert": "ts-node src/insert.ts",
+      "query": "typeorm-ts-node-commonjs query --dataSource src/data-source.ts 'SELECT * FROM \"user\"'",
+      "typeorm": "typeorm-ts-node-commonjs",
+      "test": "npm run insert && npm run query",
+      "build-typeorm": "cd node_modules/typeorm && npm install && npm run package"
    }
 }

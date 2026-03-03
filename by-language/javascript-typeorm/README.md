@@ -34,6 +34,10 @@ npm install
 npm start
 ```
 
+```shell
+npm run insert
+npm run typeorm -- query --dataSource src/data-source.ts 'SELECT * FROM "user"'
+```
 
 ## Development
 
