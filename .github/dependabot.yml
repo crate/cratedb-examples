@@ -125,6 +125,21 @@ updates:
     schedule:
       interval: "daily"
 
+  - directory: "/application/grafana"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "daily"
+
+  - directory: "/application/grafana"
+    package-ecosystem: "docker"
+    schedule:
+      interval: "daily"
+
+  - directory: "/application/grafana"
+    package-ecosystem: "docker-compose"
+    schedule:
+      interval: "daily"
+
   - directory: "/application/open-webui"
     package-ecosystem: "docker-compose"
     schedule:
