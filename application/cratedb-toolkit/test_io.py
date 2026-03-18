@@ -86,9 +86,9 @@ def test_ctk_load_table_influxdb_lp(drop_testing_tables):
 
     # Invoke data transfer.
     command = f"""
-    ctk load table \
+    ctk load \
         "{influxdb_lp_url}" \
-        --cluster-url="crate://localhost:4200/from-influxdb/dummy"
+        "crate://localhost:4200/from-influxdb/dummy"
     """
     print(f"Invoking CTK: {command}", file=sys.stderr)
     subprocess.check_call(shlex.split(command))
@@ -142,9 +142,9 @@ def test_ctk_load_table_mongodb_json(drop_testing_tables):
 
     # Invoke data transfer.
     command = f"""
-ctk load table \
+ctk load \
     "file+bson://{datasets_path}/*.json?batch-size=2500" \
-    --cluster-url="crate://localhost:4200/from-mongodb" \
+    "crate://localhost:4200/from-mongodb" \
     --transformation=zyp-mongodb-json-files.yaml
 """
     print(f"Invoking CTK: {command}", file=sys.stderr)
