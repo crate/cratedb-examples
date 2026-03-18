@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from cratedb_toolkit.io.sql import DatabaseAdapter
+from cratedb_toolkit.util.database import DatabaseAdapter
 from nbclient.exceptions import CellExecutionError
 from pueblo.testing.folder import str_list, list_python_files
 from pueblo.testing.notebook import generate_tests

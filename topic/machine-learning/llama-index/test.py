@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from cratedb_toolkit.io.sql import DatabaseAdapter
+from cratedb_toolkit.util.database import DatabaseAdapter
 from dotenv import load_dotenv
 
 HERE = Path(__file__).parent
