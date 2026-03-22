@@ -1,4 +1,5 @@
-pueblo>=0.0.8
+# Production.
+pueblo[ngr]>=0.0.16
 
 # Development.
 # pueblo @ git+https://github.com/pyveci/pueblo.git@main

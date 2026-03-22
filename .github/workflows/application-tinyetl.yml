@@ -49,6 +49,4 @@ jobs:
 
       - name: Validate application/tinyetl
         run: |
-          # TODO: Generalize invocation into `ngr` test runner.
-          cd application/tinyetl
-          sh test.sh
+          uv run --with-requirements=requirements.txt ngr test application/tinyetl
