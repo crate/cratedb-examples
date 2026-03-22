@@ -37,9 +37,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ "ubuntu-22.04" ]
-        python-version: [ "3.12" ]
-        cratedb-version: [ "nightly" ]
+        os:
+          - 'ubuntu-22.04'
+        python-version:
+          - '3.12'
+          - '3.14'
+        cratedb-version:
+          - 'nightly'
 
     steps:
 

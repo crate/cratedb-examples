@@ -36,9 +36,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ 'ubuntu-latest' ]
-        python-version: [ '3.8', '3.12' ]
-        cratedb-version: [ 'nightly' ]
+        os:
+          - 'ubuntu-latest'
+        python-version:
+          - '3.8'
+          - '3.14'
+        cratedb-version:
+          - 'nightly'
 
     env:
       PIP_PRE: true
