@@ -107,7 +107,7 @@ jobs:
 
       - name: Install Apache Superset ${{ matrix.superset-version }}
         run: |
-          pip install 'apache-superset==${{ matrix.superset-version }}'
+          uv pip install 'apache-superset==${{ matrix.superset-version }}'
 
       - name: Validate application/apache-superset
         run: ngr test application/apache-superset

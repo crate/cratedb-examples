@@ -42,6 +42,7 @@ jobs:
 
     env:
       PIP_PRE: true
+      UV_PRERELEASE: allow
 
     steps:
 
