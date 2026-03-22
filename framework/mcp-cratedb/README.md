@@ -22,33 +22,9 @@ communication.
 The Python programs have been derived from the [Writing MCP Clients] example
 program.
 
-- `example_builtin.py`: Exercise the basic built-in Model Context Protocol server
-  [@modelcontextprotocol/server-postgres] that provides read-only access to
-  PostgreSQL databases per `query` tool. This server enables LLMs to inspect
-  database schemas and execute read-only queries. It is written in TypeScript,
-  to be invoked with [npx].
-
 - `example_cratedb_mcp.py`:
   The [CrateDB MCP Server] specialises on advanced CrateDB SQL operations by blending in
   knowledge base resources from CrateDB's documentation about query optimizations.
-  It is written in Python, optionally to be invoked with `uv` or `uvx`.
-
-- `example_dbhub.py`: Exercise communication using [DBHub], a universal database
-  gateway implementing the Model Context Protocol (MCP) server interface. This
-  gateway allows MCP-compatible clients to connect to and explore different databases.
-
-- `example_jdbc.py`: Exercise JDBC communication using the [Model Context Protocol
-  Server for JDBC] from the [quarkus-mcp-servers] package, providing a range
-  of tools. It is written in Java, to be invoked with [JBang].
-
-- `example_mcp_alchemy.py`: Exercise communication using the [MCP Alchemy] MCP
-  server package, providing a range of tools. It is written in Python, and uses
-  [SQLAlchemy] and the [CrateDB SQLAlchemy dialect].
-
-- `example_pg_mcp.py`:
-  The [PG-MCP] server is specialised to talk to PostgreSQL servers. With a few adjustments,
-  the adapter can also talk to CrateDB. The project offers rich MCP server capabilities,
-  and includes advanced client programs for Claude and Gemini that work out of the box.
   It is written in Python, optionally to be invoked with `uv` or `uvx`.
 
 ## Resources
@@ -78,30 +54,19 @@ Install the [uv] package manager and launcher.
 {brew,pip} install uv
 ```
 
-Install the [JBang] package manager and launcher.
-```shell
-{asdf,choco,dnf,brew,scoop,sdk} install jbang
-```
-
 ## Install
 
 Acquire sources, set up sandbox, and install packages.
 ```bash
 git clone https://github.com/crate/cratedb-examples
-cd cratedb-examples/framework/mcp
+cd cratedb-examples/framework/mcp-cratedb
 uv pip install -r requirements.txt -r requirements-test.txt
 ```
 
 ## Synopsis
 
 ```shell
-uv run example_builtin.py
-```
-```shell
-uv run example_dbhub.py
-```
-```shell
-uv run example_jdbc.py
+uv run example_cratedb_mcp.py
 ```
 
 ## Tests
@@ -113,7 +78,7 @@ uv run pytest
 
 Run tests selectively.
 ```bash
-uv run pytest -k dbhub
+uv run pytest -k cratedb
 ```
 
 ## Development
@@ -128,11 +93,6 @@ export CRATEDB_CLUSTER_URL=crate://crate@localhost:4200/
 ```shell
 uvx --from=cratedb-toolkit ctk tail -n 3 --follow --format=log-pretty sys.jobs_log
 ```
-
-## Outlook
-
-A future iteration may provide a premium MCP database adapter for CrateDB,
-unlocking more details and features.
 
 
 [brief introduction to MCP]: https://blog.bytebytego.com/i/159075598/what-is-mcp
