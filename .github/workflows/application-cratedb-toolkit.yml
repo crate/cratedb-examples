@@ -2,7 +2,6 @@ name: CrateDB Toolkit
 
 on:
   pull_request:
-    branches: ~
     paths:
     - '.github/workflows/application-cratedb-toolkit.yml'
     - 'application/cratedb-toolkit/**'
@@ -38,9 +37,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-22.04 ]
-        python-version: [ "3.9", "3.12" ]
-        cratedb-version: [ 'nightly' ]
+        os:
+          - 'ubuntu-22.04'
+        python-version:
+          - '3.9'
+          - '3.12'
+        cratedb-version:
+          - 'nightly'
 
     services:
       cratedb:

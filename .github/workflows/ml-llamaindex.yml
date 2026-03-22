@@ -36,19 +36,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [
-          'ubuntu-latest',
-        ]
-        python-version: [
-          '3.10',
-          '3.13',
-        ]
-        cratedb-version: [
-          'nightly',
-        ]
-        cratedb-mcp-version: [
-          'main',
-        ]
+        os:
+          - 'ubuntu-latest'
+        python-version:
+          - '3.10'
+          - '3.14'
+        cratedb-version:
+          - 'nightly'
+        cratedb-mcp-version:
+          - 'main'
 
     services:
       cratedb:
