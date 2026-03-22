@@ -58,7 +58,7 @@ jobs:
           - '6.0.0rc2'
         python-version:
           - '3.9'
-          - '3.12'
+          - '3.11'
         cratedb-version:
           - 'nightly'
 
