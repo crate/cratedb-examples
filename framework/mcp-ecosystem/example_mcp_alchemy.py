@@ -6,9 +6,8 @@
 from cratedb_toolkit.util.database import DatabaseAdapter
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
+from pueblo.mcp.client import McpConversation
 import where
-
-from mcp_utils import McpDatabaseConversation
 
 
 async def run():
@@ -35,7 +34,7 @@ async def run():
             # Initialize the connection.
             await session.initialize()
 
-            client = McpDatabaseConversation(session)
+            client = McpConversation(session)
             await client.inquire()
 
             print("## MCP server conversations")

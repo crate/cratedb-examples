@@ -1,0 +1,20 @@
+[project]
+name = "cratedb-mcp-ecosystem-examples"
+version = "0.0.0"
+requires-python = ">=3.9"
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[tool.pytest.ini_options]
+minversion = "2.0"
+addopts = """
+  -rfEXs -p pytester --strict-markers --verbosity=3
+  --capture=no
+  """
+log_level = "DEBUG"
+log_cli_level = "DEBUG"
+testpaths = ["*.py"]
+xfail_strict = true
+markers = [
+]
