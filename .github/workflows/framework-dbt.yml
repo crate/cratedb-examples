@@ -75,7 +75,7 @@ jobs:
         run: |
           # TODO: Generalize invocation into `ngr` test runner.
           cd framework/dbt/basic
-          pip install -r requirements.txt
+          uv pip install -r requirements.txt
           dbt run --debug
           dbt test --debug
 
@@ -83,7 +83,7 @@ jobs:
         run: |
           # TODO: Generalize invocation into `ngr` test runner.
           cd framework/dbt/materialize
-          pip install -r requirements.txt
+          uv pip install -r requirements.txt
           dbt deps
           dbt run --debug
           dbt test --debug
