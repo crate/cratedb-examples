@@ -39,8 +39,9 @@ jobs:
       - name: Acquire sources
         uses: actions/checkout@v6
 
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+
       - name: Validate application/roapi
         run: |
-          # TODO: Generalize invocation into `ngr` test runner.
-          cd application/roapi
-          sh test.sh
+          uv run --with-requirements=requirements.txt ngr test application/roapi
