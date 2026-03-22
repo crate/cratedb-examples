@@ -54,4 +54,9 @@ jobs:
         run: uv pip install --requirements=requirements.txt
 
       - name: Validate operation/compose/ssl
-        run: ngr test operation/compose/ssl
+        run: |
+          # TODO: Use `uv` for installing Apache Superset.
+          # Hint: Currently does not work because directory includes Python files.
+          #       https://github.com/pyveci/pueblo/issues/248
+          cd operation/compose/ssl
+          make test
