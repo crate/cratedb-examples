@@ -38,7 +38,7 @@ jobs:
       matrix:
         os: [ 'ubuntu-22.04' ]
         python-version: [
-          '3.7',
+          '3.8',
           '3.13',
         ]
         cratedb-version: [ 'nightly' ]
