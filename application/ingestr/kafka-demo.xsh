@@ -126,7 +126,7 @@ class Datawrapper:
         title "Invoking ingestr job"
 
         result = ![
-            uvx --python=3.12 --prerelease=allow --with-requirements=requirements.txt \
+            uvx --python=3.12 --prerelease=allow --with-requirements=kafka-requirements.txt \
                 ingestr ingest --yes \
                 --source-uri "kafka://?bootstrap_servers=localhost:9092&group_id=test_group&value_type=json&select=value" \
                 --source-table "demo" \
