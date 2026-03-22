@@ -60,6 +60,13 @@ jobs:
 
     steps:
 
+      - name: Delay scheduled job to avoid overloading
+        if: ${{ github.event.schedule }}
+        uses: AliSajid/random-wait-action@v2.11.1
+        with:
+          minimum: 1
+          maximum: 120
+
       - name: Acquire sources
         uses: actions/checkout@v6
 
