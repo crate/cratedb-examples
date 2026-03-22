@@ -72,7 +72,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install utilities
-        run: uv pip install --requirements=requirements.txt
+        run: uv pip install 'setuptools<82' --requirements=requirements.txt
 
       - name: Validate topic/timeseries
         run: ngr test topic/timeseries
