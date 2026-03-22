@@ -54,21 +54,19 @@ jobs:
       - name: Acquire sources
         uses: actions/checkout@v6
 
-      - name: Set up Python
-        uses: actions/setup-python@v6
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
         with:
-          python-version: ${{ matrix.python-version }}
-          architecture: x64
-          cache: 'pip'
-          cache-dependency-path: |
+          activate-environment: 'true'
+          cache-dependency-glob: |
             requirements.txt
-            by-dataframe/pandas/requirements.txt
-            by-dataframe/pandas/requirements-dev.txt
+            by-dataframe/pandas/requirements*.txt
+          cache-suffix: ${{ matrix.python-version }}
+          enable-cache: true
+          python-version: ${{ matrix.python-version }}
 
       - name: Install utilities
-        run: |
-          pip install -r requirements.txt
+        run: uv pip install --requirements=requirements.txt
 
       - name: Validate by-dataframe/pandas
-        run: |
-          ngr test --accept-no-venv by-dataframe/pandas
+        run: ngr test by-dataframe/pandas
