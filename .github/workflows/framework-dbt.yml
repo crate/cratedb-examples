@@ -40,7 +40,7 @@ jobs:
           - 'ubuntu-latest'
         python-version:
           - '3.9'
-          - '3.14'
+          - '3.13'
         cratedb-version:
           - 'nightly'
 
