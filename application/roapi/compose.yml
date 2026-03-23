@@ -27,10 +27,7 @@ services:
 
   roapi:
 
-    # Either use standard build, or run a custom build.
-    # image: ghcr.io/roapi/roapi:latest
-    build:
-      dockerfile: roapi.Dockerfile
+    image: ghcr.io/roapi/roapi:v0.12.7
 
     # Start ROAPI service for on-demand data registration.
     # The `--table` parameter is currently obligatory and cannot be ignored for now.
