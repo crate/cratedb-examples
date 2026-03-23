@@ -1,0 +1,3 @@
+cratedb-toolkit
+grafana-client<6
+grafanalib<0.8
