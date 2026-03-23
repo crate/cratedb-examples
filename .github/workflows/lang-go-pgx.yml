@@ -37,10 +37,9 @@ jobs:
       matrix:
         os: [ 'ubuntu-latest' ]
         cratedb-version: [ 'nightly' ]
-        go-version: [
-          '1.24.x',
-          '1.25.x',
-        ]
+        go-version:
+          - '1.25.x'
+          - '1.26.x'
 
     services:
       cratedb:
