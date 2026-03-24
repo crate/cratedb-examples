@@ -32,6 +32,7 @@ jobs:
   test:
     name: "
      Java: ${{ matrix.java-version }}
+     Protocol: ${{ matrix.postgresql-protocol-version }}
      CrateDB: ${{ matrix.cratedb-version }}
      on ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
@@ -45,7 +46,13 @@ jobs:
           '21',
           '25',
         ]
+        postgresql-protocol-version:
+          - '3.0'
+          - '3.2'
         cratedb-version: [ 'nightly' ]
+
+    env:
+      POSTGRESQL_PROTOCOL_VERSION: ${{ matrix.postgresql-protocol-version }}
 
     services:
       cratedb:

@@ -28,7 +28,8 @@ public class JdbcMetaDataTest {
         .fromURL("https://cdn.crate.io/downloads/releases/nightly/crate-latest.tar.gz")
         .settings(Map.of("psql.port", 55432))
         .build();
-    public static final String URL = "jdbc:postgresql://localhost:55432/testdrive?user=crate";
+    static String protocol_version = System.getenv().getOrDefault("POSTGRESQL_PROTOCOL_VERSION", "3.0");
+    public static final String URL = "jdbc:postgresql://localhost:55432/testdrive?user=crate&protocolVersion=" + protocol_version;
 
     @Test
     public void test_allProceduresAreCallable() throws Exception {
