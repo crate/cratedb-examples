@@ -29,14 +29,18 @@ jobs:
   test:
     name: "
      Go: ${{ matrix.go-version }}
+     Protocol: ${{ matrix.postgresql-protocol-version }}
      CrateDB: ${{ matrix.cratedb-version }}
-     on ${{ matrix.os }}"
+    "
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         os: [ 'ubuntu-latest' ]
         cratedb-version: [ 'nightly' ]
+        postgresql-protocol-version:
+          - '3.0'
+          - '3.2'
         go-version:
           - '1.25.x'
           - '1.26.x'
@@ -65,4 +69,5 @@ jobs:
 
       - name: Validate by-language/go-pgx
         run: |
-          uv run --with=pueblo ngr test by-language/go-pgx
+          cd by-language/go-pgx
+          go run . --protocol-version="${{ matrix.postgresql-protocol-version }}"
