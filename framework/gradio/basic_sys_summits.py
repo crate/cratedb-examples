@@ -40,7 +40,7 @@ demo = gr.Interface(
     outputs=["dataframe"],
     title="Gradio with CrateDB Example",
     live=True,
-    allow_flagging="never",
+    flagging_mode="never",
 )
 
 
