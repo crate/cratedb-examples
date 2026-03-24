@@ -207,7 +207,12 @@ updates:
     schedule:
       interval: "daily"
 
-  - directory: "/framework/mcp"
+  - directory: "/framework/mcp-cratedb"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "daily"
+
+  - directory: "/framework/mcp-ecosystem"
     package-ecosystem: "pip"
     schedule:
       interval: "daily"
