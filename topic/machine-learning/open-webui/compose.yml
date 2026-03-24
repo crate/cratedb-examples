@@ -116,7 +116,7 @@ services:
   # Jupyter
   # -------
   jupyter:
-    image: quay.io/jupyter/minimal-notebook:notebook-7.4.4
+    image: quay.io/jupyter/minimal-notebook:notebook-7.5.5
     # https://docs.openwebui.com/tutorials/jupyter/
     environment:
       JUPYTER_ENABLE_LAB: "yes"
