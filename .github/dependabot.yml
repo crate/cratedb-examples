@@ -130,16 +130,6 @@ updates:
     schedule:
       interval: "daily"
 
-  - directory: "/application/open-webui"
-    package-ecosystem: "docker-compose"
-    schedule:
-      interval: "daily"
-
-  - directory: "/application/open-webui/init"
-    package-ecosystem: "docker"
-    schedule:
-      interval: "daily"
-
   - directory: "/application/ingestr"
     package-ecosystem: "pip"
     schedule:
@@ -151,11 +141,6 @@ updates:
       interval: "daily"
 
   - directory: "/application/metabase"
-    package-ecosystem: "pip"
-    schedule:
-      interval: "daily"
-
-  - directory: "/application/llm"
     package-ecosystem: "pip"
     schedule:
       interval: "daily"
@@ -251,8 +236,23 @@ updates:
     schedule:
       interval: "daily"
 
+  - directory: "/topic/machine-learning/llm"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "daily"
+
   - directory: "/topic/machine-learning/mlflow"
     package-ecosystem: "pip"
+    schedule:
+      interval: "daily"
+
+  - directory: "/topic/machine-learning/open-webui"
+    package-ecosystem: "docker-compose"
+    schedule:
+      interval: "daily"
+
+  - directory: "/topic/machine-learning/open-webui/init"
+    package-ecosystem: "docker"
     schedule:
       interval: "daily"
 
