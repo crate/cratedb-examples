@@ -41,6 +41,7 @@ demo = gr.Interface(
     title="Gradio with CrateDB Example",
     live=True,
     flagging_mode="never",
+    api_name="predict",
 )
 
 
