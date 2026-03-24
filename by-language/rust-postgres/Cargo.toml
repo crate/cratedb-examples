@@ -5,4 +5,4 @@ authors = ["The CrateDB Developers"]
 edition = "2021"
 
 [dependencies]
-postgres = "0.19.7"
+postgres = "0.19.12"
