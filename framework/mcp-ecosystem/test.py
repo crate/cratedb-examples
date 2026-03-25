@@ -60,7 +60,7 @@ def test_jdbc():
     https://github.com/quarkiverse/quarkus-mcp-servers/tree/main/jdbc#readme
     """
     p = run(f"{sys.executable} example_jdbc.py")
-    assert p.returncode == 0
+    assert p.returncode == 0, p.stderr
 
     # Validate output specific to the MCP server.
     assert re.match(br".*\[io.quarkus\] \(main\) mcp-server-jdbc 999-SNAPSHOT on JVM.*", p.stderr, re.DOTALL)
@@ -96,7 +96,7 @@ def test_dbhub():
     https://github.com/bytebase/dbhub
     """
     p = run(f"{sys.executable} example_dbhub.py")
-    assert p.returncode == 0
+    assert p.returncode == 0, p.stderr
 
     # Validate output specific to the MCP server.
     assert b"Successfully connected to PostgreSQL database" in p.stderr
@@ -130,7 +130,7 @@ def test_mcp_alchemy():
     https://github.com/runekaagaard/mcp-alchemy
     """
     p = run(f"{sys.executable} example_mcp_alchemy.py")
-    assert p.returncode == 0
+    assert p.returncode == 0, p.stderr
 
     # Validate output specific to the MCP server.
 
@@ -163,7 +163,7 @@ def test_pg_mcp():
     assert p.returncode == 0, p.stderr
 
     p = run(f"{sys.executable} example_pg_mcp.py")
-    assert p.returncode == 0
+    assert p.returncode == 0, p.stderr
 
     # Validate output specific to the MCP server.
     assert b"Processing request of type" in p.stderr
