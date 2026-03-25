@@ -99,21 +99,15 @@ def test_dbhub():
     assert p.returncode == 0, p.stderr
 
     # Validate output specific to the MCP server.
-    assert b"Successfully connected to PostgreSQL database" in p.stderr
-    assert b"Universal Database MCP Server" in p.stderr
+    assert b"Connecting to 1 database source(s)" in p.stderr
+    assert b"Tool registry initialized" in p.stderr
+    assert b"Minimal Database MCP Server" in p.stderr
 
     # Validate output specific to CrateDB.
     assert b"Calling tool: execute_sql" in p.stdout
     assert b"mountain: Mont Blanc" in p.stdout
 
-    assert b"Reading resource: db://schemas" in p.stdout
-    assert b"- doc" in p.stdout
-    assert b"- sys" in p.stdout
-    assert b"- testdrive" in p.stdout
-
-    assert b"Getting prompt: explain_db" in p.stdout
-    assert b"Table: mcp_dbhub in schema 'testdrive'" in p.stdout
-    assert b"Structure:\\n- id (integer), nullable\\n- data\\\n      \\ (text), nullable" in p.stdout
+    assert b"Calling tool: search_objects" in p.stdout
 
 
 @pytest.mark.skipif(sys.version_info < (3, 12), reason="requires Python 3.12+")
