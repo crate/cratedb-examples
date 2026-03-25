@@ -39,10 +39,10 @@ def test_builtin():
     https://www.npmjs.com/package/@modelcontextprotocol/server-postgres
     """
     p = run(f"{sys.executable} example_builtin.py")
-    assert p.returncode == 0
+    assert p.returncode == 0, p.stderr
 
     # Validate output specific to the MCP server.
-    assert b"Could not roll back transaction: error: line 1:1: mismatched input 'ROLLBACK' expecting" in p.stderr
+    assert b"Could not roll back transaction: error: line 1:1: extraneous input 'ROLLBACK' expecting" in p.stderr
 
     # Validate output specific to CrateDB.
     assert b"Calling tool: query" in p.stdout
