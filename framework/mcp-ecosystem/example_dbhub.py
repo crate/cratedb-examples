@@ -14,7 +14,7 @@ server_params_npx = StdioServerParameters(
     command="npx",
     args=[
         "-y",
-        "@bytebase/dbhub@0.11.6",
+        "@bytebase/dbhub@0.19.1",
         "--transport=stdio",
         #"--transport=sse",
         #"--port=8080",
@@ -39,24 +39,16 @@ async def run():
 
             # Call a few tools.
             await client.call_tool("execute_sql", arguments={"sql": "SELECT * FROM sys.summits ORDER BY height DESC LIMIT 3"})
+            await client.call_tool("search_objects", arguments={"object_type": "table", "schema": "sys", "detail_level": "names"})
 
-            # Validate database content.
+            # Populate database.
             db = DatabaseAdapter("crate://crate@localhost:4200/")
             db.run_sql("CREATE TABLE IF NOT EXISTS testdrive.mcp_dbhub (id INT, data TEXT)")
             db.run_sql("INSERT INTO testdrive.mcp_dbhub (id, data) VALUES (42, 'Hotzenplotz')")
             db.refresh_table("testdrive.mcp_dbhub")
 
-            # Read available resources.
-            await client.read_resource("db://schemas")
-
-            # Invoke available prompts.
-            await client.get_prompt("generate_sql", arguments={
-                "description": "Please enumerate the highest five mountains.",
-                "dialect": "postgres",
-                "schema": "sys",
-            })
-            await client.get_prompt("explain_db", arguments={"schema": "testdrive"})
-            await client.get_prompt("explain_db", arguments={"schema": "testdrive", "table": "mcp_dbhub"})
+            # Inquire database.
+            await client.call_tool("search_objects", arguments={"object_type": "table", "schema": "testdrive", "detail_level": "full"})
 
 
 if __name__ == "__main__":
