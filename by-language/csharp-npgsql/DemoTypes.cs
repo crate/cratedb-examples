@@ -356,29 +356,29 @@ namespace demo
         public async Task InsertGeoJsonTyped()
         {
             /***
-             * Verify Npgsql PostGIS/GeoJSON Type Plugin with CrateDB.
-             * https://www.npgsql.org/doc/types/geojson.html
+             * Insert a GEO_SHAPE value from a GeoJSON.Net type using CrateGeoShapeExtensions.
              *
-             * TODO: Does not work yet, because CrateDB communicates GEO_SHAPE as string?
-             *       The error message is:
-             *
-             *       System.NotSupportedException : The NpgsqlDbType 'Geometry' isn't present in your
-             *       database. You may need to install an extension or upgrade to a newer version.
-             *       See also https://github.com/npgsql/npgsql/issues/2411.
+             * CrateDB communicates GEO_SHAPE as a JSON string over the PostgreSQL wire protocol,
+             * so Npgsql's PostGIS/GeoJSON plugin (NpgsqlDbType.Geometry / UseGeoJson) cannot be
+             * used. CrateGeoShapeExtensions.AddGeoShape serializes GeoJSON.Net types to JSON
+             * transparently, removing the need for manual JsonConvert calls at each call site.
              */
             Console.WriteLine("Running InsertGeoJsonTyped");
 
             // Insert single data point.
             await using (var cmd = new NpgsqlCommand("""
             INSERT INTO testdrive.example (
+                "id",
                 "geoshape"
             ) VALUES (
+                @id,
                 @geoshape
             );
             """, conn))
             {
                 var point = new Point(new Position(85.43, 66.23));
-                cmd.Parameters.AddWithValue("geoshape", NpgsqlDbType.Geometry, point);
+                cmd.Parameters.AddWithValue("id", "point");
+                cmd.Parameters.AddGeoShape("geoshape", point);
                 cmd.ExecuteNonQuery();
             }
 
@@ -414,8 +414,6 @@ namespace demo
                         new Position(longitude: 5.0, latitude: 5.0),
                     ])
                 ]);
-                // TODO: Can GEO_SHAPE types be directly marshalled to a .NET GeoJSON type?
-                //       Currently, `InsertGeoJsonTyped` does not work yet.
                 cmd.Parameters.AddWithValue("id", "point");
                 cmd.Parameters.AddWithValue("geoshape", NpgsqlDbType.Json, JsonConvert.SerializeObject(point));
                 cmd.ExecuteNonQuery();
@@ -436,22 +434,18 @@ namespace demo
         {
             Console.WriteLine("Running GeoJsonTypesExample");
 
-            // Provision data.
+            // Provision data using GeoJSON.Net types directly via CrateGeoShapeExtensions.
             await CreateTable();
-            // await InsertGeoJsonTyped();
-            await InsertGeoJsonString();
+            await InsertGeoJsonTyped();
 
-            // Query back data.
+            // Query back data: CrateGeoShapeExtensions.GetGeoShape deserializes the JSON
+            // string returned by CrateDB into a strongly-typed GeoJSON.Net object.
             await using (var cmd = new NpgsqlCommand("SELECT * FROM testdrive.example WHERE id='point'", conn))
             await using (var reader = cmd.ExecuteReader())
             {
-                reader.Read();
-                // TODO: Can GEO_SHAPE types be directly marshalled to a .NET GeoJSON type?
-                //       Currently, `InsertGeoJsonTyped` does not work yet.
-                var obj = reader.GetFieldValue<JsonDocument>("geoshape");
-                var payload = obj.RootElement.ToString();
-                var geoJsonObject = JsonConvert.DeserializeObject<Point>(payload);
-                return (Point?) geoJsonObject;
+                if (!reader.Read())
+                    return null;
+                return reader.GetGeoShape<Point>("geoshape");
             }
         }
 
