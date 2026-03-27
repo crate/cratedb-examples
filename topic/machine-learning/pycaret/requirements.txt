@@ -1,6 +1,6 @@
 # Real.
 dask==2024.12.1
-mlflow-cratedb==2.14.1
+mlflow-cratedb==2.22.4
 plotly<6.7
 pycaret[models,parallel,test]==3.3.2
 pydantic<3
