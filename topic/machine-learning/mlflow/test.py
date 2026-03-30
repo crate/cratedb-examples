@@ -1,4 +1,6 @@
+import os
 from pathlib import Path
+from unittest import mock
 
 import pytest
 
@@ -45,4 +47,5 @@ def test_file(request, pyfile: Path):
     """
     From individual Python file, collect and wrap the `main` function into a test case.
     """
-    pytest_module_function(request, pyfile)
+    with mock.patch.dict(os.environ, {"MLFLOW_TRACKING_URI": "crate://crate@localhost/?schema=testdrive"}, clear=True):
+        pytest_module_function(request, pyfile)
