@@ -19,7 +19,7 @@ services:
   # CrateDB
   # -------
   cratedb:
-    image: docker.io/crate/crate:6.2.3
+    image: docker.io/crate/crate:6.2.4
     environment:
       CRATE_HEAP_SIZE: 2g
     ports:
