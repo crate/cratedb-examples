@@ -136,11 +136,6 @@ updates:
       interval: "daily"
 
   - directory: "/application/grafana"
-    package-ecosystem: "docker"
-    schedule:
-      interval: "daily"
-
-  - directory: "/application/grafana"
     package-ecosystem: "docker-compose"
     schedule:
       interval: "daily"
