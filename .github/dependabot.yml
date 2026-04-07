@@ -108,12 +108,12 @@ updates:
     schedule:
       interval: "daily"
 
-  - directory: "by-language/rust-r2d2"
+  - directory: "/by-language/rust-r2d2"
     package-ecosystem: "cargo"
     schedule:
       interval: "daily"
 
-  - directory: "by-language/rust-postgres"
+  - directory: "/by-language/rust-postgres"
     package-ecosystem: "cargo"
     schedule:
       interval: "daily"

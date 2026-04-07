@@ -55,7 +55,7 @@ jobs:
       - name: Set up uv
         uses: astral-sh/setup-uv@v7
 
-      - name: Validate by-language/rust-postgres
+      - name: Validate by-language/rust-{postgres,r2d2}
         run: |
           uv run --with=pueblo ngr test by-language/rust-postgres
           uv run --with=pueblo ngr test by-language/rust-r2d2

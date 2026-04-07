@@ -1,6 +1,7 @@
 use postgres::{Client, NoTls};
 use std::env;
 
+#[cfg(test)]
 mod tests;
 
 pub fn main() {
