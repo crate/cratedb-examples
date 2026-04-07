@@ -6,6 +6,7 @@ use r2d2_postgres::{
     PostgresConnectionManager,
 };
 
+#[cfg(test)]
 mod tests;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {

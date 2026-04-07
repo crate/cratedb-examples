@@ -3,7 +3,7 @@
 ## About
 
 The file `src/main.rs` includes a basic example program that uses the Rust
-[r2d2] and [postgres] packages, effective connecting to CrateDB by using
+[r2d2] and [postgres] packages, effectively connecting to CrateDB by using
 a client-side connection pool.
 
 ## Usage
