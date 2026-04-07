@@ -83,7 +83,7 @@ def run_experiment(data):
 
     log_model(
         sk_model=best_model,
-        artifact_path="model/classification_model",
+        name="classification_model",
         registered_model_name=f"classification-model",
     )
 

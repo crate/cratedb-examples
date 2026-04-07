@@ -99,7 +99,7 @@ def run_experiment(data):
 
     log_model(
         sk_model=final_model,
-        artifact_path="model/timeseriesforecast_model",
+        name="timeseriesforecast_model",
         registered_model_name="timeseriesforecast_model",
     )
 
