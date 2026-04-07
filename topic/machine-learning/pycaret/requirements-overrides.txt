@@ -1,0 +1,4 @@
+# Allow any version of `catboost` to permit installation on macOS and others.
+catboost; sys_platform=='linux'
+llvmlite; sys_platform=='linux'
+numba; sys_platform=='linux'
