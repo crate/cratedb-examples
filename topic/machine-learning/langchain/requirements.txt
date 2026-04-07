@@ -7,9 +7,10 @@ langchain-google-vertexai<4
 langchain-openai<1.2
 langchain-text-splitters<1.2
 langgraph<1.2
-pueblo[cli,nlp]>=0.0.10
+langgraph-prebuilt!=1.0.9
+nltk<4
+pueblo[cli,nlp]>=0.0.18
 pypdf<7
 python-dotenv<2
 requests<3
 requests-cache<2
-unstructured<0.19
