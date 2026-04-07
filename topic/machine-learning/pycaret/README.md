@@ -95,6 +95,14 @@ pip install -U -r requirements.txt
 ngr test topic/machine-learning/pycaret
 ```
 
+Please note due to recent package incompatibilities, you may need to install
+the requirements like this.
+```shell
+uv pip install --upgrade \
+  -r requirements.txt -r requirements-dev.txt \
+  --overrides requirements-overrides.txt
+```
+
 
 [CrateDB]: https://github.com/crate/crate
 [Introduction to hyperparameter tuning]: https://medium.com/analytics-vidhya/comparison-of-hyperparameter-tuning-algorithms-grid-search-random-search-bayesian-optimization-5326aaef1bd1
