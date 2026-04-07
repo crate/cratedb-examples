@@ -1,5 +1,5 @@
 [package]
-name = "cratedb-rust-tests"
+name = "cratedb-rust-postgres"
 version = "0.0.0"
 authors = ["The CrateDB Developers"]
 edition = "2021"
