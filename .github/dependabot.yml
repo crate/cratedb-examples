@@ -150,16 +150,6 @@ updates:
     schedule:
       interval: "daily"
 
-  - directory: "/application/open-webui"
-    package-ecosystem: "docker-compose"
-    schedule:
-      interval: "daily"
-
-  - directory: "/application/open-webui/init"
-    package-ecosystem: "docker"
-    schedule:
-      interval: "daily"
-
   - directory: "/application/metabase"
     package-ecosystem: "pip"
     schedule:
