@@ -1,0 +1,8 @@
+[package]
+name = "cratedb-rust-r2d2"
+version = "0.0.0"
+edition = "2024"
+
+[dependencies]
+postgres = "0.19.12"
+r2d2_postgres = "0.18.2"
