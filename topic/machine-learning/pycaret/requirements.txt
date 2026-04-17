@@ -1,5 +1,5 @@
 # Real.
-dask==2024.12.1
+dask==2026.3.0
 mlflow-cratedb==3.10.2
 plotly<6.8
 pycaret[models,parallel,test]==3.3.2
