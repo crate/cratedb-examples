@@ -34,10 +34,10 @@ os.environ["MLFLOW_TRACKING_URI"] = DBURI_MLFLOW
 
 def prepare_data():
     target_data = pd.read_csv(
-        "https://data.4tu.nl/file/539debdb-a325-412d-b024-593f70cba15b/a801f5d4-5dfe-412a-ace2-a64f93ad0010"
+        "https://cdn.crate.io/downloads/datasets/cratedb-datasets/machine-learning/timeseries/4tu-a801f5d4-5dfe-412a-ace2-a64f93ad0010.csv"
     )
     related_data = pd.read_csv(
-        "https://data.4tu.nl/file/539debdb-a325-412d-b024-593f70cba15b/f2bd27bd-deeb-4933-bed7-29325ee05c2e",
+        "https://cdn.crate.io/downloads/datasets/cratedb-datasets/machine-learning/timeseries/4tu-f2bd27bd-deeb-4933-bed7-29325ee05c2e.csv",
         header=None,
     )
     related_data.columns = ["item", "org", "date", "unit_price"]
