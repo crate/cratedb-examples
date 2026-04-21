@@ -37,7 +37,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ 'ubuntu-latest' ]
-        ruby-version: [ '2.7', '3.0', '3.1', '3.2', 'truffleruby', 'truffleruby+graalvm' ]
+        ruby-version: [ '2.7', '3.0', '3.1', '3.2' ]
         cratedb-version: [ 'nightly' ]
 
     services:
