@@ -1,1 +1,1 @@
-turbodbc>=5.1.1,<6
+turbodbc>=5.2.0,<6
