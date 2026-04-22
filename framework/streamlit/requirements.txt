@@ -1,2 +1,2 @@
 streamlit==1.*
-sqlalchemy-cratedb>=0.41.0.dev2
+sqlalchemy-cratedb>=0.42.0.dev2
