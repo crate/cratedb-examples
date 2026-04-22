@@ -2,5 +2,5 @@ adbc-driver-postgresql<1.12
 connectorx>=0.4.5
 pandas<3.1
 polars<1.41
-pyarrow<24
+pyarrow<25
 sqlalchemy-cratedb>=0.42.0.dev2
