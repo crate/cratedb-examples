@@ -20,7 +20,7 @@ function setup() {
 function test_kafka() {
   # Use specific version of Xonsh until #6354 is resolved.
   # https://github.com/xonsh/xonsh/issues/6354
-  uvx 'xonsh==0.22.*' kafka-demo.xsh
+  uvx 'xonsh==0.23.1' kafka-demo.xsh
 }
 
 # Invoke Elasticsearch tests.
