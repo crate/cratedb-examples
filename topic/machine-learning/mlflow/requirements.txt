@@ -1,6 +1,6 @@
 # Real.
 dask>=2026.3.0  # Python 3.11.9 breaks previous Dask
-distributed>=2024.4.1  # Python 3.11.9 breaks previous Dask
+distributed>=2026.3.0  # Python 3.11.9 breaks previous Dask
 mlflow-cratedb==3.10.2
 pydantic<3
 salesforce-merlion>=2,<3
