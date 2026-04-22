@@ -1,5 +1,5 @@
 adbc-driver-postgresql<1.12
-connectorx>=0.4.5a1
+connectorx>=0.4.5
 pandas<3.1
 polars<1.41
 pyarrow<24
