@@ -4,4 +4,4 @@ dask[dataframe]>=2026.3.0   # Python 3.11.9 breaks previous Dask
 distributed>=2024.4.1       # Python 3.11.9 breaks previous Dask
 pandas<3.1
 pueblo>=0.0.18
-sqlalchemy-cratedb>=0.41.0.dev2
+sqlalchemy-cratedb>=0.42.0.dev2
