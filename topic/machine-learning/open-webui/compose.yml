@@ -62,7 +62,7 @@ services:
   # Open WebUI
   # ----------
   open-webui:
-    image: ghcr.io/open-webui/open-webui:v0.8.12
+    image: ghcr.io/open-webui/open-webui:v0.9.1
     # https://docs.openwebui.com/getting-started/env-configuration
     # https://docs.openwebui.com/getting-started/api-endpoints/#swagger-documentation-links
     environment:
