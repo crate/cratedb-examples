@@ -2,7 +2,6 @@ name: PyCaret
 
 on:
   pull_request:
-    branches: ~
     paths:
     - '.github/workflows/ml-pycaret.yml'
     - 'topic/machine-learning/pycaret/**'
@@ -46,7 +45,7 @@ jobs:
 
     services:
       cratedb:
-        image: crate/crate:${{ matrix.cratedb-version }}
+        image: docker.io/crate/crate:${{ matrix.cratedb-version }}
         ports:
           - 4200:4200
           - 5432:5432
@@ -69,7 +68,7 @@ jobs:
             requirements.txt
             topic/machine-learning/pycaret/requirements*.txt
           cache-suffix: ${{ matrix.python-version }}
-          enable-cache: true
+          enable-cache: 'true'
           python-version: ${{ matrix.python-version }}
 
       - name: Install utilities
