@@ -38,7 +38,7 @@ public class TestJdbcUrlScheme {
     public void testReadSummitsCrateDB() throws SQLException, IOException {
         // NOTE: Please note `jdbc:tc:crate` will not work, only `jdbc:tc:cratedb`.
         //       => `java.lang.UnsupportedOperationException: Database name crate not supported`
-        String connectionUrl = "jdbc:tc:cratedb:5.10://localhost/doc?user=crate";
+        String connectionUrl = "jdbc:tc:cratedb:6.2://localhost/doc?user=crate";
         System.out.printf("Connecting to %s%n", connectionUrl);
 
         // Invoke example query.
@@ -53,7 +53,7 @@ public class TestJdbcUrlScheme {
      */
     @Test
     public void testReadSummitsCrateDBWithDaemon() throws SQLException, IOException {
-        String connectionUrl = "jdbc:tc:cratedb:5.10://localhost/doc?user=crate&TC_DAEMON=true";
+        String connectionUrl = "jdbc:tc:cratedb:6.2://localhost/doc?user=crate&TC_DAEMON=true";
         System.out.printf("Connecting to %s%n", connectionUrl);
 
         // Invoke example query.
@@ -68,7 +68,7 @@ public class TestJdbcUrlScheme {
      */
     @Test
     public void testReadSummitsCrateDBWithReuse() throws SQLException, IOException {
-        String connectionUrl = "jdbc:tc:cratedb:5.10://localhost/doc?user=crate&TC_REUSABLE=true";
+        String connectionUrl = "jdbc:tc:cratedb:6.2://localhost/doc?user=crate&TC_REUSABLE=true";
         System.out.printf("Connecting to %s%n", connectionUrl);
 
         // Invoke example query.

@@ -23,7 +23,7 @@ Usage
 
 Run CrateDB::
 
-    docker run -it --rm --publish=4200:4200 --publish=5432:5432 crate:5.1.1
+    docker run -it --rm --publish=4200:4200 --publish=5432:5432 docker.io/crate:latest
 
 Install example program::
 
