@@ -32,12 +32,12 @@ public class CrateDBTestResource implements QuarkusTestResourceLifecycleManager 
 
     private void startContainer() {
         // Run CrateDB latest.
-        DockerImageName image = dockerImageLatest();
+        DockerImageName image = dockerImageNightly();
         cratedb = new CrateDBContainer(image);
         cratedb.start();
     }
 
-    public static DockerImageName dockerImageLatest() {
+    public static DockerImageName dockerImageNightly() {
         return DockerImageName.parse("docker.io/crate/crate:nightly").asCompatibleSubstituteFor("crate");
     }
 }

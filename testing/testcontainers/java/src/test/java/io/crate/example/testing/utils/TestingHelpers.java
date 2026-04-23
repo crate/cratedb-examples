@@ -13,6 +13,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 public final class TestingHelpers {
 
     public static DockerImageName nameFromLabel(String label) {
+        // The three branches correctly map to two distinct Docker Hub repos:
+        // - `docker.io/crate:<label>` resolves to the official library/crate image
+        //   for stable releases (where tags like 6.2 and latest are maintained)
+        // - `docker.io/crate/crate:nightly` targets the separate crate/crate
+        //   repository for testing and nightly builds.
         String fullImageName;
         if (label == null) {
             fullImageName = "docker.io/crate:latest";

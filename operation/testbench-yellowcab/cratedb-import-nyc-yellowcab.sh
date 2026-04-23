@@ -12,7 +12,7 @@
 
 # 0. Define variables.
 CONTAINER_NAME=${CONTAINER_NAME:-cratedb}
-CRATEDB_IMAGE=${CRATEDB_IMAGE:-docker.io/crate/crate:nightly}
+CRATEDB_IMAGE=${CRATEDB_IMAGE:-docker.io/crate:latest}
 
 # 0. Sanity checks
 if [ ! $(command -v docker) ]; then
