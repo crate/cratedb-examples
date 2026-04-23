@@ -111,7 +111,7 @@ services:
   # CrateDB
   # -------
   cratedb:
-    image: crate:${CRATEDB_VERSION}
+    image: docker.io/crate/crate:${CRATEDB_VERSION:-nightly}
     ports:
       - "${CRATEDB_HTTP_PORT}:${CRATEDB_HTTP_PORT}"
       - "${CRATEDB_POSTGRESQL_PORT}:${CRATEDB_POSTGRESQL_PORT}"

@@ -91,7 +91,7 @@ services:
 
   # Reset data in CrateDB.
   cratedb-reset:
-    image: docker.io/crate:6.1.2
+    image: docker.io/crate/crate:nightly
     entrypoint: ["/bin/sh", "-c"]
     command: >
       """
@@ -107,7 +107,7 @@ services:
 
   # Query data in CrateDB.
   cratedb-query:
-    image: docker.io/crate:6.1.2
+    image: docker.io/crate/crate:nightly
     entrypoint: ["/bin/sh", "-c"]
     command: >
       """
