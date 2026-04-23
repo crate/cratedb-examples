@@ -66,7 +66,7 @@ Usage
     ./gradlew test --tests TestFunctionScope --info
 
     # Run test case showing how to select CrateDB version per environment variable.
-    export CRATEDB_VERSION=5.10.3
+    export CRATEDB_VERSION=6.2
     export CRATEDB_VERSION=nightly
     ./gradlew test --tests TestSqlInitialization
 

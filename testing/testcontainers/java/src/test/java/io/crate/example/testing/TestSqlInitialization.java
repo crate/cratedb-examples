@@ -23,7 +23,7 @@ public class TestSqlInitialization {
      */
     @Test
     public void testTcInitClasspathFile() throws SQLException, IOException {
-        String connectionUrl = "jdbc:tc:cratedb:5.10://localhost/doc?user=crate&TC_REUSABLE=true&TC_INITSCRIPT=init.sql";
+        String connectionUrl = "jdbc:tc:cratedb:6.2://localhost/doc?user=crate&TC_REUSABLE=true&TC_INITSCRIPT=init.sql";
         System.out.printf("Connecting to %s%n", connectionUrl);
 
         // Invoke `SHOW CREATE TABLE ...` query.
@@ -39,7 +39,7 @@ public class TestSqlInitialization {
      */
     @Test
     public void testTcInitArbitraryFile() throws SQLException, IOException {
-        String connectionUrl = "jdbc:tc:cratedb:5.10://localhost/doc?user=crate&TC_REUSABLE=true&TC_INITSCRIPT=file:src/test/resources/init.sql";
+        String connectionUrl = "jdbc:tc:cratedb:6.2://localhost/doc?user=crate&TC_REUSABLE=true&TC_INITSCRIPT=file:src/test/resources/init.sql";
         System.out.printf("Connecting to %s%n", connectionUrl);
 
         // Invoke `SHOW CREATE TABLE ...` query.
@@ -55,7 +55,7 @@ public class TestSqlInitialization {
      */
     @Test
     public void testTcInitFunction() throws SQLException, IOException {
-        String connectionUrl = "jdbc:tc:cratedb:5.10://localhost/doc?user=crate&TC_INITFUNCTION=io.crate.example.testing.utils.TestingHelpers::sqlInitFunction";
+        String connectionUrl = "jdbc:tc:cratedb:6.2://localhost/doc?user=crate&TC_INITFUNCTION=io.crate.example.testing.utils.TestingHelpers::sqlInitFunction";
         System.out.printf("Connecting to %s%n", connectionUrl);
 
         // Invoke `SHOW CREATE TABLE ...` query.

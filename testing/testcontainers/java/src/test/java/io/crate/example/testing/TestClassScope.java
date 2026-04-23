@@ -27,7 +27,7 @@ import static io.crate.example.testing.utils.TestingHelpers.assertResults;
 public class TestClassScope {
 
     @Container
-    public static CrateDBContainer cratedb = new CrateDBContainer(TestingHelpers.nameFromLabel("5.10"));
+    public static CrateDBContainer cratedb = new CrateDBContainer(TestingHelpers.nameFromLabel("6.2"));
 
     @Test
     public void testReadSummits() throws SQLException, IOException {
