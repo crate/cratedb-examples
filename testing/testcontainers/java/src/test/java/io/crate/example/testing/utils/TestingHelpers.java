@@ -15,12 +15,12 @@ public final class TestingHelpers {
     public static DockerImageName nameFromLabel(String label) {
         String fullImageName;
         if (label == null) {
-            fullImageName = "crate:latest";
+            fullImageName = "docker.io/crate:latest";
         } else {
             if (label.equals("nightly")) {
-                fullImageName = "crate/crate:nightly";
+                fullImageName = "docker.io/crate/crate:nightly";
             } else {
-                fullImageName = String.format("crate:%s", label);
+                fullImageName = String.format("docker.io/crate:%s", label);
             }
         }
         return DockerImageName.parse(fullImageName).asCompatibleSubstituteFor("crate");
