@@ -38,6 +38,6 @@ public class CrateDBTestResource implements QuarkusTestResourceLifecycleManager 
     }
 
     public static DockerImageName dockerImageLatest() {
-        return DockerImageName.parse("crate:latest").asCompatibleSubstituteFor("crate");
+        return DockerImageName.parse("docker.io/crate/crate:nightly").asCompatibleSubstituteFor("crate");
     }
 }

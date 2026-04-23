@@ -28,7 +28,7 @@ services:
         condition: service_healthy
 
   crate:
-    image: crate:latest
+    image: docker.io/crate/crate:${CRATEDB_VERSION:-nightly}
     ports:
       - "4200:4200"
     command: [ "crate",
