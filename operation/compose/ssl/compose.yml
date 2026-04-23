@@ -5,7 +5,7 @@ name: cratedb-with-ssl
 services:
 
   cratedb:
-    image: crate/crate:nightly
+    image: docker.io/crate/crate:nightly
     command: ["crate", "-Cstats.enabled=true"]
     ports:
       - 4200:4200
