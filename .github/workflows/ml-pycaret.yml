@@ -17,9 +17,9 @@ on:
   # Allow job to be triggered manually.
   workflow_dispatch:
 
-  # AutoML runs work best on day times.
+  # Run job each night after CrateDB nightly has been published.
   schedule:
-    - cron: '0 10 * * *'
+    - cron: '0 4 * * *'
 
 # Cancel in-progress jobs when pushing to the same branch.
 concurrency:
