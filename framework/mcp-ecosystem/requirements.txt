@@ -1,5 +1,5 @@
 cratedb-mcp>=0.1.1
-cratedb-toolkit>=0.0.46
+cratedb-toolkit>=0.0.47
 mcp-alchemy~=2025.8
 pueblo[mcp]>=0.0.18
 sqlalchemy-cratedb>=0.42.0.dev2
