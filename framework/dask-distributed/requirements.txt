@@ -1,0 +1,1 @@
+cratedb-toolkit[io,io-opentable] @ git+https://github.com/crate/cratedb-toolkit@io-dask
