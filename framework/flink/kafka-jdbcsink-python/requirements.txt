@@ -2,7 +2,7 @@ apache-beam==2.48.0
 apache-flink==1.18.1
 apache-flink-libraries==1.18.1
 avro-python3==1.10.2
-certifi==2024.2.2
+certifi==2024.7.4
 charset-normalizer==3.3.2
 cloudpickle==2.2.1
 crate>=2.0.0.dev6
@@ -18,7 +18,7 @@ greenlet==3.0.3
 grpcio==1.62.0
 hdfs==2.7.3
 httplib2==0.22.0
-idna==3.6
+idna==3.7
 kafka-python==2.0.2
 numpy==1.24.4
 objsize==0.6.1
@@ -26,11 +26,11 @@ orjson==3.9.15
 pandas==2.2.1
 pemja==0.3.0
 proto-plus==1.23.0
-protobuf==4.23.4
+protobuf==5.29.6
 py4j==0.10.9.7
-pyarrow==11.0.0
+pyarrow==14.0.1
 pydot==1.4.2
-pymongo==4.6.2
+pymongo==4.6.3
 pyparsing==3.1.2
 python-dateutil==2.9.0.post0
 pytz==2024.1
@@ -40,5 +40,5 @@ six==1.16.0
 SQLAlchemy==2.0.28
 typing_extensions==4.10.0
 tzdata==2024.1
-urllib3==2.0.7
+urllib3==2.6.3
 zstandard==0.22.0
