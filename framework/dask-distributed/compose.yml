@@ -1,0 +1,89 @@
+services:
+
+  cratedb:
+    image: docker.io/crate/crate:${CRATEDB_VERSION:-latest}
+    command: >
+      crate
+        '-Cdiscovery.type=single-node'
+        '-Cstats.enabled=true'
+        '-Ccluster.routing.allocation.disk.threshold_enabled=false'
+    ports:
+      - "4200:4200"
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:4200"]
+      start_period: 3s
+      interval: 1.5s
+      retries: 30
+      timeout: 30s
+
+  dask-scheduler:
+    build:
+      context: .
+    command: dask scheduler --dashboard
+    ports:
+      - "8786:8786"
+      - "8787:8787"
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "-O", "-", "http://localhost:8787/health"]
+      start_period: 3s
+      interval: 1.5s
+      retries: 30
+      timeout: 30s
+
+  dask-worker:
+    build:
+      context: .
+    command: dask worker --dashboard --dashboard-address ":8789"
+    environment:
+      DASK_SCHEDULER_ADDRESS: "tcp://dask-scheduler:8786"
+    depends_on:
+      dask-scheduler:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "-O", "-", "http://localhost:8789/health"]
+      start_period: 3s
+      interval: 1.5s
+      retries: 30
+      timeout: 30s
+
+  export-to-deltalake:
+    build:
+      context: .
+    command: >
+      ctk --debug save
+        "crate://crate:crate@cratedb/sys/summits"
+        "file+deltalake:///var/delta/summits?mode=overwrite"
+    environment:
+      DASK_SCHEDULER_ADDRESS: "tcp://dask-scheduler:8786"
+    profiles:
+      - tasks
+
+  verify:
+    build:
+      context: .
+    entrypoint:
+      - /bin/sh
+      - '-c'
+    command:
+      - |
+        python - <<EOF
+        import os
+        import sys
+        from dask.distributed import Client
+        address = os.environ["DASK_SCHEDULER_ADDRESS"]
+        with Client(address) as client:
+          tasks = client.get_task_stream()
+          if os.getenv("mode") == "ping":
+            sys.exit(0)
+          if not tasks:
+            raise RuntimeError("No tasks have been submitted")
+          task = tasks[-1]
+          assert task["key"].startswith("save_table"), f"Task has wrong key: {task['key']}"
+          assert task["status"] == "OK", f"Task status not OK: {task['status']}"
+          print("SUCCESS")
+        EOF
+    environment:
+      DASK_SCHEDULER_ADDRESS: "tcp://dask-scheduler:8786"
+    profiles:
+      - tasks

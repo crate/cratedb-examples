@@ -186,6 +186,22 @@ updates:
 
   # Frameworks.
 
+  - directory: "/framework/dask-distributed"
+    package-ecosystem: "pip"
+    versioning-strategy: "widen"
+    schedule:
+      interval: "daily"
+
+  - directory: "/framework/dask-distributed"
+    package-ecosystem: "docker"
+    schedule:
+      interval: "daily"
+
+  - directory: "/framework/dask-distributed"
+    package-ecosystem: "docker-compose"
+    schedule:
+      interval: "daily"
+
   - directory: "/framework/dbt/basic"
     package-ecosystem: "pip"
     versioning-strategy: "widen"
