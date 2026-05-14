@@ -1,0 +1,27 @@
+services:
+
+  cratedb:
+    image: docker.io/crate/crate:${CRATEDB_VERSION:-latest}
+    command: >
+      crate
+        '-Cdiscovery.type=single-node'
+        '-Cstats.enabled=true'
+    ports:
+      - "4200:4200"
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:4200"]
+      start_period: 3s
+      interval: 1.5s
+      retries: 30
+      timeout: 30s
+
+  scheduler:
+    build:
+      context: .
+    environment:
+      CRATEDB_CLUSTER_URL: "crate://crate:crate@cratedb:4200/"
+      CRATEDB_HTTP_URL: "http://crate:crate@cratedb:4200/"
+    depends_on:
+      cratedb:
+        condition: service_healthy
