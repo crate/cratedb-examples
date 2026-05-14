@@ -1,2 +1,2 @@
-plombery
-sqlalchemy-cratedb
+plombery>=0.4.0,<1.0
+sqlalchemy-cratedb>=0.40.0,<1.0

@@ -54,7 +54,7 @@ python {cron.py,worker.py}
 ```
 
 
-[Apache Airflow]: https://airflow.apache.org/
+[Airflow]: https://airflow.apache.org/
 [APScheduler]: https://pypi.org/project/APScheduler/
 [cron]: https://en.wikipedia.org/wiki/Cron
 [crontab guru]: https://crontab.guru/

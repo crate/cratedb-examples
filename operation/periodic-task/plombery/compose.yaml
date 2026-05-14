@@ -1,7 +1,7 @@
 services:
 
   cratedb:
-    image: docker.io/crate/crate:${CRATEDB_VERSION:-latest}
+    image: docker.io/crate:${CRATEDB_VERSION:-latest}
     command: >
       crate
         '-Cdiscovery.type=single-node'

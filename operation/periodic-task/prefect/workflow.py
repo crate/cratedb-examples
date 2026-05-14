@@ -24,7 +24,7 @@ def fetch_database():
             # Return the results of your task to have it stored
             # and accessible on the web UI.
             return record
-        logger.info("Fetched %s database rows", len(sales))
+        logger.info("Fetched database rows")
     except Exception:
         logger.exception("Database connection error")
 
