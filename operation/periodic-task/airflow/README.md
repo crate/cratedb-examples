@@ -30,28 +30,28 @@ Navigate to http://localhost:8080/.
 
 If your DAGs don't start running, check for any hard errors.
 ```shell
-docker exec -it airflow-scheduler-1 sh -c 'airflow dags list-import-errors'
+docker compose exec scheduler sh -c 'airflow dags list-import-errors'
 ```
 
 List available DAGs.
 ```shell
-docker exec -it airflow-scheduler-1 sh -c 'airflow dags list'
+docker compose exec scheduler sh -c 'airflow dags list'
 ```
 
 List runs of specific DAG.
 ```shell
-docker exec -it airflow-scheduler-1 sh -c 'airflow dags list-runs sys_summits'
-docker exec -it airflow-scheduler-1 sh -c 'airflow dags list-runs import_export'
+docker compose exec scheduler sh -c 'airflow dags list-runs sys_summits'
+docker compose exec scheduler sh -c 'airflow dags list-runs import_export'
 ```
 
 Invoke DAG workflow manually.
 ```shell
-docker exec -it airflow-scheduler-1 sh -c 'airflow dags trigger import_export'
+docker compose exec scheduler sh -c 'airflow dags trigger import_export'
 ```
 
 Check state of DAG.
 ```shell
-docker exec -it airflow-scheduler-1 sh -c 'airflow tasks state export_job export_to_s3 scheduled__2021-11-11T00:00:11+00:00'
+docker compose exec scheduler sh -c 'airflow tasks state export_job export_to_s3 scheduled__2021-11-11T00:00:11+00:00'
 ```
 
 

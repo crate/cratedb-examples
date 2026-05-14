@@ -1,2 +1,2 @@
-cratedb-toolkit[io,io-opentable]
-temporalio
+cratedb-toolkit[io,io-opentable]>=0.0.48
+temporalio<2

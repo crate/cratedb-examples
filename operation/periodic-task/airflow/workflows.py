@@ -27,7 +27,7 @@ with DAG(
     dag_id="sys_summits",
     description="Example DAG for plain-text SQL task.",
     default_args={"conn_id": "cratedb_connection"},
-    schedule="*/10 * * * * * *",  # @continuous, @daily
+    schedule="*/1 * * * *",  # @continuous, @daily
     catchup=False,
     max_active_runs=1,
 ):
@@ -44,7 +44,7 @@ with DAG(
     dag_id="import_export",
     description="Example DAG for SQLExecuteQueryOperator",
     default_args={"conn_id": "cratedb_connection"},
-    schedule="*/30 * * * * * *",  # @continuous, @daily
+    schedule="*/5 * * * *",  # @continuous, @daily
     catchup=False,
     max_active_runs=1,
 ):
@@ -61,7 +61,7 @@ with DAG(
     }
 
     ddl = SQLExecuteQueryOperator(
-        task_id=f"submit_ddl",
+        task_id="submit_ddl",
         conn_id="cratedb_connection",
         sql="""
         CREATE TABLE IF NOT EXISTS {{params.table}} (
@@ -76,7 +76,7 @@ with DAG(
     )
 
     insert = SQLExecuteQueryOperator(
-        task_id=f"import_from_http",
+        task_id="import_from_http",
         conn_id="cratedb_connection",
         sql="""
         COPY {{params.table}}
@@ -88,7 +88,7 @@ with DAG(
     )
 
     export = SQLExecuteQueryOperator(
-        task_id=f"export_to_s3",
+        task_id="export_to_s3",
         conn_id="cratedb_connection",
         sql="""
         COPY {{params.table}}
@@ -114,7 +114,7 @@ with DAG(
     dag_id="export_deltalake",
     description="Example DAG for CrateDB Toolkit I/O",
     default_args={"conn_id": "cratedb_connection"},
-    schedule="*/30 * * * * * *",  # @continuous, @daily
+    schedule="*/5 * * * *",  # @continuous, @daily
     catchup=False,
     max_active_runs=1,
 ):

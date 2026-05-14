@@ -1,2 +1,2 @@
-prefect
-sqlalchemy-cratedb
+prefect>=3.0.0,<4.0
+sqlalchemy-cratedb>=0.40.0,<1.0

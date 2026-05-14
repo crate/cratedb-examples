@@ -17,7 +17,6 @@ COPY requirements.txt .
 RUN --mount=type=cache,id=uv-${TARGETARCH}${TARGETVARIANT},target=/root/.cache/uv \
     uv pip install --requirements=requirements.txt
 
-# Add programs to be scheduled periodically to the `dags` folder.
-# Their schedule is defined inline with the program source.
+# Add the workflow program to be scheduled periodically.
 COPY workflow.py .
 CMD ["python", "workflow.py"]

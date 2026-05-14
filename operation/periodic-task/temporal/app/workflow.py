@@ -6,4 +6,4 @@ from temporalio import workflow
 class CronWorkflow:
     @workflow.run
     async def run(self) -> None:
-        print("Hello World")
+        workflow.logger.info("Hello World")
