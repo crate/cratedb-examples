@@ -1,0 +1,2 @@
+cratedb-toolkit[io,io-opentable]
+temporalio
