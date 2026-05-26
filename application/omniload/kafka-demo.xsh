@@ -4,12 +4,11 @@
 # Accompanies `kafka-compose.yml` and `.env` files.
 
 # End-to-end test feeding data through a pipeline implemented with Apache Kafka,
-# ingestr, and CrateDB. The data source is a file in NDJSON format, the
+# omniload, and CrateDB. The data source is a file in NDJSON format, the
 # data sink is a database table in CrateDB.
 
 
 $XONSH_SHOW_TRACEBACK = True
-$INGESTR_DISABLE_TELEMETRY = True
 
 
 # Compute path to directory of current program.
@@ -122,19 +121,18 @@ class Datawrapper:
     def load(self):
         """Load data into CrateDB"""
 
-        # Invoke ingestr job.
-        title "Invoking ingestr job"
+        # Invoke omniload job.
+        title "Invoking omniload job"
 
         result = ![
-            uvx --python=3.12 --prerelease=allow --with-requirements=kafka-requirements.txt \
-                ingestr ingest --yes \
+            omniload ingest \
                 --source-uri "kafka://?bootstrap_servers=localhost:9092&group_id=test_group&value_type=json&select=value" \
                 --source-table "demo" \
                 --dest-uri "cratedb://crate:crate@localhost:5432/?sslmode=disable" \
                 --dest-table "doc.kafka_demo"
         ]
         if result.returncode != 0:
-            echo "ERROR: Failed to ingest data using ingestr"
+            echo "ERROR: Failed to ingest data using omniload"
             exit 1
         echo "Done."
         return self
