@@ -1,15 +1,15 @@
-name: "ingestr"
+name: "omniload"
 
 on:
   pull_request:
     paths:
-    - '.github/workflows/application-ingestr.yml'
-    - 'application/ingestr/**'
+    - '.github/workflows/application-omniload.yml'
+    - 'application/omniload/**'
   push:
     branches: [ main ]
     paths:
-    - '.github/workflows/application-ingestr.yml'
-    - 'application/ingestr/**'
+    - '.github/workflows/application-omniload.yml'
+    - 'application/omniload/**'
 
   # Allow job to be triggered manually.
   workflow_dispatch:
@@ -46,6 +46,8 @@ jobs:
           enable-cache: true
           python-version: '3.14'
 
-      - name: Validate application/ingestr
+      - name: Validate application/omniload
         run: |
-          uv run --with-requirements=requirements.txt ngr test application/ingestr
+          cd application/omniload
+          uv pip install -r requirements.txt
+          sh test.sh

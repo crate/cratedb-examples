@@ -1,1 +1,0 @@
-ingestr @ git+https://github.com/crate-workbench/ingestr.git@kafka-decoder
