@@ -18,331 +18,331 @@ updates:
 
   - directory: "/"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
+    versioning-strategy: "auto"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   # Languages.
 
   - directory: "/by-dataframe/dask"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
+    versioning-strategy: "auto"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/by-dataframe/pandas"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
+    versioning-strategy: "auto"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/by-dataframe/polars"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
+    versioning-strategy: "auto"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/by-language/csharp-efcore"
     package-ecosystem: "nuget"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/by-language/csharp-npgsql"
     package-ecosystem: "nuget"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/by-language/elixir-postgrex"
     package-ecosystem: "mix"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/by-language/go-pgx"
     package-ecosystem: "gomod"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/by-language/java-jdbc"
     package-ecosystem: "maven"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/by-language/java-jooq"
     package-ecosystem: "gradle"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/by-language/java-qa"
     package-ecosystem: "maven"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/by-language/php-amphp"
     package-ecosystem: "composer"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/by-language/php-pdo"
     package-ecosystem: "composer"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/by-language/python-connectorx"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
+    versioning-strategy: "auto"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/by-language/python-dbapi"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
+    versioning-strategy: "auto"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/by-language/python-sqlalchemy"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
+    versioning-strategy: "auto"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/by-language/python-turbodbc"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
+    versioning-strategy: "auto"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/by-language/ruby"
     package-ecosystem: "bundler"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/by-language/rust-r2d2"
     package-ecosystem: "cargo"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/by-language/rust-postgres"
     package-ecosystem: "cargo"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   # Applications.
 
   - directory: "/application/apache-superset"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
+    versioning-strategy: "auto"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/application/cratedb-toolkit"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
+    versioning-strategy: "auto"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/application/grafana"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
+    versioning-strategy: "auto"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/application/grafana"
     package-ecosystem: "docker-compose"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/application/ingestr"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
+    versioning-strategy: "auto"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/application/ingestr"
     package-ecosystem: "docker-compose"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/application/metabase"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
+    versioning-strategy: "auto"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/application/metabase"
     package-ecosystem: "docker-compose"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/application/pgpool"
     package-ecosystem: "docker-compose"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/application/records"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
+    versioning-strategy: "auto"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   # Frameworks.
 
   - directory: "/framework/dask-distributed"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
+    versioning-strategy: "auto"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/framework/dask-distributed"
     package-ecosystem: "docker"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/framework/dask-distributed"
     package-ecosystem: "docker-compose"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/framework/dbt/basic"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
+    versioning-strategy: "auto"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/framework/dbt/materialize"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
+    versioning-strategy: "auto"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/framework/dlt"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
+    versioning-strategy: "auto"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/framework/flink/kafka-jdbcsink-java"
     package-ecosystem: "docker-compose"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/framework/gradio"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
+    versioning-strategy: "auto"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/framework/meltano"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
+    versioning-strategy: "auto"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/framework/mcp-cratedb"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
+    versioning-strategy: "auto"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/framework/mcp-ecosystem"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
+    versioning-strategy: "auto"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/framework/records"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
+    versioning-strategy: "auto"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/framework/streamlit"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
+    versioning-strategy: "auto"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   # Operation.
 
   - directory: "/operation/compose/ssl"
     package-ecosystem: "docker-compose"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   # Topics.
 
   - directory: "/topic/machine-learning/pycaret"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
+    versioning-strategy: "auto"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/topic/machine-learning/langchain"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
+    versioning-strategy: "auto"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/topic/machine-learning/llama-index"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
+    versioning-strategy: "auto"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/topic/machine-learning/llm"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
+    versioning-strategy: "auto"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/topic/machine-learning/mlflow"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
+    versioning-strategy: "auto"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/topic/machine-learning/open-webui"
     package-ecosystem: "docker-compose"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/topic/machine-learning/open-webui/init"
     package-ecosystem: "docker"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/topic/timeseries"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
+    versioning-strategy: "auto"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   # Testing.
 
   - directory: "/testing/testcontainers/java"
     package-ecosystem: "gradle"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/testing/native/python-pytest"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
+    versioning-strategy: "auto"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/testing/native/python-unittest"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
+    versioning-strategy: "auto"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/testing/testcontainers/python-pytest"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
+    versioning-strategy: "auto"
     schedule:
-      interval: "daily"
+      interval: "month"
 
   - directory: "/testing/testcontainers/python-unittest"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
+    versioning-strategy: "auto"
     schedule:
-      interval: "daily"
+      interval: "month"
