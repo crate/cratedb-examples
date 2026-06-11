@@ -318,6 +318,11 @@ updates:
 
   # Testing.
 
+  - directory: "/testing/testcontainers/go-pgx"
+    package-ecosystem: "gomod"
+    schedule:
+      interval: "daily"
+
   - directory: "/testing/testcontainers/java"
     package-ecosystem: "gradle"
     schedule:
