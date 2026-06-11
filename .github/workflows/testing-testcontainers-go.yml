@@ -1,0 +1,60 @@
+name: Testcontainers for Go
+
+on:
+  pull_request:
+    branches: ~
+    paths:
+    - '.github/workflows/testing-testcontainers-go.yml'
+    - 'testing/testcontainers/go**'
+  push:
+    branches: [ main ]
+    paths:
+    - '.github/workflows/testing-testcontainers-go.yml'
+    - 'testing/testcontainers/go**'
+
+  # Allow job to be triggered manually.
+  workflow_dispatch:
+
+  # Run job each night after CrateDB nightly has been published.
+  schedule:
+    - cron: '0 3 * * *'
+
+# Cancel in-progress jobs when pushing to the same branch.
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  test:
+    name: "
+     Go: ${{ matrix.go-version }}
+     CrateDB: ${{ matrix.cratedb-version }}
+     on ${{ matrix.os }}"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ 'ubuntu-latest' ]
+        cratedb-version: [ 'nightly' ]
+        go-version:
+          - '1.26.x'
+
+    # Note: No `services: cratedb` block is needed here. Unlike the
+    # `by-language/go-pgx` example, Testcontainers starts CrateDB itself, using
+    # the Docker engine available on the runner.
+    env:
+      CRATEDB_VERSION: ${{ matrix.cratedb-version }}
+
+    steps:
+
+      - name: Acquire sources
+        uses: actions/checkout@v6
+
+      - name: Install Go
+        uses: actions/setup-go@v6
+        with:
+          go-version: ${{ matrix.go-version }}
+
+      - name: Validate testing/testcontainers/go-pgx
+        working-directory: testing/testcontainers/go-pgx
+        run: go test -v ./...
