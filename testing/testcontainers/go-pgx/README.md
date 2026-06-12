@@ -28,6 +28,26 @@ port 4200.
   `/_sql` REST interface on port 4200, complementing the pgx wire-protocol
   tests.
 
+## Container scope
+
+Starting a container is expensive (a few seconds each), so the examples show two
+strategies for managing CrateDB's lifecycle in a test suite:
+
+- **Shared, package-scoped** ([`shared_test.go`](shared_test.go)) — one CrateDB
+  is started once for the whole package in `TestMain` and reused, through a
+  single `sharedConn`, by every test that doesn't need isolation. This is the
+  default: it keeps the suite fast. The trade-off is that tests share state, so
+  they must not depend on a clean database or leak data that confuses one
+  another.
+- **Per-test** ([`function_scope_test.go`](function_scope_test.go)) — each test
+  starts its own throwaway CrateDB and tears it down via `t.Cleanup`. Reach for
+  this only when a test genuinely needs a pristine instance — for example when it
+  changes cluster-wide settings or wants to pin a different CrateDB version — and
+  accept the extra startup cost per test.
+
+As a rule of thumb: prefer the shared container, and isolate a single test with
+its own container only when sharing would make it flaky.
+
 ## Usage
 
 1. Make sure Go (1.25+) and a Docker engine are available — Testcontainers starts
