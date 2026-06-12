@@ -1,5 +1,5 @@
 # Real.
-dask>=2026.3.0  # Python 3.11.9 breaks previous Dask
+dask>=2026.6.0  # Python 3.11.9 breaks previous Dask
 distributed>=2026.3.0  # Python 3.11.9 breaks previous Dask
 mlflow-cratedb==3.12.0
 pydantic<3
