@@ -18,7 +18,6 @@ updates:
 
   - directory: "/"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
     schedule:
       interval: "daily"
 
@@ -26,19 +25,16 @@ updates:
 
   - directory: "/by-dataframe/dask"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
     schedule:
       interval: "daily"
 
   - directory: "/by-dataframe/pandas"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
     schedule:
       interval: "daily"
 
   - directory: "/by-dataframe/polars"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
     schedule:
       interval: "daily"
 
@@ -89,25 +85,21 @@ updates:
 
   - directory: "/by-language/python-connectorx"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
     schedule:
       interval: "daily"
 
   - directory: "/by-language/python-dbapi"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
     schedule:
       interval: "daily"
 
   - directory: "/by-language/python-sqlalchemy"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
     schedule:
       interval: "daily"
 
   - directory: "/by-language/python-turbodbc"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
     schedule:
       interval: "daily"
 
@@ -130,19 +122,16 @@ updates:
 
   - directory: "/application/apache-superset"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
     schedule:
       interval: "daily"
 
   - directory: "/application/cratedb-toolkit"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
     schedule:
       interval: "daily"
 
   - directory: "/application/grafana"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
     schedule:
       interval: "daily"
 
@@ -153,7 +142,6 @@ updates:
 
   - directory: "/application/ingestr"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
     schedule:
       interval: "daily"
 
@@ -164,7 +152,6 @@ updates:
 
   - directory: "/application/metabase"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
     schedule:
       interval: "daily"
 
@@ -180,7 +167,6 @@ updates:
 
   - directory: "/application/records"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
     schedule:
       interval: "daily"
 
@@ -188,7 +174,6 @@ updates:
 
   - directory: "/framework/dask-distributed"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
     schedule:
       interval: "daily"
 
@@ -204,19 +189,16 @@ updates:
 
   - directory: "/framework/dbt/basic"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
     schedule:
       interval: "daily"
 
   - directory: "/framework/dbt/materialize"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
     schedule:
       interval: "daily"
 
   - directory: "/framework/dlt"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
     schedule:
       interval: "daily"
 
@@ -227,37 +209,31 @@ updates:
 
   - directory: "/framework/gradio"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
     schedule:
       interval: "daily"
 
   - directory: "/framework/meltano"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
     schedule:
       interval: "daily"
 
   - directory: "/framework/mcp-cratedb"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
     schedule:
       interval: "daily"
 
   - directory: "/framework/mcp-ecosystem"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
     schedule:
       interval: "daily"
 
   - directory: "/framework/records"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
     schedule:
       interval: "daily"
 
   - directory: "/framework/streamlit"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
     schedule:
       interval: "daily"
 
@@ -272,31 +248,26 @@ updates:
 
   - directory: "/topic/machine-learning/pycaret"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
     schedule:
       interval: "daily"
 
   - directory: "/topic/machine-learning/langchain"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
     schedule:
       interval: "daily"
 
   - directory: "/topic/machine-learning/llama-index"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
     schedule:
       interval: "daily"
 
   - directory: "/topic/machine-learning/llm"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
     schedule:
       interval: "daily"
 
   - directory: "/topic/machine-learning/mlflow"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
     schedule:
       interval: "daily"
 
@@ -312,7 +283,6 @@ updates:
 
   - directory: "/topic/timeseries"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
     schedule:
       interval: "daily"
 
@@ -330,24 +300,20 @@ updates:
 
   - directory: "/testing/native/python-pytest"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
     schedule:
       interval: "daily"
 
   - directory: "/testing/native/python-unittest"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
     schedule:
       interval: "daily"
 
   - directory: "/testing/testcontainers/python-pytest"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
     schedule:
       interval: "daily"
 
   - directory: "/testing/testcontainers/python-unittest"
     package-ecosystem: "pip"
-    versioning-strategy: "widen"
     schedule:
       interval: "daily"
