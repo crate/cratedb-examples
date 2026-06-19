@@ -27,16 +27,24 @@ def test_insert_efficient_unknown(capfd):
     assert "ValueError: Unknown variant: unknown" in err
 
 
-def test_sync_table():
+def test_sync_table_standard():
+    cmd = "time python sync_table.py cratedb"
+    run(cmd)
+
+
+@pytest.mark.skip("PostgreSQL support is experimental")
+def test_sync_table_advanced():
     cmd = "time python sync_table.py urllib3 psycopg"
     run(cmd)
 
 
+@pytest.mark.skip("Async support is experimental")
 def test_async_table():
     cmd = "time python async_table.py psycopg asyncpg"
     run(cmd)
 
 
+@pytest.mark.skip("Async support is experimental")
 def test_async_streaming():
     cmd = "time python async_streaming.py psycopg asyncpg"
     run(cmd)

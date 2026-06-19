@@ -52,7 +52,8 @@ class SynchronousTableExample:
         """
         Provide an SQLAlchemy engine object.
         """
-        return sa.create_engine(self.dsn, isolation_level="AUTOCOMMIT", echo=True)
+        # TODO: Add `isolation_level="AUTOCOMMIT"` with sqlalchemy-cratedb >= 0.43
+        return sa.create_engine(self.dsn, echo=True)
 
     @property
     @lru_cache
@@ -149,7 +150,9 @@ def run_example(dsn: str):
 
 def run_drivers(drivers: t.List[str]):
     for driver in drivers:
-        if driver == "urllib3":
+        if driver == "cratedb":
+            dsn = "crate://localhost:4200/"
+        elif driver == "urllib3":
             dsn = "crate+urllib3://localhost:4200/doc"
         elif driver == "psycopg":
             dsn = "crate+psycopg://crate@localhost:5432/doc"
