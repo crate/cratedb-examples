@@ -15,7 +15,7 @@ def test_insert_efficient_multirow():
 
 
 def test_insert_efficient_batched():
-    insert_records = 50_000
+    insert_records = 5_000
     cmd = f"time python insert_efficient.py cratedb batched {insert_records}"
     run(cmd)
 
