@@ -8,7 +8,8 @@ def run(command: str):
 
 
 def test_insert_efficient_multirow():
-    insert_records = 25_000
+    # CrateDB enforces statement_max_length=262144; keep well under that limit.
+    insert_records = 5_000
     cmd = f"time python insert_efficient.py cratedb multirow {insert_records}"
     run(cmd)
 
