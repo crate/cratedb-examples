@@ -26,17 +26,20 @@ def test_insert_efficient_unknown(capfd):
     out, err = capfd.readouterr()
     assert "ValueError: Unknown variant: unknown" in err
 
-
+# TODO: Remove skip when psycopg/asyncpg dialect is released in sqlalchemy-cratedb
+@pytest.mark.skip(reason="psycopg/asyncpg dialect not yet in released sqlalchemy-cratedb")
 def test_sync_table():
     cmd = "time python sync_table.py urllib3 psycopg"
     run(cmd)
 
 
+@pytest.mark.skip(reason="psycopg/asyncpg dialect not yet in released sqlalchemy-cratedb")
 def test_async_table():
     cmd = "time python async_table.py psycopg asyncpg"
     run(cmd)
 
 
+@pytest.mark.skip(reason="psycopg/asyncpg dialect not yet in released sqlalchemy-cratedb")
 def test_async_streaming():
     cmd = "time python async_streaming.py psycopg asyncpg"
     run(cmd)
