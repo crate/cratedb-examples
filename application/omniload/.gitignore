@@ -1,0 +1,7 @@
+*.json
+*.ndjson
+*.tar.gz
+*.jar
+.venv*
+__pycache__
+!.env

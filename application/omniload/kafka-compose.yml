@@ -2,8 +2,8 @@
 # Accompanies `kafka-demo.xsh` and `.env` files.
 ---
 networks:
-  ingestr-demo:
-    name: ingestr-demo
+  omniload-demo:
+    name: omniload-demo
     driver: bridge
 
 services:
@@ -28,7 +28,7 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     networks:
-      - ingestr-demo
+      - omniload-demo
 
     # Define health check for Kafka broker.
     healthcheck:
@@ -55,7 +55,7 @@ services:
       "-Ccluster.routing.allocation.disk.threshold_enabled=false",
     ]
     networks:
-      - ingestr-demo
+      - omniload-demo
 
     # Define health check for CrateDB.
     healthcheck:
@@ -73,7 +73,7 @@ services:
   # Create Kafka topic.
   create-topic:
     image: docker.io/apache/kafka:4.2.0
-    networks: [ingestr-demo]
+    networks: [omniload-demo]
     command: /opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka:${PORT_KAFKA_BROKER_INTERNAL} --create --if-not-exists --replication-factor 1 --partitions 1 --topic demo
     deploy:
       replicas: 0
@@ -81,7 +81,7 @@ services:
   # Delete Kafka topic.
   delete-topic:
     image: docker.io/apache/kafka:4.2.0
-    networks: [ingestr-demo]
+    networks: [omniload-demo]
     command: /opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka:${PORT_KAFKA_BROKER_INTERNAL} --delete --if-exists --topic demo
     deploy:
       replicas: 0
@@ -89,7 +89,7 @@ services:
   # Publish data to Kafka topic.
   publish-topic:
     image: docker.io/apache/kafka:4.2.0
-    networks: [ingestr-demo]
+    networks: [omniload-demo]
     command: /opt/kafka/bin/kafka-console-producer.sh --bootstrap-server kafka:${PORT_KAFKA_BROKER_INTERNAL} --topic demo
     deploy:
       replicas: 0
@@ -97,7 +97,7 @@ services:
   # Subscribe to Kafka topic.
   subscribe-topic:
     image: docker.io/edenhill/kcat:1.7.1
-    networks: [ingestr-demo]
+    networks: [omniload-demo]
     command: kcat -b kafka -C -t demo  # -o end
     deploy:
       replicas: 0
@@ -109,7 +109,7 @@ services:
   # Create database table in CrateDB.
   create-table:
     image: docker.io/westonsteimel/httpie
-    networks: [ingestr-demo]
+    networks: [omniload-demo]
     command: http "${CRATEDB_HTTP_URL_DOCKER}/_sql?pretty" stmt='CREATE TABLE "kafka_demo" ("payload" OBJECT(DYNAMIC))' --ignore-stdin
     deploy:
       replicas: 0
@@ -117,7 +117,7 @@ services:
   # Drop database table in CrateDB.
   drop-table:
     image: docker.io/westonsteimel/httpie
-    networks: [ingestr-demo]
+    networks: [omniload-demo]
     command: http "${CRATEDB_HTTP_URL_DOCKER}/_sql?pretty" stmt='DROP TABLE IF EXISTS "kafka_demo"' --ignore-stdin
     deploy:
       replicas: 0
@@ -125,6 +125,6 @@ services:
   # Invoke HTTPie via Docker.
   httpie:
     image: docker.io/westonsteimel/httpie
-    networks: [ingestr-demo]
+    networks: [omniload-demo]
     deploy:
       replicas: 0
