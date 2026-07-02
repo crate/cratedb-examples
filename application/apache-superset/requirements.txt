@@ -2,3 +2,4 @@ apache-superset
 flask-jwt-extended>=4.7.1
 sqlalchemy-cratedb>=0.43.1
 rich
+cachetools

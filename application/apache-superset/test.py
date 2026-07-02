@@ -62,7 +62,7 @@ def test_ui():
         # Navigate to Apache Superset.
         page = browser.new_page()
         page.goto(uri_home)
-        page.wait_for_url("**/login/")
+        page.wait_for_url("**/login/**")
 
         # Run the login procedure.
         page.type("input#username", "admin")
