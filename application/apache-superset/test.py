@@ -1,4 +1,5 @@
 import requests
+from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 from playwright.sync_api import expect, sync_playwright
 
 from util import get_auth_headers
@@ -62,7 +63,7 @@ def test_ui():
         # Navigate to Apache Superset.
         page = browser.new_page()
         page.goto(uri_home)
-        page.wait_for_url("**/login/")
+        page.wait_for_url("**/login/**")
 
         # Run the login procedure.
         page.type("input#username", "admin")
@@ -70,14 +71,22 @@ def test_ui():
         page.click("[type=submit]")
         page.wait_for_load_state()
 
-        # Navigate to SQL Lab.
+        # Navigate to SQL Lab. Older Superset versions open a query editor tab
+        # automatically; newer ones (6.1+) start empty and require creating one.
         page.goto(uri_sqllab)
         page.wait_for_load_state()
+        try:
+            page.wait_for_selector(".ace_editor", timeout=5000)
+        except PlaywrightTimeoutError:
+            page.click('[data-test="add-tab-icon"]')
 
         # Invoke query on SQL Lab.
+        # The ace editor's DOM id is randomly generated per tab instance, so
+        # look it up by its `ace_editor` class instead of a fixed element id.
         sql = "SELECT region, mountain, height FROM sys.summits LIMIT 42;"
-        page.wait_for_selector("#ace-editor")
-        page.evaluate(f"ace.edit('ace-editor').setValue('{sql}')")
+        page.wait_for_selector(".ace_editor")
+        editor_id = page.eval_on_selector(".ace_editor", "el => el.id")
+        page.evaluate(f"ace.edit('{editor_id}').setValue('{sql}')")
         page.get_by_role("button", name="Run").click()
         page.wait_for_load_state()
 
