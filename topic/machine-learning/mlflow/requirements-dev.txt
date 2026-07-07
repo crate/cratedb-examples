@@ -1,6 +1,6 @@
 # Real.
 cratedb-toolkit[io]>=0.0.46
-pueblo[notebook,testing]>=0.0.18
+pueblo[notebook,testing]>=0.0.19
 
 # Development.
 # cratedb-toolkit[io] @ git+https://github.com/crate-workbench/cratedb-toolkit.git@7f3a493
