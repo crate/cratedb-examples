@@ -1,6 +1,6 @@
 cratedb-mcp>=0.1.1
 cratedb-toolkit>=0.0.46
-mcp-alchemy~=2025.8
+mcp-alchemy~=2026.7
 pueblo[mcp]>=0.0.18
 sqlalchemy-cratedb>=0.43.1
 where
