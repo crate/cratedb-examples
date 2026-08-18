@@ -170,7 +170,7 @@ namespace demo
                 cmd.Parameters.AddWithValue("ip", "127.0.0.1");
 
                 // Container types
-                cmd.Parameters.AddWithValue("array", NpgsqlDbType.Json, new List<string>{"foo", "bar"});
+                cmd.Parameters.AddWithValue("array", NpgsqlDbType.Array | NpgsqlDbType.Text, new List<string>{"foo", "bar"});
                 cmd.Parameters.AddWithValue("object", NpgsqlDbType.Json, new Dictionary<string, string>{{"foo", "bar"}});
 
                 // Geospatial types
@@ -295,17 +295,23 @@ namespace demo
                     "array_object",
                     "object"
                 ) VALUES (
-                    @array,
+                    CAST(@array_object AS ARRAY(OBJECT(DYNAMIC))),
                     @object
                 );
             """, conn))
             {
                 cmd.Parameters.AddWithValue("object", NpgsqlDbType.Json, new BasicPoco { name = "Hotzenplotz" });
-                cmd.Parameters.AddWithValue("array", NpgsqlDbType.Json, new List<BasicPoco>
+                var pocos = new[]
                 {
                     new BasicPoco { name = "Hotzenplotz" },
-                    new BasicPoco { name = "Petrosilius", age = 42 },
-                });
+                    new BasicPoco { name = "Petrosilius", age = 42 }
+                };
+                cmd.Parameters.AddWithValue("array_object", System.Text.Json.JsonSerializer.Serialize(pocos,
+                            new JsonSerializerOptions
+                            {
+                                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                            })
+                );
                 cmd.ExecuteNonQuery();
             }
 
