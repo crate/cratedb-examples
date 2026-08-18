@@ -1,6 +1,0 @@
-task default: %w[test]
-
-task :test do
-  ruby "ruby_example.rb crate_ruby"
-  ruby "ruby_example.rb pg"
-end
