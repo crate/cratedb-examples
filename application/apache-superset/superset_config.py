@@ -41,3 +41,14 @@ WTF_CSRF_TIME_LIMIT = 60 * 60 * 24 * 365
 
 # Set this API key to enable Mapbox visualizations
 MAPBOX_API_KEY = ''
+
+# Superset 6.1+ ships a SQL Lab bundle that calls `eval()` during startup,
+# which the default Content-Security-Policy blocks (missing 'unsafe-eval'),
+# leaving the UI stuck on the loading spinner.
+# https://github.com/apache/superset/blob/6.1.0/superset/config.py
+import copy
+
+from superset.config import TALISMAN_CONFIG as _TALISMAN_CONFIG
+
+TALISMAN_CONFIG = copy.deepcopy(_TALISMAN_CONFIG)
+TALISMAN_CONFIG["content_security_policy"]["script-src"].append("'unsafe-eval'")
