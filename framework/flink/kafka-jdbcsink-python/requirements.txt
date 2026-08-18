@@ -22,7 +22,7 @@ idna==3.15
 kafka-python==2.0.2
 numpy==1.24.4
 objsize==0.6.1
-orjson==3.9.15
+orjson==3.11.6
 pandas==2.2.1
 pemja==0.3.0
 proto-plus==1.23.0
@@ -40,5 +40,5 @@ six==1.16.0
 SQLAlchemy==2.0.28
 typing_extensions==4.10.0
 tzdata==2024.1
-urllib3==2.6.3
+urllib3==2.7.0
 zstandard==0.22.0
