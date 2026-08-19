@@ -12,8 +12,8 @@ They are also used as integration tests to ensure software components
 fit together well.
 
 - `.env`: Environment variable definitions
-- `kafka-compose.yml`: Service composition file for Kafka and CrateDB
-- `kafka-demo.xsh`: The demonstration program
+- `elasticsearch-compose.yml`: Service composition file for Elasticsearch and CrateDB
+- `elasticsearch-demo.sh`: The demonstration program
 
 ## Prerequisites
 
@@ -22,12 +22,22 @@ installation of Docker and Python.
 
 ## Synopsis
 
+Import data from CSV into Elasticsearch.
 ```shell
 ingestr ingest --yes \
-  --source-uri "kafka://?bootstrap_servers=localhost:9092&group_id=test_group&value_type=json&select=value" \
-  --source-table "demo" \
-  --dest-uri "cratedb://crate:crate@localhost:5432/?sslmode=disable" \
-  --dest-table "doc.kafka_demo"
+  --source-uri "csv://taxi_details.csv" \
+  --source-table "data" \
+  --dest-uri "elasticsearch://elasticsearch:9200?secure=false" \
+  --dest-table "example"
+```
+
+Import data from Elasticsearch into CrateDB.
+```shell
+ingestr ingest --yes \
+  --source-uri "elasticsearch://elasticsearch:9200?secure=false" \
+  --source-table "example" \
+  --dest-uri "cratedb://crate:crate@cratedb:5432" \
+  --dest-table "doc.example"
 ```
 
 ## Usage

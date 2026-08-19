@@ -173,6 +173,16 @@ updates:
     schedule:
       interval: "daily"
 
+  - directory: "/application/omniload"
+    package-ecosystem: "pip"
+    schedule:
+      interval: "daily"
+
+  - directory: "/application/omniload"
+    package-ecosystem: "docker-compose"
+    schedule:
+      interval: "daily"
+
   - directory: "/application/pgpool"
     package-ecosystem: "docker-compose"
     schedule:
