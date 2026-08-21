@@ -29,14 +29,18 @@ concurrency:
 jobs:
   test:
     name: "
-     Java: ${{ matrix.java-version }}
-     CrateDB: ${{ matrix.cratedb-version }}
-     on ${{ matrix.os }}"
+    Java: ${{ matrix.java-version }}
+    OS: ${{ matrix.os }}
+    CrateDB: ${{ matrix.cratedb-version }}
+    "
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ 'ubuntu-latest' ]
+        os: [
+          'ubuntu-latest',
+          'windows-latest',
+        ]
         java-version: [
           '17',
           '21',
