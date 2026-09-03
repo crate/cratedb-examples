@@ -1,3 +1,3 @@
 llm<0.34
 llm-anthropic<0.28
-llm-ollama<0.17
+llm-ollama<0.18
