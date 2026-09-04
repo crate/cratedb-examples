@@ -1,4 +1,12 @@
 apache-superset
+# Apache Superset <=6.1.0 is incompatible with flask-caching 2.5.0.
+# flask-caching 2.5.0 injects an `ignore_delete_many_errors` option into the
+# cache backend kwargs, which `SupersetMetastoreCache` does not accept, so
+# app creation fails. Superset's own lockfile pins 2.4.1, but the sdist/wheel
+# dependency is the loose `flask-caching<3,>=2.1.0`, so plain pip installs
+# resolve to 2.5.0 and break.
+# https://github.com/apache/superset/issues/TBD
+flask-caching<2.5
 flask-jwt-extended>=4.7.4
 sqlalchemy-cratedb>=0.43.1
 rich
