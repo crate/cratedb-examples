@@ -29,6 +29,7 @@ concurrency:
 jobs:
   test:
     name: "
+     ${{ matrix.example }}
      Python: ${{ matrix.python-version }}
      CrateDB: ${{ matrix.cratedb-version }}
      on ${{ matrix.os }}"
@@ -39,12 +40,16 @@ jobs:
         os:
           - 'ubuntu-latest'
         python-version:
-          - '3.8'
+          - '3.10'
           - '3.14'
         cratedb-version:
           - 'nightly'
+        example:
+          - 'python-pytest'
+          - 'python-unittest'
 
     env:
+      CRATEDB_VERSION: ${{ matrix.cratedb-version }}
       PIP_PRE: true
       UV_PRERELEASE: allow
 
@@ -59,16 +64,14 @@ jobs:
           activate-environment: 'true'
           cache-dependency-glob: |
             requirements.txt
-            testing/testcontainers/python-pytest/requirements.txt
-            testing/testcontainers/python-unittest/requirements.txt
-          cache-suffix: ${{ matrix.python-version }}
+            testing/testcontainers/${{ matrix.example }}/requirements.txt
+          cache-suffix: ${{ matrix.python-version }}-${{ matrix.example }}
           enable-cache: true
           python-version: ${{ matrix.python-version }}
 
       - name: Install utilities
         run: uv pip install --requirements=requirements.txt
 
-      - name: Validate testing/testcontainers/python-{pytest,unittest}
+      - name: Validate testing/testcontainers/${{ matrix.example }}
         run: |
-          ngr test testing/testcontainers/python-pytest
-          ngr test testing/testcontainers/python-unittest
+          ngr test testing/testcontainers/${{ matrix.example }}
