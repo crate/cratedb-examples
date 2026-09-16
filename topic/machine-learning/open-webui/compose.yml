@@ -62,7 +62,7 @@ services:
   # Open WebUI
   # ----------
   open-webui:
-    image: ghcr.io/open-webui/open-webui:v0.9.5
+    image: ghcr.io/open-webui/open-webui:v0.11.3
     # https://docs.openwebui.com/getting-started/env-configuration
     # https://docs.openwebui.com/getting-started/api-endpoints/#swagger-documentation-links
     environment:
@@ -116,7 +116,7 @@ services:
   # Jupyter
   # -------
   jupyter:
-    image: quay.io/jupyter/minimal-notebook:notebook-7.5.6
+    image: quay.io/jupyter/minimal-notebook:notebook-7.6.1
     # https://docs.openwebui.com/tutorials/jupyter/
     environment:
       JUPYTER_ENABLE_LAB: "yes"
