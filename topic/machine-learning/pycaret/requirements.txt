@@ -2,7 +2,7 @@
 dask==2024.12.1
 mlflow-cratedb==3.12.0
 plotly<6.8
-pycaret[models,parallel,test]==3.3.2
+pycaret-core[models,parallel,test]<3.6
 pydantic<3
 python-dotenv<2
 sqlalchemy==2.*
