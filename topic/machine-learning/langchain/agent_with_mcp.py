@@ -28,7 +28,7 @@ import os
 
 from cratedb_about.prompt import GeneralInstructions
 from langchain_mcp_adapters.client import MultiServerMCPClient
-from langgraph.prebuilt import create_react_agent
+from langchain.agents import create_agent
 
 
 async def amain():
@@ -41,10 +41,10 @@ async def amain():
         }
     )
     tools = await client.get_tools()
-    agent = create_react_agent(
+    agent = create_agent(
         model="openai:gpt-4.1",
         tools=tools,
-        prompt=GeneralInstructions().render(),
+        system_prompt=GeneralInstructions().render(),
     )
 
     QUERY_STR = os.getenv("DEMO_QUERY", "What is the average value for sensor 1?")
