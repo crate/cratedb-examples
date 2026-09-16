@@ -13,6 +13,7 @@ _build
 build
 coverage.xml
 mlruns/
+node_modules/
 archive/
 venv/
 logs.log
