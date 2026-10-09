@@ -39,12 +39,13 @@ jobs:
         os:
           - 'ubuntu-latest'
         python-version:
-          - '3.8'
+          - '3.10'
           - '3.14'
         cratedb-version:
           - 'nightly'
 
     env:
+      CRATEDB_VERSION: ${{ matrix.cratedb-version }}
       PIP_PRE: true
       UV_PRERELEASE: allow
 

@@ -1,43 +1,47 @@
 """
 Using "Testcontainers for Python" with CrateDB and unittest
 
-Build test harnesses around CrateDB using the `CrateDBTestAdapter`
-exported by `cratedb-toolkit`.
+Start one CrateDB container for the test module, and run a query through the
+CrateDB Python driver and through the `crash` command-line client.
 
-https://pypi.org/project/cratedb-toolkit/
+https://github.com/testcontainers/testcontainers-python
 """
+import os
 import subprocess
-from pprint import pprint
-from unittest import TestCase
+from unittest import TestCase, addModuleCleanup
 
-from cratedb_toolkit.testing.testcontainers.cratedb import CrateDBTestAdapter
+from crate import client
+from testcontainers.community.cratedb import CrateDBContainer
 
-cratedb_layer = CrateDBTestAdapter()
+CRATEDB_VERSION = os.environ.get("CRATEDB_VERSION") or "nightly"
+# Nightly builds are published as `crate/crate`, releases as the official `crate` image.
+CRATEDB_IMAGE = "crate/crate:nightly" if CRATEDB_VERSION == "nightly" else f"crate:{CRATEDB_VERSION}"
 
-SQL_STATEMENT = "SELECT * FROM sys.summits ORDER BY height DESC LIMIT 3;"
+SQL_STATEMENT = "SELECT mountain FROM sys.summits ORDER BY height DESC LIMIT 3"
+HIGHEST_SUMMITS = ["Mont Blanc", "Monte Rosa", "Dom"]
+
+cratedb = CrateDBContainer(CRATEDB_IMAGE)
+http_url = None
 
 
 def setUpModule():
-    cratedb_layer.start()
+    global http_url
+    cratedb.start()
+    addModuleCleanup(cratedb.stop)
+    http_url = f"http://{cratedb.get_container_host_ip()}:{cratedb.get_exposed_port(4200)}"
 
 
-def tearDownModule():
-    cratedb_layer.stop()
-
-
-class CrashTest(TestCase):
-
-    def test_crash(self):
-        """
-        After provisioning a test instance of CrateDB, invoke `crash`.
-        """
-        http_url = cratedb_layer.get_http_url()
-        command = f"time crash --hosts '{http_url}' --command '{SQL_STATEMENT}'"
-        subprocess.check_call(command, shell=True)
+class CrateDBTest(TestCase):
 
     def test_sql(self):
-        """
-        After provisioning a test instance of CrateDB, invoke an SQL statement.
-        """
-        results = cratedb_layer.database.run_sql(SQL_STATEMENT, records=True)
-        pprint(results)
+        with client.connect(http_url, username="crate") as connection:
+            cursor = connection.cursor()
+            cursor.execute(SQL_STATEMENT)
+            self.assertEqual([row[0] for row in cursor.fetchall()], HIGHEST_SUMMITS)
+
+    def test_crash(self):
+        output = subprocess.check_output(
+            ["crash", "--hosts", http_url, "--format", "csv", "--command", "SELECT 1 + 1 AS two"],
+            text=True,
+        )
+        self.assertEqual(output.split(), ["two", "2"])
