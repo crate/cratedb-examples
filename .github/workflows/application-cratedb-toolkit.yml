@@ -62,7 +62,7 @@ jobs:
 
       - name: Delay scheduled job to avoid overloading
         if: ${{ github.event.schedule }}
-        uses: AliSajid/random-wait-action@v2.11.1
+        uses: AliSajid/random-wait-action@v2.12.0
         with:
           minimum: 1
           maximum: 120
