@@ -1,5 +1,5 @@
 crash>=0.32.0
-crate>=2.2.1
+crate>=2.3.0
 cratedb-toolkit[testing]>=0.1.1
 psycopg[binary]>=3.2
 pytest<10
