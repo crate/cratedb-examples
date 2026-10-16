@@ -1,6 +1,6 @@
 crash>=0.32.0
 crate>=2.2.1
 cratedb-toolkit[testing]>=0.1.1
-psycopg[binary]>=3.2
+psycopg[binary]>=3.3.6
 pytest<10
 testcontainers[cratedb]>=4.15
