@@ -2,5 +2,5 @@ click<9
 colorlog<7
 crate>=2.3.0
 pandas>=2.3,<3.1
-pueblo>=0.0.18
+pueblo>=0.1.0
 sqlalchemy-cratedb[all]>=0.44.0
