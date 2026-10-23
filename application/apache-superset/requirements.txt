@@ -3,6 +3,6 @@ apache-superset
 # Tracked on upstream issue: https://github.com/apache/superset/issues/43860
 flask-caching<2.5
 flask-jwt-extended>=4.7.4
-sqlalchemy-cratedb>=0.43.1
+sqlalchemy-cratedb>=0.44.0
 rich
 cachetools
