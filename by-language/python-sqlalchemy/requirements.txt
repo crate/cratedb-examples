@@ -2,5 +2,5 @@ click<9
 colorlog<7
 crate>=2.3.0
 pueblo>=0.1.0
-sqlalchemy>=2.0.52,<2.1
+sqlalchemy>=2.1.6,<2.2
 sqlalchemy-cratedb[all]>=0.44.0
