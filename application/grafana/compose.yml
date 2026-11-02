@@ -37,7 +37,7 @@ services:
     build:
       context: .
       dockerfile_inline: |
-        FROM docker.io/python:3.14-slim-trixie
+        FROM docker.io/python:3.15-slim-trixie
         RUN apt-get update && apt-get install --yes git
         ADD requirements.txt /
         ADD example-weather.py /
