@@ -1,6 +1,6 @@
 crash
 cratedb-about==0.0.10
-google-cloud-aiplatform<2
+google-cloud-aiplatform<3
 langchain-cratedb<0.2.1
 langchain-mcp-adapters<0.3
 langchain-google-vertexai<4
