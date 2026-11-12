@@ -65,9 +65,6 @@ jobs:
           CRATEDB_MCP_AUTH_DISABLED: "true"
           CRATEDB_CLUSTER_URL: http://crate:crate@cratedb:4200/
 
-    env:
-      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-
     steps:
 
       - name: Acquire sources
