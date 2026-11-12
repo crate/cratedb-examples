@@ -42,8 +42,10 @@ async def run():
 
             # Call a few tools.
             await client.call_tool("query_sql", arguments={"query": "SELECT * FROM sys.summits ORDER BY height DESC LIMIT 3"})
-            await client.call_tool("get_table_metadata", arguments={})
-            await client.call_tool("get_health", arguments={})
+            await client.call_tool("list_schemas", arguments={})
+            await client.call_tool("list_tables", arguments={"schema": "public"})
+            await client.call_tool("describe_table", arguments={"schema": "public", "table": "mcp_builtin"})
+            await client.call_tool("get_cluster_health", arguments={})
 
 
 if __name__ == "__main__":
