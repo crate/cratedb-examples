@@ -1,6 +1,7 @@
 # Production.
 cratedb-toolkit[io]>=0.0.46
 pueblo[notebook,testing]
+pytest<9.2
 
 # Staging.
 # cratedb-toolkit[io] @ git+https://github.com/crate-workbench/cratedb-toolkit.git@main
