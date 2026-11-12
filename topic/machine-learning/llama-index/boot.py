@@ -58,11 +58,13 @@ def configure_llm(debug: bool = False) -> Tuple[LLM, BaseEmbedding]:
         raise ValueError(f"LLM backend not defined or invalid: {llm_backend}")
 
     if llm_backend == "openai":
+        # Model names change over time. Check the provider's current list before running.
         embed_model = LangchainEmbedding(OpenAIEmbeddings(model="text-embedding-3-large"))
     elif llm_backend == "azure":
         embed_model = LangchainEmbedding(
             AzureOpenAIEmbeddings(
                 azure_endpoint=os.getenv("OPENAI_AZURE_ENDPOINT"),
+                # Model names change over time. Check the provider's current list before running.
                 model="text-embedding-3-large",
             )
         )
