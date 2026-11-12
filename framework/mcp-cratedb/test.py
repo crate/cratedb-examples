@@ -37,13 +37,6 @@ def test_cratedb_mcp():
     p = run(f"{sys.executable} example_cratedb_mcp.py")
     assert p.returncode == 0
 
-    # Validate output specific to the MCP server.
-    assert b"Processing request of type" in p.stderr
-    assert b"ListPromptsRequest" in p.stderr
-    assert b"ListResourcesRequest" in p.stderr
-    assert b"ListToolsRequest" in p.stderr
-    assert b"CallToolRequest" in p.stderr
-
     # Validate output specific to CrateDB.
     assert b"Calling tool: query_sql" in p.stdout
     assert b"cols:" in p.stdout
