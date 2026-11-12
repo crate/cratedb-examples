@@ -46,6 +46,7 @@ async def amain():
     )
     tools = await client.get_tools()
     agent = create_react_agent(
+        # Model names change over time. Check the provider's current list before running.
         model="openai:gpt-4.1",
         tools=tools,
         prompt=GeneralInstructions().render(),
