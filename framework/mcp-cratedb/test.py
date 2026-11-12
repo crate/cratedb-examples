@@ -50,10 +50,15 @@ def test_cratedb_mcp():
     assert b"rows:" in p.stdout
     assert b"Mont Blanc" in p.stdout
 
-    assert b"Calling tool: get_table_metadata" in p.stdout
-    assert b"- information_schema" in p.stdout
-    assert b"total_missing_shards: null" in p.stdout
-    assert b"table_name: table_partitions" in p.stdout
+    assert b"Calling tool: list_schemas" in p.stdout
+    assert b"- schema_name: public" in p.stdout
 
-    assert b"Calling tool: get_health" in p.stdout
+    assert b"Calling tool: list_tables" in p.stdout
+    assert b"- name: mcp_builtin" in p.stdout
+
+    assert b"Calling tool: describe_table" in p.stdout
+    assert b'CREATE TABLE IF NOT EXISTS \\"public\\".\\"mcp_builtin\\"' in p.stdout
+    assert b"primary_shards: 4" in p.stdout
+
+    assert b"Calling tool: get_cluster_health" in p.stdout
     assert b"underreplicated_shards" in p.stdout
