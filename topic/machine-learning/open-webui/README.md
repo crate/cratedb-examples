@@ -2,7 +2,7 @@
 
 ## About
 
-A complete end-to-end rig including CrateDB, CrateDB MCPO, and Open WebUI,
+A complete end-to-end rig including CrateDB, the CrateDB MCP server, and Open WebUI,
 including a touch of integration tests on CI/GHA.
 
 This stack is intended solely for demonstration purposes and does **not**
@@ -15,10 +15,11 @@ platform designed to operate entirely offline. It supports various LLM runners
 like Ollama and OpenAI-compatible APIs, with built-in inference engine for RAG,
 making it a powerful AI deployment solution.
 
-CrateDB MCPO is an adapter wrapper around the [CrateDB MCP] server. Because
-Open WebUI uses [OpenAPI Tool Servers] to integrate external tooling and data
-sources into LLM agents and workflows, standard MCP servers need to adapt to
-how [Open WebUI MCP Support] works.
+The [CrateDB MCP] server gives LLM agents access to CrateDB: they can explore
+schemas and tables, run read-only SQL queries, and read the CrateDB documentation.
+Open WebUI connects to it over Streamable HTTP, see [Open WebUI MCP Support].
+In this rig the server runs without an authentication token, so its port is not
+published and only the other containers reach it.
 
 ## Usage
 
@@ -28,7 +29,7 @@ It is advised to clone the Git repository and run the demo stack from there.
 In this spirit, it will be easy for you to receive updates.
 ```shell
 git clone https://github.com/crate/cratedb-examples
-cd cratedb-examples/application/open-webui
+cd cratedb-examples/topic/machine-learning/open-webui
 ```
 
 ### Start services
@@ -60,9 +61,6 @@ You can access the service's resources on those URLs.
 
 Explore the APIs here.
 
-- CrateDB MCPO: 
-  - Swagger: http://localhost:5200/docs
-  - OpenAPI: http://localhost:5200/openapi.json
 - Open WebUI: 
   - Swagger: http://localhost:6200/docs
   - OpenAPI: http://localhost:6200/openapi.json
@@ -119,13 +117,12 @@ docker compose run --rm test
 
 - `.env`: The dotenv file defines `OPENAI_API_KEY` for `compose.yml`.
 - `compose.yml`: The service composition file defines four main services:
-  CrateDB, CrateDB MCPO, Open WebUI, and Jupyter. Helper jobs (setup, test, ...)
+  CrateDB, CrateDB MCP, Open WebUI, and Jupyter. Helper jobs (setup, test, ...)
   excluded for brevity. Use it with Docker or Podman.
 - `init/`: Runtime configuration snippets.
 
 
 [CrateDB MCP]: https://cratedb.com/docs/guide/integrate/mcp/cratedb-mcp.html
-[OpenAPI Tool Servers]: https://docs.openwebui.com/openapi-servers/
 [Open WebUI]: https://docs.openwebui.com/
-[Open WebUI MCP Support]: https://docs.openwebui.com/openapi-servers/mcp/
+[Open WebUI MCP Support]: https://docs.openwebui.com/features/extensibility/mcp/
 [OPEN-WEBUI-15939]: https://github.com/open-webui/open-webui/issues/15939#issuecomment-3108279768
