@@ -1,4 +1,4 @@
-adbc-driver-postgresql<1.13
+adbc-driver-postgresql<1.14
 connectorx>=0.4.6
 pandas<3.2
 polars<2.1
