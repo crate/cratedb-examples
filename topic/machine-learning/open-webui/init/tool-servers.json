@@ -1,15 +1,17 @@
 {
   "TOOL_SERVER_CONNECTIONS": [
     {
-      "url": "http://cratedb-mcpo:8000",
-      "path": "openapi.json",
-      "auth_type": "bearer",
+      "url": "http://cratedb-mcp:8000/mcp",
+      "path": "",
+      "type": "mcp",
+      "auth_type": "none",
       "key": "",
       "config": {
         "enable": true,
         "access_control": null
       },
       "info": {
+        "id": "cratedb",
         "name": "CrateDB",
         "description": "CrateDB Text-to-SQL and documentation inquiry."
       }
