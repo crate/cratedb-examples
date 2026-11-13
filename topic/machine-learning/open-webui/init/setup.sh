@@ -42,7 +42,7 @@ http --ignore-stdin ${OPEN_WEBUI_URL}/api/v1/users/user/settings/update Authoriz
     ui[params][temperature]:=0.0 \
     ui[notificationEnabled]="true"
 
-# Configure CrateDB MCPO server.
+# Configure CrateDB MCP server.
 http --ignore-stdin ${OPEN_WEBUI_URL}/api/v1/configs/tool_servers Authorization:"Bearer $token" \
     "@tool-servers.json"
 
