@@ -7,6 +7,7 @@ https://github.com/run-llama/llama_index/tree/main/llama-index-integrations/tool
 ## Start CrateDB MCP Server
 ```
 export CRATEDB_CLUSTER_URL="http://localhost:4200/"
+export CRATEDB_MCP_AUTH_DISABLED=true
 cratedb-mcp serve --transport=http
 ```
 
