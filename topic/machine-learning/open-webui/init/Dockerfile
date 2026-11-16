@@ -27,7 +27,10 @@ ENV \
     UV_PYTHON_DOWNLOADS=never \
     UV_SYSTEM_PYTHON=true
 
-RUN uv pip install crash cratedb-mcp httpie
+# Install each tool in its own environment, because crash and cratedb-mcp
+# require different versions of sqlparse.
+ENV UV_TOOL_BIN_DIR=/usr/local/bin
+RUN uv tool install crash && uv tool install cratedb-mcp && uv tool install httpie
 
 RUN mkdir /app
 WORKDIR /app
