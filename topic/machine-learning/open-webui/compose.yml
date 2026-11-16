@@ -39,19 +39,22 @@ services:
       start_period: 3s
       interval: 10s
 
-  # ------------
-  # CrateDB MCPO
-  # ------------
-  cratedb-mcpo:
-    image: ghcr.io/crate/cratedb-mcpo:0.1.2
+  # -----------
+  # CrateDB MCP
+  # -----------
+  cratedb-mcp:
+    image: ghcr.io/crate/cratedb-mcp:0.2.0
     environment:
       CRATEDB_CLUSTER_URL: http://crate:crate@cratedb:4200/
-    ports:
-      - "5200:8000"
+      CRATEDB_MCP_TRANSPORT: streamable-http
+      CRATEDB_MCP_HOST: 0.0.0.0
+      CRATEDB_MCP_PORT: 8000
+      CRATEDB_MCP_AUTH_DISABLED: "true"
+      CRATEDB_MCP_ALLOWED_HOSTS: cratedb-mcp
     networks:
       - llm-demo
     healthcheck:
-      test: [ "CMD", "curl", "--fail", "http://localhost:8000/docs" ]
+      test: [ "CMD", "curl", "--fail", "http://localhost:8000/health" ]
       start_period: 3s
       interval: 10s
     depends_on:
@@ -107,7 +110,7 @@ services:
       retries: 60
       timeout: 90s
     depends_on:
-      cratedb-mcpo:
+      cratedb-mcp:
         condition: service_healthy
       jupyter:
         condition: service_healthy
@@ -146,7 +149,7 @@ services:
     depends_on:
       cratedb:
         condition: service_healthy
-      cratedb-mcpo:
+      cratedb-mcp:
         condition: service_healthy
       open-webui:
         condition: service_healthy
