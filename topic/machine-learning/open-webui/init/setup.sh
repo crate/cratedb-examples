@@ -48,8 +48,8 @@ http --ignore-stdin ${OPEN_WEBUI_URL}/api/v1/configs/tool_servers Authorization:
 
 # Configure chat model.
 http --ignore-stdin ${OPEN_WEBUI_URL}/api/v1/configs/models Authorization:"Bearer $token" \
-    DEFAULT_MODELS="gpt-4.1" MODEL_ORDER_LIST="[]"
+    DEFAULT_MODELS="gpt-4.1" DEFAULT_PINNED_MODELS="" MODEL_ORDER_LIST:='[]'
 
 # Configure embedding model.
 http --ignore-stdin ${OPEN_WEBUI_URL}/api/v1/retrieval/embedding/update Authorization:"Bearer $token" \
-    embedding_engine="openai" embedding_model="text-embedding-3-small"
+    RAG_EMBEDDING_ENGINE="openai" RAG_EMBEDDING_MODEL="text-embedding-3-small"
