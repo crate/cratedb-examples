@@ -146,6 +146,7 @@ Spin up the [CrateDB MCP server], connecting it to CrateDB on localhost.
 ```bash
 export CRATEDB_CLUSTER_URL=http://crate:crate@localhost:4200/
 export CRATEDB_MCP_TRANSPORT=streamable-http
+export CRATEDB_MCP_AUTH_DISABLED=true
 uvx cratedb-mcp serve
 ```
 
