@@ -109,6 +109,7 @@ source .venv/bin/activate
 pip install -U -r requirements.txt
 ```
 
+Moreover, it is required that you are using Python 3.10 or later.
 
 ## Setup
 
@@ -157,10 +158,16 @@ python agent_with_mcp.py
 Expected output:
 ```text
 Query was: What is the average value for sensor 1?
-Answer was: The average value for sensor 1 is approximately 17.03. If you need more details or a different calculation, let me know!
+Answer was: The average value for sensor 1 is approximately 17.03. (Query: SELECT AVG(value) AS avg_value FROM time_series_data WHERE sensor_id = 1;) 
 ```
 
 ## Testing
+
+To install `pytest`, execute the following command:
+
+```shell
+pip install pytest
+```
 
 Run all tests.
 ```shell
