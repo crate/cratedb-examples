@@ -82,6 +82,7 @@ OPENAI_API_KEY=<Your key from Azure>
 OPENAI_API_TYPE=azure
 OPENAI_AZURE_ENDPOINT=https://<Your endpoint from Azure e.g. myendpoint.openai.azure.com>
 OPENAI_AZURE_API_VERSION=2024-08-01-preview
+# Model names change over time. Check the provider's current list before running.
 LLM_INSTANCE=<The name of your Chat GPT 3.5 turbo instance from Azure>
 EMBEDDING_MODEL_INSTANCE=<The name of your Text Embedding Ada 2.0 instance from Azure>
 CRATEDB_SQLALCHEMY_URL=crate://<Database user name>:<Database password>@<Database host>:4200/?ssl=true
@@ -99,12 +100,14 @@ Save your changes.
 Configure either OpenAI GPT,
 ```bash
 export OPENAI_API_KEY=<YOUR_OPENAI_API_KEY>
+# Model names change over time. Check the provider's current list before running.
 export LLM_MODEL=gpt-4.1
 ```
 ... or Ollama, either on runpod,
 ```bash
 export LLM_BACKEND=ollama
 export OLLAMA_BASE_URL=https://l59hg3k5z1bxtw-11434.proxy.runpod.net/
+# Model names change over time. Check the provider's current list before running.
 export LLM_MODEL=gemma3:1b
 ```
 or somewhere else.
