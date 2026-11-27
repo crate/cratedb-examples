@@ -1,7 +1,7 @@
 click<9
 colorlog<7
 dask[dataframe]>=2026.8.0   # Python 3.11.9 breaks previous Dask
-distributed>=2026.8.0       # Python 3.11.9 breaks previous Dask
+distributed>=2026.11.0       # Python 3.11.9 breaks previous Dask
 pandas<3.2
 pueblo>=0.1.0
 sqlalchemy-cratedb>=0.44.0
