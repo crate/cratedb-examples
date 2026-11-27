@@ -16,8 +16,12 @@ crash < init.sql
 export CRATEDB_MCP_TRANSPORT=streamable-http
 export CRATEDB_MCP_HOST=0.0.0.0
 export CRATEDB_MCP_PORT=8000
+export CRATEDB_MCP_AUTH_DISABLED=true
 export CRATEDB_CLUSTER_URL=http://crate:crate@localhost:4200/
-docker run --rm -it --network=host --publish=8000:8000 ghcr.io/crate/cratedb-mcp:pr-50
+docker run --rm -it --network=host --publish=8000:8000 \
+  --env=CRATEDB_MCP_TRANSPORT --env=CRATEDB_MCP_HOST --env=CRATEDB_MCP_PORT \
+  --env=CRATEDB_MCP_AUTH_DISABLED --env=CRATEDB_CLUSTER_URL \
+  ghcr.io/crate/cratedb-mcp:pr-50
 
 # Run program.
 export OPENAI_API_KEY=<your_openai_api_key>
